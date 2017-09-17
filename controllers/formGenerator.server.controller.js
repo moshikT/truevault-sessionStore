@@ -49,7 +49,7 @@ exports.generateForm = function (req, res) {
 
             //console.log(formJSON);
 
-            res.render('form', { title: 'הכי בבית בעולם' ,
+            res.render('form', { title: 'כלל ביטוח' ,
                 formjson: formJSON,
                 isInEnglish: textDirection});
         })

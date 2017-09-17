@@ -48,7 +48,7 @@ exports.exportToCsv = function (req, res) {
 };
 
 exports.getIndex = function (req, res) {
-    res.render('index', { title: 'הכי בבית בעולם',
+    res.render('index', { title: 'כלל ביטוח',
         isInEnglish: textDirection });
 }
 
