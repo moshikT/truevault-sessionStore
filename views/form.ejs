@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html">
+<% include partials/head %>
+<header>
+    <% include partials/logo %>
+    <div class="container col-md-12">
+        <h1> <%=  title %> </h1>
+
+       <div class="container">
+    <div class="progress" style="border-radius: 15px;">
+        <div id="progressBar" class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+             aria-valuemax="100" style="width:0%;">
+            0%
+        </div>
+    </div>
+       </div>
+    </div>
+</header>
+<body class="content" dir=<%=isInEnglish%>>
+    <div id="fromContainer"  class="" style="scroll:hidden;overflow: auto; height: 360px;width:100%">
+       <% include partials/formPartial %>
+    </div>
+    <% include partials/footer %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <script src="javascripts/messages_he.js"></script>
+    <script src="/javascripts/form.js" ></script>
+</body>
+</html>

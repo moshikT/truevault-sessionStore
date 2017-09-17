@@ -1,0 +1,147 @@
+@media screen and (max-device-width: 450px) {
+  .logo {
+     zoom: 40%;
+  }
+  .compInfo {
+
+  }
+}
+
+.answer {
+
+}
+
+.compInfo {
+
+}
+
+body {
+  padding: 20px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  /*direction: rtl;*/
+  background-color: white;
+  opacity: 0.6;
+  width: 100%;
+}
+
+form {
+  text-align: center;
+
+}
+
+.background {
+  background-color: whitesmoke;
+  opacity: 0.9;
+  border-radius: 25px;
+}
+
+h1 {
+  padding:0px 20px 20px 0px;
+  text-align: center;
+  /*direction: ltr;*/
+  font-size: 1em;
+  color: #68668c;
+}
+
+.container {
+}
+ p {
+   /*float: right;*/
+ }
+.q {
+  font-size: large;
+  font-weight: 600;
+  color: black;
+  margin-top: 50px;
+  padding: 25px;
+  /*border-style: solid;
+  border-width: 1px;
+  border-color: darkgrey;*/
+  border-radius: 25px;
+  vertical-align: middle;
+  /**background-color: white;**/
+  opacity: 0.9;
+  width: 100%;
+
+}
+
+.a {
+  padding-top: 20px;
+}
+
+.option {
+  width: 40%;
+}
+
+div.error {
+  font-size: smaller;
+  color: darkred;
+  padding: 5px;
+  /*border: solid red 1px;*/
+}
+
+/*
+.btn:hover {
+  zoom: 100%;
+}
+*/
+#radioBtn .notActive:hover {
+  background-color: cornflowerblue;
+}
+
+#radioBtn .notActive{
+  color: #3276b1;
+  background-color: #fff;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.content:before {
+  content: "";
+  position: fixed;
+  left: 0;
+  right: 0;
+  top:0;
+  bottom: 0;
+  z-index: -1;
+
+  display: block;
+  background-image: url("../images/bg.jpg");
+
+
+  -webkit-filter: blur(10px);
+  -moz-filter: blur(10px);
+  -o-filter: blur(10px);
+  -ms-filter: blur(10px);
+  filter: blur(10px);
+ /*
+  background: black; /* For browsers that do not support gradients */
+  /*background: -webkit-linear-gradient(black, white); /* For Safari 5.1 to 6.0 */
+  /*background: -o-linear-gradient(black, white); /* For Opera 11.1 to 12.0 */
+  /*background: -moz-linear-gradient(black, white); /* For Firefox 3.6 to 15 */
+  /*background: linear-gradient(black, white); /* Standard syntax */
+}
+
+.content {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  margin: 0px;
+}
+
+.btn-group {
+  min-width: inherit;
+}
+
+/*
+.grad {
+  background: black; /* For browsers that do not support gradients */
+ /* background: -webkit-linear-gradient(black, white); *//* For Safari 5.1 to 6.0 */
+ /* background: -o-linear-gradient(black, white); /* For Opera 11.1 to 12.0 */
+ /* background: -moz-linear-gradient(black, white); /* For Firefox 3.6 to 15 */
+ /* background: linear-gradient(black, white); /* Standard syntax */
+/*}
+
