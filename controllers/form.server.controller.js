@@ -48,7 +48,7 @@ exports.exportToCsv = function (req, res) {
 };
 
 exports.getIndex = function (req, res) {
-    res.render('index', { title: 'בנק הפועלים',
+    res.render('index', { title: '',
         isInEnglish: textDirection });
 }
 
