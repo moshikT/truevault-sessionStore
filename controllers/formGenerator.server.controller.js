@@ -25,7 +25,7 @@ exports.generateForm = function (req, res) {
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            if (questionsJSON['AYALON'] == 'yes' && lines < 25) {
+            if (questionsJSON['AYALON'] == 'yes' && lines > 350) {
                 parseQuestions(questionsJSON);
                 if (questionsJSON['TYPE'] == 'P') {
                     p_typeJSON.push(questionsJSON);
