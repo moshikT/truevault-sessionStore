@@ -27,7 +27,7 @@ and (max-device-width: 1600px) {
 and (min-device-width: 320px)
 and (max-device-width: 667px) {
   .introText {
-    font-size: small;
+    font-size: smaller;
     font-weight: 600;
     color: black;
     margin-top: 50px;
