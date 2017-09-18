@@ -25,14 +25,14 @@ exports.generateForm = function (req, res) {
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            if (questionsJSON['AYALON'] == 'yes'/* && lines > 350*/) {
+            if (questionsJSON['AYALON'] == 'yes' && lines < 25) {
                 parseQuestions(questionsJSON);
                 if (questionsJSON['TYPE'] == 'P') {
                     p_typeJSON.push(questionsJSON);
                 } else if (questionsJSON['TYPE'] == 'F') {
                     f_typeJSON.push(questionsJSON);
                 } else if (questionsJSON['TYPE'] == 'C') {
-                    c_typeJSON.push(questionsJSON);
+                    // FOR DEMO c_typeJSON.push(questionsJSON);
                 } else if (questionsJSON['TYPE'] == 'B') {
                     // FOR DEMO b_typeJSON.push(questionsJSON);
                 }
