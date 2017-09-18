@@ -42,7 +42,7 @@ and (max-device-width: 667px) {
     width: 100%;
   }
   .logo {
-    zoom: 65%;
+    zoom: 40%;
   }
   .inputField {
     font-size: smaller;
