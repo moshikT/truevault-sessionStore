@@ -49,7 +49,7 @@ exports.generateForm = function (req, res) {
 
             //console.log(formJSON);
 
-            res.render('form', { title: '' ,
+            res.render('form', { title: 'בנק הפועלים' ,
                 formjson: formJSON,
                 isInEnglish: textDirection});
         })
