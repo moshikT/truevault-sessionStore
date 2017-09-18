@@ -1,11 +1,60 @@
-@media screen and (max-device-width: 450px) {
-  .logo {
-     zoom: 65%;
+@media screen
+and (min-device-width: 1200px)
+and (max-device-width: 1600px) {
+  .introText {
+    font-size: large;
+    font-weight: 600;
+    color: black;
+    margin-top: 50px;
+    padding: 25px;
+    /*border-style: solid;
+    border-width: 1px;
+    border-color: darkgrey;*/
+    border-radius: 25px;
+    vertical-align: middle;
+    background-color: white;
+    opacity: 0.9;
+    width: 30%;
   }
-  .compInfo {
+
+  .inputField {
+    font-size: large;
 
   }
 }
+
+@media only screen
+and (min-device-width: 320px)
+and (max-device-width: 667px) {
+  .introText {
+    font-size: small;
+    font-weight: 600;
+    color: black;
+    margin-top: 50px;
+    padding: 25px;
+    /*border-style: solid;
+    border-width: 1px;
+    border-color: darkgrey;*/
+    border-radius: 25px;
+    vertical-align: middle;
+    background-color: white;
+    opacity: 0.9;
+    width: 100%;
+  }
+  .logo {
+    zoom: 65%;
+  }
+  .inputField {
+    font-size: smaller;
+  }
+}
+/*
+@media screen and (max-device-width: 450px) {
+
+
+}
+*/
+
 
 .answer {
 
