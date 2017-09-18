@@ -34,7 +34,7 @@ exports.generateForm = function (req, res) {
                 } else if (questionsJSON['TYPE'] == 'C') {
                     c_typeJSON.push(questionsJSON);
                 } else if (questionsJSON['TYPE'] == 'B') {
-                    b_typeJSON.push(questionsJSON);
+                    // FOR DEMO b_typeJSON.push(questionsJSON);
                 }
             }
 

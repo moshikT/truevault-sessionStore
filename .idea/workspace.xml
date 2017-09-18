@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="2689c713-82ce-4b65-bb19-670a8889a6a2" name="Default" comment="" />
+    <list default="true" id="2689c713-82ce-4b65-bb19-670a8889a6a2" name="Default" comment="">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/formGenerator.server.controller.js" afterPath="$PROJECT_DIR$/controllers/formGenerator.server.controller.js" />
+    </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
     <ignored path="$PROJECT_DIR$/tmp/" />
@@ -14,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="formGenerator.server.controller.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="formGenerator.server.controller.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controllers/formGenerator.server.controller.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="125">
-              <caret line="51" column="41" lean-forward="false" selection-start-line="51" selection-start-column="41" selection-end-line="51" selection-end-column="41" />
+            <state relative-caret-position="251">
+              <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
               <folding />
             </state>
           </provider>
@@ -29,7 +32,25 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
               <caret line="2" column="2" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-              <folding />
+              <folding>
+                <marker date="1505665290000" expanded="true" signature="219:1739" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="447:623" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="933:1736" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="1142:1233" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="1662:1730" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="1861:1967" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="1925:1965" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="1989:3288" ph="{&quot;ignore&quot;: &quot;&quot;...}" />
+                <marker date="1505665290000" expanded="true" signature="2039:2133" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="2068:2126" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="2264:2516" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="2589:3108" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="2875:2924" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="3004:3095" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="3145:3286" ph="{...}" />
+                <marker date="1505665290000" expanded="true" signature="3292:3689" ph="/*...*/" />
+                <marker date="1505665290000" expanded="true" signature="3690:3830" ph="//..." />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -39,12 +60,24 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="295">
               <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
-              <folding />
+              <folding>
+                <marker date="1505676982000" expanded="true" signature="386:436" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="480:1673" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="924:1637" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="951:1251" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="1122:1239" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="1265:1631" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="1407:1619" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="1715:1794" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="1741:1790" ph="{&quot;title&quot;: 'בנק הפועלים'...}" />
+                <marker date="1505676982000" expanded="true" signature="1842:1937" ph="{...}" />
+                <marker date="1505676982000" expanded="true" signature="1871:1933" ph="{&quot;title&quot;: 'Empiricalhire'...}" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="style.css" pinned="false" current-in-tab="true">
+      <file leaf-file-name="style.css" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
@@ -113,11 +146,11 @@
         <option value="$PROJECT_DIR$/public/javascripts/form.js" />
         <option value="$PROJECT_DIR$/views/form.ejs" />
         <option value="$PROJECT_DIR$/views/partials/formPartial.ejs" />
-        <option value="$PROJECT_DIR$/controllers/formGenerator.server.controller.js" />
         <option value="$PROJECT_DIR$/controllers/form.server.controller.js" />
         <option value="$PROJECT_DIR$/views/index.ejs" />
         <option value="$PROJECT_DIR$/views/partials/logo.ejs" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
+        <option value="$PROJECT_DIR$/controllers/formGenerator.server.controller.js" />
       </list>
     </option>
   </component>
@@ -126,6 +159,13 @@
   </component>
   <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER">
     <package-json value="$PROJECT_DIR$/package.json" />
+  </component>
+  <component name="JsFlowSettings">
+    <service-enabled>true</service-enabled>
+    <exe-path />
+    <annotation-enable>false</annotation-enable>
+    <other-services-enabled>true</other-services-enabled>
+    <auto-save>true</auto-save>
   </component>
   <component name="JsGulpfileManager">
     <detection-done>true</detection-done>
@@ -209,13 +249,14 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="settings.editor.selected.configurable" value="settings.nodejs" />
+    <property name="settings.editor.selected.configurable" value="Settings.JavaScript" />
     <property name="nodejs_interpreter_path" value="/usr/local/bin/node" />
     <property name="javascript.nodejs.core.library.configured.version" value="4.4.3" />
-    <property name="settings.editor.splitter.proportion" value="0.2" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="HbShouldOpenHtmlAsHb" value="" />
+    <property name="JavaScriptPreferStrict" value="false" />
+    <property name="JavaScriptWeakerCompletionTypeGuess" value="true" />
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -239,12 +280,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1505662389963</updated>
-      <workItem from="1505662408868" duration="6119000" />
+      <workItem from="1505662408868" duration="6518000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="6119000" />
+    <option name="totallyTimeSpent" value="6518000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -285,7 +326,25 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="2" lean-forward="false" selection-start-line="2" selection-start-column="2" selection-end-line="2" selection-end-column="2" />
-          <folding />
+          <folding>
+            <marker date="1505665290000" expanded="true" signature="219:1739" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="447:623" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="933:1736" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="1142:1233" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="1662:1730" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="1861:1967" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="1925:1965" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="1989:3288" ph="{&quot;ignore&quot;: &quot;&quot;...}" />
+            <marker date="1505665290000" expanded="true" signature="2039:2133" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="2068:2126" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="2264:2516" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="2589:3108" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="2875:2924" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="3004:3095" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="3145:3286" ph="{...}" />
+            <marker date="1505665290000" expanded="true" signature="3292:3689" ph="/*...*/" />
+            <marker date="1505665290000" expanded="true" signature="3690:3830" ph="//..." />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -308,19 +367,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controllers/formGenerator.server.controller.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="125">
-          <caret line="51" column="41" lean-forward="false" selection-start-line="51" selection-start-column="41" selection-end-line="51" selection-end-column="41" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controllers/form.server.controller.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="295">
           <caret line="50" column="34" lean-forward="false" selection-start-line="50" selection-start-column="34" selection-end-line="50" selection-end-column="34" />
-          <folding />
+          <folding>
+            <marker date="1505676982000" expanded="true" signature="386:436" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="480:1673" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="924:1637" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="951:1251" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="1122:1239" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="1265:1631" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="1407:1619" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="1715:1794" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="1741:1790" ph="{&quot;title&quot;: 'בנק הפועלים'...}" />
+            <marker date="1505676982000" expanded="true" signature="1842:1937" ph="{...}" />
+            <marker date="1505676982000" expanded="true" signature="1871:1933" ph="{&quot;title&quot;: 'Empiricalhire'...}" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -349,6 +412,14 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
           <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controllers/formGenerator.server.controller.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="251">
+          <caret line="36" column="32" lean-forward="false" selection-start-line="36" selection-start-column="32" selection-end-line="36" selection-end-column="32" />
           <folding />
         </state>
       </provider>
