@@ -22,8 +22,8 @@
 
             if (formjson[i]['TYPE'] == 'B')  { %>
             <% for (var j=0;j <formjson[i]['answer'].length; j++) { %>
-                            <a class="btn btn-primary btn-lg notActive" data-value=<%-formjson[i]['answer'][j].replace(/\s+/g, '')%> data-toggle=<%= formjson[i].Q_ID %>
-                            data-title=<%=formjson[i]['data-title'][j]%> ><%- formjson[i]['answer'][j] %></a>
+                            <a class="btn btn-primary btn-sm notActive" data-value=<%-formjson[i]['answer'][j].replace(/\s+/g, '')%> data-toggle=<%= formjson[i].Q_ID %>
+                            data-title=<%=formjson[i]['data-title'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
              <%  }
                 }
              %>

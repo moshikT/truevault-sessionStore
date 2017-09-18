@@ -32,9 +32,9 @@ exports.generateForm = function (req, res) {
                 } else if (questionsJSON['TYPE'] == 'F') {
                     f_typeJSON.push(questionsJSON);
                 } else if (questionsJSON['TYPE'] == 'C') {
-                    // FOR DEMO c_typeJSON.push(questionsJSON);
+                    c_typeJSON.push(questionsJSON);
                 } else if (questionsJSON['TYPE'] == 'B') {
-                    // FOR DEMO b_typeJSON.push(questionsJSON);
+                    b_typeJSON.push(questionsJSON);
                 }
             }
 
