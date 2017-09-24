@@ -19,6 +19,10 @@ router.get('/form', function(req, res) {
     return form_Ctrl.getForm(req, res);
 });
 
+router.post('/info', function (req, res) {
+    return form_Ctrl.getForm(req, res);
+});
+
 router.post('/form', function(req, res) {
     return form_Ctrl.exportToCsv(req, res);
 });

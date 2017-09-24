@@ -25,7 +25,7 @@ exports.generateForm = function (req, res) {
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            if (questionsJSON['AYALON'] == 'yes' && lines > 350) {
+            if (questionsJSON['AYALON'] == 'yes' && lines < 25) {
                 parseQuestions(questionsJSON);
                 if (questionsJSON['TYPE'] == 'P') {
                     p_typeJSON.push(questionsJSON);
@@ -49,7 +49,7 @@ exports.generateForm = function (req, res) {
 
             //console.log(formJSON);
 
-            res.render('form', { title: 'הכי בבית בעולם' ,
+            res.render('form', { title: 'החברה המרכזית' ,
                 formjson: formJSON,
                 isInEnglish: textDirection});
         })

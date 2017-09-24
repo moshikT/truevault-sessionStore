@@ -89,14 +89,19 @@ $("#form").validate({
         container.scrollTop()}, 500);
     },
     submitHandler: function (form) {
-        $('#FormTotalTime').prop('value', Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes");
+        var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
+        mixpanel.track('formTotalTime', {'uid': 'employeeNumber', 'TotalTime': totalTime});
+        $('#FormTotalTime').prop('value', totalTime);
         form.submit();
+        mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
     }
 });
 
+
+
 /*
 mixpanel.time_event('#radioBtn');
-mixpanel.track('#radioBtn', {'Gender': 'Male', 'Age': 21});
+
 
 
 mixpanel.identify("13487");
