@@ -74,6 +74,9 @@ and (max-device-width: 667px) {
   .logo {
     /*zoom: 55%;*/
   }
+  .input-cover {
+    position: static;
+  }
   .inputField {
     font-size: smaller;
   }
