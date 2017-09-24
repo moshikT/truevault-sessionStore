@@ -2,18 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="2689c713-82ce-4b65-bb19-670a8889a6a2" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/images/Hachevra_Hamerkazit_Clean.png" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/npm-debug.log" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Nike.csv" afterPath="$PROJECT_DIR$/Nike.csv" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/form.server.controller.js" afterPath="$PROJECT_DIR$/controllers/form.server.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controllers/formGenerator.server.controller.js" afterPath="$PROJECT_DIR$/controllers/formGenerator.server.controller.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/form.js" afterPath="$PROJECT_DIR$/public/javascripts/form.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style.css" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/index.js" afterPath="$PROJECT_DIR$/routes/index.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/index.ejs" afterPath="$PROJECT_DIR$/views/index.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/partials/formPartial.ejs" afterPath="$PROJECT_DIR$/views/partials/formPartial.ejs" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/views/partials/logo.ejs" afterPath="$PROJECT_DIR$/views/partials/logo.ejs" />
     </list>
     <ignored path="$PROJECT_DIR$/.tmp/" />
     <ignored path="$PROJECT_DIR$/temp/" />
@@ -62,15 +51,15 @@
       <file leaf-file-name="index.ejs" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/views/index.ejs">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="93" lean-forward="true" selection-start-line="14" selection-start-column="93" selection-end-line="14" selection-end-column="93" />
+            <state relative-caret-position="110">
+              <caret line="30" column="75" lean-forward="false" selection-start-line="30" selection-start-column="75" selection-end-line="30" selection-end-column="75" />
               <folding>
                 <element signature="n#style#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#button#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-                <marker date="1506271885000" expanded="false" signature="866:884" ph="..." />
-                <marker date="1506271885000" expanded="false" signature="1076:1094" ph="..." />
-                <marker date="1506271885000" expanded="false" signature="1178:1244" ph="..." />
-                <marker date="1506271885000" expanded="false" signature="1529:1547" ph="..." />
+                <marker date="1506273372000" expanded="false" signature="885:903" ph="..." />
+                <marker date="1506273372000" expanded="false" signature="1095:1113" ph="..." />
+                <marker date="1506273372000" expanded="false" signature="1197:1263" ph="..." />
+                <marker date="1506273372000" expanded="false" signature="1540:1558" ph="..." />
               </folding>
             </state>
           </provider>
@@ -284,12 +273,12 @@
       <option name="presentableId" value="Default" />
       <updated>1505662389963</updated>
       <workItem from="1505662408868" duration="19685000" />
-      <workItem from="1505813969233" duration="4158000" />
+      <workItem from="1505813969233" duration="4539000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23843000" />
+    <option name="totallyTimeSpent" value="24224000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="0" />
@@ -358,10 +347,10 @@
           <folding>
             <element signature="n#style#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1506271885000" expanded="false" signature="866:884" ph="..." />
-            <marker date="1506271885000" expanded="false" signature="1076:1094" ph="..." />
-            <marker date="1506271885000" expanded="false" signature="1178:1244" ph="..." />
-            <marker date="1506271885000" expanded="false" signature="1529:1547" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="885:903" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="1095:1113" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="1197:1263" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="1540:1558" ph="..." />
           </folding>
         </state>
       </provider>
@@ -504,15 +493,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/views/index.ejs">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="93" lean-forward="true" selection-start-line="14" selection-start-column="93" selection-end-line="14" selection-end-column="93" />
+        <state relative-caret-position="110">
+          <caret line="30" column="75" lean-forward="false" selection-start-line="30" selection-start-column="75" selection-end-line="30" selection-end-column="75" />
           <folding>
             <element signature="n#style#0;n#div#1;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#button#0;n#div#2;n#form#0;n#div#0;n#body#0;n#html#0;n#!!top" expanded="true" />
-            <marker date="1506271885000" expanded="false" signature="866:884" ph="..." />
-            <marker date="1506271885000" expanded="false" signature="1076:1094" ph="..." />
-            <marker date="1506271885000" expanded="false" signature="1178:1244" ph="..." />
-            <marker date="1506271885000" expanded="false" signature="1529:1547" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="885:903" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="1095:1113" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="1197:1263" ph="..." />
+            <marker date="1506273372000" expanded="false" signature="1540:1558" ph="..." />
           </folding>
         </state>
       </provider>
