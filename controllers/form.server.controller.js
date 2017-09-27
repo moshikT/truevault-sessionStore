@@ -35,14 +35,14 @@ exports.exportToCsv = function (req, res) {
 
 
 
-    userData['FormTotalTime'] = formResults['FormTotalTime'];
+    // FOR DEMO userData['FormTotalTime'] = formResults['FormTotalTime'];
     delete formResults['FormTotalTime'];
 
     //console.log(formResults);
-    userData['formResults'] = formResults;
+    // FOR DEMO userData['formResults'] = formResults;
 
     //console.log(userDataArr);
-    console.log(userData);
+    // FOR DEMO console.log(userData);
 
     var fields = Object.keys(req.body);
     fields.pop(); // remove checkbox from array
