@@ -1,0 +1,41 @@
+BEGIN:VCALENDAR
+PRODID:-//Google Inc//Google Calendar 70.9054//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:REQUEST
+BEGIN:VEVENT
+DTSTART:20170927T053000Z
+DTEND:20170927T060000Z
+DTSTAMP:20170926T130246Z
+ORGANIZER;CN=Shiran Danoch:mailto:shirandanoch@gmail.com
+UID:6r1meciqu0g2fcsu25vddgrdak@google.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;X-NUM-GUESTS=0:mailto:a.u.yaari@gmail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=anat@empiricalhire.com;X-NUM-GUESTS=0:mailto:anat@empiricalhire.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=Moshik Tsadok;X-NUM-GUESTS=0:mailto:moshik.tsadok@gmail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=gal@empiricalhire.com;X-NUM-GUESTS=0:mailto:gal@empiricalhire.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=Boaz Mishaan;X-NUM-GUESTS=0:mailto:boazmic@gmail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=ACCEPTED;RSVP=TRUE
+ ;CN=Shiran Danoch;X-NUM-GUESTS=0:mailto:shirandanoch@gmail.com
+ATTENDEE;CUTYPE=INDIVIDUAL;ROLE=REQ-PARTICIPANT;PARTSTAT=NEEDS-ACTION;RSVP=
+ TRUE;CN=Amit Zohar;X-NUM-GUESTS=0:mailto:amit.zohar@gmail.com
+CREATED:20170926T130245Z
+DESCRIPTION:-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~::~:~::-\nPlease do not edit this section of the descriptio
+ n.\n\nView your event at https://www.google.com/calendar/event?action=VIEW&
+ eid=NnIxbWVjaXF1MGcyZmNzdTI1dmRkZ3JkYWsgbW9zaGlrLnRzYWRva0Bt&tok=MjIjc2hpcm
+ FuZGFub2NoQGdtYWlsLmNvbWMyMWRhZmRiZDRhNDE1NWIyYjJlZmU2NTU2YjM3MGQ3NWQ4ZWU1M
+ jE&ctz=Asia/Jerusalem&hl=en.\n-::~:~::~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~
+ :~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~:~::~:~::-
+LAST-MODIFIED:20170926T130245Z
+LOCATION:
+SEQUENCE:0
+STATUS:CONFIRMED
+SUMMARY:findings from ayalon predictor analysis
+TRANSP:OPAQUE
+END:VEVENT
+END:VCALENDAR

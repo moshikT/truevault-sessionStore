@@ -18,7 +18,7 @@ and (max-device-width: 1600px) {
   }
 
   .inputField {
-    font-size: large;
+    font-size: medium;
 
   }
 
@@ -91,7 +91,7 @@ min-width: 100%;
 float: right;
 }
   .q {
-    font-size: large;
+    font-size: small;
     font-weight: 600;
     color: black;
     margin-top: 50px;

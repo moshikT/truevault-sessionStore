@@ -19,8 +19,8 @@ router.get('/form', function(req, res) {
     return form_Ctrl.getForm(req, res);
 });
 
-router.post('/info', function (req, res) {
-    return form_Ctrl.getForm(req, res);
+router.post('/', function (req, res) {
+    return form_Ctrl.getInfo(req, res);
 });
 
 router.post('/form', function(req, res) {

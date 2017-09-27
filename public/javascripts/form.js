@@ -76,6 +76,7 @@ $("#form").validate({
         if (!validator.numberOfInvalids())
             return;
 
+        //console.log(validator.errorList);
         var currentElementID = validator.errorList[0].element.id;
         var parent = $('[id="' + currentElementID + '"]').parent();
 

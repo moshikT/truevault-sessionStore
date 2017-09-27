@@ -8,27 +8,55 @@ var isInEnglish = false;
 var textDirection = isInEnglish ? "lfr" : "rtl";
 
 var newLine= "\r\n";
+var userData;
+
+
+exports.getInfo = function (req, res) {
+    userData = req.body;
+    delete userData['submit_btn'];
+    //userData.pop();
+    console.log(userData);
+    // TODO: test if user exists in db - if not else prompt error code
+    // TODO: send SMS with varification code
+    //formGenerator_Ctrl.generateForm(req,res);
+    res.render('index', { title: '',
+        isInEnglish: textDirection });
+}
 
 exports.getForm = function (req, res) {
     formGenerator_Ctrl.generateForm(req, res);
 }
 
 exports.exportToCsv = function (req, res) {
-//var employee_ID = [{'employee_ID': "0547456081"}];
     var formResults = req.body;
-    var fields = Object.keys(req.body);
-    req.body.employee_ID = "0547546083";
+    delete formResults['submit_btn'];
+    delete formResults['agree'];
+    formResults['candidate_ID'] = userData['user_id'];
 
-    console.log(req.body);
+
+
+    userData['FormTotalTime'] = formResults['FormTotalTime'];
+    delete formResults['FormTotalTime'];
+
+    //console.log(formResults);
+    userData['formResults'] = formResults;
+
+    //console.log(userDataArr);
+    console.log(userData);
+
+    var fields = Object.keys(req.body);
     fields.pop(); // remove checkbox from array
-    fields.pop(); // remove chweckbox from array
-    fields.push("employee_ID");
+    fields.pop(); // remove agree from array
+    fields.push("candidate_ID");
+
+    //console.log(fields);
+
     //console.log("User " + "PUT PHONE NUMBER HERE" + " " + formResults);
-    fs.stat('Nike.csv', function (err, stat) {
+    fs.stat('Ayalon.csv', function (err, stat) {
         if (err == null) {
 
             var toCsv = json2csv({ data: formResults, fields: fields, hasCSVColumnTitle: false}) + newLine;
-            fs.appendFile("Nike.csv", toCsv, function (err) {
+            fs.appendFile("Ayalon.csv", toCsv, function (err) {
                 if (err) throw err;
                 console.log("Inserted new row to Nike csv file");
             });
@@ -48,7 +76,7 @@ exports.exportToCsv = function (req, res) {
 };
 
 exports.getIndex = function (req, res) {
-    res.render('index', { title: 'החברה המרכזית',
+    res.render('index', { title: '',
         isInEnglish: textDirection });
 }
 

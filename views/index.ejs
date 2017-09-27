@@ -8,43 +8,166 @@
   </div>
 </header>
 <body class="content" dir=<%=isInEnglish%>>
-<div   class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
-  <form id="info" method="get" action="/form">
+<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
+  <form id="formInfo" method="post" action="/">
+    <div id="intro1" style="padding: 10px;height:370px;">
+        <div class="container introText" style="padding: 10px;margin-top: 0px; ">
+
+          לפניך שאלון לדוגמא/דמו למבחן מיון למועמדים לתפקיד נציגי שירות ו/או מכירה בחברה ויזה.
+          יש להשיב על השאלון בכנות וברצינות ולמלא בסביבה נטולת הפרעות וברצף.
+          בתודה ובהערכה, צוות ההנהלה.
+
+        </div>
+      <div style="padding: 30px;">
+        <a onclick="scrollToNextElement('intro2')" class="btn btn-primary">הבא</a>
+      </div>
+    </div>
+
+      <div id="intro2" style="height:370px;">
     <div class="container introText" style="padding: 10px;margin-top: 0px; ">
 
-      לפניך שאלון לדוגמא/דמו למבחן מיון למועמדים לתפקיד נציגי שירות ו/או מכירה בחברה המרכזית.
-      יש להשיב על השאלון בכנות וברצינות ולמלא בסביבה נטולת הפרעות וברצף.
-      בתודה ובהערכה, צוות ההנהלה.
-
+        החזון שלנו ב- Visa, הוא לאפשר לך לשלם ולקבל תשלומים בצורה נוחה ובטוחה בכל זמן, בכל מקום ומכל
+        מכשיר.
     </div>
-    <div class="container inputField" style="padding-top: 30px;font-weight: 600;color: black;position: static; /*font-size: medium;*/">
-  <div class="">להתחלת השאלון נא מלא/י את הפרטים הבאים:</div>
-    <!--
-      <div class="" style="padding-top: 20px;">
-      <input id="user_fullName" type="text" placeholder="שם מלא" required style="border-style: none none solid none;text-align: center;opacity: 0.7;">
-    </div>
-      <div class="" style="padding-top: 20px;">
-        <input id="user_tel" type="tel" placeholder="מספר טלפון" required style="border-style: none none solid none;text-align: center;opacity: 0.7">
-      </div>
-      -->
-      <div class="" style="padding-top: 20px;">
-        <input id="user_id" type="text" maxlength="9" placeholder="ת.ז."  style="border-style: none none solid none;text-align: center;opacity: 0.7">
-      </div>
-      <!--
-      <div class="" style="padding-top: 20px;">
-        <input  id="user_email" type="email" placeholder="דואר אלקטרוני" required style="border-style: none none solid none;text-align: center;opacity: 0.7">
-      </div>
-      -->
-    </div>
-    <div class="" style="padding-top: 50px; padding-bottom: 50px;">
-      <button href="/form" id="submit" name="submit_btn" style="width: 100px;" class="btn btn-primary">הבא</button>
+        <div style="padding: 30px;">
+          <a onclick="scrollToNextElement('intro3')" class="btn btn-primary">הבא</a>
+        </div>
     </div>
 
+
+    <div id="intro3" style="height:370px;">
+    <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
+          <div class="">להתחלת השאלון נא מלא/י את הפרטים הבאים:</div>
+              <div id="inputname" class="" style="padding-top: 20px;">
+                <input name="user_fullName" type="text" placeholder="שם מלא" style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+              </div>
+              <div id="inputphone" class="" style="padding-top: 20px;">
+                <input name="user_tel" type="number" placeholder="מספר טלפון" style="border-style: none none solid none;text-align: center;opacity: 0.7">
+              </div>
+              <div id="inputid" class="" style="padding-top: 20px;">
+                <input name="user_id" type="number" placeholder="ת.ז." style="border-style: none none solid none;text-align: center;opacity: 0.7">
+              </div>
+              <div id="inputemail" class="" style="padding-top: 20px;">
+                <input  name="user_email" type="email" placeholder="דואר אלקטרוני" style="border-style: none none solid none;text-align: center;opacity: 0.7">
+              </div>
+          </div>
+              <div class="" style="padding-top: 25px; padding-bottom: 50px;">
+                <a href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary"> להתחלת השאלון </a>
+              </div>
+    </div>
   </form>
 </div>
 
 <% include partials/footer %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
 <script src="javascripts/messages_he.js"></script>
+<script>
+
+
+
+    var container = $('#formContainer');//,
+
+
+    function scrollToNextElement(nextElement) {
+        var scrollTo = $('#' + nextElement);
+        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
+        container.scrollTop()});
+    }
+        //scrollTo = $('#question' + numOfQuestionsAnswered);
+
+
+
+    var keys = document.getElementsByTagName("input");
+    var rules = {};
+
+    for (var index = 0; index < keys.length; index++) {
+        var key = keys[index].name;
+        //if(key != 'FormTotalTime'){
+            rules[key] = "required";
+
+        //}
+    }
+    //console.log(rules);
+
+    $("#formInfo").validate({
+        ignore: "",
+        success: function(label,element) {
+            //element.find("input").css( "border", "solid green 1px" );
+            element.style.border= "solid green 1px" ;
+            //console.log(element);
+            //console.log(label);
+        },
+        //debug: true,
+        // FOR DEMO rules: rules,
+        messages: {
+            /*"agreeableness_1": {
+                //required: "Please, enter a date"
+            },*/
+        },
+        errorElement: "div",
+        wrapper: "div",  // a wrapper around the error message
+        errorPlacement: function(error, element) {
+            element.before(error);
+
+            //element.parent("div").find("a").css( "border", "solid red 1px" );
+            element.css( "border", "solid red 1px" );
+            offset = element.offset();
+            error.css('left', offset.left);
+            error.css('bottom', offset.top - element.outerHeight());
+        },
+        focusInvalid: false,
+        invalidHandler: function(form, validator) {
+            //var container = $('#fromContainer');
+
+            if (!validator.numberOfInvalids())
+                return;
+
+            //console.log(validator.errorList);
+            //var currentElementID = validator.errorList[0].element.id;
+            //var parent = $('[id="' + currentElementID + '"]').parent();
+
+
+            //if(currentElementID == 'agree') {
+            //    parent = parent.parent();
+           // }
+
+            //var scrollTo = $('#' + parent.attr('id'));
+
+            //container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
+            //container.scrollTop()}, 500);*/
+        },
+        submitHandler: function (form) {
+            /*var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
+            //
+            //$('#FormTotalTime').prop('value', totalTime);*/
+
+
+
+            $.ajax({
+                url:'/',
+                type:'post',
+                data:$('#formInfo').serialize(),
+                success:function(){
+                    //whatever you wanna do after the form is successfully submitted
+                    //console.log(form);
+                    console.log(form.user_id.value);
+                    mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'demo_user'/* candidate/employee */});
+
+                    // TODO: scrollTo block user authentication display
+                }
+            });
+            //console.log(form);
+
+            // FOR DEMO return false;
+            //form.submit();
+
+            //mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
+        }
+    });
+
+    // TODO: create form for authentication and redirect to form
+
+</script>
   </body>
 </html>
