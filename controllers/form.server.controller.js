@@ -31,7 +31,7 @@ exports.exportToCsv = function (req, res) {
     var formResults = req.body;
     delete formResults['submit_btn'];
     delete formResults['agree'];
-    formResults['candidate_ID'] = userData['user_id'];
+    formResults['candidate_ID'] = 'demo';// FOR DEMO  userData['user_id'];
 
 
 
