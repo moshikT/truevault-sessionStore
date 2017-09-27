@@ -25,7 +25,7 @@ exports.generateForm = function (req, res) {
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            if (questionsJSON['AYALON'] == 'yes' && lines < 25) {
+            if (questionsJSON['AYALON'] == 'yes' /*&& lines < 25*/) {
                 parseQuestions(questionsJSON);
                 if (questionsJSON['TYPE'] == 'P') {
                     p_typeJSON.push(questionsJSON);
@@ -94,7 +94,23 @@ function parseQuestions(qJSON) {
             scalaEdges[0] = scalaEdges[0].replace(/\s+/g, '<br>');
             scalaEdges[1] = scalaEdges[1].replace(/\s+/g, '<br>');
         }
-        qJSON['ANS_OPT_HEBREW'] = scalaEdges;
+
+
+            if (isInEnglish) {
+                if (qJSON['TYPE'] == 'P') {
+                    qJSON['ANS_OPT_ENGLISH'] = ["Disagree","Agree"];//Disagree=1, Netural=3, Agree=5
+                }
+                else {
+                    qJSON['ANS_OPT_ENGLISH'] = ["Not <br>important <br>at all","Very <br> important"]; //1=Not inportant at all, 5= Very important
+                }
+            }
+            else {
+                qJSON['ANS_OPT_HEBREW'] = scalaEdges;
+            }
+
+        //console.log("SCALA EDGES: " + qJSON['ANS_OPT_ENGLISH'])
+
+        qJSON['scala-edges'] = isInEnglish ? qJSON['ANS_OPT_ENGLISH'] : qJSON['ANS_OPT_HEBREW'];
         //console.log(qJSON['ANS_OPT_HEBREW']);
         //qJSON['ANS_OPT_HEBREW'][0] = scalaEdges[0];
         //qJSON['ANS_OPT_HEBREW'][1] = scalaEdges[1];/* UNTIL EXCEL UPDATE */

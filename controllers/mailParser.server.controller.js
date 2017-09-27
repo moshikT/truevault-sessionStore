@@ -1,6 +1,7 @@
 var express = require('express');
 var MailListener = require("mail-listener2");
 var fs = require('fs');
+var pdfText = require('pdf-text')
 
 exports.onMailArrived = function () {
     var mailListener = new MailListener({
@@ -18,7 +19,7 @@ exports.onMailArrived = function () {
         markSeen: false, // all fetched email willbe marked as seen and not fetched next time
         fetchUnreadOnStart: false, // use it only if you want to get all unread email on lib start. Default is `false`,
         mailParserOptions: {streamAttachments: false}, // options to be passed to mailParser lib.
-        attachments: true, // download attachments as they are encountered to the project directory
+        attachments: false, // download attachments as they are encountered to the project directory
         attachmentOptions: { directory: "attachments/" } // specify a download directory for attachments
     });
 
@@ -43,17 +44,44 @@ exports.onMailArrived = function () {
 
         //data.content.pipe(process.stdout);
         //data.on('end', ()=>data.release());
+        var attachmentsArray = mail['attachments'];
+        if (typeof attachmentsArray !== 'undefined')  {
+            for (var index = 0; index < attachmentsArray.length; index++) {
+                if(attachmentsArray[index].fileName.toString().indexOf('ics') == '-1' &&
+                    attachmentsArray[index].fileName.toString().indexOf('pdf') != '-1') {
+                    //fs.readFile('attachments/' + attachmentsArray[index].fileName, 'utf8', function(err, data) {
+                    //    if (err) throw err;
+                    //    console.log(data);
+                    //});var res
+                    var res = "";
+                    var fs = require('fs');
+                    //var buffer = fs.readFileSync('attachments/' + attachmentsArray[index].fileName);
+                    var buffer = attachmentsArray[index].content;
+                    //console.log(buffer);
+                    pdfText(buffer, function(err, chunks) {
+                            res += chunks;
+                            res = res.replace(/[ ]*,[ ]*|[ ]+/g, '');
+                        console.log(res);
+                 //       console.log(buffer);
+                    });
+                    //console.log(res);
+                }
+            }
 
-
-
+        }
+        /*
+        console.log(seqno);
+        console.log(attributes);
+        //console.log(mail);
         //console.log(mail['attachments']);
         var attachmentsArray = mail['attachments'];
+        console.log(attachmentsArray);
         if (typeof attachmentsArray !== 'undefined')  {
             for (var index = 0; index < attachmentsArray.length; index++) {
                 //if (attachmentsArray[index]['fileName'].indexof('test') != -1) {
                 //    console.log(attachmentsArray[index]['content'].toString('utf-8'));
                 //}
-                //console.log(attachmentsArray[index]['fileName']);
+                console.log(attachmentsArray[index]);
                 //var output = fs.createWriteStream(attachmentsArray[index]['fileName']);
                 //attachmentsArray[index].stream.pipe(output);
                 var buffer =  new Buffer(attachmentsArray[index].length);
@@ -74,15 +102,18 @@ exports.onMailArrived = function () {
        // console.log(mail['subject']);// [subject:] || attachments
 
 
-        //mail.SaveAllAttachments("attachments/"); //INSIDE HTML ATTR: "<br>Subject: test parser<br>"
+        //mail.attachments .SaveAllAttachments("attachments/"); //INSIDE HTML ATTR: "<br>Subject: test parser<br>"
         //console.log("saved!!");
-        // mail processing code goes here
+        // mail processing code goes here*/
+
+
+
     });
 
     mailListener.on("attachment", function(attachment){
-        console.log(attachment.generatedFileName);
-        console.log(attachment.path);
-        console.log(attachment);
+        //console.log(attachment.generatedFileName);
+        //console.log(attachment.path);
+        //console.log(attachment);
        // console.log(attachment.content);
         //console.log("new attachment");
         //console.log(attachment);
