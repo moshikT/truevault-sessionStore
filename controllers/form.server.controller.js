@@ -5,7 +5,9 @@ var fs = require('fs');
 var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 
-var isInEnglish = true;
+var isInEnglish = false;
+var isDemo = false;
+var companyForm = isDemo ? 'DEMO' : 'AYALON';
 var indexPageText = {
     textDirection : isInEnglish ? "ltr" : "rtl",
     personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
@@ -31,14 +33,6 @@ exports.getInfo = function (req, res) {
     //formGenerator_Ctrl.generateForm(req,res);
     res.render('index', { title: '',
                         isInEnglish: isInEnglish,
-                        /*textDirection: textDirection,
-                        personalInfoText: personalInfoText,
-                        emailField: emailField,
-                        phoneField: phoneField,
-                        idField: idField,
-                        nameField: nameField,
-                        submitBtn: submitBtn,
-                        next: next*/
                         indexPageText : indexPageText
                         });
 }
@@ -72,18 +66,18 @@ exports.exportToCsv = function (req, res) {
     //console.log(fields);
 
     //console.log("User " + "PUT PHONE NUMBER HERE" + " " + formResults);
-    fs.stat('Ayalon.csv', function (err, stat) {
+    fs.stat(companyForm + '.csv', function (err, stat) {
         if (err == null) {
 
             var toCsv = json2csv({ data: formResults, fields: fields, hasCSVColumnTitle: false}) + newLine;
-            fs.appendFile("Ayalon.csv", toCsv, function (err) {
+            fs.appendFile(companyForm + ".csv", toCsv, function (err) {
                 if (err) throw err;
                 console.log("Inserted new row to Nike csv file");
             });
         }
         else {
             var toCsv = json2csv({ data: formResults, fields: fields}) + newLine;
-            fs.writeFile('Nike.csv', toCsv, function(err) {
+            fs.writeFile(companyForm + '.csv', toCsv, function(err) {
                 if (err) throw err;
                 var dt = dateTime.create();
                 var formatted = dt.format('Y-m-d H:M:S');

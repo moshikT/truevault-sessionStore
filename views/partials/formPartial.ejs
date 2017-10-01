@@ -1,66 +1,67 @@
 <form id="form" method="post" action="/form">
     <input type="hidden" name="FormTotalTime" id="FormTotalTime">
-
-    <% for (var i=0;i<formjson.length; i++) { %>
-    <div id=<%= "question" +  i%> class="container q">
+<!--onclick="scrollToNextElement('<%=/* (typeof formjson[i].next !== 'undefined') ?  'div' + formjson[i].next['id'] : 'div' + formjson.length + ""*/ %>')">
+   --> <% for (var i=0;i<formjson.length; i++) { console.log(formjson[i])%>
+    <div onclick="scrollToNextElement('<%= (typeof formjson[i].next !== 'undefined') ?  'div' + formjson[i].next['id'] : 'div' + formjson.length + "" %>')"
+         id=<%- 'div' + formjson[i].id /*(typeof formjson[i].next !== 'undefined') ? formjson[i].next['id'] : formjson.length + "" */%> class="container q">
         <p><%- formjson[i]['item'] %></p>
 
             <%
-            if (formjson[i]['TYPE'] == 'F' || formjson[i]['TYPE'] == 'P') {
+            if (formjson[i].type == 'F' || formjson[i].type == 'P') {
 %><div id="radioBtn" class="btn-group a">
-  <%              for (var j=0;j<formjson[i]['answer-options'].length; j++) {
+  <%              for (var j=0;j<formjson[i]['answerOptions'].length; j++) {
 
             %>
 
-    <a class="btn btn-primary btn-lg notActive" data-value=<%=formjson[i]['answer-options'][j]%> data-toggle=<%= formjson[i].Q_ID %>
-            data-title=<%=formjson[i]['data-title'][j]%>
-             style=<% if (j == formjson[i]['answer-options'].length - 1) { %>
+    <a class="btn btn-primary btn-lg notActive" data-value=<%=formjson[i]['answerOptions'][j]%> data-toggle=<%= formjson[i].id %>
+            data-title=<%=formjson[i]['dataTitle'][j]%>
+             style=<% if (j == formjson[i]['answerOptions'].length - 1) { %>
                 "border-bottom-right-radius: 6px;border-top-right-radius: 6px;"
             <% } %>
-            ><%- formjson[i]['answer-options'][j] %></a>
+            ><%- formjson[i]['answerOptions'][j] %></a>
             <%  } %>
 
         <%    }%>
             <%
 
-            if (formjson[i]['TYPE'] == 'B')  { %>
+            if (formjson[i].type == 'B')  { %>
     <div id="radioBtn" class="a bTypeGroup">
             <% for (var j=0;j <formjson[i]['answer'].length; j++) { %>
                             <a class="btn btn-primary btn-lg notActive bType"
                                style="<% if (isInEnglish) { %>text-align: left;<% } %>"
-                               data-value=<%-formjson[i]['answer'][j].replace(/\s+/g, '')%> data-toggle=<%= formjson[i].Q_ID %>
-                            data-title=<%=formjson[i]['data-title'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
+                               data-value="<%-formjson[i]['answer'][j].replace(/\s+/g && /"/g, '')%>" data-toggle=<%= formjson[i].id %>
+                            data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
              <%  } %>
 
         <%  }
              %>
             <%
-            if (formjson[i]['TYPE'] == 'C')  { %>
+            if (formjson[i].type == 'C')  { %>
     <div id="radioBtn" class="a bTypeGroup">
-            <% for (var j=0;j <formjson[i]['answer-options'].length; j++) { %>
+            <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { %>
             <a class="btn btn-primary btn-lg notActive bType"
                style="<% if (isInEnglish) { %>text-align: left;<% } %>"
-               data-value=<%-formjson[i]['answer-options'][j].replace(/\s+/g, '')%> data-toggle=<%= formjson[i].Q_ID %>
-               data-title=<%=formjson[i]['data-title'][j]%> ><%- formjson[i]['answer-options'][j] %></a><br>
+               data-value=<%-formjson[i]['answerOptions'][j].replace(/\s+/g, '')%> data-toggle=<%= formjson[i].id %>
+               data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answerOptions'][j] %></a><br>
             <%  } %>
 
         <% }
             %>
 
-            <% if (formjson[i]['TYPE'] == 'P' || formjson[i]['TYPE'] == 'F') {/* if yes no/ true false question remove ans description*/ %>
+            <% if (formjson[i].type == 'P' || formjson[i].type == 'F') {/* if yes no/ true false question remove ans description*/ %>
             <br>
             <div class="a" style="font-size: x-small;font-weight: 100;">
                 <% /*    for (var k=0;k<formjson[i]['answer-options'].length; k++) { */%>
-                <p class="am" style="float: right;padding:5px;/*width:20px;*/"><%- formjson[i]['scala-edges'][1] %></p>
-                <p class="am" style="float: left;padding:5px;/*width:20px;*/"><%- formjson[i]['scala-edges'][0] %></p>
+                <p class="am" style="float: right;padding:5px;/*width:20px;*/"><%- formjson[i]['scalaEdges'][1] %></p>
+                <p class="am" style="float: left;padding:5px;/*width:20px;*/"><%- formjson[i]['scalaEdges'][0] %></p>
                 <%/* } */%>
             </div>
             <% } %>
         </div>
-        <input type="hidden" name=<%= formjson[i].Q_ID %> id=<%= formjson[i].Q_ID %>>
+        <input type="hidden" name=<%= formjson[i].id %> id=<%= formjson[i].id %>>
     </div>
     <% } %>
-    <div id=<%= "question" +  formjson.length + "" %> class="container" style="text-align: center;padding-top: 50px;color: black;">
+    <div id=<%= formjson.length + "" %> class="container" style="text-align: center;padding-top: 50px;color: black;">
 
         <p><input id="agree"title="<%= terms.title %>" name="agree" type="checkbox" value="" style="vertical-align: bottom;" >
             <%= terms.prefix %>  <a href="#" style="color: #3276b1;"><%= terms.postfix %> </a></p>

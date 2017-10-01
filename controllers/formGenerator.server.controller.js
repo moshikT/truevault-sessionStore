@@ -1,24 +1,39 @@
 var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
-var isInEnglish = true;
+var isInEnglish = false;
 var isDemo = true;
 var companyForm = isDemo ? 'DEMO' : 'AYALON';
 var textDirection = isInEnglish ? "lfr" : "rtl";
 var submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
 var terms = {
     title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
-    //text : isInEnglish ? "" : "אני מאשר את <\a>\"; ;
     prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
     postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
 }
 
+var question = {
+    type : null,
+    item : null,
+    answer : null,
+    dataTitle : null,
+    answerOptions : null,
+    scalaEdges : null,
+    next : null
+}
+
+
+
 exports.generateForm = function (req, res) {
-    var formJSON = [];
-    var p_typeJSON = [];
-    var f_typeJSON = [];
-    var c_typeJSON = [];
-    var b_typeJSON = [];
+    var questionsArraysByType = {
+        p_typeJSON : [],
+        f_typeJSON : [],
+        c_typeJSON : [],
+        b_typeJSON : []
+    }
+
+    var form = [];
+
     var lines = 0;
 
     csv()
@@ -35,31 +50,40 @@ exports.generateForm = function (req, res) {
             var questionsJSON = JSON.parse(jsonStr);
 
             if (questionsJSON[companyForm] == 'yes') {
-                parseQuestions(questionsJSON);
-                if (questionsJSON['TYPE'] == 'P') {
-                    p_typeJSON.push(questionsJSON);
-                } else if (questionsJSON['TYPE'] == 'F') {
-                    f_typeJSON.push(questionsJSON);
-                } else if (questionsJSON['TYPE'] == 'C') {
-                    c_typeJSON.push(questionsJSON);
-                } else if (questionsJSON['TYPE'] == 'B') {
-                    b_typeJSON.push(questionsJSON);
+                question = parseQuestions(questionsJSON);
+                console.log(question);
+                if (question.type == 'P') {
+                    questionsArraysByType.p_typeJSON.push(question);
+                    console.log("P array: ", questionsArraysByType.p_typeJSON);
+                } else if (question.type == 'F') {
+                    questionsArraysByType.f_typeJSON.push(question);
+                } else if (question.type == 'C') {
+                    questionsArraysByType.c_typeJSON.push(question);
+                    console.log("C array: ", questionsArraysByType.c_typeJSON);
+                } else if (question.type == 'B') {
+                    questionsArraysByType.b_typeJSON.push(question);
                 }
             }
 
             lines++;
         })
         .on('done',(error)=>{
-            shuffle(p_typeJSON);
-            shuffle(f_typeJSON);
-            shuffle(b_typeJSON);
+            //console.log("before shuffle :" ,questionsArraysByType.p_typeJSON);
 
-            formJSON = reOrderFormJSON(p_typeJSON, f_typeJSON, c_typeJSON, b_typeJSON);
+            shuffle(questionsArraysByType.p_typeJSON);
+            shuffle(questionsArraysByType.f_typeJSON);
+            shuffle(questionsArraysByType.b_typeJSON);
 
-            //console.log(formJSON);
+//            console.log("after shuffle :" ,questionsArraysByType.p_typeJSON);
+
+            //formJSON = reOrderFormJSON(p_typeJSON, f_typeJSON, c_typeJSON, b_typeJSON);
+            form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
+                questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON);
+            //console.log(form);
+
 
             res.render('form', { title: '' ,
-                formjson: formJSON,
+                formjson: form,
                 isInEnglish: isInEnglish,
                 textDirection: textDirection,
                 terms : terms,
@@ -69,10 +93,13 @@ exports.generateForm = function (req, res) {
 }
 
 function parseQuestions(qJSON) {
-    isInEnglish ? qJSON['item'] = qJSON['ITEM ENGLISH'] : qJSON['item'] = qJSON['ITEM HEBREW'];
+    var parsedQuestion = {};
+    parsedQuestion.id = qJSON['Q_ID'];
+    parsedQuestion.item = isInEnglish ? qJSON['ITEM ENGLISH'] : qJSON['ITEM HEBREW'];
     var answerOptions = isInEnglish ? qJSON['ANS_OPT_ENGLISH'].split(",") : qJSON['ANS_OPT_HEBREW'].split(",");
 
     if (qJSON['TYPE'] == 'B') {
+        parsedQuestion.type = 'B';
         var parsedAnswers = [];
         var parsedAnswersWeight = [];
         var answersOptionsArray = isInEnglish ? qJSON['ANSWER ENGLISH'].split(";") : qJSON['ANSWER HEBREW'].split(";");
@@ -87,20 +114,19 @@ function parseQuestions(qJSON) {
                 console.log("Wrong structure for question type B: " + qJSON);
             }
         }
-        //isInEnglish ? qJSON['ANSWER ENGLISH'] = parsedAnswers : qJSON['ANSWER HEBREW'] = parsedAnswers;
-        qJSON['answer'] = parsedAnswers;
-        qJSON['data-title'] = parsedAnswersWeight;
+        parsedQuestion.answer = parsedAnswers;
+        parsedQuestion.dataTitle = parsedAnswersWeight;
     }
     else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'F') {
+        parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : 'F';
         var scalaOptionsNumber = 5;
         var scalaArray = [];
         for (var index = 1; index <= scalaOptionsNumber; index++) {
             scalaArray.push(index);
         }
 
-        qJSON['data-title'] = scalaArray;
-        //isInEnglish ? qJSON['ANS_OPT_ENGLISH'] = scalaArray: qJSON['ANSWER HEBREW'] = scalaArray;
-        qJSON['answer-options'] = scalaArray;
+        parsedQuestion.answerOptions = scalaArray;
+        parsedQuestion.dataTitle = scalaArray;
         var scalaEdges = answerOptions.toString().split("-");//.reverse().join("");
 
         if (scalaEdges.length == 2) {
@@ -109,32 +135,17 @@ function parseQuestions(qJSON) {
         }
 
 
-            if (isInEnglish) {
-                if (qJSON['TYPE'] == 'P') {
-                    qJSON['ANS_OPT_ENGLISH'] = ["Disagree","Agree"];//Disagree=1, Netural=3, Agree=5
-                }
-                else {
-                    qJSON['ANS_OPT_ENGLISH'] = ["Not <br>important <br>at all","Very <br> important"]; //1=Not inportant at all, 5= Very important
-                }
-            }
-            else {
-                qJSON['ANS_OPT_HEBREW'] = scalaEdges;
-            }
+        parsedQuestion.scalaEdges = isInEnglish ?
+            ((qJSON['TYPE'] == 'P') ? ["Disagree","Agree"] : ["Not <br>important <br>at all","Very <br> important"]) :
+            ((qJSON['TYPE'] == 'P') ? scalaEdges : ['הכי חשוב <br> לי', 'הכי פחות <br> חשוב לי']);
 
-        //console.log("SCALA EDGES: " + qJSON['ANS_OPT_ENGLISH'])
 
-        qJSON['scala-edges'] = isInEnglish ? qJSON['ANS_OPT_ENGLISH'] : qJSON['ANS_OPT_HEBREW'];
-        //console.log(qJSON['ANS_OPT_HEBREW']);
-        //qJSON['ANS_OPT_HEBREW'][0] = scalaEdges[0];
-        //qJSON['ANS_OPT_HEBREW'][1] = scalaEdges[1];/* UNTIL EXCEL UPDATE */
-        //isInEnglish ? qJSON['ANS_OPT_ENGLISH'] = scalaEdges : qJSON['ANS_OPT_HEBREW'] = scalaEdges;
-        //console.log("TEST VALUE: " + qJSON['ANS_OPT_ENGLISH']);
     } else if (qJSON['TYPE'] == 'C') {
-        (answerOptions.length == 2) ? qJSON['data-title'] = [5, 1] : qJSON['data-title'] = answerOptions;
-        //isInEnglish ? qJSON['ANS_OPT_ENGLISH'] = answerOptions : qJSON['ANS_OPT_HEBREW'] = answerOptions;
-        qJSON['answer-options'] = answerOptions;
-        //console.log("answer - options: " + qJSON['answer-options']);
+        parsedQuestion.type = 'C';
+        parsedQuestion.dataTitle = (answerOptions.length == 2) ? [5, 1] : answerOptions;
+        parsedQuestion.answerOptions = answerOptions;
     }
+    return parsedQuestion;
 }
 
 function shuffle(typeArray) {
@@ -155,21 +166,76 @@ function swap(array, element1Index, element2Index) {
     array[element2Index] = temp;
 }
 
-function reOrderFormJSON(typeP, typeF, typeC, typeB) {
+function reOrderFormJSON(pType, fType, cType, bType) {
     var orderedForm = [];
     var numOfPTypeQuestion = 20;
     var numOfFTypeQuestion = 5;
 
-    while(typeP.length > 0 || typeF.length > 0 || typeC.length > 0) {
-        pushQuestionsToForm(numOfPTypeQuestion, typeP, orderedForm);
-        if(typeC.length > 0) {
-            orderedForm.push(typeC.pop());
+    console.log(pType);
+
+    while(pType.length > 0 || fType.length > 0 ||
+    cType.length > 0) {
+
+        var elementsToPush = numOfPTypeQuestion;
+
+        while (elementsToPush > 0 && pType.length > 0){
+            /*var nextQuestion = arrayFrom.pop();
+            if (arrayTo.length > 0) {
+                setNext(arrayTo[arrayTo.length - 1], nextQuestion)
+            }
+            arrayTo.push(nextQuestion);*/
+            var elementToPush = pType.pop();
+            //console.log("P type: ", elementToPush);
+            pushQuestion(elementToPush, orderedForm);
+            elementsToPush--;
+            //console.log(pType.length);
         }
-        pushQuestionsToForm(numOfFTypeQuestion, typeF, orderedForm);
+
+
+
+        //pushQuestionsToForm(numOfPTypeQuestion, questionsArraysByType.p_typeJSON, form);
+        if(cType.length > 0) {
+
+            //var next = typeC.pop();
+            //console.log(typeC.length);
+            var elementToPush = cType.pop()
+            pushQuestion(elementToPush, orderedForm);
+            /*
+            var nextQuestion = typeC.pop();
+            if(orderedForm.length > 0) {
+                setNext(orderedForm[orderedForm.length - 1], nextQuestion);
+            }
+            orderedForm.push(nextQuestion);
+            */
+        }
+
+        var elementsToPush = numOfFTypeQuestion;
+
+        while (elementsToPush > 0 && fType.length > 0){
+            /*var nextQuestion = arrayFrom.pop();
+            if (arrayTo.length > 0) {
+                setNext(arrayTo[arrayTo.length - 1], nextQuestion)
+            }
+            arrayTo.push(nextQuestion);*/
+            var elementToPush = fType.pop();
+            pushQuestion(elementToPush, orderedForm);
+            elementsToPush--;
+        }
+
+       // pushQuestionsToForm(numOfFTypeQuestion, questionsArraysByType.f_typeJSON, form);
     }
 
-    while(typeB.length > 0) {
-        orderedForm.push(typeB.pop());
+    while(bType.length > 0) {
+        //var next = typeB.pop();
+        var elementToPush = bType.pop();
+        pushQuestion(elementToPush, orderedForm);
+        /*
+        var nextQuestion = typeB.pop();
+        if (orderedForm.length > 0) {
+            setNext(orderedForm[orderedForm.length - 1], nextQuestion);
+        }
+        orderedForm.push(nextQuestion);
+        */
     }
 
     /* For testing
@@ -177,13 +243,32 @@ function reOrderFormJSON(typeP, typeF, typeC, typeB) {
         console.log("question Number " + i + " " + orderedForm[i]['TYPE']);
     }*/
 
+    console.log(orderedForm);
     return orderedForm;
 }
 
+/*
 function pushQuestionsToForm(numOfElements, arrayFrom, arrayTo) {
     var elementsToPush = numOfElements;
-    while (elementsToPush > 0 && arrayFrom.length > 0){
-        arrayTo.push(arrayFrom.pop());
+
+    while (elementsToPush > 0 && form.length > 0){
+        /*var nextQuestion = arrayFrom.pop();
+        if (arrayTo.length > 0) {
+            setNext(arrayTo[arrayTo.length - 1], nextQuestion)
+        }
+        arrayTo.push(nextQuestion);*/
+        /*pushQuestion(arrayFrom.pop(), form);
         elementsToPush--;
     }
+}
+*/
+function pushQuestion(nextQuestion, arrayTo) {
+   // var nextQuestion = arrayFrom.pop();
+    if (arrayTo.length > 0) {
+        var currentQuestion = arrayTo[arrayTo.length - 1];
+        //setNext(arrayTo[arrayTo.length - 1], nextQuestion)
+        currentQuestion.next = nextQuestion;
+    }
+    //console.log(nextQuestion);
+    arrayTo.push(nextQuestion);
 }

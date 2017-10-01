@@ -4,11 +4,24 @@ var totalQuestions = document.getElementsByClassName('q').length;
 var questionsAnswered = [];
 var startDate = new Date();
 
+
+
+function scrollToNextElement(nextElement) {
+    var container = $('#formContainer');
+    var scrollTo = $('#' + nextElement);
+    console.log("scrollto: " + scrollTo);
+    console.log("container: " + container);
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
+    container.scrollTop()});
+}
+
 $('#radioBtn a').on('click', function(){
     var answer = $(this).data('title');
     var tog = $(this).data('toggle');
     var dataValue = $(this).data('value');
     var isOnError = $(this).css('border');
+    var nextQuestion = $(this).parent().parent().attr('id');
+    console.log(nextQuestion);
 
     if(isOnError.indexOf("1px solid rgb(255, 0, 0)") != "-1"){
         $(this).parent().find("a").css('border', "solid green 1px");
@@ -24,11 +37,19 @@ $('#radioBtn a').on('click', function(){
         questionsAnswered.push(tog);
         numOfQuestionsAnswered++;
 
+        /*
         var container = $('#fromContainer'),
-            scrollTo = $('#question' + numOfQuestionsAnswered);
+            //scrollTo = $('#question' + numOfQuestionsAnswered);
+            scrollTo = $('#' + nextQuestion);
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
         container.scrollTop()});
-        //container.animate({scrollTop: container.offset().top - scrollTo.offset().top});
+        //container.animate({scrollTop: container.offset().top - scrollTo.offset().top});*/
+
+        //scrollToNextElement(nextQuestion);
+        var container = $('#formContainer');
+        var scrollTo = $('#' + nextQuestion);
+        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
+        container.scrollTop()});
 
         var progress = document.getElementById("progressBar");
         var percent = (numOfQuestionsAnswered / totalQuestions) * 100;
