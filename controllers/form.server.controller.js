@@ -30,11 +30,11 @@ exports.getInfo = function (req, res) {
     console.log(userData);
     // TODO: test if user exists in db - if not else prompt error code
     // TODO: send SMS with varification code
-    //formGenerator_Ctrl.generateForm(req,res);
-    res.render('index', { title: '',
+    formGenerator_Ctrl.generateForm(req,res);
+   /* res.render('index', { title: '',
                         isInEnglish: isInEnglish,
                         indexPageText : indexPageText
-                        });
+                        });*/
 }
 
 exports.getForm = function (req, res) {
@@ -45,25 +45,25 @@ exports.exportToCsv = function (req, res) {
     var formResults = req.body;
     delete formResults['submit_btn'];
     delete formResults['agree'];
-    formResults['candidate_ID'] = 'demo';// FOR DEMO  userData['user_id'];
+    formResults['candidate_ID'] = userData['user_id'];
 
 
 
-    // FOR DEMO userData['FormTotalTime'] = formResults['FormTotalTime'];
+    userData['FormTotalTime'] = formResults['FormTotalTime'];
     delete formResults['FormTotalTime'];
 
-    //console.log(formResults);
-    // FOR DEMO userData['formResults'] = formResults;
+    console.log(formResults);
+    userData['formResults'] = formResults;
 
     //console.log(userDataArr);
-    // FOR DEMO console.log(userData);
+    //console.log(userData);
 
     var fields = Object.keys(req.body);
     fields.pop(); // remove checkbox from array
     fields.pop(); // remove agree from array
     fields.push("candidate_ID");
 
-    //console.log(fields);
+    console.log("fields: ", fields);
 
     //console.log("User " + "PUT PHONE NUMBER HERE" + " " + formResults);
     fs.stat(companyForm + '.csv', function (err, stat) {
@@ -72,7 +72,7 @@ exports.exportToCsv = function (req, res) {
             var toCsv = json2csv({ data: formResults, fields: fields, hasCSVColumnTitle: false}) + newLine;
             fs.appendFile(companyForm + ".csv", toCsv, function (err) {
                 if (err) throw err;
-                console.log("Inserted new row to Nike csv file");
+                console.log("Inserted new row to CocaCola csv file");
             });
         }
         else {

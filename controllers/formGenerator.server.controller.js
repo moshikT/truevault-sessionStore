@@ -2,7 +2,7 @@ var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
 var isInEnglish = false;
-var isDemo = true;
+var isDemo = false;
 var companyForm = isDemo ? 'DEMO' : 'AYALON';
 var textDirection = isInEnglish ? "lfr" : "rtl";
 var submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
@@ -51,15 +51,15 @@ exports.generateForm = function (req, res) {
 
             if (questionsJSON[companyForm] == 'yes') {
                 question = parseQuestions(questionsJSON);
-                console.log(question);
+                //console.log(question);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
-                    console.log("P array: ", questionsArraysByType.p_typeJSON);
+                    //console.log("P array: ", questionsArraysByType.p_typeJSON);
                 } else if (question.type == 'F') {
                     questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
-                    console.log("C array: ", questionsArraysByType.c_typeJSON);
+                    //console.log("C array: ", questionsArraysByType.c_typeJSON);
                 } else if (question.type == 'B') {
                     questionsArraysByType.b_typeJSON.push(question);
                 }
@@ -171,7 +171,7 @@ function reOrderFormJSON(pType, fType, cType, bType) {
     var numOfPTypeQuestion = 20;
     var numOfFTypeQuestion = 5;
 
-    console.log(pType);
+    //console.log(pType);
 
     while(pType.length > 0 || fType.length > 0 ||
     cType.length > 0) {
@@ -243,7 +243,7 @@ function reOrderFormJSON(pType, fType, cType, bType) {
         console.log("question Number " + i + " " + orderedForm[i]['TYPE']);
     }*/
 
-    console.log(orderedForm);
+    //console.log(orderedForm);
     return orderedForm;
 }
 

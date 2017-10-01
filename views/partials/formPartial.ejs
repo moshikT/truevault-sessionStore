@@ -2,8 +2,7 @@
     <input type="hidden" name="FormTotalTime" id="FormTotalTime">
 <!--onclick="scrollToNextElement('<%=/* (typeof formjson[i].next !== 'undefined') ?  'div' + formjson[i].next['id'] : 'div' + formjson.length + ""*/ %>')">
    --> <% for (var i=0;i<formjson.length; i++) { console.log(formjson[i])%>
-    <div onclick="scrollToNextElement('<%= (typeof formjson[i].next !== 'undefined') ?  'div' + formjson[i].next['id'] : 'div' + formjson.length + "" %>')"
-         id=<%- 'div' + formjson[i].id /*(typeof formjson[i].next !== 'undefined') ? formjson[i].next['id'] : formjson.length + "" */%> class="container q">
+    <div data-title=<%- (typeof formjson[i].next !== 'undefined') ? 'div' + formjson[i].next['id'] : 'div' + formjson.length + "" %> id=<%- 'div' + formjson[i].id /*(typeof formjson[i].next !== 'undefined') ? formjson[i].next['id'] : formjson.length + "" */%> class="container q">
         <p><%- formjson[i]['item'] %></p>
 
             <%
@@ -61,7 +60,7 @@
         <input type="hidden" name=<%= formjson[i].id %> id=<%= formjson[i].id %>>
     </div>
     <% } %>
-    <div id=<%= formjson.length + "" %> class="container" style="text-align: center;padding-top: 50px;color: black;">
+    <div id=<%= 'div' + formjson.length + "" %> class="container" style="text-align: center;padding-top: 50px;color: black;">
 
         <p><input id="agree"title="<%= terms.title %>" name="agree" type="checkbox" value="" style="vertical-align: bottom;" >
             <%= terms.prefix %>  <a href="#" style="color: #3276b1;"><%= terms.postfix %> </a></p>

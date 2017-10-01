@@ -10,12 +10,21 @@
 <body class="content" dir=<%=indexPageText.textDirection%>>
 <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
   <form id="formInfo" method="post" action="/">
-    <div id="intro1" style="padding: 10px;height:370px;">
+    <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
         <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-            The following questions are examples from the Empirical Hire applicant screening test for service and/or sales position in Siemens.
-            Please complete the following questions honestly and seriously,  Sequentially and without interruptions
-            With thanks and appreciation,
-            The management.
+            לפניך שאלון שמילויו אורך כחצי שעה.
+            השאלון הנו מבחן מיון למועמדים לתפקיד נציגי שירות ו/או מכירה בחברה המרכזית.
+            הסיבה שאת/ה מתבקש/ת להשיב על השאלון היא על מנת שנוכל להבין כיצד העובדים הקיימים משיבים על השאלון.
+            השאיפה שלנו היא לגייס עוד עובדים טובים כמוך!
+            מטרה נוספת היא לקבל משוב מקדים על חוויית מילוי השאלון.
+            חשוב מאוד לציין שלא נעשה בשאלון שום שימוש לטובת הערכה אישית שלך וכי נתוני השאלון שלך מעובדים באופן מוצפן על ידי חברה חיצונית.
+            סומכים עלייך שתירתם למטרה של יצירת סביבת עבודה מצוינת ותשיב על השאלון בכנות וברצינות.
+            את השאלון יש למלא בסביבה נטולת הפרעות וברצף.
+            פרט לשאלות שכותרתן שאלות חשיבה, אין תשובות נכונות או לא נכונות בשאלון, עלייך לבחור בתשובה המשקפת בצורה הטובה ביותר את עמדתך/התנהגותך. השאלון יודע לאבחן דפוסי תשובה כנים יותר ופחות ולכן מומלץ להשיב בכנות ובפתיחות.
+            בשאלות החשיבה יש לסמן את התשובה הנכונה לדעתך, במידה ואינך בטוח/ה - יש לנחש.
+            לא ניתן למלא את השאלון יותר מפעם אחת וכן לא ניתן להעבירו.
+            חובה למלא את כל השאלות בשאלון.
+            בתודה ובהערכה, צוות ההנהלה.
         </div>
       <div style="padding: 30px;">
         <a onclick="scrollToNextElement('intro2')" class="btn btn-primary"><%=  indexPageText.next %></a>
@@ -24,34 +33,31 @@
 
       <div id="intro2" style="height:370px;">
     <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-        Siemens is a global powerhouse positioned along the electrification value chain – from power generation,
-        transmission and distribution to smart grid solutions and the efficient
-        application of electrical energy – as well as in the areas of medical imaging and laboratory diagnostics.
-    </div>
+        החברה המרכזית למכירות ולהפצה משווקת את מרבית מוצרי קבוצת “החברה המרכזית לייצור משקאות קלים בע”מ”, המובילה את שוק המשקאות בישראל, החל ממשקאות מוגזים דרך משקאות קלים, מיצים טבעיים ועד לבירה. החל משנת 2005 פועלת הקבוצה גם בשוק מוצרי החלב.    </div>
         <div style="padding: 30px;">
-          <a onclick="scrollToNextElement('u_id')" class="btn btn-primary"><%=  indexPageText.next %></a>
+          <a onclick="scrollToNextElement('intro3')" class="btn btn-primary"><%=  indexPageText.next %></a>
         </div>
     </div>
 
 
-    <div id="intro3" style="height:370px;">
+    <div id="intro3" style="height:600px;">
     <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
           <div class=""><%=  indexPageText.personalInfoText %></div>
               <div id="inputname"  style="padding-top: 20px;">
                 <input id="u_id" class="inputs" name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
               </div>
               <div id="inputphone" style="padding-top: 20px;">
-                <input class="inputs" name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                <input onclick="scrollToNextElement('user_tel')" id="user_tel" class="inputs" name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
               <div id="inputid" style="padding-top: 20px;">
-                <input class="inputs" name="user_id" type="number" placeholder=<%= indexPageText.idField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                <input onclick="scrollToNextElement('user_id')" id="user_id" class="inputs" name="user_id" type="number" placeholder=<%= indexPageText.idField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
               <div id="inputemail" style="padding-top: 20px;">
-                <input class="inputs" name="user_email" type="email" placeholder=<%= indexPageText.emailField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                <input onclick="scrollToNextElement('user_email')" id="user_email" class="inputs" name="user_email" type="email" placeholder='<%= indexPageText.emailField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
           </div>
               <div style="padding-top: 25px; padding-bottom: 50px;">
-                <a href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></a>
+                <button href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></button>
               </div>
     </div>
   </form>
@@ -103,7 +109,7 @@
             //console.log(label);
         },
         //debug: true,
-        // FOR DEMO rules: rules,
+        rules: rules,
         messages: {
             /*"agreeableness_1": {
                 //required: "Please, enter a date"
@@ -156,7 +162,7 @@
                     //whatever you wanna do after the form is successfully submitted
                     //console.log(form);
                     console.log(form.user_id.value);
-                    mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'demo_user'/* candidate/employee */});
+                    mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'cocacola_user'/* candidate/employee */});
 
                     // TODO: scrollTo block user authentication display
                 }
@@ -164,7 +170,7 @@
             //console.log(form);
 
             // FOR DEMO return false;
-            //form.submit();
+            form.submit();
 
             //mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
         }
