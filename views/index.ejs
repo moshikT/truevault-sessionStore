@@ -37,21 +37,21 @@
     <div id="intro3" style="height:370px;">
     <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
           <div class=""><%=  indexPageText.personalInfoText %></div>
-              <div id="inputname" class="" style="padding-top: 20px;">
-                <input name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+              <div id="inputname"  style="padding-top: 20px;">
+                <input id="u_id" class="inputs" name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
               </div>
-              <div id="inputphone" class="" style="padding-top: 20px;">
-                <input name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+              <div id="inputphone" style="padding-top: 20px;">
+                <input class="inputs" name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
-              <div id="inputid" class="" style="padding-top: 20px;">
-                <input name="user_id" type="number" placeholder=<%= indexPageText.idField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
+              <div id="inputid" style="padding-top: 20px;">
+                <input class="inputs" name="user_id" type="number" placeholder=<%= indexPageText.idField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
-              <div id="inputemail" class="" style="padding-top: 20px;">
-                <input  name="user_email" type="email" placeholder=<%= indexPageText.emailField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
+              <div id="inputemail" style="padding-top: 20px;">
+                <input class="inputs" name="user_email" type="email" placeholder=<%= indexPageText.emailField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
           </div>
-              <div class="" style="padding-top: 25px; padding-bottom: 50px;">
-                <a href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary"><%= indexPageText.submitBtn %></a>
+              <div style="padding-top: 25px; padding-bottom: 50px;">
+                <a href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></a>
               </div>
     </div>
   </form>
@@ -63,7 +63,12 @@
 <script src="javascripts/messages_he.js"></script>
 <script>
 
-
+    $('.inputs').keydown(function (e) {
+        if (e.which === 13) {
+            var index = $('.inputs').index(this) + 1;
+            $('.inputs').eq(index).focus();
+        }
+    });
 
     var container = $('#formContainer');//,
 
@@ -72,6 +77,9 @@
         var scrollTo = $('#' + nextElement);
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
         container.scrollTop()});
+        if(nextElement == 'intro3') {
+            $('#u_id').focus();
+        }
     }
         //scrollTo = $('#question' + numOfQuestionsAnswered);
 
