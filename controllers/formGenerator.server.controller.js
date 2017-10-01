@@ -1,8 +1,17 @@
 var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
-var isInEnglish = false;
+var isInEnglish = true;
+var isDemo = true;
+var companyForm = isDemo ? 'DEMO' : 'AYALON';
 var textDirection = isInEnglish ? "lfr" : "rtl";
+var submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
+var terms = {
+    title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
+    //text : isInEnglish ? "" : "אני מאשר את <\a>\"; ;
+    prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
+    postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
+}
 
 exports.generateForm = function (req, res) {
     var formJSON = [];
@@ -25,7 +34,7 @@ exports.generateForm = function (req, res) {
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            if (questionsJSON['AYALON'] == 'yes' /*&& lines < 25*/) {
+            if (questionsJSON[companyForm] == 'yes') {
                 parseQuestions(questionsJSON);
                 if (questionsJSON['TYPE'] == 'P') {
                     p_typeJSON.push(questionsJSON);
@@ -51,7 +60,11 @@ exports.generateForm = function (req, res) {
 
             res.render('form', { title: '' ,
                 formjson: formJSON,
-                isInEnglish: textDirection});
+                isInEnglish: isInEnglish,
+                textDirection: textDirection,
+                terms : terms,
+                submitText : submitText
+            });
         })
 }
 

@@ -7,51 +7,51 @@
     <h1> <%=  title %> </h1>
   </div>
 </header>
-<body class="content" dir=<%=isInEnglish%>>
+<body class="content" dir=<%=indexPageText.textDirection%>>
 <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
   <form id="formInfo" method="post" action="/">
     <div id="intro1" style="padding: 10px;height:370px;">
         <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-
-          לפניך שאלון לדוגמא/דמו למבחן מיון למועמדים לתפקיד נציגי שירות ו/או מכירה בחברת קסטרו.
-          יש להשיב על השאלון בכנות וברצינות ולמלא בסביבה נטולת הפרעות וברצף.
-          בתודה ובהערכה, צוות ההנהלה.
-
+            The following questions are examples from the Empirical Hire applicant screening test for service and/or sales position in Siemens.
+            Please complete the following questions honestly and seriously,  Sequentially and without interruptions
+            With thanks and appreciation,
+            The management.
         </div>
       <div style="padding: 30px;">
-        <a onclick="scrollToNextElement('intro2')" class="btn btn-primary">הבא</a>
+        <a onclick="scrollToNextElement('intro2')" class="btn btn-primary"><%=  indexPageText.next %></a>
       </div>
     </div>
 
       <div id="intro2" style="height:370px;">
     <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-        קסטרו הוא בית האופנה המוביל והאהוב בישראל.
-        עבורנו, קסטרו היא התשובה הישראלית לאופנה העולמית. היא משלבת בתוכה את האהבה והתשוקה לאופנה, לאיכות ולעיצוב, יחד עם המהות התל-אביבית והישראלית שמקורה באופי שלנו כאנשים וכבית אופנה - אנרגטיות, צבעוניות, אורבניות, חופשיות, שמחה, וגם סקסיות עם קורטוב של חוצפה.
+        Siemens is a global powerhouse positioned along the electrification value chain – from power generation,
+        transmission and distribution to smart grid solutions and the efficient
+        application of electrical energy – as well as in the areas of medical imaging and laboratory diagnostics.
     </div>
         <div style="padding: 30px;">
-          <a onclick="scrollToNextElement('intro3')" class="btn btn-primary">הבא</a>
+          <a onclick="scrollToNextElement('intro3')" class="btn btn-primary"><%=  indexPageText.next %></a>
         </div>
     </div>
 
 
     <div id="intro3" style="height:370px;">
     <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
-          <div class="">להתחלת השאלון נא מלא/י את הפרטים הבאים:</div>
+          <div class=""><%=  indexPageText.personalInfoText %></div>
               <div id="inputname" class="" style="padding-top: 20px;">
-                <input name="user_fullName" type="text" placeholder="שם מלא" style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+                <input name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
               </div>
               <div id="inputphone" class="" style="padding-top: 20px;">
-                <input name="user_tel" type="number" placeholder="מספר טלפון" style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                <input name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
               <div id="inputid" class="" style="padding-top: 20px;">
-                <input name="user_id" type="number" placeholder="ת.ז." style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                <input name="user_id" type="number" placeholder=<%= indexPageText.idField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
               <div id="inputemail" class="" style="padding-top: 20px;">
-                <input  name="user_email" type="email" placeholder="דואר אלקטרוני" style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                <input  name="user_email" type="email" placeholder=<%= indexPageText.emailField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
               </div>
           </div>
               <div class="" style="padding-top: 25px; padding-bottom: 50px;">
-                <a href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary"> להתחלת השאלון </a>
+                <a href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary"><%= indexPageText.submitBtn %></a>
               </div>
     </div>
   </form>

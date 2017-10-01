@@ -3,12 +3,7 @@ var router = express.Router();
 var form_Ctrl = require('../controllers/form.server.controller');
 var mailParser_Ctrl = require('../controllers/mailParser.server.controller');
 
-
 //mailParser_Ctrl.onMailArrived();
-//const json = formGenerator_Ctrl.generateForm();
-//while(json == undefined) {}
-//console.log("Inside form " + json);
-
 
 /* GET home page. */
 router.get('/', function(req, res) {

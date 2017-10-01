@@ -4,8 +4,18 @@ var json2csv = require('json2csv');
 var fs = require('fs');
 var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
-var isInEnglish = false;
-var textDirection = isInEnglish ? "lfr" : "rtl";
+
+var isInEnglish = true;
+var indexPageText = {
+    textDirection : isInEnglish ? "ltr" : "rtl",
+    personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
+    emailField : isInEnglish ? "Email" : "דואר אלקטרוני",
+    phoneField : isInEnglish ? "Phone Number" : "מספר טלפון",
+    idField : isInEnglish ? "ID" : "ת.ז.",
+    nameField : isInEnglish ? "Full Name" : "שם מלא",
+    submitBtn : isInEnglish ? "Start Questionnaire" : "להתחלת השאלון",
+    next : isInEnglish ? "next" : "הבא"
+}
 
 var newLine= "\r\n";
 var userData;
@@ -20,7 +30,17 @@ exports.getInfo = function (req, res) {
     // TODO: send SMS with varification code
     //formGenerator_Ctrl.generateForm(req,res);
     res.render('index', { title: '',
-        isInEnglish: textDirection });
+                        isInEnglish: isInEnglish,
+                        /*textDirection: textDirection,
+                        personalInfoText: personalInfoText,
+                        emailField: emailField,
+                        phoneField: phoneField,
+                        idField: idField,
+                        nameField: nameField,
+                        submitBtn: submitBtn,
+                        next: next*/
+                        indexPageText : indexPageText
+                        });
 }
 
 exports.getForm = function (req, res) {
@@ -76,11 +96,19 @@ exports.exportToCsv = function (req, res) {
 };
 
 exports.getIndex = function (req, res) {
-    res.render('index', { title: '',
-        isInEnglish: textDirection });
+    res.render('index', {
+        title: '',
+        isInEnglish: isInEnglish,
+        indexPageText : indexPageText
+    });
 }
 
 exports.getThankYouPage = function (req, res) {
     res.render('thankYou', { title: 'Empiricalhire',
-        isInEnglish: textDirection });
+        isInEnglish: isInEnglish,
+    textDirection: indexPageText.textDirection});
+}
+
+function setLanguage() {
+
 }
