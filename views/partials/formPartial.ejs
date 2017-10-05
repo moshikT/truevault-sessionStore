@@ -1,12 +1,16 @@
 <form id="form" method="post" action="/form">
-    <input type="hidden" name="FormTotalTime" id="FormTotalTime">
+    <input type="hidden" name="formDuration" id="formDuration">
+    <input type="hidden" name="fullName" id="fullName" value='<%= candidateData['fullName'] %>'>
+    <input type="hidden" name="id" id="id" value='<%= candidateData['id'] %>'>
+    <input type="hidden" name="email" id="email" value='<%= candidateData['email'] %>'>
+    <input type="hidden" name="phoneNumber" id="phoneNumber" value='<%= candidateData['phoneNumber'] %>'>
 <!--onclick="scrollToNextElement('<%=/* (typeof formjson[i].next !== 'undefined') ?  'div' + formjson[i].next['id'] : 'div' + formjson.length + ""*/ %>')">
-   --> <% for (var i=0;i<formjson.length; i++) { console.log(formjson[i])%>
+   --> <% for (var i=0;i<formjson.length; i++) {%>
     <div data-title=<%- (typeof formjson[i].next !== 'undefined') ? 'div' + formjson[i].next['id'] : 'div' + formjson.length + "" %> id=<%- 'div' + formjson[i].id /*(typeof formjson[i].next !== 'undefined') ? formjson[i].next['id'] : formjson.length + "" */%> class="container q">
         <p><%- formjson[i]['item'] %></p>
 
             <%
-            if (formjson[i].type == 'F' || formjson[i].type == 'P') {
+            if (formjson[i].type == 'F' || formjson[i].type == 'P' || formjson[i].type == 'A') {
 %><div id="radioBtn" class="btn-group a">
   <%              for (var j=0;j<formjson[i]['answerOptions'].length; j++) {
 
@@ -47,7 +51,7 @@
         <% }
             %>
 
-            <% if (formjson[i].type == 'P' || formjson[i].type == 'F') {/* if yes no/ true false question remove ans description*/ %>
+            <% if (formjson[i].type == 'P' || formjson[i].type == 'F' || formjson[i].type == 'A') {/* if yes no/ true false question remove ans description*/ %>
             <br>
             <div class="a" style="font-size: x-small;font-weight: 100;">
                 <% /*    for (var k=0;k<formjson[i]['answer-options'].length; k++) { */%>

@@ -1,11 +1,34 @@
 var express = require('express');
+var multer  = require('multer');
+var upload = multer({ dest: 'uploads/' });
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var fs = require('fs');
 
+
+mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire
 var index = require('./routes/index');
+
+/* LOCAL */
+/*
+mongoose.connect('mongodb://127.0.0.1/candidateLocal', {
+    useMongoClient: true
+});
+/*  mLAB */
+mongoose.connect('mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire', {
+    useMongoClient: true
+});
+
+
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+    console.log("Connected to mongodb!");
+});
 
 var app = express();
 
@@ -16,6 +39,7 @@ app.set('view engine', 'ejs');
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
+//app.use(bodyParser({uploadDir:'/uploads'}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

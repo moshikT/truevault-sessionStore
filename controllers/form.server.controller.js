@@ -4,10 +4,12 @@ var json2csv = require('json2csv');
 var fs = require('fs');
 var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+var Candidate = require('../models/candidate.server.model.js');
+var Client = require('../models/addClient.server.model.js');
 
 var isInEnglish = false;
 var isDemo = false;
-var companyForm = isDemo ? 'DEMO' : 'AYALON';
+var companyForm = isDemo ? 'DEMO' : 'Beta';
 var indexPageText = {
     textDirection : isInEnglish ? "ltr" : "rtl",
     personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
@@ -20,52 +22,65 @@ var indexPageText = {
 }
 
 var newLine= "\r\n";
-var userData;
-
+class userData {
+    constructor(fullName, id, email, phoneNumber) {
+        this.fullName = fullName;
+        this.id = id;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+    }
+}
 
 exports.getInfo = function (req, res) {
-    userData = req.body;
-    delete userData['submit_btn'];
-    //userData.pop();
-    console.log(userData);
+    var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
+        req.body['user_email'], req.body['user_tel']);//= req.body;
+
     // TODO: test if user exists in db - if not else prompt error code
     // TODO: send SMS with varification code
-    formGenerator_Ctrl.generateForm(req,res);
-   /* res.render('index', { title: '',
-                        isInEnglish: isInEnglish,
-                        indexPageText : indexPageText
-                        });*/
+
+    getForm(req, res, newUser);
 }
 
-exports.getForm = function (req, res) {
-    formGenerator_Ctrl.generateForm(req, res);
+function getForm(req, res, candidate) {
+    (candidate.id) ? formGenerator_Ctrl.generateForm(req, res, candidate) : res.redirect('/');
 }
 
-exports.exportToCsv = function (req, res) {
+exports.saveFormResults = function (req, res) {
     var formResults = req.body;
     delete formResults['submit_btn'];
     delete formResults['agree'];
-    formResults['candidate_ID'] = userData['user_id'];
+    var userFullName = formResults['fullName'];
+    delete formResults['fullName'];
+    var userId = formResults['id'];
+    delete formResults['id'];
+    var userEmail = formResults['email'];
+    delete formResults['email'];
+    var userPhoneNumber = formResults['phoneNumber'];
+    delete formResults['phoneNumber'];
 
+    var totalTime = formResults['formDuration'];
+    delete formResults['formDuration'];
 
+    //var candidate = Candidate.find({ name: id }, callback);
 
-    userData['FormTotalTime'] = formResults['FormTotalTime'];
-    delete formResults['FormTotalTime'];
+    var entry = new Candidate({
+        fullName: userFullName,
+        id: userId,
+        email: userEmail,
+        phoneNumber: userPhoneNumber,
+        company : companyForm,
+        formDuration: totalTime,
+        formResults : formResults
+    });
+    entry.save();
+    console.log("new candidate entry " + entry);
 
-    console.log(formResults);
-    userData['formResults'] = formResults;
-
-    //console.log(userDataArr);
-    //console.log(userData);
-
+    /*
     var fields = Object.keys(req.body);
     fields.pop(); // remove checkbox from array
     fields.pop(); // remove agree from array
     fields.push("candidate_ID");
 
-    console.log("fields: ", fields);
-
-    //console.log("User " + "PUT PHONE NUMBER HERE" + " " + formResults);
     fs.stat(companyForm + '.csv', function (err, stat) {
         if (err == null) {
 
@@ -85,7 +100,7 @@ exports.exportToCsv = function (req, res) {
             });
         }
     });
-
+*/
     res.redirect('/thankYou');
 };
 
@@ -103,6 +118,22 @@ exports.getThankYouPage = function (req, res) {
     textDirection: indexPageText.textDirection});
 }
 
-function setLanguage() {
+exports.getTest = function (req, res) {
+    var clientData;
+    Client.findById('59d4ba0519a0861387f42a64', function (err, doc) {
+        if (err) return next(err);
+        //res.contentType(doc.img.contentType);
+        //res.send(doc.img.data);
+        console.log(doc.logoImg);
+
+        res.render('test', {
+            title: 'Empiricalhire',
+            imgData: doc.logoImg.data,
+            imgContentType: doc.logoImg.contentType,
+            style : 'height:100px;padding-top:20px;zoom:40%;'
+        });
+    });
+//console.log(clientData);
+
 
 }

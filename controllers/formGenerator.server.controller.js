@@ -22,14 +22,15 @@ var question = {
     next : null
 }
 
+exports.generateForm = function (req, res, candidate) {
+    //console.log("generateForm candidate: ", candidate);
 
-
-exports.generateForm = function (req, res) {
     var questionsArraysByType = {
         p_typeJSON : [],
         f_typeJSON : [],
         c_typeJSON : [],
-        b_typeJSON : []
+        b_typeJSON : [],
+        a_typeJSON : []
     }
 
     var form = [];
@@ -51,43 +52,36 @@ exports.generateForm = function (req, res) {
 
             if (questionsJSON[companyForm] == 'yes') {
                 question = parseQuestions(questionsJSON);
-                //console.log(question);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
-                    //console.log("P array: ", questionsArraysByType.p_typeJSON);
                 } else if (question.type == 'F') {
                     questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
-                    //console.log("C array: ", questionsArraysByType.c_typeJSON);
                 } else if (question.type == 'B') {
                     questionsArraysByType.b_typeJSON.push(question);
+                } else if (question.type == 'A') {
+                    questionsArraysByType.a_typeJSON.push(question);
                 }
             }
 
             lines++;
         })
         .on('done',(error)=>{
-            //console.log("before shuffle :" ,questionsArraysByType.p_typeJSON);
-
             shuffle(questionsArraysByType.p_typeJSON);
             shuffle(questionsArraysByType.f_typeJSON);
             shuffle(questionsArraysByType.b_typeJSON);
 
-//            console.log("after shuffle :" ,questionsArraysByType.p_typeJSON);
-
-            //formJSON = reOrderFormJSON(p_typeJSON, f_typeJSON, c_typeJSON, b_typeJSON);
             form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
-                questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON);
-            //console.log(form);
-
+                questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
 
             res.render('form', { title: '' ,
                 formjson: form,
                 isInEnglish: isInEnglish,
                 textDirection: textDirection,
                 terms : terms,
-                submitText : submitText
+                submitText : submitText,
+                candidateData: candidate
             });
         })
 }
@@ -111,14 +105,14 @@ function parseQuestions(qJSON) {
                 //console.log(answer);
             }
             else {
-                console.log("Wrong structure for question type B: " + qJSON);
+                //console.log("Wrong structure for question type B: " + qJSON);
             }
         }
         parsedQuestion.answer = parsedAnswers;
         parsedQuestion.dataTitle = parsedAnswersWeight;
     }
-    else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'F') {
-        parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : 'F';
+    else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'F' || qJSON['TYPE'] == 'A') {
+        parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : (qJSON['TYPE'] == 'F') ? 'F' : 'A';
         var scalaOptionsNumber = 5;
         var scalaArray = [];
         for (var index = 1; index <= scalaOptionsNumber; index++) {
@@ -134,10 +128,9 @@ function parseQuestions(qJSON) {
             scalaEdges[1] = scalaEdges[1].replace(/\s+/g, '<br>');
         }
 
-
         parsedQuestion.scalaEdges = isInEnglish ?
-            ((qJSON['TYPE'] == 'P') ? ["Disagree","Agree"] : ["Not <br>important <br>at all","Very <br> important"]) :
-            ((qJSON['TYPE'] == 'P') ? scalaEdges : ['הכי חשוב <br> לי', 'הכי פחות <br> חשוב לי']);
+            ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? ["Disagree","Agree"] : ["Not <br>important <br>at all","Very <br> important"]) :
+            ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? scalaEdges : ['הכי חשוב <br> לי', 'הכי פחות <br> חשוב לי']);
 
 
     } else if (qJSON['TYPE'] == 'C') {
@@ -166,84 +159,38 @@ function swap(array, element1Index, element2Index) {
     array[element2Index] = temp;
 }
 
-function reOrderFormJSON(pType, fType, cType, bType) {
+function reOrderFormJSON(pType, fType, cType, bType, aType) {
     var orderedForm = [];
     var numOfPTypeQuestion = 20;
     var numOfFTypeQuestion = 5;
 
-    //console.log(pType);
-
-    while(pType.length > 0 || fType.length > 0 ||
-    cType.length > 0) {
-
+    while(pType.length > 0 || fType.length > 0 || cType.length > 0) {
         var elementsToPush = numOfPTypeQuestion;
-
         while (elementsToPush > 0 && pType.length > 0){
-            /*var nextQuestion = arrayFrom.pop();
-            if (arrayTo.length > 0) {
-                setNext(arrayTo[arrayTo.length - 1], nextQuestion)
-            }
-            arrayTo.push(nextQuestion);*/
             var elementToPush = pType.pop();
-            //console.log("P type: ", elementToPush);
             pushQuestion(elementToPush, orderedForm);
             elementsToPush--;
-            //console.log(pType.length);
         }
-
-
-
-        //pushQuestionsToForm(numOfPTypeQuestion, questionsArraysByType.p_typeJSON, form);
         if(cType.length > 0) {
-
-            //var next = typeC.pop();
-            //console.log(typeC.length);
             var elementToPush = cType.pop()
             pushQuestion(elementToPush, orderedForm);
-            /*
-            var nextQuestion = typeC.pop();
-            if(orderedForm.length > 0) {
-                setNext(orderedForm[orderedForm.length - 1], nextQuestion);
-            }
-            orderedForm.push(nextQuestion);
-            */
         }
-
         var elementsToPush = numOfFTypeQuestion;
-
         while (elementsToPush > 0 && fType.length > 0){
-            /*var nextQuestion = arrayFrom.pop();
-            if (arrayTo.length > 0) {
-                setNext(arrayTo[arrayTo.length - 1], nextQuestion)
-            }
-            arrayTo.push(nextQuestion);*/
             var elementToPush = fType.pop();
             pushQuestion(elementToPush, orderedForm);
             elementsToPush--;
         }
-
-       // pushQuestionsToForm(numOfFTypeQuestion, questionsArraysByType.f_typeJSON, form);
     }
-
     while(bType.length > 0) {
-        //var next = typeB.pop();
         var elementToPush = bType.pop();
         pushQuestion(elementToPush, orderedForm);
-        /*
-        var nextQuestion = typeB.pop();
-        if (orderedForm.length > 0) {
-            setNext(orderedForm[orderedForm.length - 1], nextQuestion);
-        }
-        orderedForm.push(nextQuestion);
-        */
     }
 
-    /* For testing
-    for (var i = 0; i < orderedForm.length; i++) {
-        console.log("question Number " + i + " " + orderedForm[i]['TYPE']);
-    }*/
-
-    //console.log(orderedForm);
+    while(aType.length > 0) {
+        var elementToPush = aType.pop();
+        pushQuestion(elementToPush, orderedForm);
+    }
     return orderedForm;
 }
 
@@ -269,6 +216,5 @@ function pushQuestion(nextQuestion, arrayTo) {
         //setNext(arrayTo[arrayTo.length - 1], nextQuestion)
         currentQuestion.next = nextQuestion;
     }
-    //console.log(nextQuestion);
     arrayTo.push(nextQuestion);
 }

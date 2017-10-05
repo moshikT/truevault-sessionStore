@@ -4,17 +4,6 @@ var totalQuestions = document.getElementsByClassName('q').length;
 var questionsAnswered = [];
 var startDate = new Date();
 
-
-/*
-function scrollToNextElement(nextElement) {
-    var container = $('#formContainer');
-    var scrollTo = $('#' + nextElement);
-    console.log("scrollto: " + scrollTo);
-    console.log("container: " + container);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
-    container.scrollTop()});
-}
-*/
 $('#radioBtn a').on('click', function(){
     var answer = $(this).data('title');
     var tog = $(this).data('toggle');
@@ -70,13 +59,22 @@ var rules = {};
 
 for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
-    if(key != 'FormTotalTime'){
+    if(key != 'formDuration'){
         rules[key] = "required";
     }
 }
 
+console.log(rules);
+
 $("#form").validate({
     ignore: "",
+    /*success: function(label,element) {
+        //element.find("input").css( "border", "solid green 1px" );
+        element.style.border= "solid green 1px" ;
+        //console.log(element);
+        //console.log(label);
+    },
+    //debug: true,*/
     rules: rules,
     messages: {
         "agreeableness_1": {
@@ -94,7 +92,7 @@ $("#form").validate({
     },
     focusInvalid: false,
     invalidHandler: function(form, validator) {
-        var container = $('#fromContainer');
+        var container = $('#formContainer');
         if (!validator.numberOfInvalids())
             return;
 
@@ -113,10 +111,17 @@ $("#form").validate({
     },
     submitHandler: function (form) {
         var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
-        mixpanel.track('formTotalTime', {'uid': 'employeeNumber', 'TotalTime': totalTime});
-        $('#FormTotalTime').prop('value', totalTime);
+        mixpanel.track('form submited', {
+            'uid': document.getElementsByName('id'),
+            'form duration': totalTime,
+            'uname': document.getElementsByName('fullName'),
+            'company' : 'beta'
+        });
+        $('#formDuration').prop('value', totalTime);
+        //console.log(totalTime);
+        //return false;
         form.submit();
-        mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
+        //mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
     }
 });
 

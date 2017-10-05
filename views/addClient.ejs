@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+</head>
+<header>
+    <div class="container col-md-12" style="text-align: center;">
+        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/empiricalhire.png" />
+    </div>
+    <div class="container col-md-12">
+        <h1>Add new client</h1>
+    </div>
+</header>
+<body>
+<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
+<form id="addClient" method="post" enctype="multipart/form-data" action="/addClient">
+    <div class="container">
+        <div id="clientName" style="padding: 20px;">
+            <input class="inputs" name="name" type="text"
+                   placeholder='Client Name' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        </div>
+        <div id="clientLogo" style="padding: 20px;">
+            <input class="inputs" name="logo" type="file" accept="image/png"
+                   style="border-style: none none solid none;text-align: center;opacity: 0.7;margin-right:auto;margin-left: auto;">
+        </div>
+        <div id="clientLogoStyle" style="padding: 20px;">
+            <input onclick="scrollToNextElement('LogoStyle')" id="LogoStyle" class="inputs" name="logoStyle" type="text"
+                   placeholder='Client Logo Style' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        </div>
+        <div id="clientTitle" style="padding: 20px;">
+            <input onclick="scrollToNextElement('title')" id="title" class="inputs" name="title" type="text"
+                   placeholder='Title' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        </div>
+        <div id="clientIntroText" style="padding: 20px;">
+            <textarea onclick="scrollToNextElement('introText')" id="introText" class="inputs" name="introText"
+                      placeholder='Introduction Text' cols="40" rows="5" style="opacity: 0.7"></textarea>
+           <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
+                   placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
+        </div>
+        <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
+            <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
+                   value="en" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">English</span>
+
+
+                <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
+                   value="he" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">Hebrew</span>
+
+        </div>
+        <div>
+            <input  onclick="scrollToNextElement('btn_submit')" class="inputs" name="isDemo" type="checkbox"
+                   style="vertical-align: bottom;" > Is Demo
+        </div>
+    </div>
+    <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
+    <button href="/addClient" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add Client</button>
+    </div>
+</form>
+</div>
+<% include partials/footer %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+<script>
+    $('.inputs').keydown(function (e) {
+        if (e.which === 13) {
+            var index = $('.inputs').index(this) + 1;
+            $('.inputs').eq(index).focus();
+        }
+    });
+
+    var container = $('#formContainer');//,
+
+
+    function scrollToNextElement(nextElement) {
+        var scrollTo = $('#' + nextElement);
+        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
+        container.scrollTop()});
+    }
+
+    $("#addClient").validate({
+        ignore: "",
+        success: function(label,element) {
+            //element.find("input").css( "border", "solid green 1px" );
+            element.style.border= "solid green 1px" ;
+            //console.log(element);
+            //console.log(label);
+        },
+        //debug: true,
+        //rules: rules,
+        messages: {
+            /*"agreeableness_1": {
+                //required: "Please, enter a date"
+            },*/
+        },
+        errorElement: "div",
+        wrapper: "div",  // a wrapper around the error message
+        errorPlacement: function(error, element) {
+            element.before(error);
+
+            //element.parent("div").find("a").css( "border", "solid red 1px" );
+            element.css( "border", "solid red 1px" );
+            offset = element.offset();
+            error.css('left', offset.left);
+            error.css('bottom', offset.top - element.outerHeight());
+        },
+        focusInvalid: false,
+        invalidHandler: function(form, validator) {
+            if (!validator.numberOfInvalids())
+                return;
+
+            },
+        submitHandler: function (form) {
+            //console.log(form.logo.files[0]);
+            //var fileData = "&r=";
+          //  console.log(form);
+         /*   var file = form.logo.files[0];
+            if (file) {
+                // create reader
+                var reader = new FileReader();
+                reader.readAsText(file);
+                reader.onload = function(e) {
+                    // browser completed reading file - display it
+                   // $('#logo').prop('value', e.target.result.toString());
+                    fileData += e.target.result;
+                    //console.log(e.target.result);
+                };
+            }*/
+            //return false;
+           // var formData = new FormData(this);
+
+            $.ajax({
+                url:'/addClient',
+                type:'post',
+                data:$('#addClient').serialize() ,//+ fileData,
+                async: false,
+                success:function(){
+                    //alert(data)
+                    //whatever you wanna do after the form is successfully submitted
+                   /* console.log(form);
+                    var file = form.logo.files[0];
+                    if (file) {
+                        // create reader
+                        var reader = new FileReader();
+                        reader.readAsText(file);
+                        reader.onload = function(e) {
+                            // browser completed reading file - display it
+                            $('#logo').prop('value', e.target.result.toString());
+                            console.log(e.target.result);
+                        };
+                    }*/
+
+                    //console.log(form.user_id.value);
+                    mixpanel.track('New Client added', {'uid': form.user_id.value/* candidate/employee */});
+
+                    // TODO: scrollTo block user authentication display
+                }
+            });
+            form.submit();
+        }
+    });
+</script>
+
+</body>
+</html>
