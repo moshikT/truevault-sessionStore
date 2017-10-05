@@ -1,8 +1,8 @@
 var express = require('express');
 var fs = require('fs');
 var path = require('path')
-var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
+//var multer  = require('multer');
+//var upload = multer({ dest: 'uploads/' });
 var Client = require('../models/addClient.server.model.js');
 
 /*
