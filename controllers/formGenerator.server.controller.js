@@ -1,16 +1,6 @@
 var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
-var isInEnglish = false;
-var isDemo = false;
-var companyForm = isDemo ? 'DEMO' : 'AYALON';
-var textDirection = isInEnglish ? "lfr" : "rtl";
-var submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
-var terms = {
-    title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
-    prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
-    postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
-}
 
 var question = {
     type : null,
@@ -22,8 +12,12 @@ var question = {
     next : null
 }
 
-exports.generateForm = function (req, res, candidate) {
-    //console.log("generateForm candidate: ", candidate);
+exports.generateForm = function (res, candidate, company) {
+    var form = [];
+    var lines = 0;
+    var isInEnglish = (company.language == 'en');
+    var companyForm = company.isDemo ? 'DEMO' : 'AYALON';
+    var formPageText = initFormPageText(isInEnglish);
 
     var questionsArraysByType = {
         p_typeJSON : [],
@@ -32,10 +26,6 @@ exports.generateForm = function (req, res, candidate) {
         b_typeJSON : [],
         a_typeJSON : []
     }
-
-    var form = [];
-
-    var lines = 0;
 
     csv()
         .fromFile('items key.csv')
@@ -51,7 +41,7 @@ exports.generateForm = function (req, res, candidate) {
             var questionsJSON = JSON.parse(jsonStr);
 
             if (questionsJSON[companyForm] == 'yes') {
-                question = parseQuestions(questionsJSON);
+                question = parseQuestions(questionsJSON, isInEnglish);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
                 } else if (question.type == 'F') {
@@ -68,25 +58,30 @@ exports.generateForm = function (req, res, candidate) {
             lines++;
         })
         .on('done',(error)=>{
+
             shuffle(questionsArraysByType.p_typeJSON);
             shuffle(questionsArraysByType.f_typeJSON);
             shuffle(questionsArraysByType.b_typeJSON);
 
-            form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
+            var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
                 questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
 
             res.render('form', { title: '' ,
+            companyLogo: company.companyLogo,
+                companyName: company.name,
+                logoStyle: company.logoStyle,
+                language: company.language,
                 formjson: form,
                 isInEnglish: isInEnglish,
-                textDirection: textDirection,
-                terms : terms,
-                submitText : submitText,
+                textDirection: isInEnglish ? 'ltr' : 'rtl',
+                terms : formPageText.terms,
+                submitText : formPageText.submitText,
                 candidateData: candidate
-            });
-        })
+        });
+    })
 }
 
-function parseQuestions(qJSON) {
+function parseQuestions(qJSON, isInEnglish) {
     var parsedQuestion = {};
     parsedQuestion.id = qJSON['Q_ID'];
     parsedQuestion.item = isInEnglish ? qJSON['ITEM ENGLISH'] : qJSON['ITEM HEBREW'];
@@ -194,27 +189,21 @@ function reOrderFormJSON(pType, fType, cType, bType, aType) {
     return orderedForm;
 }
 
-/*
-function pushQuestionsToForm(numOfElements, arrayFrom, arrayTo) {
-    var elementsToPush = numOfElements;
-
-    while (elementsToPush > 0 && form.length > 0){
-        /*var nextQuestion = arrayFrom.pop();
-        if (arrayTo.length > 0) {
-            setNext(arrayTo[arrayTo.length - 1], nextQuestion)
-        }
-        arrayTo.push(nextQuestion);*/
-        /*pushQuestion(arrayFrom.pop(), form);
-        elementsToPush--;
-    }
-}
-*/
 function pushQuestion(nextQuestion, arrayTo) {
-   // var nextQuestion = arrayFrom.pop();
-    if (arrayTo.length > 0) {
+   if (arrayTo.length > 0) {
         var currentQuestion = arrayTo[arrayTo.length - 1];
-        //setNext(arrayTo[arrayTo.length - 1], nextQuestion)
         currentQuestion.next = nextQuestion;
     }
     arrayTo.push(nextQuestion);
+}
+
+function initFormPageText(isInEnglish) {
+    var pageText = {};
+    pageText.submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
+    pageText.terms = {
+        title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
+        prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
+        postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
+    }
+    return pageText;
 }

@@ -75,7 +75,6 @@
 
     var container = $('#formContainer');//,
 
-
     function scrollToNextElement(nextElement) {
         var scrollTo = $('#' + nextElement);
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
@@ -87,15 +86,11 @@
         success: function(label,element) {
             //element.find("input").css( "border", "solid green 1px" );
             element.style.border= "solid green 1px" ;
-            //console.log(element);
-            //console.log(label);
         },
         //debug: true,
         //rules: rules,
         messages: {
-            /*"agreeableness_1": {
-                //required: "Please, enter a date"
-            },*/
+
         },
         errorElement: "div",
         wrapper: "div",  // a wrapper around the error message
@@ -115,45 +110,12 @@
 
             },
         submitHandler: function (form) {
-            //console.log(form.logo.files[0]);
-            //var fileData = "&r=";
-          //  console.log(form);
-         /*   var file = form.logo.files[0];
-            if (file) {
-                // create reader
-                var reader = new FileReader();
-                reader.readAsText(file);
-                reader.onload = function(e) {
-                    // browser completed reading file - display it
-                   // $('#logo').prop('value', e.target.result.toString());
-                    fileData += e.target.result;
-                    //console.log(e.target.result);
-                };
-            }*/
-            //return false;
-           // var formData = new FormData(this);
-
             $.ajax({
                 url:'/addClient',
                 type:'post',
                 data:$('#addClient').serialize() ,//+ fileData,
                 async: false,
                 success:function(){
-                    //alert(data)
-                    //whatever you wanna do after the form is successfully submitted
-                   /* console.log(form);
-                    var file = form.logo.files[0];
-                    if (file) {
-                        // create reader
-                        var reader = new FileReader();
-                        reader.readAsText(file);
-                        reader.onload = function(e) {
-                            // browser completed reading file - display it
-                            $('#logo').prop('value', e.target.result.toString());
-                            console.log(e.target.result);
-                        };
-                    }*/
-
                     //console.log(form.user_id.value);
                     mixpanel.track('New Client added', {'uid': form.user_id.value/* candidate/employee */});
 

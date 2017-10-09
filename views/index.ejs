@@ -1,30 +1,24 @@
 <!DOCTYPE html>
 <html>
 <% include partials/head %>
+
+<body class="content" dir=<%=indexPageText.textDirection%>>
 <header>
     <% include partials/logo %>
-  <div class="container col-md-12">
-    <h1> <%=  title %> </h1>
-  </div>
+    <div class="container col-md-12">
+        <h1> <%=  title %> </h1>
+    </div>
 </header>
-<body class="content" dir=<%=indexPageText.textDirection%>>
 <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
   <form id="formInfo" method="post" action="/">
-    <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
+      <input type="hidden" name="companyName" id="companyName" value='<%= companyName %>'>
+      <input type="hidden" name="logoStyle" id="logoStyle" value='<%= logoStyle %>'>
+      <input type="hidden" name="logoImgContentType" id="logoImgContentType" value='<%= companyLogo.contentType %>'>
+      <input type="hidden" name="logoImgData" id="logoImgData" value='<%= companyLogo.data.toString('base64') %>'>
+      <input type="hidden" name="language" id="language" value='<%= language %>'>
+      <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
         <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-            לפניך שאלון שמילויו אורך כחצי שעה.
-            השאלון הנו מבחן מיון למועמדים לתפקיד נציגי שירות ו/או מכירה בחברה המרכזית.
-            הסיבה שאת/ה מתבקש/ת להשיב על השאלון היא על מנת שנוכל להבין כיצד העובדים הקיימים משיבים על השאלון.
-            השאיפה שלנו היא לגייס עוד עובדים טובים כמוך!
-            מטרה נוספת היא לקבל משוב מקדים על חוויית מילוי השאלון.
-            חשוב מאוד לציין שלא נעשה בשאלון שום שימוש לטובת הערכה אישית שלך וכי נתוני השאלון שלך מעובדים באופן מוצפן על ידי חברה חיצונית.
-            סומכים עלייך שתירתם למטרה של יצירת סביבת עבודה מצוינת ותשיב על השאלון בכנות וברצינות.
-            את השאלון יש למלא בסביבה נטולת הפרעות וברצף.
-            פרט לשאלות שכותרתן שאלות חשיבה, אין תשובות נכונות או לא נכונות בשאלון, עלייך לבחור בתשובה המשקפת בצורה הטובה ביותר את עמדתך/התנהגותך. השאלון יודע לאבחן דפוסי תשובה כנים יותר ופחות ולכן מומלץ להשיב בכנות ובפתיחות.
-            בשאלות החשיבה יש לסמן את התשובה הנכונה לדעתך, במידה ואינך בטוח/ה - יש לנחש.
-            לא ניתן למלא את השאלון יותר מפעם אחת וכן לא ניתן להעבירו.
-            חובה למלא את כל השאלות בשאלון.
-            בתודה ובהערכה, צוות ההנהלה.
+            <%=indexPageText.instructionText%>
         </div>
       <div style="padding: 30px;">
         <a onclick="scrollToNextElement('intro2')" class="btn btn-primary"><%=  indexPageText.next %></a>
@@ -33,7 +27,9 @@
 
       <div id="intro2" style="height:370px;">
     <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-        החברה המרכזית למכירות ולהפצה משווקת את מרבית מוצרי קבוצת “החברה המרכזית לייצור משקאות קלים בע”מ”, המובילה את שוק המשקאות בישראל, החל ממשקאות מוגזים דרך משקאות קלים, מיצים טבעיים ועד לבירה. החל משנת 2005 פועלת הקבוצה גם בשוק מוצרי החלב.    </div>
+        <%=companyDescription%>
+    </div>
+
         <div style="padding: 30px;">
           <a onclick="scrollToNextElement('intro3')" class="btn btn-primary"><%=  indexPageText.next %></a>
         </div>
@@ -76,27 +72,20 @@
         }
     });
 
-    var container = $('#formContainer');//,
-
+    var container = $('#formContainer');
 
     function scrollToNextElement(nextElement) {
         var scrollTo = $('#' + nextElement);
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
         container.scrollTop()});
     }
-        //scrollTo = $('#question' + numOfQuestionsAnswered);
-
-
 
     var keys = document.getElementsByTagName("input");
     var rules = {};
 
     for (var index = 0; index < keys.length; index++) {
         var key = keys[index].name;
-        //if(key != 'FormTotalTime'){
-            rules[key] = "required";
-
-        //}
+        rules[key] = "required";
     }
     //console.log(rules);
 
@@ -105,8 +94,6 @@
         success: function(label,element) {
             //element.find("input").css( "border", "solid green 1px" );
             element.style.border= "solid green 1px" ;
-            //console.log(element);
-            //console.log(label);
         },
         //debug: true,
         rules: rules,
@@ -128,56 +115,25 @@
         },
         focusInvalid: false,
         invalidHandler: function(form, validator) {
-            //var container = $('#fromContainer');
-
             if (!validator.numberOfInvalids())
                 return;
-
-            //console.log(validator.errorList);
-            //var currentElementID = validator.errorList[0].element.id;
-            //var parent = $('[id="' + currentElementID + '"]').parent();
-
-
-            //if(currentElementID == 'agree') {
-            //    parent = parent.parent();
-           // }
-
-            //var scrollTo = $('#' + parent.attr('id'));
-
-            //container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
-            //container.scrollTop()}, 500);*/
         },
         submitHandler: function (form) {
-            /*var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
-            //
-            //$('#FormTotalTime').prop('value', totalTime);*/
-
-
-
             $.ajax({
                 url:'/',
                 type:'post',
                 data:$('#formInfo').serialize(),
                 success:function(){
                     //whatever you wanna do after the form is successfully submitted
-                    //console.log(form);
                     console.log(form.user_id.value);
                     mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'cocacola_user'/* candidate/employee */});
 
                     // TODO: scrollTo block user authentication display
                 }
             });
-            //console.log(form);
-
-            // FOR DEMO return false;
             form.submit();
-
-            //mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
         }
     });
-
-    // TODO: create form for authentication and redirect to form
-
 </script>
   </body>
 </html>

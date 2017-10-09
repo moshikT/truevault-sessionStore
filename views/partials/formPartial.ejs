@@ -1,11 +1,15 @@
 <form id="form" method="post" action="/form">
+    <input type="hidden" name="companyName" id="companyName" value='<%= companyName %>'>
+    <input type="hidden" name="logoStyle" id="logoStyle" value='<%= logoStyle %>'>
+    <input type="hidden" name="logoImgContentType" id="logoImgContentType" value='<%= companyLogo.contentType %>'>
+    <input type="hidden" name="logoImgData" id="logoImgData" value='<%= companyLogo.data.toString('base64') %>'>
+    <input type="hidden" name="language" id="language" value='<%= language %>'>
     <input type="hidden" name="formDuration" id="formDuration">
     <input type="hidden" name="fullName" id="fullName" value='<%= candidateData['fullName'] %>'>
     <input type="hidden" name="id" id="id" value='<%= candidateData['id'] %>'>
     <input type="hidden" name="email" id="email" value='<%= candidateData['email'] %>'>
     <input type="hidden" name="phoneNumber" id="phoneNumber" value='<%= candidateData['phoneNumber'] %>'>
-<!--onclick="scrollToNextElement('<%=/* (typeof formjson[i].next !== 'undefined') ?  'div' + formjson[i].next['id'] : 'div' + formjson.length + ""*/ %>')">
-   --> <% for (var i=0;i<formjson.length; i++) {%>
+    <% for (var i=0;i<formjson.length; i++) {%>
     <div data-title=<%- (typeof formjson[i].next !== 'undefined') ? 'div' + formjson[i].next['id'] : 'div' + formjson.length + "" %> id=<%- 'div' + formjson[i].id /*(typeof formjson[i].next !== 'undefined') ? formjson[i].next['id'] : formjson.length + "" */%> class="container q">
         <p><%- formjson[i]['item'] %></p>
 
@@ -74,120 +78,3 @@
     </div>
 
 </form>
-<!--
-    <div id="test0" class="container q" style="margin-top: 0px;">
-        <p for="q1">Sympathize with others' feelings.</p>
-        <div id="radioBtn" class="btn-group a">
-            <a href="#q2" class="btn btn-primary btn-lg notActive answer"  data-toggle="q1" data-title="Y">YES</a>
-            <a href="#q2" class="btn btn-primary btn-lg notActive answer"  data-toggle="q1" data-title="N">NO</a>
-        </div>
-        <input type="hidden" name="agreeableness_1" id="q1">
-    </div>
-    </br>
-    <div id="test1" class="container q">
-        <p for="q2">Get chores done right away.</p>
-
-        <div id="radioBtn" class="btn-group a">
-            <a href="#q3" class="btn btn-primary btn-lg notActive answer" data-toggle="q2" data-title="1" >1</a>
-            <a href="#q3" class="btn btn-primary btn-lg notActive answer" data-toggle="q2" data-title="2" >2</a>
-            <a href="#q3" class="btn btn-primary btn-lg notActive answer" data-toggle="q2" data-title="3" >3</a>
-            <a href="#q3" class="btn btn-primary btn-lg notActive answer" data-toggle="q2" data-title="4" >4</a>
-            <a href="#q3" class="btn btn-primary btn-lg notActive answer" data-toggle="q2" data-title="5"
-               style="border-bottom-right-radius: 6px;border-top-right-radius: 6px;">5</a>
-            </br>
-            <div class="a" style="font-size: x-small;font-weight: 100;">
-                <p class="am" style="float: right;padding:5px;/*width:20px;*/"> במידה  <br>רבה<br> מאוד</p>
-                <p class="am" style="float: left;padding:5px;/*width:20px;*/"> במידה <br>מועטה<br> מאוד</p>
-            </div>
-        </div>
-
-
-        <input type="hidden" name="q2" id="q2">
-    </div>
-    </br>
-    <div id="test2" class="container q">
-        <p>Make a mess of things.</p>
-        <div id="radioBtn" class="btn-group a">
-            <a href="#q4" class="btn btn-primary btn-lg notActive" data-toggle="q3" data-title="1" >1</a>
-            <a href="#q4" class="btn btn-primary btn-lg notActive" data-toggle="q3" data-title="2" >2</a>
-            <a href="#q4" class="btn btn-primary btn-lg notActive" data-toggle="q3" data-title="3" >3</a>
-            <a href="#q4" class="btn btn-primary btn-lg notActive" data-toggle="q3" data-title="4"
-               style="border-bottom-right-radius: 6px;border-top-right-radius: 6px;">4</a>
-            <br>
-            <div class="a" style="font-size: x-small;font-weight: 100;">
-                <p class="am" style="float: right;padding:5px;/*width:20px;*/"> במידה  <br>רבה<br> מאוד</p>
-                <p class="am" style="float: left;padding:5px;/*width:20px;*/"> במידה <br>מועטה<br> מאוד</p>
-            </div>
-        </div>
-        <input type="hidden" name="q3" id="q3">
-    </div>
-    </br>
-    <div id="test3" class="container q">
-        <p>Have difficulty understanding abstract ideas.</p>
-        <div id="radioBtn" class="a">
-            <a href="#q5" class="btn btn-primary btn-md notActive option" data-toggle="efficiency_8rA213" data-title="1" >Option A</a></br>
-            <a href="#q5" class="btn btn-primary btn-md notActive option" data-toggle="efficiency_8rA213" data-title="2" >Option B</a></br>
-            <a href="#q5" class="btn btn-primary btn-md notActive option" data-toggle="efficiency_8rA213" data-title="3" >Option C</a></br>
-            <a href="#q5" class="btn btn-primary btn-md notActive option" data-toggle="efficiency_8rA213" data-title="4" >Option D</a>
-        </div>
-        <input type="hidden" name="efficiency_8rA213" id="efficiency_8rA213">
-    </div>
-    <div id="test4" class="container q">
-        <p>Plunge into tasks with all my heart.</p>
-        <div id="radioBtn" class="a">
-            <a href="#q6" class="btn btn-primary btn-md notActive option" data-toggle="negotiation_3" data-title="1" >Option A</a></br>
-            <a href="#q6" class="btn btn-primary btn-md notActive option" data-toggle="negotiation_3" data-title="2" >Option B</a></br>
-            <a href="#q6" class="btn btn-primary btn-md notActive option" data-toggle="negotiation_3" data-title="3" >Option C</a></br>
-            <a href="#q6" class="btn btn-primary btn-md notActive option" data-toggle="negotiation_3" data-title="4" >Option D</a></br>
-            <a href="#q6" class="btn btn-primary btn-md notActive option" data-toggle="negotiation_3" data-title="5" >Option E</a>
-        </div>
-        <input type="hidden" name="negotiation_3" id="negotiation_3">
-    </div>
-    <div id="test5" class="container q">
-        <p>I would like to have more motivation to succeed.</p>
-        <div id="radioBtn" class="a">
-            <a href="#q7" class="btn btn-primary btn-md notActive option" data-toggle="details_12" data-title="1" >Option A</a></br>
-            <a href="#q7" class="btn btn-primary btn-md notActive option" data-toggle="details_12" data-title="2" >Option B</a></br>
-            <a href="#q7" class="btn btn-primary btn-md notActive option" data-toggle="details_12" data-title="3" >Option C</a></br>
-            <a href="#q7" class="btn btn-primary btn-md notActive option" data-toggle="details_12" data-title="4" >Option D</a></br>
-            <a href="#q7" class="btn btn-primary btn-md notActive option" data-toggle="details_12" data-title="5" >Option E</a>
-        </div>
-        <input type="hidden" name="details_12" id="details_12">
-    </div>
-    <div id="test6" class="container q">
-        <p>Put little time and effort into my work. </p>
-        <div id="radioBtn" class="btn-group a">
-            <a href="#q8" class="btn btn-primary btn-lg notActive"  data-toggle="information_giving_3" data-title="Y">YES</a>
-            <a href="#q8" class="btn btn-primary btn-lg notActive"  data-toggle="information_giving_3" data-title="N">NO</a>
-        </div>
-        <input type="hidden" name="information_giving_3" id="information_giving_3">
-    </div>
-    <div id="test7" class="container q">
-        <p>Don't talk a lot.</p>
-        <div id="radioBtn" class="btn-group a">
-            <a href="#q9" class="btn btn-primary btn-lg notActive am" data-toggle="service_1" data-title="1" >1</a>
-            <a href="#q9" class="btn btn-primary btn-lg notActive am" data-toggle="service_1" data-title="2" >2</a>
-            <a href="#q9" class="btn btn-primary btn-lg notActive am" data-toggle="service_1" data-title="3" >3</a>
-            <a href="#q9" class="btn btn-primary btn-lg notActive am" data-toggle="service_1" data-title="4" >4</a>
-            <a href="#q9" class="btn btn-primary btn-lg notActive am" data-toggle="service_1" data-title="5" >5</a>
-        </div>
-        <input type="hidden" name="service_1" id="service_1">
-    </div>
-    <div id="test8" class="container q">
-        <p>Am relaxed most of the time.</p>
-        <div id="radioBtn" class="btn-group a">
-            <a class="btn btn-primary btn-lg notActive am" data-toggle="cultural_20" data-title="1" >1</a>
-            <a class="btn btn-primary btn-lg notActive am" data-toggle="cultural_20" data-title="2" >2</a>
-            <a class="btn btn-primary btn-lg notActive am" data-toggle="cultural_20" data-title="3" >3</a>
-            <a class="btn btn-primary btn-lg notActive am" data-toggle="cultural_20" data-title="4" >4</a>
-        </div>
-        <input type="hidden" name="cultural_20" id="cultural_20">
-    </div>
--->
-
-
-
-
-
-
-
