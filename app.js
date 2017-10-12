@@ -1,6 +1,6 @@
 var express = require('express');
 var multer  = require('multer');
-var upload = multer({ dest: 'uploads/' });
+var upload = multer({ dest: '/tmp/uploads/' });
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');

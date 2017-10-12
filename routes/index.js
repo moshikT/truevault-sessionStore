@@ -4,7 +4,8 @@ var form_Ctrl = require('../controllers/form.server.controller');
 var mailParser_Ctrl = require('../controllers/mailParser.server.controller');
 var addClient_Ctrl = require('../controllers/addClient.server.controller');
 var multer  = require('multer');
-var upload = multer({ dest: '../uploads/' });
+//var upload = multer({ dest: '../uploads/' });
+var upload = multer({ dest: '/tmp/uploads/' });
 var fs = require('fs');
 
 //mailParser_Ctrl.onMailArrived();
