@@ -96,7 +96,7 @@ exports.getIndex = function (req, res) {
     /* if req.query.id undefined initiate with coca cola id as default for now. */
 
 
-    var companyId = req.query.id ? req.query.id : '59d9c11075ed080ba4b40869';
+    var companyId = req.query.id ? req.query.id : 'קסטרו';
     Client.findOne({name : companyId}, function(err, company) {
         if (err) throw err; /* load default params */
         console.log("loaded from db: ", company.name);
