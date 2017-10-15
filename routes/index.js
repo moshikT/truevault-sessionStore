@@ -32,10 +32,10 @@ router.get('/addClient', function(req, res) {
     return addClient_Ctrl.getAddClientPage(req, res);
 });
 
-/* submit file object with form */
+/* submit file object with form
 router.post('/addClient', upload.single('logo'), function(req, res) {
     return addClient_Ctrl.addClient(req, res);
-});
+});*/
 
 router.get('/test', function (req, res) {
     return form_Ctrl.getTest(req, res);
