@@ -3,8 +3,8 @@ var router = express.Router();
 var form_Ctrl = require('../controllers/form.server.controller');
 var mailParser_Ctrl = require('../controllers/mailParser.server.controller');
 var addClient_Ctrl = require('../controllers/addClient.server.controller');
-var multer  = require('multer');
-var upload = multer({ dest: '../uploads/' });
+//var multer  = require('multer');
+//var upload = multer({ dest: '../uploads/' });
 var fs = require('fs');
 //var questionRouter = require('./routes/questionRouter');
 
