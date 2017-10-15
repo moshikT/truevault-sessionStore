@@ -94,8 +94,10 @@ exports.saveFormResults = function (req, res) {
 
 exports.getIndex = function (req, res) {
     /* if req.query.id undefined initiate with coca cola id as default for now. */
+
+
     var companyId = req.query.id ? req.query.id : '59d9c11075ed080ba4b40869';
-    Client.findById(companyId, function(err, company) {
+    Client.findOne({name : companyId}, function(err, company) {
         if (err) throw err; /* load default params */
         console.log("loaded from db: ", company.name);
         var indexPageText = initPageText(company.name, company.isDemo, isCandidate, (company.language == 'en'));

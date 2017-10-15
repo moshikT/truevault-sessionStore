@@ -9,7 +9,8 @@ var clientSchema = new Schema({
     title : String,
     introText : String,
     language : String,
-    isDemo : Boolean
+    isDemo : Boolean,
+    link : String
 });
 
 module.exports = mongoose.model('Client', clientSchema);

@@ -10,19 +10,20 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 
 
-//mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire
+mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire
 //mongodb://emphireDB:nD9yncX1bf@ds115035.mlab.com:15035/empiricalhire
 var index = require('./routes/index');
+var questionRouter = require('./routes/questionRouter');
 
-/* LOCAL */
-/*
+/* LOCAL
+
 mongoose.connect('mongodb://127.0.0.1/candidateLocal', {
     useMongoClient: true
-});
+});*/
 // old mLab
-//mongoose.connect('mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire', {
-/*  mLAB */
-mongoose.connect('mongodb://emphireDB:nD9yncX1bf@ds115035.mlab.com:15035/empiricalhire', {
+mongoose.connect('mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire', {
+ /* mLAB
+mongoose.connect('mongodb://emphireDB:nD9yncX1bf@ds115035.mlab.com:15035/empiricalhire', { */
     useMongoClient: true
 });
 
@@ -51,6 +52,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+app.use('/api', questionRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
