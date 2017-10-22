@@ -6,23 +6,34 @@ var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 var Candidate = require('../models/candidate.server.model.js');
 var Client = require('../models/addClient.server.model.js');
+var Guid = require('Guid');
 
 var isCandidate = true;
 
 var newLine= "\r\n";
 class userData {
-    constructor(fullName, id, email, phoneNumber) {
+    constructor(fullName, id, email, phoneNumber, company) {
         this.fullName = fullName;
         this.id = id;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.company = company;
     }
 }
 
 exports.getInfo = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
-        req.body['user_email'], req.body['user_tel']);//= req.body;
+        req.body['user_email'], req.body['user_tel'], req.client.name);//= req.body;
 
+/*    var companyLogo = {};
+    companyLogo.data = req.body['logoImgData'];
+    companyLogo.contentType = req.body['logoImgContentType'];
+    //company.companyLogo = companyLogo;
+
+  */  var isInEnglish = (req.client.language == 'en');
+    var formPageText = initFormPageText(isInEnglish);
+
+    /*
     var company = {};
     company.name = req.body['companyName'];
     company.language = req.body['language'];
@@ -31,81 +42,15 @@ exports.getInfo = function (req, res) {
     companyLogo.contentType = req.body['logoImgContentType'];
     company.companyLogo = companyLogo;
     company.logoStyle = req.body['logoStyle'];
-
-    // TODO: test if user exists in db - if not else prompt error code
-    // TODO: send SMS with varification code
-
-    formGenerator_Ctrl.generateForm(res, newUser, company);
-}
-
-exports.saveFormResults = function (req, res) {
-    /* Remove duplicates from the form before insert to db */
-    var formResults = req.body;
-    delete formResults['submit_btn'];
-    delete formResults['agree'];
-    var userFullName = formResults['fullName'];
-    delete formResults['fullName'];
-    var userId = formResults['id'];
-    delete formResults['id'];
-    var userEmail = formResults['email'];
-    delete formResults['email'];
-    var userPhoneNumber = formResults['phoneNumber'];
-    delete formResults['phoneNumber'];
-
-    var totalTime = formResults['formDuration'];
-    delete formResults['formDuration'];
-
-    var companyName = formResults['companyName'];
-    delete formResults['companyName'];
-
-    var logoStyle = formResults['logoStyle'];
-    delete formResults['logoStyle'];
-
-
-    var logoImg = {}
-    logoImg.data = formResults['logoImgData'];
-    delete formResults['logoImgData'];
-    logoImg.contentData = formResults['logoImgContentType'];
-    delete formResults['logoImgContentType'];
-
-    var language = formResults['language'];
-    delete formResults['language'];
-
-    var entry = new Candidate({
-        fullName: userFullName,
-        id: userId,
-        email: userEmail,
-        phoneNumber: userPhoneNumber,
-        company : companyName,
-        formDuration: totalTime,
-        formResults : formResults
-    });
-    entry.save();
-    console.log("new candidate entry " + entry);
-
-    res.render('thankYou', { title: 'Empiricalhire',
-        isInEnglish: (language == 'en'),
-        textDirection: (language == 'en') ? 'ltr' : 'rtl',
-        company: companyName,
-        companyLogo: logoImg,
-        logoStyle: logoStyle
-    });
-};
-
-exports.getIndex = function (req, res) {
-    /* if req.query.id undefined initiate with coca cola id as default for now. */
-
-
-    var companyId = req.query.id ? req.query.id : 'קסטרו';
-    Client.findOne({name : companyId}, function(err, company) {
+*/
+    // TODO: test if user exists in db - if not generate form, else check if form completed if true prompt error code,
+    // TODO: else load form.
+    /*Candidate.findOne({name : companyId}, function(err, candidate) {
         if (err) throw err; /* load default params */
-        console.log("loaded from db: ", company.name);
-        var indexPageText = initPageText(company.name, company.isDemo, isCandidate, (company.language == 'en'));
-        var companyLogo = {};
-        companyLogo.data = company.logoImg.data;
-        companyLogo.contentType = company.logoImg.contentType;
+       // console.log("loaded from db: ", candidate.fullName);
 
         /* Load page with the loaded company from client db */
+        /*
         res.render('index', {
             title: '',
             isInEnglish: (company.language == 'en'),
@@ -115,10 +60,143 @@ exports.getIndex = function (req, res) {
             logoStyle: company.logoStyle,
             companyName: company.name,
             companyDescription: company.introText
+        });*/
+
+    //});
+    // TODO: send SMS with varification code
+
+
+
+    formGenerator_Ctrl.generateForm(isInEnglish, function (form) {
+        var guid = Guid.create();
+
+        var entry = new Candidate({
+            fullName: newUser.fullName,
+            id: newUser.id,
+            email: newUser.email,
+            phoneNumber: newUser.phoneNumber,
+            company : newUser.company,
+            formDuration: '0 minutes',
+            form : form,
+            formCompleted: false,
+            sessionID: guid.value
         });
+        entry.save(function (err) {
+            if(err) {
+                console.log(err);
+            }
+        });
+
+        /* REDIRECT to '/form?sid=guid.value' */
+        res.redirect('/' + req.client._id + '/form/?sid=' + guid.value);
+        /* TODO: Temporary commented
+        req.params.sid = guid.value;
+
+        res.render('form', { title: '' ,
+            companyLogo: companyLogo,
+            companyName: req.body['companyName'],
+            logoStyle: req.body['logoStyle'],
+            language: req.body['language'],
+            formjson: form,
+            isInEnglish: isInEnglish,
+            textDirection: isInEnglish ? 'ltr' : 'rtl',
+            terms : formPageText.terms,
+            submitText : formPageText.submitText,
+            candidateData: newUser,
+            sid: guid.value
+        });*/
     });
 }
 
+exports.saveFormResults = function (req, res) {
+    //Candidate.markModified('formCompleted');
+    //Candidate.markModified('formDuration');
+console.log("sid val: ", req.query.sid);
+    var formResults = req.body;
+    var totalTime = formResults['formDuration'];
+// TODO: add date completed
+    Candidate.update({sessionID: req.query.sid}, {
+            formCompleted : true,
+            formDuration : totalTime// handle document
+    }, function(err, numberAffected, rawResponse) {
+        if(err) throw err;
+        console.log("Duration and Completed updated!!", numberAffected);
+        console.log("response ", rawResponse);
+        res.redirect('/' + req.client._id + '/thankYou');
+    });
+
+
+};
+
+exports.getIndex = function (req, res) {
+    // TODO: export to different module
+    var indexPageText = initPageText(req.client.name, req.client.isDemo, isCandidate, (req.client.language == 'en'));
+    res.render('index', {
+        title: '',
+        indexPageText : indexPageText,
+        client: req.client
+    });
+}
+
+exports.getForm = function (req, res) {
+    if(!req.query.sid) {
+        /* no session id; redirect to home page in order to get user data */
+        //res.redirect('' + req.client._id + '/');
+        console.log("no sid");
+    }
+    /*
+    *  else if(req.query.sid.isExpired)
+    *  {
+    *       // user already fill the form
+    *       //res.redirect('' + req.client._id + '/thankYou');
+    *  }
+    * */
+    else {
+        /* Load form */
+        Candidate.findOne({sessionID: req.query.sid}, function (err, candidate) {
+            if (err) throw err;
+            if (candidate) {
+                /*if (req.query.f == 0) {
+                    res.json(candidate.form/* change to form *///)
+                /*}
+                else {
+                    res.json(candidate);
+                }*/
+                var isInEnglish = (req.client.language == 'en');
+                var formPageText = initFormPageText(isInEnglish);
+
+                res.render('form', {
+                    title: '' ,
+                    formjson: candidate.form,
+                    isInEnglish: isInEnglish,
+                    textDirection: isInEnglish ? 'ltr' : 'rtl',
+                    terms : formPageText.terms,
+                    submitText : formPageText.submitText,
+                    sid: candidate.sessionID,
+                    client: req.client
+                });
+            }
+            else {
+                res.status(500).send("No User found");
+            }
+        });
+                      }
+                      /* TODO: check if req.params.sid !exist generateForm and load form
+                         TODO: else if req.params.sid exist and session !expired load form from db and update view with question answered
+                         TODO: else (sid exist and session expires) redirect to thank you page
+
+                         Think to use middleware and REAST api for getting the form
+                       */
+}
+
+exports.getThankYouPage = function (req, res) {
+    res.render('thankYou', { title: 'Empiricalhire',
+        isInEnglish: (req.client.language == 'en'),
+        textDirection: (req.client.language == 'en') ? 'ltr' : 'rtl',
+        client: req.client
+    });
+}
+/* export this functions to different module */
 function initPageText(companyName, isDemo, isCandidate, isInEnglish) {
     return indexPageText = {
         //company : '',
@@ -165,4 +243,15 @@ function initPageText(companyName, isDemo, isCandidate, isInEnglish) {
                     'חובה למלא את כל השאלות בשאלון.\n' +
                     'בתודה ובהערכה, צוות ההנהלה.'))
     }
+}
+
+function initFormPageText(isInEnglish) {
+    var pageText = {};
+    pageText.submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
+    pageText.terms = {
+        title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
+        prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
+        postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
+    }
+    return pageText;
 }

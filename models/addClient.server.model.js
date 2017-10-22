@@ -10,6 +10,7 @@ var clientSchema = new Schema({
     introText : String,
     language : String,
     isDemo : Boolean,
+    /* userType: String //candidate, employee */
     link : String
 });
 

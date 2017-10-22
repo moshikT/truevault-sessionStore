@@ -1,16 +1,27 @@
-var numOfQuestionsAnswered = 0;
-var totalQuestions = document.getElementsByClassName('q').length;
-//alert(totalQuestions);
+var numOfQuestionsAnswered = document.getElementsByClassName('active').length;
+var qAnsweredArray = document.getElementsByClassName('active');//.length;
 var questionsAnswered = [];
+for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswered; questionsAnsweredIndex++) {
+    questionsAnswered.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
+}
+if(numOfQuestionsAnswered !== 0) {
+    // TODO: scroll to the last element filled
+}
+var totalQuestions = document.getElementsByClassName('q').length;
+updateProgressbar(numOfQuestionsAnswered, totalQuestions);
+//alert(totalQuestions);
 var startDate = new Date();
+var lastQuestionAnswered = startDate;
+var sid = getParameterByName('sid');
+var cid = getCid();
 
 $('#radioBtn a').on('click', function(){
     var answer = $(this).data('title');
-    var tog = $(this).data('toggle');
+    var qid = $(this).data('toggle');
     var dataValue = $(this).data('value');
     var isOnError = $(this).css('border');
     var nextQuestion = $(this).parent().parent().data('title');
-    //console.log(nextQuestion);
+    var patchData = {};
 
     if(isOnError.indexOf("1px solid rgb(255, 0, 0)") != "-1"){
         $(this).parent().find("a").css('border', "solid green 1px");
@@ -18,40 +29,60 @@ $('#radioBtn a').on('click', function(){
         el[0].style.display = 'none';
     }
 
-    $('#'+tog).prop('value', answer);
-    $('a[data-toggle="'+tog+'"]').not('[data-value="'+dataValue+'"]').removeClass('active').addClass('notActive');
-    $('a[data-toggle="'+tog+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
+    /* mark question answered as active */
+    $('#'+qid).prop('value', answer);
+    $('a[data-toggle="'+qid+'"]').not('[data-value="'+dataValue+'"]').removeClass('active').addClass('notActive');
+    $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
 
-    if(questionsAnswered.indexOf(tog) == '-1') {
-        questionsAnswered.push(tog);
+    if(questionsAnswered.indexOf(qid) == '-1') {
+        questionsAnswered.push(qid);
         numOfQuestionsAnswered++;
 
-        /*
-        var container = $('#fromContainer'),
-            //scrollTo = $('#question' + numOfQuestionsAnswered);
-            scrollTo = $('#' + nextQuestion);
-        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
-        container.scrollTop()});
-        //container.animate({scrollTop: container.offset().top - scrollTo.offset().top});*/
+        // TODO: if upload existed form - push al unAnswered questions to questionsAnswered array
+        // TODO: and upadte numOfQuestionsAnswered + progressbar.
+        // TODO: Think to export both to external functions
+        // In mongodb v property might hold the number of questions answered! - minus number of questions switched
 
-        //scrollToNextElement(nextQuestion);
-        var container = $('#formContainer'),
-            scrollTo = $('#' + nextQuestion);
-        //console.log(container);
-        //console.log(scrollTo);
-        container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()});
+        var timeAnswered = Math.abs((new Date() - lastQuestionAnswered)/1000).toFixed(0);//(new Date() - lastQuestionAnswered);
+        console.log(timeAnswered);
 
-        var progress = document.getElementById("progressBar");
-        var percent = (numOfQuestionsAnswered / totalQuestions) * 100;
-        progress['aria-valuenow'] = percent.toFixed(0);
-        progress['style'].width = percent.toFixed(0) + "%";
-        progress.innerText = percent.toFixed(0) + "%";
+        patchData.finalAnswer = answer.toString();
+        patchData.timeAnsweredInSeconds = timeAnswered;
+        //patchData.answerSwitched = false;
 
-        if(percent == "100") {
-            progress['style'].backgroundColor  ="green";
-        }
+        /* start timer for next question */
+        lastQuestionAnswered = new Date();
+
+        updateProgressbar(numOfQuestionsAnswered, totalQuestions);
+    }
+    else {
+        /* Already answered the question */
+        patchData.finalAnswer = answer.toString();
+        patchData.AnswerSwitched = true;
+
     }
 
+    /* Scroll to the next question */
+    var container = $('#formContainer'),
+        scrollTo = $('#' + nextQuestion);
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()});
+
+    //var uid = document.getElementById('id').value;
+    var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
+    console.log(patchUrl);
+
+    $.ajax({
+        url : patchUrl,
+        data : JSON.stringify(patchData),
+        type : 'PATCH',
+        contentType : 'application/json',
+        success:function(){
+            //whatever you wanna do after the form is successfully submitted
+            console.log("success patch request ", patchData);
+            //mixpanel.track('Question Answered, {'uid': form.user_id.value,
+            // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
+        }
+    });
 });
 
 var keys = document.getElementsByTagName("input");
@@ -64,8 +95,6 @@ for (var index = 0; index < keys.length; index++) {
     }
 }
 
-console.log(rules);
-
 $("#form").validate({
     ignore: "",
     /*success: function(label,element) {
@@ -76,11 +105,11 @@ $("#form").validate({
     },
     //debug: true,*/
     rules: rules,
-    messages: {
+    /*messages: {
         "agreeableness_1": {
             //required: "Please, enter a date"
         },
-    },
+    },*/
     errorElement: "div",
     wrapper: "div",  // a wrapper around the error message
     errorPlacement: function(error, element) {
@@ -105,49 +134,48 @@ $("#form").validate({
         }
 
         var scrollTo = $('#' + parent.attr('id'));
-
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
         container.scrollTop()}, 500);
     },
     submitHandler: function (form) {
         var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
-        mixpanel.track('form submited', {
-            'uid': document.getElementsByName('id'),
+        /* Send form data to mixpanel */
+        mixpanel.track('form submitted', {
+            'uid': document.getElementsByName('id').value,
             'form duration': totalTime,
-            'uname': document.getElementsByName('fullName'),
+            'uname': document.getElementsByName('fullName').value,
             'company' : 'beta'
         });
         $('#formDuration').prop('value', totalTime);
-        //console.log(totalTime);
         //return false;
         form.submit();
-        //mixpanel.track('formSubmited', {'uid': 'employeeNumber', 'formCompany': 'Ayalon'});
     }
 });
 
+function updateProgressbar(numOfQuestionsAnswered, totalQuestions) {
+    var progress = document.getElementById("progressBar");
+    var percent = (numOfQuestionsAnswered / totalQuestions) * 100;
+    progress['aria-valuenow'] = percent.toFixed(0);
+    progress['style'].width = percent.toFixed(0) + "%";
+    progress.innerText = percent.toFixed(0) + "%";
 
+    if(percent == "100") {
+        progress['style'].backgroundColor  ="green";
+    }
+}
 
-/*
-mixpanel.time_event('#radioBtn');
+function getParameterByName(name) {
+    var url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
 
-
-
-mixpanel.identify("13487");
-mixpanel.people.set({
-    "$first_name": "Joe2",
-    "$last_name": "Doe",
-    "$created": "2013-04-01T09:02:00",
-    "$email": "joe.doe@example.com"
-});
-
-//mixpanel.track("test4");
-mixpanel.track("test5",
-    {
-        "Video length": 213,
-        "id": "hY7gQr0"
-});
-*/
-// function getFormTimeFilled() {
-//     var totalTime = document.getElementsByName('FormTotalTime');
-//     totalTime.value = "asdasd";
-//}
+function getCid() {
+    var urlPath = window.location.pathname;
+    var cid = urlPath.split('/');
+    return cid[1];
+}

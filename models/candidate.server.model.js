@@ -6,8 +6,11 @@ var candidateSchema = new Schema({
     id : Number,//{type: Number, required: true},
     email: String,
     phoneNumber : Number,
+    company: String,
     formDuration : String,
-    formResults : JSON
+    form : JSON,
+    formCompleted: Boolean,
+    sessionID: String
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

@@ -10,13 +10,8 @@
     </div>
 </header>
 <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
-  <form id="formInfo" method="post" action="/">
-      <input type="hidden" name="companyName" id="companyName" value='<%= companyName %>'>
-      <input type="hidden" name="logoStyle" id="logoStyle" value='<%= logoStyle %>'>
-      <input type="hidden" name="logoImgContentType" id="logoImgContentType" value='<%= companyLogo.contentType %>'>
-      <input type="hidden" name="logoImgData" id="logoImgData" value='<%= companyLogo.data.toString('base64') %>'>
-      <input type="hidden" name="language" id="language" value='<%= language %>'>
-      <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
+  <form id="formInfo" method="post" action=<%='/' + client._id%>>
+       <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
         <div class="container introText" style="padding: 10px;margin-top: 0px; ">
             <%=indexPageText.instructionText%>
         </div>
@@ -27,7 +22,7 @@
 
       <div id="intro2" style="height:370px;">
     <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-        <%=companyDescription%>
+        <%=client.introText%>
     </div>
 
         <div style="padding: 30px;">
@@ -119,18 +114,19 @@
                 return;
         },
         submitHandler: function (form) {
-            $.ajax({
+            /* might send twice because form 'action' test it! */
+           /* $.ajax({
                 url:'/',
                 type:'post',
                 data:$('#formInfo').serialize(),
                 success:function(){
                     //whatever you wanna do after the form is successfully submitted
                     console.log(form.user_id.value);
-                    mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'cocacola_user'/* candidate/employee */});
+                    mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'cocacola_user'/* candidate/employee });
 
                     // TODO: scrollTo block user authentication display
-                }
-            });
+               // }
+            //});*/
             form.submit();
         }
     });
