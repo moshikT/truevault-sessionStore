@@ -14,11 +14,17 @@ var Client = require('../models/addClient.server.model.js');
 /* Middleware in order to add company details (cid) to the form pages */
 router.use(function (req, res, next) {
     var parts = req.path.split('/');
-    var cid = parts[1].toNumber;
-    if (isNaN(cid)) {
+    if ((parts[1]!="clients") ||
+        (!parts[2])) {
         next();
+        return;
     }
-    else Client.findById(parts[1], function (err, client) {
+    var cid = parts[2];
+    if (!cid) {
+        next();
+        return;
+    }
+    Client.findById(cid, function (err, client) {
         if (err) {
             res.status(500).send(err)
         };
@@ -47,23 +53,23 @@ router.use(function (req, res, next) {
 })
 
 /* GET home page. */
-router.get('/:cid', function(req, res) {
+router.get('/clients/:cid', function(req, res) {
     return form_Ctrl.getIndex(req, res);
 });
 
-router.post('/:cid', function (req, res) {
+router.post('/clients/:cid', function (req, res) {
     return form_Ctrl.getInfo(req, res);
 });
 
-router.post('/:cid/form', function(req, res) {
+router.post('/clients/:cid/form', function(req, res) {
     return form_Ctrl.saveFormResults(req, res);
 });
 
-router.get('/:cid/form', function(req, res) {
+router.get('/clients/:cid/form', function(req, res) {
     return form_Ctrl.getForm(req, res);
 });
 
-router.get('/:cid/thankYou', function(req, res) {
+router.get('/clients/:cid/thankYou', function(req, res) {
     return form_Ctrl.getThankYouPage(req, res);
 });
 
