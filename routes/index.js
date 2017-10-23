@@ -15,8 +15,12 @@ var Client = require('../models/addClient.server.model.js');
 
 /* Middleware in order to add company details (cid) to the form pages */
 router.use(function (req, res, next) {
-    var cid = req.path.split('/');
-    Client.findById(cid[1], function (err, client) {
+    var parts = req.path.split('/');
+    var cid = parts[1].toNumber;
+    if (isNaN(cid)) {
+        next();
+    }
+    else Client.findById(parts[1], function (err, client) {
         if (err) {
             res.status(500).send(err)
         };

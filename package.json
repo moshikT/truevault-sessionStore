@@ -14,7 +14,6 @@
     "express": "~4.15.2",
     "google-url": "0.0.4",
     "grunt-reload": "^0.2.0",
-    "guid": "0.0.12",
     "json2csv": "^3.11.1",
     "mail-listener2": "^0.3.1",
     "mailparser": "^2.0.5",
@@ -26,6 +25,7 @@
     "pdf2json": "^1.1.7",
     "promise": "^8.0.1",
     "serve-favicon": "~2.4.2",
+    "uuid": "^3.1.0",
     "xlsx": "^0.11.3"
   },
   "devDependencies": {

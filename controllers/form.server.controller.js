@@ -6,7 +6,7 @@ var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 var Candidate = require('../models/candidate.server.model.js');
 var Client = require('../models/addClient.server.model.js');
-var Guid = require('guid');
+var uuid = require('uuid/v1');
 
 var isCandidate = true;
 
@@ -68,7 +68,7 @@ exports.getInfo = function (req, res) {
 
 
     formGenerator_Ctrl.generateForm(isInEnglish, function (form) {
-        var guid = Guid.create();
+        var uuid = uuidv1();
 
         var entry = new Candidate({
             fullName: newUser.fullName,
@@ -79,7 +79,7 @@ exports.getInfo = function (req, res) {
             formDuration: '0 minutes',
             form : form,
             formCompleted: false,
-            sessionID: guid.value
+            sessionID: uuid
         });
         entry.save(function (err) {
             if(err) {
@@ -88,7 +88,7 @@ exports.getInfo = function (req, res) {
         });
 
         /* REDIRECT to '/form?sid=guid.value' */
-        res.redirect('/' + req.client._id + '/form/?sid=' + guid.value);
+        res.redirect('/' + req.client._id + '/form/?sid=' + uuid);
         /* TODO: Temporary commented
         req.params.sid = guid.value;
 
