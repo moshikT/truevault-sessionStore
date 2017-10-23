@@ -38,9 +38,9 @@ exports.getInfo = function (req, res) {
         }
         else {
             formGenerator_Ctrl.generateForm(isInEnglish, function (form) {
-                var guid = Guid.create();
+                var sid = uuidv1();
                 var session = {};
-                session.id = guid.value;
+                session.id = sid;
                 session.expired = false;
 
                 var entry = new Candidate({
@@ -58,7 +58,7 @@ exports.getInfo = function (req, res) {
                     if(err) {
                         console.log(err);
                     }
-                    res.redirect('/' + req.client._id + '/form/?sid=' + guid.value);
+                    res.redirect('/' + req.client._id + '/form/?sid=' + sid);
                 });
             });
         }
