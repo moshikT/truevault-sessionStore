@@ -6,7 +6,7 @@ var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 var Candidate = require('../models/candidate.server.model.js');
 var Client = require('../models/addClient.server.model.js');
-var uuid = require('uuid/v1');
+var uuidv1 = require('uuid/v1');
 
 var isCandidate = true;
 
@@ -34,7 +34,7 @@ exports.getInfo = function (req, res) {
     Candidate.findOne({id : req.body['user_id']}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
-            res.redirect('/' + req.client._id + '/form/?sid=' + candidate.session.id);
+            res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);
         }
         else {
             formGenerator_Ctrl.generateForm(isInEnglish, function (form) {
@@ -58,7 +58,7 @@ exports.getInfo = function (req, res) {
                     if(err) {
                         console.log(err);
                     }
-                    res.redirect('/' + req.client._id + '/form/?sid=' + sid);
+                    res.redirect('/clients/' + req.client._id + '/form/?sid=' + sid);
                 });
             });
         }
@@ -72,7 +72,7 @@ exports.saveFormResults = function (req, res) {
         'session.expired' : true
     }, function (err) {
         if (err) throw err;
-        res.redirect('/' + req.client._id + '/thankYou');
+        res.redirect('/clients/' + req.client._id + '/thankYou');
     });
 }
 
@@ -89,14 +89,14 @@ exports.getIndex = function (req, res) {
 exports.getForm = function (req, res) {
     if(!req.query.sid) {
         /* no session id; redirect to home page in order to get user data */
-        res.redirect('/' + req.client._id + '/');
+        res.redirect('/clients/' + req.client._id + '/');
     }
     else {
         Candidate.findOne({'session.id': req.query.sid}, function (err, candidate) {
             if (err) throw err;
             if (candidate) {
                 if(candidate.session.expired) {
-                    res.redirect('/' + req.client._id + '/thankYou');
+                    res.redirect('/clients/' + req.client._id + '/thankYou');
                 }
                 else {
                     var isInEnglish = (req.client.language == 'en');
