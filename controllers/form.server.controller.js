@@ -23,110 +23,58 @@ class userData {
 
 exports.getInfo = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
-        req.body['user_email'], req.body['user_tel'], req.client.name);//= req.body;
+        req.body['user_email'], req.body['user_tel'], req.client.name);
 
-/*    var companyLogo = {};
-    companyLogo.data = req.body['logoImgData'];
-    companyLogo.contentType = req.body['logoImgContentType'];
-    //company.companyLogo = companyLogo;
-
-  */  var isInEnglish = (req.client.language == 'en');
+    var isInEnglish = (req.client.language == 'en');
     var formPageText = initFormPageText(isInEnglish);
 
-    /*
-    var company = {};
-    company.name = req.body['companyName'];
-    company.language = req.body['language'];
-    var companyLogo = {};
-    companyLogo.data = req.body['logoImgData'];
-    companyLogo.contentType = req.body['logoImgContentType'];
-    company.companyLogo = companyLogo;
-    company.logoStyle = req.body['logoStyle'];
-*/
-    // TODO: test if user exists in db - if not generate form, else check if form completed if true prompt error code,
-    // TODO: else load form.
-    /*Candidate.findOne({name : companyId}, function(err, candidate) {
-        if (err) throw err; /* load default params */
-       // console.log("loaded from db: ", candidate.fullName);
-
-        /* Load page with the loaded company from client db */
-        /*
-        res.render('index', {
-            title: '',
-            isInEnglish: (company.language == 'en'),
-            indexPageText : indexPageText,
-            companyLogo: companyLogo,
-            language: company.language,
-            logoStyle: company.logoStyle,
-            companyName: company.name,
-            companyDescription: company.introText
-        });*/
-
-    //});
     // TODO: send SMS with varification code
 
+    /* If user exists and session not expired load form - else generate new form */
+    Candidate.findOne({id : req.body['user_id']}, function(err, candidate) {
+        if (err) throw err; /* load default params */
+        if(candidate) {
+            res.redirect('/' + req.client._id + '/form/?sid=' + candidate.session.id);
+        }
+        else {
+            formGenerator_Ctrl.generateForm(isInEnglish, function (form) {
+                var guid = Guid.create();
+                var session = {};
+                session.id = guid.value;
+                session.expired = false;
 
-
-    formGenerator_Ctrl.generateForm(isInEnglish, function (form) {
-        var uuid = uuidv1();
-
-        var entry = new Candidate({
-            fullName: newUser.fullName,
-            id: newUser.id,
-            email: newUser.email,
-            phoneNumber: newUser.phoneNumber,
-            company : newUser.company,
-            formDuration: '0 minutes',
-            form : form,
-            formCompleted: false,
-            sessionID: uuid
-        });
-        entry.save(function (err) {
-            if(err) {
-                console.log(err);
-            }
-        });
-
-        /* REDIRECT to '/form?sid=guid.value' */
-        res.redirect('/' + req.client._id + '/form/?sid=' + uuid);
-        /* TODO: Temporary commented
-        req.params.sid = guid.value;
-
-        res.render('form', { title: '' ,
-            companyLogo: companyLogo,
-            companyName: req.body['companyName'],
-            logoStyle: req.body['logoStyle'],
-            language: req.body['language'],
-            formjson: form,
-            isInEnglish: isInEnglish,
-            textDirection: isInEnglish ? 'ltr' : 'rtl',
-            terms : formPageText.terms,
-            submitText : formPageText.submitText,
-            candidateData: newUser,
-            sid: guid.value
-        });*/
+                var entry = new Candidate({
+                    fullName: newUser.fullName,
+                    id: newUser.id,
+                    email: newUser.email,
+                    phoneNumber: newUser.phoneNumber,
+                    company : newUser.company,
+                    formDurationInMinutes: 0,
+                    form : form,
+                    formCompleted: false,
+                    session: session
+                });
+                entry.save(function (err) {
+                    if(err) {
+                        console.log(err);
+                    }
+                    res.redirect('/' + req.client._id + '/form/?sid=' + guid.value);
+                });
+            });
+        }
     });
 }
 
 exports.saveFormResults = function (req, res) {
-    //Candidate.markModified('formCompleted');
-    //Candidate.markModified('formDuration');
-console.log("sid val: ", req.query.sid);
-    var formResults = req.body;
-    var totalTime = formResults['formDuration'];
-// TODO: add date completed
-    Candidate.update({sessionID: req.query.sid}, {
-            formCompleted : true,
-            formDuration : totalTime// handle document
-    }, function(err, numberAffected, rawResponse) {
-        if(err) throw err;
-        console.log("Duration and Completed updated!!", numberAffected);
-        console.log("response ", rawResponse);
+    console.log("sid: ", req.query.sid);
+    Candidate.update({'session.id': req.query.sid},{
+        'formCompleted' : true,
+        'session.expired' : true
+    }, function (err) {
+        if (err) throw err;
         res.redirect('/' + req.client._id + '/thankYou');
     });
-
-
-};
+}
 
 exports.getIndex = function (req, res) {
     // TODO: export to different module
@@ -141,52 +89,38 @@ exports.getIndex = function (req, res) {
 exports.getForm = function (req, res) {
     if(!req.query.sid) {
         /* no session id; redirect to home page in order to get user data */
-        //res.redirect('' + req.client._id + '/');
-        console.log("no sid");
+        res.redirect('/' + req.client._id + '/');
     }
-    /*
-    *  else if(req.query.sid.isExpired)
-    *  {
-    *       // user already fill the form
-    *       //res.redirect('' + req.client._id + '/thankYou');
-    *  }
-    * */
     else {
-        /* Load form */
-        Candidate.findOne({sessionID: req.query.sid}, function (err, candidate) {
+        Candidate.findOne({'session.id': req.query.sid}, function (err, candidate) {
             if (err) throw err;
             if (candidate) {
-                /*if (req.query.f == 0) {
-                    res.json(candidate.form/* change to form *///)
-                /*}
+                if(candidate.session.expired) {
+                    res.redirect('/' + req.client._id + '/thankYou');
+                }
                 else {
-                    res.json(candidate);
-                }*/
-                var isInEnglish = (req.client.language == 'en');
-                var formPageText = initFormPageText(isInEnglish);
+                    var isInEnglish = (req.client.language == 'en');
+                    var formPageText = initFormPageText(isInEnglish);
 
-                res.render('form', {
-                    title: '' ,
-                    formjson: candidate.form,
-                    isInEnglish: isInEnglish,
-                    textDirection: isInEnglish ? 'ltr' : 'rtl',
-                    terms : formPageText.terms,
-                    submitText : formPageText.submitText,
-                    sid: candidate.sessionID,
-                    client: req.client
-                });
+                    // TODO: update and delete unnecessary fields render.
+                    res.render('form', {
+                        title: '' ,
+                        formjson: candidate.form,
+                        isInEnglish: isInEnglish,
+                        textDirection: isInEnglish ? 'ltr' : 'rtl',
+                        terms : formPageText.terms,
+                        submitText : formPageText.submitText,
+                        sid: candidate.session.id,
+                        client: req.client,
+                        formDurationInMinutes: candidate.formDurationInMinutes
+                    });
+                }
             }
             else {
                 res.status(500).send("No User found");
             }
         });
-                      }
-                      /* TODO: check if req.params.sid !exist generateForm and load form
-                         TODO: else if req.params.sid exist and session !expired load form from db and update view with question answered
-                         TODO: else (sid exist and session expires) redirect to thank you page
-
-                         Think to use middleware and REAST api for getting the form
-                       */
+    }
 }
 
 exports.getThankYouPage = function (req, res) {

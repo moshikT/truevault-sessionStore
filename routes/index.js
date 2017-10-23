@@ -8,8 +8,6 @@ var upload = multer({ dest: '/tmp/uploads/' });
 var fs = require('fs');
 var Client = require('../models/addClient.server.model.js');
 
-//var questionRouter = require('./routes/questionRouter');
-
 //router.use('/api', questionRouter);
 //mailParser_Ctrl.onMailArrived();
 

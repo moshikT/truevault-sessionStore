@@ -1,11 +1,10 @@
 <form id="form" method="post" action=<%='/' + client._id + '/form?sid=' + sid %>>
-    <input type="hidden" name="formDuration" id="formDuration">
     <% for (var i=0;i<formjson.length; i++) {%>
     <div data-title=<%- (typeof formjson[i].next !== 'undefined') ?
             'div' + formjson[i].next : 'div' + formjson.length + "" %> id=<%- 'div' + formjson[i].id %> class="container q">
         <p><%- formjson[i]['item'] %></p>
 
-        <% if (formjson[i].type == 'F' || formjson[i].type == 'P' || formjson[i].type == 'A') { %>
+        <% if (formjson[i].type == 'P' || formjson[i].type == 'A') { %>
         <div id="radioBtn" class="btn-group a">
             <% for (var j=0;j<formjson[i]['answerOptions'].length; j++) { %>
             <a class='<%- (formjson[i]['answerOptions'][j] == formjson[i].finalAnswer) ?
@@ -21,12 +20,22 @@
         if (formjson[i].type == 'B')  { %>
         <div id="radioBtn" class="a bTypeGroup">
             <% for (var j=0;j <formjson[i]['answer'].length; j++) { console.log(formjson[i].finalAnswer) %>
-            <a class='<%- (formjson[i]['answerOptions'][j] == formjson[i].finalAnswer) ?
+            <a class='<%- (formjson[i]['answer'][j] == formjson[i].finalAnswer) ?
                     'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
                    style="<% if (isInEnglish) { %>text-align: left;<% } %>"
                                data-value="<%-formjson[i]['answer'][j].replace(/\s+/g && /"/g, '')%>" data-toggle=<%= formjson[i].id %>
                                 data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
              <%  }
+        }
+        if (formjson[i].type == 'F')  { %>
+        <div id="radioBtn" class="a bTypeGroup">
+            <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log(formjson[i].finalAnswer)%>
+            <a class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
+                'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
+                    style="<% if (isInEnglish) { %>text-align: left;<% } %>"
+                   data-value='<%-formjson[i]['answerOptions'][j].replace(/\s+/g, '')%>' data-toggle='<%= formjson[i].id %>'
+                   data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answerOptions'][j] %></a><br>
+        <%  }
         }
         if (formjson[i].type == 'C')  { %>
             <div id="radioBtn" class="a bTypeGroup">
@@ -38,7 +47,7 @@
                data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answerOptions'][j] %></a><br>
             <%  }
         }
-            if (formjson[i].type == 'P' || formjson[i].type == 'F' || formjson[i].type == 'A') {/* if yes no/ true false question remove ans description*/ %>
+        if (formjson[i].type == 'P' || formjson[i].type == 'A') {/* if yes no/ true false question remove ans description*/ %>
             <br>
             <div class="a" style="font-size: x-small;font-weight: 100;">
                 <% /*    for (var k=0;k<formjson[i]['answer-options'].length; k++) { */%>
@@ -46,19 +55,17 @@
                 <p class="am" style="float: left;padding:5px;/*width:20px;*/"><%- formjson[i]['scalaEdges'][0] %></p>
                 <%/* } */%>
             </div>
-            <% } %>
+        <% } %>
         </div>
         <input type="hidden" name='<%= formjson[i].id %> id=<%= formjson[i].id %>'
                value='<%- (formjson[i].finalAnswer) ? formjson[i].finalAnswer : '' %>'>
     </div>
     <% } %>
     <div id=<%= 'div' + formjson.length + "" %> class="container" style="text-align: center;padding-top: 50px;color: black;">
-
         <p><input id="agree"title="<%= terms.title %>" name="agree" type="checkbox" value="" style="vertical-align: bottom;" >
             <%= terms.prefix %>  <a href="#" style="color: #3276b1;"><%= terms.postfix %> </a></p>
     </div>
     <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
         <button href="/thankYou" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary"><%= submitText%></button>
     </div>
-
 </form>
