@@ -6,7 +6,7 @@ var csv = require("csvtojson");
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 var Candidate = require('../models/candidate.server.model.js');
 var Client = require('../models/addClient.server.model.js');
-var Guid = require('Guid');
+var Guid = require('guid');
 
 var isCandidate = true;
 
