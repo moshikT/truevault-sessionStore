@@ -15,7 +15,7 @@ var question = {
 
 exports.generateForm = function (isInEnglish, callback) {
     var lines = 0;
-    var companyForm = 'DEMO';//company.isDemo ? 'DEMO' : 'AYALON';
+    var companyForm = 'AYALON';//company.isDemo ? 'DEMO' : 'AYALON';
 
     var questionsArraysByType = {
         p_typeJSON : [],
@@ -42,7 +42,8 @@ exports.generateForm = function (isInEnglish, callback) {
                 question = parseQuestions(questionsJSON, isInEnglish);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
-                } else if (question.type == 'F') {
+                } else if (question.type == 'F' && question.answerOptions.length > 2) {
+                    console.log("pushed f type: ", question.id);
                     questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
@@ -93,8 +94,8 @@ function parseQuestions(qJSON, isInEnglish) {
         parsedQuestion.answer = parsedAnswers;
         parsedQuestion.dataTitle = parsedAnswersWeight;
     }
-    else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'F' || qJSON['TYPE'] == 'A') {
-        parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : (qJSON['TYPE'] == 'F') ? 'F' : 'A';
+    else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') {
+        parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : 'A';
         var scalaOptionsNumber = 5;
         var scalaArray = [];
         for (var index = 1; index <= scalaOptionsNumber; index++) {
@@ -115,7 +116,18 @@ function parseQuestions(qJSON, isInEnglish) {
             ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? scalaEdges : ['הכי חשוב <br> לי', 'הכי פחות <br> חשוב לי']);
 
 
-    } else if (qJSON['TYPE'] == 'C') {
+    }
+    else if (qJSON['TYPE'] == 'F') {
+        parsedQuestion.type = 'F';
+        var fitItemString = qJSON['FIT HEBREW'].toString();
+        //if()
+        var itemsCollection = fitItemString.split(/\,\s?(?![^\(]*\))/);
+        //console.log("coltural fit qid: ", parsedQuestion.id);
+        //console.log("coltural fit asnwers: ", itemsCollection);
+        parsedQuestion.answerOptions = itemsCollection;
+        parsedQuestion.dataTitle = itemsCollection;
+    }
+    else if (qJSON['TYPE'] == 'C') {
         parsedQuestion.type = 'C';
         parsedQuestion.dataTitle = (answerOptions.length == 2) ? [5, 1] : answerOptions;
         parsedQuestion.answerOptions = answerOptions;

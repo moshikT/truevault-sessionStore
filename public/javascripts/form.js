@@ -1,15 +1,14 @@
 var numOfQuestionsAnswered = document.getElementsByClassName('active').length;
-var qAnsweredArray = document.getElementsByClassName('active');//.length;
-var questionsAnswered = [];
+var qAnsweredArray = document.getElementsByClassName('active');
+var questionsAnsweredID = [];
 for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswered; questionsAnsweredIndex++) {
-    questionsAnswered.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
+    questionsAnsweredID.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
 }
 if(numOfQuestionsAnswered !== 0) {
     // TODO: scroll to the last element filled
 }
 var totalQuestions = document.getElementsByClassName('q').length;
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);
-//alert(totalQuestions);
 var startDate = new Date();
 var lastQuestionAnswered = startDate;
 var sid = getParameterByName('sid');
@@ -34,21 +33,15 @@ $('#radioBtn a').on('click', function(){
     $('a[data-toggle="'+qid+'"]').not('[data-value="'+dataValue+'"]').removeClass('active').addClass('notActive');
     $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
 
-    if(questionsAnswered.indexOf(qid) == '-1') {
-        questionsAnswered.push(qid);
+    if(questionsAnsweredID.indexOf(qid) == '-1') {
+        questionsAnsweredID.push(qid);
         numOfQuestionsAnswered++;
 
-        // TODO: if upload existed form - push al unAnswered questions to questionsAnswered array
-        // TODO: and upadte numOfQuestionsAnswered + progressbar.
-        // TODO: Think to export both to external functions
-        // In mongodb v property might hold the number of questions answered! - minus number of questions switched
-
-        var timeAnswered = Math.abs((new Date() - lastQuestionAnswered)/1000).toFixed(0);//(new Date() - lastQuestionAnswered);
+        var timeAnswered = Math.abs((new Date() - lastQuestionAnswered)/1000).toFixed(0);
         console.log(timeAnswered);
 
         patchData.finalAnswer = answer.toString();
         patchData.timeAnsweredInSeconds = timeAnswered;
-        //patchData.answerSwitched = false;
 
         /* start timer for next question */
         lastQuestionAnswered = new Date();
@@ -59,7 +52,6 @@ $('#radioBtn a').on('click', function(){
         /* Already answered the question */
         patchData.finalAnswer = answer.toString();
         patchData.AnswerSwitched = true;
-
     }
 
     /* Scroll to the next question */
@@ -67,7 +59,6 @@ $('#radioBtn a').on('click', function(){
         scrollTo = $('#' + nextQuestion);
     container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()});
 
-    //var uid = document.getElementById('id').value;
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
 
@@ -90,9 +81,7 @@ var rules = {};
 
 for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
-    if(key != 'formDuration'){
-        rules[key] = "required";
-    }
+    rules[key] = "required";
 }
 
 $("#form").validate({
@@ -105,11 +94,6 @@ $("#form").validate({
     },
     //debug: true,*/
     rules: rules,
-    /*messages: {
-        "agreeableness_1": {
-            //required: "Please, enter a date"
-        },
-    },*/
     errorElement: "div",
     wrapper: "div",  // a wrapper around the error message
     errorPlacement: function(error, element) {

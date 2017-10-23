@@ -10,15 +10,12 @@ exports.getAddClientPage = function (req, res) {
     res.render('addClient', { title: '' });
 }
 
-
-
 exports.addClient = function (req, res) {
     var logoImg = {};
     logoImg.data = fs.readFileSync(req.file.path);
     logoImg.contentType = 'image/png';
 
     var companyName = req.body.name;
-    var id = companyName.pr
 
     var url = req.protocol + '://' + req.get('host') + '/?id=' + req.body.name;//+ req.originalUrl;
     console.log(url);
@@ -36,8 +33,6 @@ exports.addClient = function (req, res) {
             link: shortendLink
         }
 
-
-
         Client.findOneAndUpdate(
             {name: req.body.name}, // find a document with that filter
             newClientEntry, // document to insert when nothing was found
@@ -51,11 +46,6 @@ exports.addClient = function (req, res) {
                 }
             }
         );
-/*
-        newClientEntry.save(function (err, a) {
-            if (err) throw err;
-            console.log("new client entry " + newClientEntry);
-        });*/
     });
     res.redirect('/addClient');
 }

@@ -7,10 +7,10 @@ var candidateSchema = new Schema({
     email: String,
     phoneNumber : Number,
     company: String,
-    formDuration : String,
+    formDurationInMinutes : Number,
     form : JSON,
     formCompleted: Boolean,
-    sessionID: String
+    session: JSON
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);
