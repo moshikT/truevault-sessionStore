@@ -27,7 +27,7 @@
                                 data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
              <%  }
         }
-        if (formjson[i].type == 'F')  { %>
+        if (formjson[i].type == 'F')  {/* %>
         <div id="radioBtn" class="a bTypeGroup">
             <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log(formjson[i].finalAnswer)%>
             <a class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
@@ -35,7 +35,7 @@
                     style="<% if (isInEnglish) { %>text-align: left;<% } %>"
                    data-value='<%-formjson[i]['answerOptions'][j].replace(/\s+/g, '')%>' data-toggle='<%= formjson[i].id %>'
                    data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answerOptions'][j] %></a><br>
-        <%  }
+        <% */ }
         }
         if (formjson[i].type == 'C')  { %>
             <div id="radioBtn" class="a bTypeGroup">

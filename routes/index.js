@@ -15,7 +15,7 @@ var Client = require('../models/addClient.server.model.js');
 router.use(function (req, res, next) {
     var parts = req.path.split('/');
     var cid = parts[1].toNumber;
-    if (isNaN(cid)) {
+    if (!cid) {
         next();
     }
     else Client.findById(parts[1], function (err, client) {
