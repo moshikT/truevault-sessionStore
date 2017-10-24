@@ -68,25 +68,26 @@ $('#radioBtn a').on('click', function(){
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
 
-
-    $.ajax({
-        url : patchUrl,
-        data : JSON.stringify(patchData),
-        type : 'PATCH',
-        contentType : 'application/json',
-        async: false,
-        success:function(){
-            //whatever you wanna do after the form is successfully submitted
-            console.log("success patch request ", patchData);
-            //mixpanel.track('Question Answered, {'uid': form.user_id.value,
-            // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
-        },
-        error: function (err) {
-            // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
-            console.log(err);
-        }     //return;  // it's not really an error
+    setTimeout(function() {
+        $.ajax({
+            url : patchUrl,
+            data : JSON.stringify(patchData),
+            type : 'PATCH',
+            contentType : 'application/json',
+            async: false,
+            success:function(){
+                //whatever you wanna do after the form is successfully submitted
+                console.log("success patch request ", patchData);
+                //mixpanel.track('Question Answered, {'uid': form.user_id.value,
+                // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
+            },
+            error: function (err) {
+                // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
+                console.log(err);
+            }     //return;  // it's not really an error
             // Do normal error handling
-    });
+        });
+    }, 1)
 });
 
 var keys = document.getElementsByTagName("input");
