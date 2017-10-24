@@ -11,7 +11,8 @@ var clientSchema = new Schema({
     language : String,
     isDemo : Boolean,
     /* userType: String //candidate, employee */
-    link : String
+    link : String,
+    keyword: String
 });
 
 module.exports = mongoose.model('Client', clientSchema);

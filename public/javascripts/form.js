@@ -164,16 +164,15 @@ function getCid() {
     return cid[1];
 }
 
-function allowDrop(ev) {
-    ev.preventDefault();
-}
-
-function drag(ev) {
-    ev.dataTransfer.setData("text", ev.target.id);
-}
-
-function drop(ev) {
-    ev.preventDefault();
-    var data = ev.dataTransfer.getData("text");
-    ev.target.appendChild(document.getElementById(data));
-}
+$(function() {
+    $( "#sortable" ).sortable({
+        stop: function () {
+            var nbElems = inputs.length;
+            $('input.currentposition').each(function(idx) {
+                $(this).val(nbElems - idx);
+                console.log($(this).val);
+            });
+        }
+    });
+    $( "#sortable" ).disableSelection();
+});

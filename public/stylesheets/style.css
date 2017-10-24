@@ -52,6 +52,9 @@ and (max-device-width: 1600px) {
     width: 60%;
 
   }
+  #radioBtn .notActive:hover {
+    background-color: cornflowerblue;
+  }
 }
 
 /* IPHONE 6 and above */
@@ -225,9 +228,7 @@ div.error {
   zoom: 100%;
 }
 */
-#radioBtn .notActive:hover {
-  background-color: cornflowerblue;
-}
+
 
 #radioBtn .notActive{
   color: #3276b1;

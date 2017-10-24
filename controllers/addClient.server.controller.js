@@ -30,7 +30,8 @@ exports.addClient = function (req, res) {
             introText : req.body.introText,
             language : req.body.language,
             isDemo : (req.body.isDemo == 'on'),
-            link: shortendLink
+            link: shortendLink,
+            keyword: req.body.questionsKeyword
         }
 
         Client.findOneAndUpdate(

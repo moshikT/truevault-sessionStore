@@ -13,9 +13,9 @@ var question = {
     next : null
 }
 
-exports.generateForm = function (isInEnglish, callback) {
+exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
     var lines = 0;
-    var companyForm = 'AYALON';//company.isDemo ? 'DEMO' : 'AYALON';
+    var companyForm = questionsKeyWord;//company.isDemo ? 'DEMO' : 'AYALON';
 
     var questionsArraysByType = {
         p_typeJSON : [],
@@ -44,7 +44,7 @@ exports.generateForm = function (isInEnglish, callback) {
                     questionsArraysByType.p_typeJSON.push(question);
                 } else if (question.type == 'F' && question.answerOptions.length > 2) {
                     console.log("pushed f type: ", question.id);
-                    questionsArraysByType.f_typeJSON.push(question);
+                    //questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
                 } else if (question.type == 'B') {
@@ -59,7 +59,7 @@ exports.generateForm = function (isInEnglish, callback) {
         .on('done',(error)=>{
 
             shuffle(questionsArraysByType.p_typeJSON);
-            shuffle(questionsArraysByType.f_typeJSON);
+            //shuffle(questionsArraysByType.f_typeJSON);
             shuffle(questionsArraysByType.b_typeJSON);
 
             var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
@@ -156,7 +156,7 @@ function swap(array, element1Index, element2Index) {
 function reOrderFormJSON(pType, fType, cType, bType, aType) {
     var orderedForm = [];
     var numOfPTypeQuestion = 20;
-    var numOfFTypeQuestion = 5;
+    var numOfFTypeQuestion = 0;//5;
 
     while(pType.length > 0 || fType.length > 0 || cType.length > 0) {
         var elementsToPush = numOfPTypeQuestion;

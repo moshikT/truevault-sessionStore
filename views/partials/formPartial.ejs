@@ -27,16 +27,22 @@
                                 data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
              <%  }
         }
-        if (formjson[i].type == 'F')  {/* %>
-        <div id="radioBtn" class="a bTypeGroup">
-            <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log(formjson[i].finalAnswer)%>
-            <a class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
-                'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
-                    style="<% if (isInEnglish) { %>text-align: left;<% } %>"
-                   data-value='<%-formjson[i]['answerOptions'][j].replace(/\s+/g, '')%>' data-toggle='<%= formjson[i].id %>'
-                   data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answerOptions'][j] %></a><br>
-        <% */ }
-        }
+             if (formjson[i].type == 'F')  { %>
+            <div id="radioBtn" class="a bTypeGroup">
+                <ul id="sortable">
+                    <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { %>
+                    <li class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
+                            'btn btn-primary btn-lg active bType ui-state-default' : 'btn btn-primary btn-lg notActive bType ui-state-default' %>'
+                        style="<% if (isInEnglish) { %>text-align: left;<% } %>"
+                        data-value='<%-formjson[i]['answerOptions'][j].replace(/\s+/g, '')%>' data-toggle='<%= formjson[i].id %>'
+                        data-title=<%=formjson[i]['dataTitle'][j]%> >
+                        <%- formjson[i]['answerOptions'][j] %>
+                    </li>
+                    <% } %>
+                </ul>
+
+                <% }
+
         if (formjson[i].type == 'C')  { %>
             <div id="radioBtn" class="a bTypeGroup">
             <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log(formjson[i].finalAnswer)%>
