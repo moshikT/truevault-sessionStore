@@ -5,7 +5,13 @@ for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswe
     questionsAnsweredID.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
 }
 if(numOfQuestionsAnswered !== 0) {
-    // TODO: scroll to the last element filled
+    /* Scroll to the next question */
+
+    var question = $('#div'+questionsAnsweredID[questionsAnsweredID.length-1]);
+    var nextQuestion = question.data('title');
+    var container = $('#formContainer'),
+        scrollTo = $('#' + nextQuestion);
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()});
 }
 var totalQuestions = document.getElementsByClassName('q').length;
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);

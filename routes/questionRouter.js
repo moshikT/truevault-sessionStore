@@ -67,7 +67,7 @@ router.route('/:sid/:qid')
                 req.candidate.formDurationInMinutes = (req.candidate.formDurationInMinutes + req.candidate.form[index].timeAnsweredInSeconds / 60).toFixed(2);
                 req.candidate.save(function(err, entry){
                     if(err) {
-                        res.send(500).send(err);
+                        res.status(500).send(err);
                     }
                     else {
                         console.log("entry saved!");
