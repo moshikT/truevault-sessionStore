@@ -5,7 +5,6 @@ for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswe
     questionsAnsweredID.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
 }
 if(numOfQuestionsAnswered !== 0) {
-    // TODO: scroll to the last element filled
     /* Scroll to the next question */
 
     var question = $('#div'+questionsAnsweredID[questionsAnsweredID.length-1]);
