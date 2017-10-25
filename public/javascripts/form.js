@@ -11,7 +11,7 @@ if(numOfQuestionsAnswered !== 0) {
     var nextQuestion = question.data('title');
     var container = $('#formContainer'),
         scrollTo = $('#' + nextQuestion);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()});
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
 }
 var totalQuestions = document.getElementsByClassName('q').length;
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);
@@ -63,7 +63,7 @@ $('#radioBtn a').on('click', function(){
     /* Scroll to the next question */
     var container = $('#formContainer'),
         scrollTo = $('#' + nextQuestion);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()});
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 1250);
 
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
