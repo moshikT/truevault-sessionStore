@@ -63,32 +63,57 @@ $('#radioBtn a').on('click', function(){
     /* Scroll to the next question */
     var container = $('#formContainer'),
         scrollTo = $('#' + nextQuestion);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 1500);
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
 
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
 
-    setTimeout(function() {
+
+    sendResult(patchUrl, patchData)
+        .then(function(result) {
+            // Code depending on result
+            console.log("result ", result);
+        })
+        .catch(function(rejected) {
+            // An error occurred
+            requests.push(rejected);
+            console.log("pushed new rejected req to array ", rejected);
+        });
+
+    //setTimeout(function() {
+
+    //}, 1)
+});
+
+var requests = [];
+
+function sendResult(patchUrl, patchData) {
+    var request = {};
+    request.url = patchUrl;
+    request.data = patchData;
+    return new Promise(function(resolve, reject) {
         $.ajax({
             url : patchUrl,
             data : JSON.stringify(patchData),
             type : 'PATCH',
             contentType : 'application/json',
-            async: false,
+            //async: false,
             success:function(){
                 //whatever you wanna do after the form is successfully submitted
                 console.log("success patch request ", patchData);
+                resolve(request);
                 //mixpanel.track('Question Answered, {'uid': form.user_id.value,
                 // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
             },
             error: function (err) {
                 // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
                 console.log(err);
+                reject(request);
             }     //return;  // it's not really an error
             // Do normal error handling
         });
-    }, 1)
-});
+    });
+}
 
 var keys = document.getElementsByTagName("input");
 var rules = {};
@@ -108,7 +133,7 @@ $("#form").validate({
         //console.log(element);
         //console.log(label);
     },*/
-    debug: true,
+    //debug: true,
     rules: rules,
     errorElement: "div",
     wrapper: "div",  // a wrapper around the error message
@@ -142,7 +167,7 @@ $("#form").validate({
         container.scrollTop()}, 500);
     },
     submitHandler: function (form) {
-        var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
+        //var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
         /* Send form data to mixpanel */
         mixpanel.track('form submitted', {
             'uid': document.getElementsByName('id').value,
@@ -150,7 +175,33 @@ $("#form").validate({
             'uname': document.getElementsByName('fullName').value,
             'company' : 'beta'
         });
-        $('#formDuration').prop('value', totalTime);
+        //$('#formDuration').prop('value', totalTime);
+        while(requests.length > 0) {
+            for(var i = 0; i < requests.length; i++) {
+                $.ajax({
+                    url : requests[i].url,
+                    data : JSON.stringify(requests[i].data),
+                    type : 'PATCH',
+                    contentType : 'application/json',
+                    //async: false,
+                    success:function(){
+                        //whatever you wanna do after the form is successfully submitted
+                        console.log("success patch request ", requests[i].data);
+                        requests.pop();
+                        //resolve(request);
+                        //mixpanel.track('Question Answered, {'uid': form.user_id.value,
+                        // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
+                    },
+                    error: function (err) {
+                        // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
+                        console.log(err);
+                        //reject(request);
+                    }     //return;  // it's not really an error
+                    // Do normal error handling
+                });
+            }
+
+        }
         //return false;
         form.submit();
     }
