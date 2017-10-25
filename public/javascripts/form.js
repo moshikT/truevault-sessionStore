@@ -39,10 +39,18 @@ $('#radioBtn a').on('touchstart', function(){
     }
     var qid = $(this).data('toggle');
     var dataValue = $(this).data('value');
+
+    // Check if already marked (meaning this is a previously selected answer)
+    if ($('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').hasClass('active'))
+    {   // If it is, we don't want to touch it because touching it will cause it to be unmarked when moving (touchMove)
+        console.log("Already active");
+        return;
+    }
+    // Remember the highlighted question & answer
     highlightedQ = qid;
     highlightedValue = dataValue;
 
-    /* mark answer touched as active */
+    // mark answer touched as active
     $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
 });
 
