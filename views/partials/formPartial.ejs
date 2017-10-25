@@ -1,4 +1,4 @@
-<form id="form" method="post" action=<%='/' + client._id + '/form?sid=' + sid %>>
+<form id="form" method="post" action=<%='/clients/' + client._id + '/form?sid=' + sid %>>
     <% for (var i=0;i<formjson.length; i++) {%>
     <div data-title=<%- (typeof formjson[i].next !== 'undefined') ?
             'div' + formjson[i].next : 'div' + formjson.length + "" %> id=<%- 'div' + formjson[i].id %> class="container q">
@@ -42,7 +42,6 @@
                 </ul>
 
                 <% }
-
         if (formjson[i].type == 'C')  { %>
             <div id="radioBtn" class="a bTypeGroup">
             <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log(formjson[i].finalAnswer)%>
@@ -63,7 +62,7 @@
             </div>
         <% } %>
         </div>
-        <input type="hidden" name='<%= formjson[i].id %> id=<%= formjson[i].id %>'
+        <input type="hidden" name='<%= formjson[i].id %>' id='<%= formjson[i].id %>'
                value='<%- (formjson[i].finalAnswer) ? formjson[i].finalAnswer : '' %>'>
     </div>
     <% } %>

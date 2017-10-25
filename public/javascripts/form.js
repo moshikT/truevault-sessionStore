@@ -98,6 +98,8 @@ for (var index = 0; index < keys.length; index++) {
     rules[key] = "required";
 }
 
+console.log(rules);
+
 $("#form").validate({
     ignore: "",
     /*success: function(label,element) {
@@ -105,8 +107,8 @@ $("#form").validate({
         element.style.border= "solid green 1px" ;
         //console.log(element);
         //console.log(label);
-    },
-    //debug: true,*/
+    },*/
+    debug: true,
     rules: rules,
     errorElement: "div",
     wrapper: "div",  // a wrapper around the error message
@@ -126,12 +128,16 @@ $("#form").validate({
         //console.log(validator.errorList);
         var currentElementID = validator.errorList[0].element.id;
         var parent = $('[id="' + currentElementID + '"]').parent();
+        console.log("parent ", parent);
+        console.log("error list first element ", validator.errorList[0]);
 
         if(currentElementID == 'agree') {
             parent = parent.parent();
         }
+        console.log("container ", container);
 
         var scrollTo = $('#' + parent.attr('id'));
+        console.log("scrollTo ", scrollTo);
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
         container.scrollTop()}, 500);
     },
