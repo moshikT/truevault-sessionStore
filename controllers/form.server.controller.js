@@ -30,11 +30,14 @@ exports.getInfo = function (req, res) {
     Candidate.findOne({id : req.body['user_id']}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
+            console.log("User exists. Proceeding to form...")
             res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);
         }
         else {
+            console.log("User doesn't exist...")
             var isInEnglish = (req.client.language == 'en');
             formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword , function (form) {
+                console.log("Form generated. Length=", form.length);
                 var sid = uuidv1();
                 var session = {};
                 session.id = sid;

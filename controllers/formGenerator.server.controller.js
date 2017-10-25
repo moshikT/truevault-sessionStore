@@ -24,7 +24,7 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
         b_typeJSON : [],
         a_typeJSON : []
     }
-
+    console.log("Generating form...");
     csv()
         .fromFile('items key.csv')
         .on('json',(jsonObj)=>{
