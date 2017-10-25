@@ -421,7 +421,7 @@ cognitive_arithmetic_4,cognitive - arithmetic,cognitive,"לפניך שאלת ח�
 אנא סמן/י את התשובה הנכונה <br>
 במידה ואינך בטוח/ה, נחש/י <br>
 זוג נעליים עולה 27 שקלים. מחר יש מבצע על נעליים בו יציעו שני זוגות ב-45 שקלים. כמה עולים 3 זוגות נעליים היום?",A pair of shoes cost  27 NIS. Tomorrow there is a sale on shoes that will offer two pairs for 45 NIS. How much will 3 pairs of shoes cost today?,,C,,,81 שקלים,81 NIS,"27, 72, 81, 162","27, 72, 81, 162","AYALON,EH",yes,
-cognitive _logic_2,cognitive - logic,cognitive,"לפניך שאלת חשיבה <br>
+cognitive_logic_2,cognitive - logic,cognitive,"לפניך שאלת חשיבה <br>
 אנא סמן/י את התשובה הנכונה <br>
 במידה ואינך בטוח/ה, נחש/י <br>
 חלק מהגובלינים הם פנגינים, וכל הפנגינים הם גרבילאים. האם חלק מהגובלינים בוודאות גרבילאים?","Some goblins are penguins, and all the penguins are gerbils. Are some goblins for sure gerbils?",,C,,,כן,yes,"כן, לא","yes, no",,yes,
@@ -445,7 +445,7 @@ cognitive_arithmetic_7,cognitive - arithmetic,cognitive,"לפניך שאלת ח�
 אנא סמן/י את התשובה הנכונה <br>
 במידה ואינך בטוח/ה, נחש/י <br>
 שלושה צבעים מסוגלים לצבוע שלושה קירות בשלוש דקות. כמה צבעים נדרשים לצביעת 27 קירות ב-9 דקות?",Three painters can paint three walls in three minutes. How many painters do you need to paint 27 walls in 9 minutes?,,C,,,9,9,"3, 6, 9, 12, 15","3, 6, 9, 12, 15","AYALON,EH",yes,
-cognitive _quantitivelogic_2,cognitive - quantitive logic,cognitive,"לפניך שאלת חשיבה <br>
+cognitive_quantitivelogic_2,cognitive - quantitive logic,cognitive,"לפניך שאלת חשיבה <br>
 אנא סמן/י את התשובה הנכונה <br>
 במידה ואינך בטוח/ה, נחש/י <br>
 עוד שש שנים, דנה תהיה כפליים בגיל מרוני. לפני שנה, דנה הייתה פי תשעה בגיל מרוני. בת כמה דנה היום?","Six years from now, Emma will be two times older than Sophia. A year ago, Emma was nine times older than Sophia. How old is Emma today? ",,C,,,10,10,"9, 10, 11, 12, 14","9, 10, 11, 12, 14","AYALON,EH",yes,yes
