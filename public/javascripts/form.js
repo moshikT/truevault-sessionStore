@@ -19,6 +19,39 @@ var startDate = new Date();
 var lastQuestionAnswered = startDate;
 var sid = getParameterByName('sid');
 var cid = getCid();
+var highlightedQ, highlightedValue;
+
+function clearMark() {
+    var qid = highlightedQ;
+    var dataValue = highlightedValue;
+
+    /* mark answer touched as notActive */
+    $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('active').addClass('notActive');
+
+    highlightedQ = undefined;
+    highlightedValue = undefined;
+}
+
+$('#radioBtn a').on('touchstart', function(){
+    if (highlightedQ && highlightedValue)
+    {
+        clearMark();
+    }
+    var qid = $(this).data('toggle');
+    var dataValue = $(this).data('value');
+    highlightedQ = qid;
+    highlightedValue = dataValue;
+
+    /* mark answer touched as active */
+    $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
+});
+
+$('#radioBtn a').on('touchmove', function(){
+    if (highlightedQ && highlightedValue)
+    {
+        clearMark();
+    }
+});
 
 $('#radioBtn a').on('click', function(){
     var answer = $(this).data('title');
