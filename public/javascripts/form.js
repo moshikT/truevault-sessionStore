@@ -96,7 +96,7 @@ $('#radioBtn a').on('click', function(){
     /* Scroll to the next question */
     var container = $('#formContainer'),
         scrollTo = $('#' + nextQuestion);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 250);
 
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
