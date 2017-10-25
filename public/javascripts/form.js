@@ -61,6 +61,10 @@ $('#radioBtn a').on('click', function(){
     var nextQuestion = $(this).parent().parent().data('title');
     var patchData = {};
 
+    // Prevent accidentally removing the highlight
+    highlightedQ = undefined;
+    highlightedValue = undefined;
+
     if(isOnError.indexOf("1px solid rgb(255, 0, 0)") != "-1"){
         $(this).parent().find("a").css('border', "solid green 1px");
         var el = $(this).parent().parent().find("div.error");
