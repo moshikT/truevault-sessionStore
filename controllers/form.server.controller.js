@@ -26,12 +26,10 @@ exports.getInfo = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
         req.body['user_email'], req.body['user_tel'], req.client.name);
 
-    console.log("quesry", req.query.sid);
     /* If user exists and session not expired load form - else generate new form */
     Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
-            console.log("foumd candidate");
             res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);
         }
         else {

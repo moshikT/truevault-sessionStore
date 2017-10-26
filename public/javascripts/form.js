@@ -19,6 +19,47 @@ var startDate = new Date();
 var lastQuestionAnswered = startDate;
 var sid = getParameterByName('sid');
 var cid = getCid();
+var highlightedQ, highlightedValue;
+
+function clearMark() {
+    var qid = highlightedQ;
+    var dataValue = highlightedValue;
+
+    /* mark answer touched as notActive */
+    $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('active').addClass('notActive');
+
+    highlightedQ = undefined;
+    highlightedValue = undefined;
+}
+
+$('#radioBtn a').on('touchstart', function(){
+    if (highlightedQ && highlightedValue)
+    {
+        clearMark();
+    }
+    var qid = $(this).data('toggle');
+    var dataValue = $(this).data('value');
+
+    // Check if already marked (meaning this is a previously selected answer)
+    if ($('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').hasClass('active'))
+    {   // If it is, we don't want to touch it because touching it will cause it to be unmarked when moving (touchMove)
+        console.log("Already active");
+        return;
+    }
+    // Remember the highlighted question & answer
+    highlightedQ = qid;
+    highlightedValue = dataValue;
+
+    // mark answer touched as active
+    $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
+});
+
+$('#radioBtn a').on('touchmove', function(){
+    if (highlightedQ && highlightedValue)
+    {
+        clearMark();
+    }
+});
 
 $('#radioBtn a').on('click', function(){
     var answer = $(this).data('title');
@@ -27,6 +68,10 @@ $('#radioBtn a').on('click', function(){
     var isOnError = $(this).css('border');
     var nextQuestion = $(this).parent().parent().data('title');
     var patchData = {};
+
+    // Prevent accidentally removing the highlight
+    highlightedQ = undefined;
+    highlightedValue = undefined;
 
     if(isOnError.indexOf("1px solid rgb(255, 0, 0)") != "-1"){
         $(this).parent().find("a").css('border', "solid green 1px");
@@ -63,7 +108,7 @@ $('#radioBtn a').on('click', function(){
     /* Scroll to the next question */
     var container = $('#formContainer'),
         scrollTo = $('#' + nextQuestion);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
+    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 250);
 
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);

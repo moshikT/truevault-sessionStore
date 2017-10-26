@@ -37,8 +37,8 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
             //data is a buffer object
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
-// TODO: change when excel is ready => if(questionsJSON['INCLUDED'].indexOf(companyForm) != -1) {
-            if (questionsJSON[companyForm] == 'yes') {
+
+            if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
                 question = parseQuestions(questionsJSON, isInEnglish);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
