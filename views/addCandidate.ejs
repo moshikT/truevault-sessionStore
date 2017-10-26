@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+</head>
+<header>
+    <div class="container col-md-12" style="text-align: center;">
+        <img class="logo" style="height: 100px;padding-top:20px;" src="/images/empiricalhire.png" />
+    </div>
+    <div class="container col-md-12">
+        <h1>Add New Candidate</h1>
+    </div>
+</header>
+<body>
+    <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
+        <form id="addCandidate" method="post" action=<%='/clients/' + client._id + '/addCandidate'%>>
+    <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
+        <div id="inputname"  style="padding-top: 20px;">
+            <input id="u_id" class="inputs" name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+        </div>
+        <div id="inputphone" style="padding-top: 20px;">
+            <input id="user_tel" class="inputs" name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        </div>
+        <div id="inputid" style="padding-top: 20px;">
+            <input id="user_id" class="inputs" name="user_id" type="number" placeholder='<%= indexPageText.idField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+        </div>
+        <div id="inputemail" style="padding-top: 20px;">
+            <input id="user_email" class="inputs" name="user_email" type="email" placeholder='<%= indexPageText.emailField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        </div>
+    </div>
+            <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
+                <button href="/addCandidate" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add Candidate</button>
+            </div>
+        </form>
+    </div>
+    <% include partials/footer %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+    <script>
+        $('.inputs').keydown(function (e) {
+            if (e.which === 13) {
+                var index = $('.inputs').index(this) + 1;
+                $('.inputs').eq(index).focus();
+            }
+        });
+
+        var container = $('#formContainer');//,
+
+        function scrollToNextElement(nextElement) {
+            var scrollTo = $('#' + nextElement);
+            container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
+            container.scrollTop()});
+        }
+
+        var keys = document.getElementsByTagName("input");
+        var rules = {};
+
+        for (var index = 0; index < keys.length; index++) {
+            var key = keys[index].name;
+            rules[key] = "required";
+        }
+
+        $("#addCandidate").validate({
+            ignore: "",
+            success: function(label,element) {
+                //element.find("input").css( "border", "solid green 1px" );
+                element.style.border= "solid green 1px" ;
+            },
+            //debug: true,
+            rules: rules,
+            messages: {
+
+            },
+            errorElement: "div",
+            wrapper: "div",  // a wrapper around the error message
+            errorPlacement: function(error, element) {
+                element.before(error);
+
+                //element.parent("div").find("a").css( "border", "solid red 1px" );
+                element.css( "border", "solid red 1px" );
+                offset = element.offset();
+                error.css('left', offset.left);
+                error.css('bottom', offset.top - element.outerHeight());
+            },
+            focusInvalid: false,
+            invalidHandler: function(form, validator) {
+                if (!validator.numberOfInvalids())
+                    return;
+
+            },
+            submitHandler: function (form) {
+                /*$.ajax({
+                    url:'/addCandidate',
+                    type:'post',
+                    data:$('#addCandidate').serialize() ,//+ fileData,
+                    async: false,
+                    success:function(){
+                        //console.log(form.user_id.value);
+                        mixpanel.track('New Candidate added', {'uid': form.user_id.value/* candidate/employee });
+
+                        // TODO: scrollTo block user authentication display
+                    }
+                });*/
+                form.submit();
+            }
+        });
+    </script>
+
+</body>
+</html>

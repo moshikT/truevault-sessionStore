@@ -10,7 +10,8 @@ var candidateSchema = new Schema({
     formDurationInMinutes : Number,
     form : JSON,
     formCompleted: Boolean,
-    session: JSON
+    session: JSON,
+    linkToForm: String
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

@@ -188,6 +188,10 @@ $("#form").validate({
                         //whatever you wanna do after the form is successfully submitted
                         console.log("success patch request ", requests[i].data);
                         requests.pop();
+                        console.log("request array size", requests.length);
+                        if(requests.length < 1) {
+                            form.submit();
+                        }
                         //resolve(request);
                         //mixpanel.track('Question Answered, {'uid': form.user_id.value,
                         // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
@@ -202,8 +206,8 @@ $("#form").validate({
             }
 
         }
-        //return false;
-        form.submit();
+        return false;
+        //form.submit();
     }
 });
 

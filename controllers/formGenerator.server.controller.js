@@ -37,13 +37,13 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
             //data is a buffer object
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
-
+// TODO: change when excel is ready => if(questionsJSON['INCLUDED'].indexOf(companyForm) != -1) {
             if (questionsJSON[companyForm] == 'yes') {
                 question = parseQuestions(questionsJSON, isInEnglish);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
                 } else if (question.type == 'F' && question.answerOptions.length > 2) {
-                    console.log("pushed f type: ", question.id);
+                    //console.log("pushed f type: ", question.id);
                     //questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
@@ -96,7 +96,7 @@ function parseQuestions(qJSON, isInEnglish) {
     }
     else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') {
         parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : 'A';
-        var scalaOptionsNumber = 5;
+        var scalaOptionsNumber = 7;
         var scalaArray = [];
         for (var index = 1; index <= scalaOptionsNumber; index++) {
             scalaArray.push(index);
@@ -129,7 +129,7 @@ function parseQuestions(qJSON, isInEnglish) {
     }
     else if (qJSON['TYPE'] == 'C') {
         parsedQuestion.type = 'C';
-        parsedQuestion.dataTitle = (answerOptions.length == 2) ? [5, 1] : answerOptions;
+        parsedQuestion.dataTitle = (answerOptions.length == 2) ? [7, 1] : answerOptions;
         parsedQuestion.answerOptions = answerOptions;
     }
     return parsedQuestion;

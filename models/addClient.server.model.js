@@ -8,6 +8,7 @@ var clientSchema = new Schema({
     logoStyle : String,
     title : String,
     introText : String,
+    instructionText: String,
     language : String,
     isDemo : Boolean,
     /* userType: String //candidate, employee */

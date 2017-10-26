@@ -80,6 +80,14 @@ router.get('/addClient', function(req, res) {
     return addClient_Ctrl.getAddClientPage(req, res);
 });
 
+router.get('/clients/:cid/addCandidate', function(req, res) {
+    return addClient_Ctrl.getAddCandidatePage(req, res);
+});
+
+router.post('/clients/:cid/addCandidate', function(req, res) {
+    return addClient_Ctrl.addCandidate(req, res);
+});
+
 /* submit file object with form */
 router.post('/addClient', upload.single('logo'), function(req, res) {
     return addClient_Ctrl.addClient(req, res);

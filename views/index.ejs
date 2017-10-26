@@ -10,7 +10,7 @@
     </div>
 </header>
 <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
-  <form id="formInfo" method="post" action=<%='/clients/' + client._id%>>
+  <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=6a5f5f10-ba73-11e7-ad40-8d9b0207ecab' %>>
        <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
         <div class="container introText" style="padding: 10px;margin-top: 0px; ">
             <%=indexPageText.instructionText%>
@@ -32,21 +32,7 @@
 
 
     <div id="intro3" style="height:600px;">
-    <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
-          <div class=""><%=  indexPageText.personalInfoText %></div>
-              <div id="inputname"  style="padding-top: 20px;">
-                <input id="u_id" class="inputs" name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
-              </div>
-              <div id="inputphone" style="padding-top: 20px;">
-                <input onclick="scrollToNextElement('user_tel')" id="user_tel" class="inputs" name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-              </div>
-              <div id="inputid" style="padding-top: 20px;">
-                <input onclick="scrollToNextElement('user_id')" id="user_id" class="inputs" name="user_id" type="number" placeholder=<%= indexPageText.idField %> style="border-style: none none solid none;text-align: center;opacity: 0.7">
-              </div>
-              <div id="inputemail" style="padding-top: 20px;">
-                <input onclick="scrollToNextElement('user_email')" id="user_email" class="inputs" name="user_email" type="email" placeholder='<%= indexPageText.emailField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-              </div>
-          </div>
+
               <div style="padding-top: 25px; padding-bottom: 50px;">
                 <button href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></button>
               </div>
@@ -58,78 +44,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
 <script src="/javascripts/messages_he.js"></script>
-<script>
-
-    $('.inputs').keydown(function (e) {
-        if (e.which === 13) {
-            var index = $('.inputs').index(this) + 1;
-            $('.inputs').eq(index).focus();
-        }
-    });
-
-    var container = $('#formContainer');
-
-    function scrollToNextElement(nextElement) {
-        var scrollTo = $('#' + nextElement);
-        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
-        container.scrollTop()});
-    }
-
-    var keys = document.getElementsByTagName("input");
-    var rules = {};
-
-    for (var index = 0; index < keys.length; index++) {
-        var key = keys[index].name;
-        rules[key] = "required";
-    }
-    //console.log(rules);
-
-    $("#formInfo").validate({
-        ignore: "",
-        success: function(label,element) {
-            //element.find("input").css( "border", "solid green 1px" );
-            element.style.border= "solid green 1px" ;
-        },
-        //debug: true,
-        rules: rules,
-        messages: {
-            /*"agreeableness_1": {
-                //required: "Please, enter a date"
-            },*/
-        },
-        errorElement: "div",
-        wrapper: "div",  // a wrapper around the error message
-        errorPlacement: function(error, element) {
-            element.before(error);
-
-            //element.parent("div").find("a").css( "border", "solid red 1px" );
-            element.css( "border", "solid red 1px" );
-            offset = element.offset();
-            error.css('left', offset.left);
-            error.css('bottom', offset.top - element.outerHeight());
-        },
-        focusInvalid: false,
-        invalidHandler: function(form, validator) {
-            if (!validator.numberOfInvalids())
-                return;
-        },
-        submitHandler: function (form) {
-            /* might send twice because form 'action' test it! */
-           /* $.ajax({
-                url:'/',
-                type:'post',
-                data:$('#formInfo').serialize(),
-                success:function(){
-                    //whatever you wanna do after the form is successfully submitted
-                    console.log(form.user_id.value);
-                    mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'cocacola_user'/* candidate/employee });
-
-                    // TODO: scrollTo block user authentication display
-               // }
-            //});*/
-            form.submit();
-        }
-    });
-</script>
+<script src="/javascripts/indexIntro.js" ></script>
   </body>
 </html>
