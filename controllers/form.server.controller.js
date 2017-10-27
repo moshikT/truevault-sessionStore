@@ -64,14 +64,48 @@ exports.getInfo = function (req, res) {
 }
 
 exports.saveFormResults = function (req, res) {
-    console.log("sid: ", req.query.sid);
+    console.log("form details", req.body);
+    var formData = req.body;
+    delete formData['agree'];
+    delete formData['submit_btn'];
+    Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
+        if (err) throw err; /* load default params */
+        if(candidate) {
+            candidate.markModified('form');
+            candidate.markModified('formCompleted');
+            candidate.markModified('session');
+
+            candidate.formCompleted = true;
+            candidate.session.expired = true;
+
+            for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
+                //if(formData[qIndex].    candidate.form[qIndex] == formData
+                candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];
+                console.log("updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
+            }
+            candidate.save(function(err, entry){
+                if(err) {
+                    console.log("unable To save", err);
+                }
+                else {
+                    console.log("succeed update final answer");
+                }
+            });
+
+        }
+        else {
+            console.log("Unable to save all form data");
+        }
+        res.redirect('/clients/' + req.client._id + '/thankYou');
+    });
+    /*
     Candidate.update({'session.id': req.query.sid},{
         'formCompleted' : true,
         'session.expired' : true
     }, function (err) {
         if (err) throw err;
         res.redirect('/clients/' + req.client._id + '/thankYou');
-    });
+    });*/
 }
 
 exports.getIndex = function (req, res) {
