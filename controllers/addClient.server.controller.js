@@ -99,6 +99,7 @@ exports.addCandidate = function (req, res) {
             });
         }
         else {
+            console.log("Creating candidate");
             var isInEnglish = (req.client.language == 'en');
             formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
                 var sid = uuidv1();
@@ -106,6 +107,8 @@ exports.addCandidate = function (req, res) {
                 session.id = sid;
                 session.expired = false;
                 var url = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/?sid=' + session.id;//+ req.originalUrl;
+                console.log("URL:", url);
+                console.log("Form length:", form.length);
                 generateLink(url, function(shortendLink) {
                     var newCandidateEntry = new Candidate({
                         fullName: newUser.fullName,
