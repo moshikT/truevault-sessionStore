@@ -1,0 +1,28 @@
+    <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=' + sid %>>
+        <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
+            <div class="container introText" style="padding: 10px;margin-top: 0px; ">
+                <%=indexPageText.instructionText%>
+            </div>
+            <div style="padding: 30px;">
+                <a onclick="scrollToNextElement('intro2')" class="btn btn-primary"><%=  indexPageText.next %></a>
+            </div>
+        </div>
+
+        <div id="intro2" style="height:370px;">
+            <div class="container introText" style="padding: 10px;margin-top: 0px; ">
+                <%=client.introText%>
+            </div>
+
+            <div style="padding: 30px;">
+                <a onclick="scrollToNextElement('intro3')" class="btn btn-primary"><%=  indexPageText.next %></a>
+            </div>
+        </div>
+
+
+        <div id="intro3" style="height:600px;">
+
+            <div style="padding-top: 25px; padding-bottom: 50px;">
+                <button href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></button>
+            </div>
+        </div>
+    </form>

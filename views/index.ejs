@@ -10,36 +10,8 @@
     </div>
 </header>
 <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
-  <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=6a5f5f10-ba73-11e7-ad40-8d9b0207ecab' %>>
-       <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
-        <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-            <%=indexPageText.instructionText%>
-        </div>
-      <div style="padding: 30px;">
-        <a onclick="scrollToNextElement('intro2')" class="btn btn-primary"><%=  indexPageText.next %></a>
-      </div>
-    </div>
-
-      <div id="intro2" style="height:370px;">
-    <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-        <%=client.introText%>
-    </div>
-
-        <div style="padding: 30px;">
-          <a onclick="scrollToNextElement('intro3')" class="btn btn-primary"><%=  indexPageText.next %></a>
-        </div>
-    </div>
-
-
-    <div id="intro3" style="height:600px;">
-
-              <div style="padding-top: 25px; padding-bottom: 50px;">
-                <button href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></button>
-              </div>
-    </div>
-  </form>
+<% include partials/indexPartial %>
 </div>
-
 <% include partials/footer %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>

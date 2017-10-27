@@ -44,6 +44,9 @@ router.use(function (req, res, next) {
 
             //console.log("url param", req);
             /* Add the question found to the request and pass it to the next action - get or patch */
+           if(req.query.sid) {
+               req.sid = req.query.sid;
+           }
             req.client = client;
             next();
         }

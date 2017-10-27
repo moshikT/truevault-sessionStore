@@ -27,7 +27,7 @@ exports.getInfo = function (req, res) {
         req.body['user_email'], req.body['user_tel'], req.client.name);
 
     /* If user exists and session not expired load form - else generate new form */
-    Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
+    Candidate.findOne({'session.id' : req.sid}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
             res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);
@@ -64,14 +64,48 @@ exports.getInfo = function (req, res) {
 }
 
 exports.saveFormResults = function (req, res) {
-    console.log("sid: ", req.query.sid);
+    console.log("form details", req.body);
+    var formData = req.body;
+    delete formData['agree'];
+    delete formData['submit_btn'];
+    Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
+        if (err) throw err; /* load default params */
+        if(candidate) {
+            candidate.markModified('form');
+            candidate.markModified('formCompleted');
+            candidate.markModified('session');
+
+            candidate.formCompleted = true;
+            candidate.session.expired = true;
+
+            for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
+                //if(formData[qIndex].    candidate.form[qIndex] == formData
+                candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];
+                console.log("updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
+            }
+            candidate.save(function(err, entry){
+                if(err) {
+                    console.log("unable To save", err);
+                }
+                else {
+                    console.log("succeed update final answer");
+                }
+            });
+
+        }
+        else {
+            console.log("Unable to save all form data");
+        }
+        res.redirect('/clients/' + req.client._id + '/thankYou');
+    });
+    /*
     Candidate.update({'session.id': req.query.sid},{
         'formCompleted' : true,
         'session.expired' : true
     }, function (err) {
         if (err) throw err;
         res.redirect('/clients/' + req.client._id + '/thankYou');
-    });
+    });*/
 }
 
 exports.getIndex = function (req, res) {
@@ -80,7 +114,8 @@ exports.getIndex = function (req, res) {
         res.render('index', {
             title: '',
             indexPageText : indexText,
-            client: req.client
+            client: req.client,
+            sid: req.sid
         });
     });
 }
