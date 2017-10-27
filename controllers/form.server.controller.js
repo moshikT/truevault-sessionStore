@@ -27,7 +27,7 @@ exports.getInfo = function (req, res) {
         req.body['user_email'], req.body['user_tel'], req.client.name);
 
     /* If user exists and session not expired load form - else generate new form */
-    Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
+    Candidate.findOne({'session.id' : req.sid}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
             res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);
@@ -80,7 +80,8 @@ exports.getIndex = function (req, res) {
         res.render('index', {
             title: '',
             indexPageText : indexText,
-            client: req.client
+            client: req.client,
+            sid: req.sid
         });
     });
 }
