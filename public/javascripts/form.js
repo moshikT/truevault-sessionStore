@@ -66,7 +66,7 @@ $('#radioBtn a').on('click', function(){
     var qid = $(this).data('toggle');
     var dataValue = $(this).data('value');
     var isOnError = $(this).css('border');
-    var nextQuestion = $(this).parent().parent().data('title');
+    var nextQuestion = $(this).parent().parent().data('title'); // We use the 'title' attribute to store the ID of the next question
     var patchData = {};
 
     // Prevent accidentally removing the highlight
@@ -105,10 +105,17 @@ $('#radioBtn a').on('click', function(){
         patchData.AnswerSwitched = true;
     }
 
-    /* Scroll to the next question */
-    var container = $('#formContainer'),
-        scrollTo = $('#' + nextQuestion);
-    container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 250);
+    // Are we at the point after clicking the submit button and going through unanswered items?
+    if (formNextError != undefined) {
+        // We are - so jump to the next unanswered item
+        formNextError = gotoNextInvalid(formErrorList, formNextError);
+    }
+    else {
+        // We aren't - just scroll to the next question
+        let container = $('#formContainer'); // The form container
+        let scrollTo = $('#' + nextQuestion); //
+        container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 250);
+    }
 
     var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
@@ -170,6 +177,9 @@ for (var index = 0; index < keys.length; index++) {
 
 console.log(rules);
 
+let formErrorList;
+let formNextError;
+
 $("#form").validate({
     ignore: "",
     /*success: function(label,element) {
@@ -191,25 +201,12 @@ $("#form").validate({
     },
     focusInvalid: false,
     invalidHandler: function(form, validator) {
-        var container = $('#formContainer');
         if (!validator.numberOfInvalids())
             return;
 
-        //console.log(validator.errorList);
-        var currentElementID = validator.errorList[0].element.id;
-        var parent = $('[id="' + currentElementID + '"]').parent();
-        console.log("parent ", parent);
-        console.log("error list first element ", validator.errorList[0]);
-
-        if(currentElementID == 'agree') {
-            parent = parent.parent();
-        }
-        console.log("container ", container);
-
-        var scrollTo = $('#' + parent.attr('id'));
-        console.log("scrollTo ", scrollTo);
-        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
-        container.scrollTop()}, 500);
+        formErrorList = validator.errorList;
+        formNextError = 0;
+        formNextError = gotoNextInvalid(formErrorList, formNextError);
     },
     submitHandler: function (form) {
         //var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
@@ -255,6 +252,43 @@ $("#form").validate({
         //form.submit();
     }
 });
+
+// Function to move through unanswered items after form is submitted
+function gotoNextInvalid(errorList, nextError) {
+    // Get the form container
+    var container = $('#formContainer');
+    // Are we at or beyond the end of the unanswered list?
+    if (nextError >= errorList.length)
+    { // We are
+        // @@@ Jump to the submit button
+
+        // Exit the function
+        return nextError;
+    }
+
+    var currentElementID = errorList[nextError].element.id; // The next item to jump to
+    var parent = $('[id="' + currentElementID + '"]').parent(); // The (div) container of the item
+    console.log("parent ", parent);
+    console.log("error list first element ", errorList[0]);
+
+    // Is this the 'agree' checkbox?
+    if (currentElementID == 'agree') {
+        // It's an embedded container
+        parent = parent.parent();
+    }
+    console.log("container ", container);
+
+    // Get the ID of the container we're going to scroll to
+    var scrollTo = $('#' + parent.attr('id'));
+    console.log("scrollTo ", scrollTo);
+    // Do an animated scroll
+    container.animate({
+        scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+    }, 500);
+
+    // Move to the next element
+    return nextError+1;
+}
 
 function updateProgressbar(numOfQuestionsAnswered, totalQuestions) {
     var progress = document.getElementById("progressBar");
