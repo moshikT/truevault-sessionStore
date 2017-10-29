@@ -79,9 +79,11 @@ exports.saveFormResults = function (req, res) {
             candidate.session.expired = true;
 
             for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
-                //if(formData[qIndex].    candidate.form[qIndex] == formData
-                candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];
-                console.log("updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
+                /* If final answer does not exist update from form */
+                if(!candidate.form[qIndex].finalAnswer) {
+                    candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];
+                    console.log("updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
+                }
             }
             candidate.save(function(err, entry){
                 if(err) {
@@ -98,14 +100,6 @@ exports.saveFormResults = function (req, res) {
         }
         res.redirect('/clients/' + req.client._id + '/thankYou');
     });
-    /*
-    Candidate.update({'session.id': req.query.sid},{
-        'formCompleted' : true,
-        'session.expired' : true
-    }, function (err) {
-        if (err) throw err;
-        res.redirect('/clients/' + req.client._id + '/thankYou');
-    });*/
 }
 
 exports.getIndex = function (req, res) {

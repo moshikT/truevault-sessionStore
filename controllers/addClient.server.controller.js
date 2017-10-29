@@ -35,6 +35,7 @@ exports.addClient = function (req, res) {
 
     generateLink(url, function(shortendLink) {
        // console.log("generate Link " , shortendLink);
+
         var newClientEntry = {
             name: req.body.name,
             logoImg : logoImg,
@@ -56,7 +57,12 @@ exports.addClient = function (req, res) {
                 if (err) {
                      throw err;
                 } else {
-                    doc = newClientEntry;// handle document
+                    for(var field in re.body) {
+                        /* Update only unempty fields */
+                        if(field !== '') {
+                            doc[field] = newClientEntry[field];// handle document
+                        }
+                    }
                     console.log("update doc: ", doc);
                 }
             }
