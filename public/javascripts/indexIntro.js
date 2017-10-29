@@ -1,5 +1,7 @@
 var sid = getParameterByName('sid');
-console.log(sid);
+var cid = getCid();
+
+//console.log(sid);
 
 function getParameterByName(name) {
     var url = window.location.href;
@@ -78,6 +80,14 @@ $("#formInfo").validate({
                  // TODO: scrollTo block user authentication display
             // }
          //});*/
+        var startFormDate = new Date();
+        mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
         form.submit();
     }
 });
+
+function getCid() {
+    var urlPath = window.location.pathname;
+    var cid = urlPath.split('/');
+    return cid[2];
+}

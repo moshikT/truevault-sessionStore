@@ -1,6 +1,12 @@
 var numOfQuestionsAnswered = document.getElementsByClassName('active').length;
 var qAnsweredArray = document.getElementsByClassName('active');
 var questionsAnsweredID = [];
+var sid = getParameterByName('sid');
+var cid = getCid();
+var startDate = new Date();
+var lastQuestionAnswered = startDate;
+
+
 for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswered; questionsAnsweredIndex++) {
     questionsAnsweredID.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
 }
@@ -12,13 +18,11 @@ if(numOfQuestionsAnswered !== 0) {
     var container = $('#formContainer'),
         scrollTo = $('#' + nextQuestion);
     container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
+
+    mixpanel.track('Form reloaded', {'sid': sid, 'date': startDate.toString(), 'cid': cid});
 }
 var totalQuestions = document.getElementsByClassName('q').length;
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);
-var startDate = new Date();
-var lastQuestionAnswered = startDate;
-var sid = getParameterByName('sid');
-var cid = getCid();
 var highlightedQ, highlightedValue;
 
 function clearMark() {
@@ -117,7 +121,7 @@ $('#radioBtn a').on('click', function(){
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 250);
     }
 
-    var patchUrl = '/' + cid +  '/api/' + sid + '/' + qid;
+    var patchUrl = '/' + 'clients' +  '/api/' + sid + '/' + qid;
     console.log(patchUrl);
 
 
@@ -125,10 +129,14 @@ $('#radioBtn a').on('click', function(){
         .then(function(result) {
             // Code depending on result
             console.log("result ", result);
+            var dateAnswered = new Date();
+            mixpanel.track('Question Answered', {'sid': sid, 'qData': result, 'date': dateAnswered.toString(), 'cid': cid});
         })
         .catch(function(rejected) {
             // An error occurred
             requests.push(rejected);
+            var dateAnswered = new Date();
+            mixpanel.track('Unable to send question data to server', {'sid': sid, 'qData': rejected, 'date': dateAnswered.toString(), 'cid': cid});
             console.log("pushed new rejected req to array ", rejected);
         });
 
@@ -211,14 +219,14 @@ $("#form").validate({
     submitHandler: function (form) {
         //var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
         /* Send form data to mixpanel */
-        mixpanel.track('form submitted', {
-            'uid': document.getElementsByName('id').value,
-            'form duration': totalTime,
-            'uname': document.getElementsByName('fullName').value,
-            'company' : 'beta'
-        });
+        //console.log("before mix panel form submitted");
+
+        var dateSubmitted = new Date();
+        mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate' });
+
+        //console.log("after mix panel form submitted");
         //$('#formDuration').prop('value', totalTime);
-        while(requests.length > 0) {
+       /* while(requests.length > 0) {
             for(var i = 0; i < requests.length; i++) {
                 $.ajax({
                     url : requests[i].url,
@@ -227,16 +235,16 @@ $("#form").validate({
                     contentType : 'application/json',
                     //async: false,
                     success:function(){
+
                         //whatever you wanna do after the form is successfully submitted
-                        console.log("success patch request ", requests[i].data);
-                        requests.pop();
-                        console.log("request array size", requests.length);
-                        if(requests.length < 1) {
-                            form.submit();
-                        }
+                        //console.log("success patch request ", requests[i].data);
+                        //requests.pop();
+                        //console.log("request array size", requests.length);
+                        //if(requests.length < 1) {
+
+                        //}
                         //resolve(request);
-                        //mixpanel.track('Question Answered, {'uid': form.user_id.value,
-                        // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
+                        //mixpanel.track('Question Answered', {'sid': sid, 'qData': requests[i].data, 'date': new Date(), 'cid': cid});
                     },
                     error: function (err) {
                         // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
@@ -247,9 +255,9 @@ $("#form").validate({
                 });
             }
 
-        }
-        return false;
-        //form.submit();
+        }*/
+
+        form.submit();
     }
 });
 
@@ -315,7 +323,7 @@ function getParameterByName(name) {
 function getCid() {
     var urlPath = window.location.pathname;
     var cid = urlPath.split('/');
-    return cid[1];
+    return cid[2];
 }
 
 $(function() {
