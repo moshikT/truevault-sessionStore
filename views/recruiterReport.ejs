@@ -9,9 +9,13 @@
     <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body>
+<script src="/javascripts/convert2image.js" ></script>
 
-    <header class="container header">
+<body>
+    <div id="page-container" style="background-color: #9e9e9e; bottom: 0; right: 0; overflow: auto; position: absolute; top: 0; left: 0; margin: 0; padding: 0; border: 0; display: block; "> <!--background: rgba(127,255,255,0.4);">-->
+    <div id="report-page" style="width: 1200px; margin: 13px auto; box-shadow: 1px 1px 3px 1px #333; border-collapse: separate; position: relative; background-color: white; overflow: hidden; border: 0; display: block;"> <!-- background: rgba(127,255,255,0.4);">-->
+    <!--div style = "width: 792; height: 1224; transform: scale(1);"-->
+    <header id="report-header" class="container header">
         <div class="row">
             <div class="col-xs-12 header__content">
 
@@ -48,7 +52,7 @@
         </div>
     </section>
 
-    <section class="container graph">
+    <section id="report-graph" class="container graph">
         <div class="row">
             <div class="col-xs-12">
                 <div class="graph__filters">
@@ -111,7 +115,7 @@
         </div>
     </section>
 
-    <section class="container features" >
+    <section id="report-features" class="container features" >
         <div class="row">
             <div class="col-xs-12 features__content">
                 <div class="features__column">
@@ -121,7 +125,7 @@
                             <b>סביר</b> להציג את ההתנהגויות
                             <br>או הנטיות הבאות:</h4>
                     </div>
-                    <div class="features__list">
+                    <div id="features-list-1" class="features__list">
                         <% if (candidate.report.weaknesses.length > 0) { %>
                         <% for (var weaknessesIndex = 0; weaknessesIndex < candidate.report.weaknesses.length; weaknessesIndex++) { %>
                         <div class="features__item-wrapper">
@@ -145,8 +149,8 @@
                             </div>
                             <!-- Questions for interview
                             <div class="features__item-message">
-                                <h4 class="features__text features__text--alt features__text--brand">Lorem ipsum</h4>
-                                <p class="features__text features__text--alt">Adipisicing sit anim officia minim id anim eiusmod mollit consectetur. Do labore incididunt
+                                <h4 class="features__text features__text- -alt features__text- -brand">Lorem ipsum</h4>
+                                <p class="features__text features__text- -alt">Adipisicing sit anim officia minim id anim eiusmod mollit consectetur. Do labore incididunt
                                     ex ipsum laborum et.</p>
                             </div>
                             -->
@@ -158,7 +162,7 @@
                             <div class="features__item">
                                 <img src="/images/i-book.png" alt="Icon" class="features__item-icon">
                                 <div class="features__item-copy">
-                                    <h3 class="features__title features__title--brand features__item-title">Lorem ipsum</h3>
+                                    <h3 class="features__title features__title- -brand features__item-title">Lorem ipsum</h3>
                                     <ul class="features__item-list">
                                         <li class="features__item-list__item">Pariatur sunt nulla tempor nisi.</li>
                                         <li class="features__item-list__item">Pariatur tempor anim exercitation irure do.</li>
@@ -168,8 +172,8 @@
                             </div>
                             <!-- Questions for interview
                             <div class="features__item-message">
-                                <h4 class="features__text features__text--alt features__text--brand">Lorem ipsum</h4>
-                                <p class="features__text features__text--alt">Adipisicing sit anim officia minim id anim eiusmod mollit consectetur. Do labore incididunt
+                                <h4 class="features__text features__text- -alt features__text- -brand">Lorem ipsum</h4>
+                                <p class="features__text features__text- -alt">Adipisicing sit anim officia minim id anim eiusmod mollit consectetur. Do labore incididunt
                                     ex ipsum laborum et.</p>
                             </div>
                             -->
@@ -183,7 +187,7 @@
                             <b>סביר</b> להציג את ההתנהגויות
                             <br>או הנטיות הבאות:</h4>
                     </div>
-                    <div class="features__list">
+                    <div id="features-list-2" class="features__list">
                         <% if (candidate.report.strengths.length > 0) { %>
                         <% for (var strengthsIndex = 0; strengthsIndex < candidate.report.strengths.length; strengthsIndex++) { %>
                             <div class="features__item-wrapper">
@@ -213,7 +217,7 @@
                             <div class="features__item">
                                 <img src="/images/i-faces.png" alt="Icon" class="features__item-icon">
                                 <div class="features__item-copy">
-                                    <h3 class="features__title features__title--brand features__item-title">אינטליגנציה רגשית</h3>
+                                    <h3 class="features__title features__title- -brand features__item-title">אינטליגנציה רגשית</h3>
                                     <ul class="features__item-list">
                                         <li class="features__item-list__item">Pariatur sunt nulla tempor nisi.</li>
                                         <li class="features__item-list__item">Pariatur tempor anim exercitation irure do.</li>
@@ -227,7 +231,7 @@
                             <div class="features__item">
                                 <img src="/images/i-meditation.png" alt="Icon" class="features__item-icon">
                                 <div class="features__item-copy">
-                                    <h3 class="features__title features__title--brand features__item-title">תוצאתיות והתמדה</h3>
+                                    <h3 class="features__title features__title- -brand features__item-title">תוצאתיות והתמדה</h3>
                                     <ul class="features__item-list">
                                         <li class="features__item-list__item">Pariatur sunt nulla tempor nisi.</li>
                                         <li class="features__item-list__item">Pariatur tempor anim exercitation irure do.</li>
@@ -243,13 +247,29 @@
         </div>
     </section>
 
-    <footer class="container footer">
+    <footer id="report-footer" class="container footer">
         <div class="row">
             <div class="col-xs-12">
                 <h5 class="footer__text"></h5>
             </div>
         </div>
     </footer>
+    <!--/div-->
+    </div>
+    </div>
+
+    <!-- The following div was used for testing conversion to an img which hasn't been implemented yet. -->
+    <!--div style="background-color: #9e9e9e; bottom: 0; right: 0; overflow: auto; position: absolute; bottom: 0; left: 0; margin: 0; padding: 0; border: 0; display: block; ">
+        <div style="height: 100px; width: 1200px; margin: 13px auto; box-shadow: 1px 1px 3px 1px #333; border-collapse: separate; position: relative; background-color: white; overflow: hidden; border: 0; display: block;">
+            <button style="height: 30px; width: 50px;" onclick="convert2image();">
+            </button>
+            <div style="height: 70px; width: 1200px;" id="here-appear-theimages">
+                <p>
+                    Here the images will be appended when you click the button
+                </p>
+            </div>
+        </div>
+    </div>-->
 
 </body>
 
