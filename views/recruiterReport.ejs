@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Empirical Hire</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+
+    <header class="container header">
+        <div class="row">
+            <div class="col-xs-12 header__content">
+
+                <a href="#" class="header__logo-wrapper">
+                    <!-- <img src="/images/logo.png" alt="Logo" class="header__logo">-->
+                </a>
+
+                <div class="header__copy">
+                    <h1 class="header__title">
+                        <span class="header__title--brand">Empirical</span> Hire
+                        <span class="header__title--small"></span>
+                    </h1>
+                    <p class="header__subtitle">
+                        <br></p>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="container-fluid banner">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 banner__content">
+                    <div class="banner__main">
+                        <h2 class="banner__title"><%= candidate.fullName %></h2>
+                    </div>
+                    <div class="banner__info">
+                        <h3 class="banner__phone"><%= candidate.id %></h3>
+                        <p class="banner__text">
+                            <b>מילוי השאלון:</b> 15/8/17 (לפני X ימים)</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="container graph">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="graph__filters">
+                    <h4 class="graph__filters-text">
+                        <b>&nbsp; נציג מכירות &nbsp;|&nbsp; מקור גיוס:</b> AllJobs</h4>
+                </div>
+                <div class="graph__img">
+                    <div class="graph__img-row">
+                        <div class="graph__img-column">
+                            <h4 class="graph__img-text">20%
+                                <br>
+                                <b>תחתונים</b>
+                            </h4>
+                        </div>
+                        <div class="graph__img-column">
+                            <h4 class="graph__img-text">60%
+                                <br>
+                                <b>מרכזיים</b>
+                            </h4>
+                        </div>
+                        <div class="graph__img-column">
+                            <h4 class="graph__img-text">20%
+                                <br>
+                                <b>עליונים</b>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="graph__img-mark">
+                        <div class="graph__img-mark__list">
+                            <div class="graph__img-mark__column">
+                                <h4 class="graph__img-text">1</h4>
+                            </div>
+                            <div class="graph__img-mark__column">
+                                <h4 class="graph__img-text">2</h4>
+                                <h4 class="graph__img-text">3</h4>
+                                <h4 class="graph__img-text graph__img-text--active">4</h4>
+                            </div>
+                            <div class="graph__img-mark__column">
+                                <h4 class="graph__img-text">5</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="graph__img-row">
+                        <div class="graph__img-column">
+                            <img src="/images/arrow.png" alt="Arrow" class="graph__img-arrow">
+                            <h4 class="graph__img-text graph__img-text--light">מומלץ לא להעסיק</h4>
+                        </div>
+                        <div class="graph__img-column">
+                            <img src="/images/arrow.png" alt="Arrow" class="graph__img-arrow">
+                            <h4 class="graph__img-text graph__img-text--bold">מומלץ להמשיך בתהליך המיון ולברר התאמה</h4>
+                        </div>
+                        <div class="graph__img-column">
+                            <img src="/images/arrow.png" alt="Arrow" class="graph__img-arrow">
+                            <h4 class="graph__img-text graph__img-text--light">מומלץ להעסיק</h4>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="graph__subtitle">ציון ממוצע:</h4>
+            </div>
+        </div>
+    </section>
+
+    <section class="container features" >
+        <div class="row">
+            <div class="col-xs-12 features__content">
+                <div class="features__column">
+                    <div class="features__header">
+                        <h3 class="features__title features__title--underline">נקודות לבירור</h3>
+                        <h4 class="features__subtitle">המועמד
+                            <b>סביר</b> להציג את ההתנהגויות
+                            <br>או הנטיות הבאות:</h4>
+                    </div>
+                    <div class="features__list">
+                        <% if (candidate.report.weaknesses.length > 0) { %>
+                        <% for (var weaknessesIndex = 0; weaknessesIndex < candidate.report.weaknesses.length; weaknessesIndex++) { %>
+                        <div class="features__item-wrapper">
+                            <div class="features__item">
+                                <img src="/images/icons/<%= candidate.report.weaknesses[weaknessesIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon">
+                                <div class="features__item-copy">
+                                    <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
+                                    <ul class="features__item-list">
+                                        <% for (var wtxtIndex = 0; wtxtIndex < candidate.report.weaknesses[weaknessesIndex]['text'].length; wtxtIndex++) {
+                                            if (candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] == '') { %>
+                                                <br>
+                                        <%  } else if (candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].charAt(candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].length - 1) == '-' ||
+                                                candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].charAt(candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].length - 2) == '-') { %>
+                                                <p style="font-weight: bold;"> בצוות ובארגון- </p>
+                                        <%  } else { %>
+                                        <li class="features__item-list__item"><%= candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] %></li>
+                                        <%  } %>
+                                    <%  } %>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Questions for interview
+                            <div class="features__item-message">
+                                <h4 class="features__text features__text--alt features__text--brand">Lorem ipsum</h4>
+                                <p class="features__text features__text--alt">Adipisicing sit anim officia minim id anim eiusmod mollit consectetur. Do labore incididunt
+                                    ex ipsum laborum et.</p>
+                            </div>
+                            -->
+                        </div>
+                        <%  } %>
+                    <%  } %>
+                        <!--
+                        <div class="features__item-wrapper">
+                            <div class="features__item">
+                                <img src="/images/i-book.png" alt="Icon" class="features__item-icon">
+                                <div class="features__item-copy">
+                                    <h3 class="features__title features__title--brand features__item-title">Lorem ipsum</h3>
+                                    <ul class="features__item-list">
+                                        <li class="features__item-list__item">Pariatur sunt nulla tempor nisi.</li>
+                                        <li class="features__item-list__item">Pariatur tempor anim exercitation irure do.</li>
+                                        <li class="features__item-list__item">Ex laborum laborum nulla ullamco pariatur reprehenderit sit ex.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <!-- Questions for interview
+                            <div class="features__item-message">
+                                <h4 class="features__text features__text--alt features__text--brand">Lorem ipsum</h4>
+                                <p class="features__text features__text--alt">Adipisicing sit anim officia minim id anim eiusmod mollit consectetur. Do labore incididunt
+                                    ex ipsum laborum et.</p>
+                            </div>
+                            -->
+                        <!--</div>-->
+                </div>
+                </div>
+                <div class="features__column">
+                    <div class="features__header">
+                        <h3 class="features__title features__title--underline">נקודות עוצמה</h3>
+                        <h4 class="features__subtitle">המועמד
+                            <b>סביר</b> להציג את ההתנהגויות
+                            <br>או הנטיות הבאות:</h4>
+                    </div>
+                    <div class="features__list">
+                        <% if (candidate.report.strengths.length > 0) { %>
+                        <% for (var strengthsIndex = 0; strengthsIndex < candidate.report.strengths.length; strengthsIndex++) { %>
+                            <div class="features__item-wrapper">
+                                <div class="features__item">
+                                <img src="/images/icons/<%= candidate.report.strengths[strengthsIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon">
+                                    <div class="features__item-copy">
+                                        <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.strengths[strengthsIndex].title%></h3>
+                                        <ul class="features__item-list">
+                                            <% for (var txtIndex = 0; txtIndex < candidate.report.strengths[strengthsIndex]['text'].length; txtIndex++) {
+                                                if (candidate.report.strengths[strengthsIndex]['text'][txtIndex] == '') { %>
+                                                <br>
+                                                <%  } else if (candidate.report.strengths[strengthsIndex]['text'][txtIndex].charAt(candidate.report.strengths[strengthsIndex]['text'][txtIndex].length - 1) == '-' ||
+                                                        candidate.report.strengths[strengthsIndex]['text'][txtIndex].charAt(candidate.report.strengths[strengthsIndex]['text'][txtIndex].length - 2) == '-'){ %>
+                                                    <p style="font-weight: bold;"> בצוות ובארגון- </p>
+                                                <%  } else { %>
+                                                    <li class="features__item-list__item"><%= candidate.report.strengths[strengthsIndex]['text'][txtIndex] %></li>
+                                                <%  } %>
+                                            <%  } %>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <%  } %>
+                        <%  } %>
+                        <!--
+                        <div class="features__item-wrapper">
+                            <div class="features__item">
+                                <img src="/images/i-faces.png" alt="Icon" class="features__item-icon">
+                                <div class="features__item-copy">
+                                    <h3 class="features__title features__title--brand features__item-title">אינטליגנציה רגשית</h3>
+                                    <ul class="features__item-list">
+                                        <li class="features__item-list__item">Pariatur sunt nulla tempor nisi.</li>
+                                        <li class="features__item-list__item">Pariatur tempor anim exercitation irure do.</li>
+                                        <li class="features__item-list__item">Ex laborum laborum nulla ullamco pariatur reprehenderit sit ex.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="features__item-wrapper">
+                            <div class="features__item">
+                                <img src="/images/i-meditation.png" alt="Icon" class="features__item-icon">
+                                <div class="features__item-copy">
+                                    <h3 class="features__title features__title--brand features__item-title">תוצאתיות והתמדה</h3>
+                                    <ul class="features__item-list">
+                                        <li class="features__item-list__item">Pariatur sunt nulla tempor nisi.</li>
+                                        <li class="features__item-list__item">Pariatur tempor anim exercitation irure do.</li>
+                                        <li class="features__item-list__item">Ex laborum laborum nulla ullamco pariatur reprehenderit sit ex.</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+            -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="container footer">
+        <div class="row">
+            <div class="col-xs-12">
+                <h5 class="footer__text"></h5>
+            </div>
+        </div>
+    </footer>
+
+</body>
+
+</html>
