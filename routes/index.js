@@ -3,6 +3,7 @@ var router = express.Router();
 var form_Ctrl = require('../controllers/form.server.controller');
 var mailParser_Ctrl = require('../controllers/mailParser.server.controller');
 var addClient_Ctrl = require('../controllers/addClient.server.controller');
+var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
 var multer  = require('multer');
 var upload = multer({ dest: '/tmp/uploads/' });
 var fs = require('fs');
@@ -99,5 +100,10 @@ router.post('/addClient', upload.single('logo'), function(req, res) {
 router.get('/test', function (req, res) {
     return form_Ctrl.getTest(req, res);
 });
+
+router.get('/clients/:cid/recruiterReport', function(req, res) {
+    return recruiterReport_Ctrl.generateRecruiterReport(req, res);
+});
+
 
 module.exports = router;
