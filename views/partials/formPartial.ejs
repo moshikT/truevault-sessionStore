@@ -8,10 +8,10 @@
         <div id="radioBtn" class="btn-group a">
             <% for (var j=0;j<formjson[i]['answerOptions'].length; j++) { %>
             <a class='<%- (formjson[i]['answerOptions'][j] == formjson[i].finalAnswer) ?
-                'btn btn-primary btn-md active' : 'btn btn-primary btn-md notActive' %>'
+                'btn btn-primary btn-lg active' : 'btn btn-primary btn-lg notActive' %>'
                data-value=<%=formjson[i]['answerOptions'][j]%> data-toggle=<%= formjson[i].id %>
-                    data-title=<%=formjson[i]['dataTitle'][j]%> style=
-            <%  (j == formjson[i]['answerOptions'].length - 1) ? "border-bottom-right-radius: 6px;border-top-right-radius: 6px;" : ""; %>>
+                    data-title=<%=formjson[i]['dataTitle'][j]%> style="<%=
+             (j == formjson[i]['answerOptions'].length - 1) ? "border-bottom-right-radius: 6px;border-top-right-radius: 6px;" : ""; %>">
             <%- formjson[i]['answerOptions'][j] %></a>
             <%  }
         }

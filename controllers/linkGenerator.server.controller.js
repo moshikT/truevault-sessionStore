@@ -1,11 +1,19 @@
-var GoogleUrl = require('google-url');
+//******* linkGenerator *******
+// Handles generation of goo.gl short URLs
+//*****************************
+var GoogleUrl = require('google-url');  //goo.gl URL generation package
 
 googleUrl = new GoogleUrl( { key: 'AIzaSyAOKuZalTeNBoetXdEz_on81E5vcjxarVU' });
 
 generateLink = function (link, callback) {
+    // Call goo.gl to generate a short URL for us
     googleUrl.shorten(link , function( err, shortUrl ) {
         // shortUrl should be http://goo.gl/BzpZ54
+        // We get here after the URL is generated or if there's an error
+        console.log("Short URL: ", shortUrl);
+        // @@@ For now throw an exception but need to handle this better
         if(err) throw err;
+        // Notify the caller that the URL is ready
         callback(shortUrl);
     } );
 };

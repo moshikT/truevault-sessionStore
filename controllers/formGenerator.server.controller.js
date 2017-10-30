@@ -38,8 +38,11 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            //if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
-            if (questionsJSON['Ayalon pre-callibration'] == 'yes') {
+            //console.log(questionsJSON);
+            //console.log(questionsJSON['INCLUDED']);
+            //console.log(questionsJSON['INCLUDED'].indexOf(companyForm));
+
+            if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
                 question = parseQuestions(questionsJSON, isInEnglish);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);

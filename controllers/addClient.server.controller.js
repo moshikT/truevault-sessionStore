@@ -92,9 +92,13 @@ exports.addCandidate = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
         req.body['user_email'], req.body['user_tel'], req.client.name);
 
-    Candidate.findOne({id: req.body['user_id']}, function (err, candidate) {
+    // Removed search for candidate because we would like to create a new entry for the candidate in any case
+    // If this is returned to active state then the behavior MUST change because currently it appears to the admin
+    //  as if he's creating a new candidate even if one is already found but behind the scenes just the existing candidate
+    //  entry is used and this is BAD (Amit)
+    /*Candidate.findOne({id: req.body['user_id']}, function (err, candidate) {
         if (err) throw err;
-        /* load default params */
+        // load default params
         if (candidate) {
             console.log("found candidate");
             res.render('displayLink', {
@@ -104,7 +108,8 @@ exports.addCandidate = function (req, res) {
                 client: req.client
             });
         }
-        else {
+        else */ {
+            console.log("Creating candidate for keyword:", req.client.keyword);
             var isInEnglish = (req.client.language == 'en');
             formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
                 var sid = uuidv1();
@@ -112,6 +117,8 @@ exports.addCandidate = function (req, res) {
                 session.id = sid;
                 session.expired = false;
                 var url = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/?sid=' + session.id;//+ req.originalUrl;
+                console.log("URL:", url);
+                console.log("Form length:", form.length);
                 generateLink(url, function(shortendLink) {
                     var newCandidateEntry = new Candidate({
                         fullName: newUser.fullName,
@@ -142,6 +149,6 @@ exports.addCandidate = function (req, res) {
             });
         }
         //res.redirect('/addClient');
-    });
+    //}); //This belongs to the 'findone' that was disabled above
 }
 
