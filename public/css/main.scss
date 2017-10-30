@@ -1,0 +1,50 @@
+/*------------- BASE IMPORT -------------*/
+
+@import "_variables.scss";
+@import "_base.scss";
+
+
+/*------------- UTILITIES IMPORT -------------*/
+
+@import "_utilities.scss";
+
+
+/*------------- MODULES IMPORT -------------*/
+
+/*------------- TABLE OF CONTENTS -------------*/
+
+
+/*
+
+    1. HEADER
+    2. BANNER
+    3. GRAPH
+    4. FEATURES
+    5. FOOTER
+
+*/
+
+
+/*------------- 1. HEADER -------------*/
+
+@import "/modules/_header";
+
+
+/*------------- 2. BANNER -------------*/
+
+@import "/modules/_banner";
+
+
+/*------------- 3. GRAPH -------------*/
+
+@import "/modules/_graph";
+
+
+/*------------- 4. FEATURES -------------*/
+
+@import "/modules/_features";
+
+
+/*------------- 5. FOOTER -------------*/
+
+@import "/modules/_footer";

@@ -1,0 +1,116 @@
+.graph {
+    padding: 2rem 15px 5rem 15px;
+    @include atSmall {
+        padding-bottom: 10rem;
+    }
+    &__filters {
+        margin-bottom: 5rem;
+        direction: rtl;
+        @include atSmall {
+            margin-bottom: 7rem;
+        }
+        &-text {
+            direction: rtl;
+            font-family: $main;
+            color: $text;
+            font-size: 1.333rem;
+        }
+    }
+    &__img {
+        width: 100%;
+        height: auto;
+        border: 2px solid $text; 
+        @include atSmall {
+            width: 60%;
+            margin: 0 auto;
+        }
+        &-row {
+            display: flex;
+            align-items: stretch;
+            justify-content: space-between;
+        }
+        &-column {
+            text-align: center;
+            width: 30%;
+            padding: 1rem 0.5rem;
+            &:nth-child(even) {
+                background-color: $gray-light;
+                width: 40%;
+            }
+        }
+        &-text {
+            color: $text;
+            font-family: $main;
+            font-size: 1.333rem;
+            @include atSmall {
+                font-size: 1rem;
+            }
+            &--light {
+                font-weight: 300;
+            }
+            &--bold {
+                font-weight: 700;
+            }
+            &--active {
+                position: relative;
+                &:after {
+                    content: "";
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    width: 4rem;
+                    height: 4rem;
+                    border-radius: 50%;
+                    border: 5px solid $text;
+                }
+            }
+        }
+        &-arrow {
+            width: 1rem;
+            margin: 0.5rem auto;
+        }
+        &-mark {
+            background: #ec5066;
+            background: -moz-linear-gradient(left, #ec5066 0%, #f19a65 30%, #f7c266 57%, #c9ca7a 83%, #93ca89 100%);
+            background: -webkit-linear-gradient(left, #ec5066 0%,#f19a65 30%,#f7c266 57%,#c9ca7a 83%,#93ca89 100%);
+            background: linear-gradient(to right, #ec5066 0%,#f19a65 30%,#f7c266 57%,#c9ca7a 83%,#93ca89 100%);
+            filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ec5066', endColorstr='#93ca89',GradientType=1 );
+            padding: 1rem;
+            &__list {
+                background-color: $white;
+                display: flex;
+                align-items: stretch;
+                justify-content: space-between;
+            }
+            &__column {
+                padding: 0 0.5rem;
+                width: 28%;
+                text-align: center;
+                &:nth-child(even) {
+                    display: flex;
+                    align-items: center;
+                    justify-content: space-between;
+                    background-color: $gray-light;
+                    width: 42%;
+                }
+                h4 {
+                    font-size: 3rem;
+                }
+            }
+        }
+    }
+    &__subtitle {
+        font-family: $main;
+        color: $text;
+        font-size: 1.5rem;
+        font-weight: 700;
+        direction: rtl;
+        margin-top: 2rem;
+        width: 100%;
+        @include atSmall {
+            width: 60%;
+            margin: 2rem auto 0 auto;
+        }
+    }
+}

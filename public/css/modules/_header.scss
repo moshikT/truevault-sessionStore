@@ -1,0 +1,82 @@
+.header {
+    &__content {
+        @include atSmall {
+            display: flex;
+            align-items: stretch;
+            justify-content: flex-start;
+        }
+    }
+    &__logo-wrapper {
+        width: 25%;
+        display: block;
+        text-align: center;
+        margin: 0 auto;
+        @include atSmall {
+            width: 15%;
+            margin: 0;
+        }
+        @include atMedium {
+            width: 10%;
+        }
+    }
+    &__logo {
+        width: 100%;
+        height: auto;
+    }
+    &__copy {
+        text-align: center;
+        @include atSmall {
+            width: 75%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+        @include atMedium {
+            width: 80%;
+        }
+    }
+    &__title {
+        font-family: $main;
+        color: $text;
+        font-size: 3rem;
+        font-weight: 400;
+        margin: 2rem auto;
+        @include atSmall {
+            margin-top: 1rem;
+            margin-bottom: 0;
+        }
+        @include atMedium {
+            margin-top: 0.5rem;
+        }
+        @include atLarge {
+            margin-top: 1rem;
+        }
+        &--brand {
+            color: $brand;
+        }
+        &--small {
+            font-size: 2rem;
+            color: $text;
+            font-weight: 300;
+            margin-left: 1rem;
+            display: block;
+            @include atSmall {
+                display: inline-block;
+            }
+        }
+    }
+    &__subtitle {
+        font-size: 1.333rem;
+        color: $text;
+        direction: rtl;
+        font-family: $main;
+        @include atSmall {
+            font-size: 1rem;
+            flex-grow: 1;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+        }
+    }
+}

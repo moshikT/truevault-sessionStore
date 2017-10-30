@@ -1,0 +1,13 @@
+.footer {
+    margin-bottom: 3rem;
+    @include atSmall {
+        margin-top: 3rem;
+        padding-right: 6rem;
+    }
+    &__text {
+        font-family: $main;
+        color: $text;
+        direction: rtl;
+        font-size: 1rem;
+    }
+}

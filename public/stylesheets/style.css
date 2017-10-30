@@ -281,7 +281,7 @@ a {
 
 /* overide bootstrap large button so that more buttons will fit in one line on small handsets */
 .btn-lg {
-  padding: 10px 14px;
+  padding: 10px 13px;
 }
 
 /*
