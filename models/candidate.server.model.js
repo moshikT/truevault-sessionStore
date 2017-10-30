@@ -8,10 +8,17 @@ var candidateSchema = new Schema({
     phoneNumber : Number,
     company: String,
     formDurationInMinutes : Number,
+    //formData: JSON,
     form : JSON,
     formCompleted: Boolean,
     session: JSON,
-    linkToForm: String
+    linkToForm: String,
+    report: JSON,
+    //strengths: JSON,
+    //weaknesses: JSON,
+    isMale: Boolean,
+    recruitmentSource: String,
+    dateCompleted: String
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

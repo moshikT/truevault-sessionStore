@@ -95,7 +95,7 @@ function parseQuestions(qJSON, isInEnglish) {
                 //console.log("Wrong structure for question type B: " + qJSON);
             }
         }
-        parsedQuestion.answer = parsedAnswers;
+        parsedQuestion.answer = parsedAnswers; /* TODO: check if possible to change to answer options for uniformity between questions types */
         parsedQuestion.dataTitle = parsedAnswersWeight;
     }
     else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') {
@@ -135,6 +135,7 @@ function parseQuestions(qJSON, isInEnglish) {
         parsedQuestion.type = 'C';
         parsedQuestion.dataTitle = (answerOptions.length == 2) ? [7, 1] : answerOptions;
         parsedQuestion.answerOptions = answerOptions;
+        parsedQuestion.optAnswer = isInEnglish ? qJSON['ANSWER ENGLISH'] : qJSON['ANSWER HEBREW'];
     }
     return parsedQuestion;
 }

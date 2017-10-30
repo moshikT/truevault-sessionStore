@@ -77,6 +77,7 @@ exports.saveFormResults = function (req, res) {
 
             candidate.formCompleted = true;
             candidate.session.expired = true;
+            //candidate.report =
 
             for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
                 /* If final answer does not exist update from form */

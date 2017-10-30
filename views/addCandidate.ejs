@@ -99,15 +99,9 @@
 
             },
             submitHandler: function (form) {
-                //var userData = $('#addCandidate').serializeToString();//serialize();
-                //alert($(form).serializeToString());
-                //alert(userData);
-                var formDataArr =  JSON.stringify($('#addCandidate').serializeArray());
+                var formData =  JSON.stringify($('#addCandidate').serializeArray());
                 var cid = getCid();
-                //var userName = $('#user_name').val();//document.getElementsById('user_fullName').getAttr("value");
-                //alert(userName);
-                var newUserDate = new Date();
-                mixpanel.track('New User', { 'userData': formDataArr, 'userType': 'candidate', 'date': newUserDate.toString(), 'cid': cid });
+                mixpanel.track('New User', { 'userData': formData, 'userType': 'candidate', 'date': newUserDate.toString(), 'cid': cid });
 
                 /*$.ajax({
                     url:'/addCandidate',
@@ -121,8 +115,6 @@
                         // TODO: scrollTo block user authentication display
                     }
                 });*/
-
-
                 form.submit();
             }
         });
