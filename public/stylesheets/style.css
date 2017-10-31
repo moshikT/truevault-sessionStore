@@ -45,10 +45,10 @@ and (max-device-width: 1600px) {
     /*border-style: solid;
     border-width: 1px;
     border-color: darkgrey;*/
-    border-radius: 25px;
+    border-radius: 0px 0px 25px 25px;
     vertical-align: middle;
     background-color: white;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     width: 60%;
 
   }
@@ -62,20 +62,26 @@ and (max-device-width: 1600px) {
 and (min-device-width: 340px)
 and (max-device-width: 667px) {
   .introText {
-    line-height: 1.3;
-    font-size: large;
-    font-weight: 600;
-    color: black;
+    font-family: Arial;
+    font-size: 13px;/* "Lucida Grande", Helvetica, Arial, sans-serif;*/
+    line-height: 1.1;
+    /*font-size: large;*/
+    font-weight: 100;
+    color: dimgray;
+    letter-spacing: 1px;
+    text-align: right;
     margin-top: 50px;
     padding: 25px;
     /*border-style: solid;
     border-width: 1px;
     border-color: darkgrey;*/
-    border-radius: 25px;
+    border-radius: 0px 0px 25px 25px;
     vertical-align: middle;
     background-color: white;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     width: 100%;
+    height: 100%;
+
   }
   .logo {
     /*zoom: 55%;*/
@@ -109,7 +115,7 @@ float: right;
     border-radius: 25px;
     vertical-align: middle;
     background-color: white;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     width: 100%;
 
   }
@@ -129,11 +135,13 @@ and (max-device-width: 339px) {
     /*border-style: solid;
     border-width: 1px;
     border-color: darkgrey;*/
-    border-radius: 25px;
+    border-radius: 0px 0px 25px 25px;
     vertical-align: middle;
     background-color: white;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     width: 100%;
+    height: 100%;
+
   }
   .logo {
     /*zoom: 55%;*/
@@ -169,7 +177,7 @@ and (max-device-width: 339px) {
     border-radius: 25px;
     vertical-align: middle;
     background-color: white;
-    opacity: 0.9;
+    /*opacity: 0.9;*/
     width: 100%;
 
   }
@@ -177,10 +185,10 @@ and (max-device-width: 339px) {
 
 body {
   padding: 10px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  font: 12px "Lucida Grande", Helvetica, Arial, sans-serif;
   /*direction: rtl;*/
   background-color: white;
-  opacity: 0.6;
+  /*opacity: 0.6;*/
   width: 100%;
 }
 
@@ -189,10 +197,25 @@ form {
 
 }
 
+.headline {
+  position: absolute;
+  z-index: -1;
+  font-size: 14px;/* "Lucida Grande", Helvetica, Arial, sans-serif;*/
+  font-family: Arial;
+  background-image: url("../images/headline_bg.png");
+  width: 90%;
+  padding: 5px 25px 5px 5px;
+  right: 20px;
+  top: 110px;
+  text-align: right;
+  color: white;
+  letter-spacing: 1px;
+}
+
 .background {
-  background-color: whitesmoke;
-  opacity: 0.9;
-  border-radius: 25px;
+  /*background-color: whitesmoke;*/
+  /*opacity: 0.9;*/
+  /*border-radius: 25px;*/
 }
 
 h1 {
@@ -207,6 +230,11 @@ h1 {
 }
  p {
    /*float: right;*/
+   margin: 0px 0px 0px 0px;
+ }
+
+ p.b {
+   font-weight: bold;
  }
 
 
@@ -251,7 +279,7 @@ a {
   z-index: -1;
 
   display: block;
-  background-image: url("../images/bg.jpg");
+  background-image: url("../images/EH_bg.png");
 
 
   -webkit-filter: blur(10px);
