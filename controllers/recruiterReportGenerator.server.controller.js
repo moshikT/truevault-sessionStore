@@ -88,6 +88,7 @@ function getFactorsAvg(candidate, callback) {
                                 var score = Number(candidate.form[qIndex].finalAnswer);
                             }
                             factorAvg += score;
+                            console.log("question id: " + candidate.form[qIndex].id + " score: " + score);
                         }
                     }
                 }
@@ -96,6 +97,8 @@ function getFactorsAvg(candidate, callback) {
             factorData.name = factor;
             factorData.avg = factorAvg/numOfElementsInFactor;
             testScore += factorData.avg;
+
+            console.log("factor: " + factor + " avg: " + factorData.avg);
             factors.push(factorData);
         })
         .on('data',(data)=>{
@@ -108,17 +111,23 @@ function getFactorsAvg(candidate, callback) {
             console.log("test score ", testScore);
             console.log("num of factors ", factors.length);
             console.log("test avg ", testScoreAvg);
-            if(testScoreAvg < 2.5) {
+            if(testScoreAvg < 1.5) {
                 var finalScore = Math.round(testScoreAvg);
             }
-            else if(testScoreAvg >= 2.5 && testScoreAvg < 5.5) {
+            else if(testScoreAvg >= 1.5 && testScoreAvg < 3) {
+                var finalScore = 2;
+            }
+            else if(testScoreAvg >= 3 && testScoreAvg < 5) {
                 var finalScore = 3;
             }
+            else if(testScoreAvg >= 5 && testScoreAvg < 6.5) {
+                var finalScore = 4;
+            }
             else {
-                var finalScore = Math.round(testScoreAvg-2);
+                var finalScore = 5;//;Math.round(testScoreAvg-2);
             }
 
-            //console.log("test avg conversion to 1-5 ", finalScore);
+            console.log("test avg conversion to 1-5 ", finalScore);
             callback(factors, finalScore);
         })
 }
@@ -138,8 +147,8 @@ function getVerbalText(factorsData, isMale, callback) {
             factorsData.forEach(function (factor) {
                 //console.log(factor.name);
                 if(factor.name == factorVerbal['SHORT NAME']) {
-                    var isStrength = (factor.avg > 3.5);
-                    var isWeakness = (factor.avg < 2.5);
+                    var isStrength = (factor.avg >= 5);
+                    var isWeakness = (factor.avg <= 3);
                     var verbalKey = isStrength ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                         : isWeakness ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                         : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
