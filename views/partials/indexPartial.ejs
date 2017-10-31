@@ -1,16 +1,68 @@
     <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=' + sid %>>
-        <div id="intro1" style="padding: 10px;height:370px;scroll:hidden;overflow: auto;">
+
+        <div id="intro1" style="height:auto;scroll:hidden;overflow: auto;">
+            <div class="headline" style="z-index: 10;"><p>
+                מבחן מיון למועמדים לתפקיד<br>
+                נציגי שירות ו/או מכירה בחברת איילון
+                </p> </div>
             <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-                <%=indexPageText.instructionText%>
-            </div>
-            <div style="padding: 30px;">
-                <a onclick="scrollToNextElement('intro2')" class="btn btn-primary"><%=  indexPageText.next %></a>
+                <%=//indexPageText.instructionText%>
+                <div id="testInstructions" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
+                <p>
+                    לפניך שאלון שמילויו אורך כחצי שעה.
+                    <br><br>
+<b>                    יש להשיב בסביבה נטולת הפרעות וברצף.</b>
+                    <br><br>
+                    ברוב השאלות בשאלון (אלא אם כן נאמר אחרת) עלייך לבחור בתשובה המשקפת בצורה הטובה ביותר את עמדתך/התנהגותך.<b> פרט לשאלות שכותרתן "שאלות חשיבה", אין תשובות נכונות או לא נכונות בשאלון.</b>
+                    <br><br>
+                    <b> השאלון יודע לאבחן דפוסי תשובה כנים יותר ופחות ולכן מומלץ להשיב בכנות ובפתיחות.</b>
+                    <br><br>
+                בשאלות החשיבה יש לסמן את התשובה הנכונה לדעתך, במידה ואינך בטוח/ה - יש לנחש.
+                    <br><br>
+                לא ניתן למלא את השאלון יותר מפעם אחת וכן לא ניתן להעבירו.
+                    <br><br>
+                חובה להשיב על כל השאלות בשאלון.
+                    <br><br>
+
+                    <b> אני מסכים/ה לתנאי השימוש</b>
+                    <br><br>
+                    בהצלחה,
+                    <br>
+                צוות הגיוס
+                </p>
+                </div>
+
+                <div id="companyDescription" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;display: none;">
+                    <p>
+                         סוכנות
+<b>                        "הכי בריא" </b>
+                            היא חלק מקבוצת "איילון ביטוח".
+                        <br><br>
+                        אנו ב
+                        <b>                        "הכי בריא" </b>
+                        שמים דגש בבחירת עובדינו ומאמינים כי הצלחת הארגון מבוססת על הון אנושי איכותי, מקצועי ואמין.
+                        <br><br>
+                        העבודה ב
+                        <b>                        "הכי בריא" </b>
+                        מתאפיינת במצוינות, כבוד הדדי, אווירה משפחתית, יציבות ויכולת להתפתח ולהתקדם.
+                    </p>
+                </div>
+                <div style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;">
+                    <a onclick="goNext()" >
+                    <img style="zoom:30%" src="/images/next_btn.png">
+                    </a>
+                </div>
+                <div id="back_btn" style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
+                    <a onclick="goBack()" >
+                        <img style="zoom:30%" src="/images/back_btn.png">
+                    </a>
+                </div>
             </div>
         </div>
-
+                <!--
         <div id="intro2" style="height:370px;">
             <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-                <%=client.introText%>
+                <%=//client.introText%>
             </div>
 
             <div style="padding: 30px;">
@@ -25,4 +77,5 @@
                 <button href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></button>
             </div>
         </div>
+        -->
     </form>

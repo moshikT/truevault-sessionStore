@@ -5,14 +5,43 @@
 <body class="content" dir=<%=indexPageText.textDirection%>>
 <header>
     <% include partials/logo %>
+    <!--
     <div class="container col-md-12">
         <h1> <%=  title %> </h1>
     </div>
+    -->
 </header>
-<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
+<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: auto;width:100%;">
 <% include partials/indexPartial %>
 </div>
 <% include partials/footer %>
+<script>
+    var isFirstPage = true;
+    function goNext() {
+        if(isFirstPage) {
+            document.getElementById('testInstructions').style.display = 'none';
+            document.getElementById('companyDescription').style.display = 'block';
+            document.getElementById('back_btn').style.display = 'block';
+            isFirstPage = false;
+        }
+        else {
+            //console.log("redirect to form");
+            document.getElementById("formInfo").submit();
+        }
+    }
+
+    function goBack() {
+        if (!isFirstPage) {
+            document.getElementById('testInstructions').style.display = 'block';
+            document.getElementById('companyDescription').style.display = 'none';
+            document.getElementById('back_btn').style.display = 'none';
+            isFirstPage = true;
+        }
+    }
+
+
+</script>
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
 <script src="/javascripts/messages_he.js"></script>

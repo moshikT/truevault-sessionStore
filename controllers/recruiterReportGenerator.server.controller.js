@@ -147,8 +147,8 @@ function getVerbalText(factorsData, isMale, callback) {
             factorsData.forEach(function (factor) {
                 //console.log(factor.name);
                 if(factor.name == factorVerbal['SHORT NAME']) {
-                    var isStrength = (factor.avg >= 5);
-                    var isWeakness = (factor.avg <= 3);
+                    var isStrength = (factor.avg >= 4.5);
+                    var isWeakness = (factor.avg <= 3.5);
                     var verbalKey = isStrength ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                         : isWeakness ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                         : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
