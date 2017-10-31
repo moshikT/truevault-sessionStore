@@ -18,11 +18,15 @@
     </div>
 </header>
 <body style="text-align: center;">
-    <h2>New Link Generated for:  <%= candidate.fullName %></h2>
+<div>
+<h2>New Links Generated for:  <%= candidate.fullName %></h2>
 
     <br>
     <br>
-    <span><a><%= candidate.linkToForm %></a></span>
+    <span>Form: <a href='<%= candidate.linkToForm %>'><%= candidate.linkToForm %></a></span>
+    <br>
+    <br>
+    <span>Report: <a href='<%= candidate.linkToReport %>'><%= candidate.linkToReport %></a></span>
 </div>
 
 

@@ -14,16 +14,27 @@ exports.generateRecruiterReport = function (req, res) {
         if (candidate) {
             // TODO: calculate average by formula
 
-            getFactorsAvg(candidate, function (factorsData) {
+            getFactorsAvg(candidate, function (factorsData, finalScore) {
 
-                var isMale = true; // TODO: get from candidate's doc
+                var isMale = (candidate.gender == 'male'); // TODO: get from candidate's doc
                 getVerbalText(factorsData, isMale, function (strengths, weaknesses) {
                     //console.log("strengths ", strengths);
                     //console.log("weaknesses ", weaknesses);
+                    var report = {}
+                    report.strengths = strengths;
+                    report.weaknesses = weaknesses;
+                    report.finalScore = finalScore;
 
-                    candidate.report = {};
-                    candidate.report.strengths = strengths;
-                    candidate.report.weaknesses = weaknesses;
+                    candidate.report = report;
+
+                    candidate.save(function(err, entry){
+                        if(err) {
+                            console.log("unable To save", err);
+                        }
+                        else {
+                            console.log("succeed update final answer");
+                        }
+                    });
                     /*
                     // TODO: save candidate average in the db
 
@@ -52,6 +63,7 @@ exports.generateRecruiterReport = function (req, res) {
 
 function getFactorsAvg(candidate, callback) {
     var factors = [];
+    var testScore = 0;
 
     csv({noheader:true})
         .fromFile('report factors - factorsTranspose.csv')
@@ -83,6 +95,7 @@ function getFactorsAvg(candidate, callback) {
             var factorData = {};
             factorData.name = factor;
             factorData.avg = factorAvg/numOfElementsInFactor;
+            testScore += factorData.avg;
             factors.push(factorData);
         })
         .on('data',(data)=>{
@@ -91,7 +104,22 @@ function getFactorsAvg(candidate, callback) {
             //var factor = JSON.parse(jsonStr);
         })
         .on('done',(error)=>{
-            callback(factors);
+            var testScoreAvg = testScore/factors.length;
+            console.log("test score ", testScore);
+            console.log("num of factors ", factors.length);
+            console.log("test avg ", testScoreAvg);
+            if(testScoreAvg < 2.5) {
+                var finalScore = Math.round(testScoreAvg);
+            }
+            else if(testScoreAvg >= 2.5 && testScoreAvg < 5.5) {
+                var finalScore = 3;
+            }
+            else {
+                var finalScore = Math.round(testScoreAvg-2);
+            }
+
+            //console.log("test avg conversion to 1-5 ", finalScore);
+            callback(factors, finalScore);
         })
 }
 
@@ -110,8 +138,8 @@ function getVerbalText(factorsData, isMale, callback) {
             factorsData.forEach(function (factor) {
                 //console.log(factor.name);
                 if(factor.name == factorVerbal['SHORT NAME']) {
-                    var isStrength = (factor.avg > 4.5);
-                    var isWeakness = (factor.avg < 4);
+                    var isStrength = (factor.avg > 3.5);
+                    var isWeakness = (factor.avg < 2.5);
                     var verbalKey = isStrength ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                         : isWeakness ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                         : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';

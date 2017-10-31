@@ -22,20 +22,32 @@
     </div>
 </header>
 <body>
-    <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
+    <div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 450px;width:100%;">
         <form id="addCandidate" method="post" action=<%='/clients/' + client._id + '/addCandidate'%>>
     <div class="container inputField" style="padding-top: 10px;font-weight: 600;color: black;/*font-size: medium;*/">
         <div id="inputname"  style="padding-top: 20px;">
             <input id="user_name" class="inputs" name="user_fullName" type="text" placeholder='<%= indexPageText.nameField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
         </div>
         <div id="inputphone" style="padding-top: 20px;">
-            <input id="user_tel" class="inputs" name="user_tel" type="number" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+            <input id="user_tel" class="inputs" name="user_tel" type="text" placeholder='<%= indexPageText.phoneField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
         </div>
         <div id="inputid" style="padding-top: 20px;">
-            <input id="user_id" class="inputs" name="user_id" type="number" placeholder='<%= indexPageText.idField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+            <input id="user_id" class="inputs" name="user_id" type="text" placeholder='<%= indexPageText.idField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
         </div>
         <div id="inputemail" style="padding-top: 20px;">
             <input id="user_email" class="inputs" name="user_email" type="email" placeholder='<%= indexPageText.emailField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        </div>
+        <div id="inputRecruitmentSource"  style="padding-top: 20px;">
+        <input id="recruitmentSource" class="inputs" name="recruitmentSource" type="text" placeholder='<%= indexPageText.recruitmentSourcelField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+    </div>
+        <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
+            <input class="inputs" name="gender" type="radio"
+                   value="male" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">Male</span>
+
+
+            <input class="inputs" name="gender" type="radio"
+                   value="female" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">Female</span>
+
         </div>
     </div>
             <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">

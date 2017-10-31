@@ -3,6 +3,7 @@ var router = express.Router();
 var form_Ctrl = require('../controllers/form.server.controller');
 var mailParser_Ctrl = require('../controllers/mailParser.server.controller');
 var addClient_Ctrl = require('../controllers/addClient.server.controller');
+var addCandidate_Ctrl = require('../controllers/addCandidate.server.controller');
 var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
 var multer  = require('multer');
 var upload = multer({ dest: '/tmp/uploads/' });
@@ -85,11 +86,11 @@ router.get('/addClient', function(req, res) {
 });
 
 router.get('/clients/:cid/addCandidate', function(req, res) {
-    return addClient_Ctrl.getAddCandidatePage(req, res);
+    return addCandidate_Ctrl.getAddCandidatePage(req, res);
 });
 
 router.post('/clients/:cid/addCandidate', function(req, res) {
-    return addClient_Ctrl.addCandidate(req, res);
+    return addCandidate_Ctrl.addCandidate(req, res);
 });
 
 /* submit file object with form */

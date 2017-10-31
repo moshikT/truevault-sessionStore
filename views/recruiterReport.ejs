@@ -4,12 +4,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Empirical Hire</title>
+    <!--<title>Empirical Hire</title>-->
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
     <link rel="stylesheet" href="/css/main.css">
+    <style>
+        page {
+            background: white;
+            display: block;
+            margin: 0 auto;
+            margin-bottom: 0.5cm;
+            box-shadow: 0 0 0.5cm rgba(0,0,0,0.5);
+        }
+
+        @media (min-width: 1200px) {
+            .container {
+                width: auto;
+            }
+
+            page[size="A4"] {
+                width: 21cm;
+                height: auto;
+            }
+            @media print {
+                body, page {
+                    margin: 0;
+                    box-shadow: 0;
+                }
+            }
+            page[size="A4"][layout="portrait"] {
+                width: 29.7cm;
+                height: auto;
+            }
+        }
+    </style>
 </head>
 
-<body>
+<body style="background: rgb(204,204,204);" >
+<page size="A4" layout="portrait">
 
     <header class="container header">
         <div class="row">
@@ -21,7 +53,8 @@
 
                 <div class="header__copy">
                     <h1 class="header__title">
-                        <span class="header__title--brand">Empirical</span> Hire
+                        <!--<span class="header__title--brand">Empirical</span> Hire-->
+                        <img style="height: 100px;padding-top:0px;zoom: 1.4;" src="/images/EH_logo.png" />
                         <span class="header__title--small"></span>
                     </h1>
                     <p class="header__subtitle">
@@ -31,7 +64,7 @@
         </div>
     </header>
 
-    <section class="container-fluid banner">
+    <section class="container-fluid banner" style="margin-top: 0rem;">
         <div class="container">
             <div class="row">
                 <div class="col-xs-12 banner__content">
@@ -41,20 +74,21 @@
                     <div class="banner__info">
                         <h3 class="banner__phone"><%= candidate.id %></h3>
                         <p class="banner__text">
-                            <b>מילוי השאלון:</b> 15/8/17 (לפני X ימים)</p>
+                            <b>מילוי השאלון:</b> <%= candidate.dateCompleted %>  (לפני X ימים)</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <section class="container graph">
+    <section class="container graph" style="padding: 1rem 15px 4rem 15px;">
         <div class="row">
             <div class="col-xs-12">
-                <div class="graph__filters">
+                <div class="graph__filters" style="margin-bottom: 3rem;">
                     <h4 class="graph__filters-text">
-                        <b>&nbsp; נציג מכירות &nbsp;|&nbsp; מקור גיוס:</b> AllJobs</h4>
+                        <b>&nbsp; נציג/ת שירות ומכירות </b>&nbsp;| <b>  טלפון: </b> <%= candidate.phoneNumber %> |&nbsp;<b> מקור גיוס:</b> <%= candidate.recruitmentSource %></h4>
                 </div>
+                <h4 class="graph__subtitle">ציון מבחן (לפני כיול):</h4>
                 <div class="graph__img">
                     <div class="graph__img-row">
                         <div class="graph__img-column">
@@ -79,15 +113,15 @@
                     <div class="graph__img-mark">
                         <div class="graph__img-mark__list">
                             <div class="graph__img-mark__column">
-                                <h4 class="graph__img-text">1</h4>
+                                <h4 class='<%= (candidate.report.finalScore == 1) ? 'graph__img-text--active' : 'graph__img-text'%>'>1</h4>
                             </div>
                             <div class="graph__img-mark__column">
-                                <h4 class="graph__img-text">2</h4>
-                                <h4 class="graph__img-text">3</h4>
-                                <h4 class="graph__img-text graph__img-text--active">4</h4>
+                                <h4 class='<%= (candidate.report.finalScore == 2) ? 'graph__img-text--active' : 'graph__img-text'%>'>2</h4>
+                                <h4 class='<%= (candidate.report.finalScore == 3) ? 'graph__img-text--active' : 'graph__img-text'%>'>3</h4>
+                                <h4 class='<%= (candidate.report.finalScore == 4) ? 'graph__img-text--active' : 'graph__img-text'%>'>4</h4>
                             </div>
                             <div class="graph__img-mark__column">
-                                <h4 class="graph__img-text">5</h4>
+                                <h4 class='<%= (candidate.report.finalScore == 5) ? 'graph__img-text--active' : 'graph__img-text'%>'>5</h4>
                             </div>
                         </div>
                     </div>
@@ -106,7 +140,6 @@
                         </div>
                     </div>
                 </div>
-                <h4 class="graph__subtitle">ציון ממוצע:</h4>
             </div>
         </div>
     </section>
@@ -125,7 +158,7 @@
                         <% if (candidate.report.weaknesses.length > 0) { %>
                         <% for (var weaknessesIndex = 0; weaknessesIndex < candidate.report.weaknesses.length; weaknessesIndex++) { %>
                         <div class="features__item-wrapper">
-                            <div class="features__item">
+                            <div class="features__item" style="justify-content: normal;">
                                 <img src="/images/icons/<%= candidate.report.weaknesses[weaknessesIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon">
                                 <div class="features__item-copy">
                                     <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
@@ -177,7 +210,7 @@
                 </div>
                 </div>
                 <div class="features__column">
-                    <div class="features__header">
+                    <div class="features__header" style="margin-bottom: 0%;">
                         <h3 class="features__title features__title--underline">נקודות עוצמה</h3>
                         <h4 class="features__subtitle">המועמד
                             <b>סביר</b> להציג את ההתנהגויות
@@ -187,7 +220,7 @@
                         <% if (candidate.report.strengths.length > 0) { %>
                         <% for (var strengthsIndex = 0; strengthsIndex < candidate.report.strengths.length; strengthsIndex++) { %>
                             <div class="features__item-wrapper">
-                                <div class="features__item">
+                                <div class="features__item" style="justify-content: normal;">
                                 <img src="/images/icons/<%= candidate.report.strengths[strengthsIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon">
                                     <div class="features__item-copy">
                                         <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.strengths[strengthsIndex].title%></h3>
@@ -250,7 +283,7 @@
             </div>
         </div>
     </footer>
-
+</page>
 </body>
 
 </html>

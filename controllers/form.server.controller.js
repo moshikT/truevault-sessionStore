@@ -75,9 +75,18 @@ exports.saveFormResults = function (req, res) {
             candidate.markModified('formCompleted');
             candidate.markModified('session');
 
+            var recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
+            var report = {};
+            report.link = recruiterReportUrl;
+            report.completed = true;
+
+            var dateCompleted = new Date();
+
             candidate.formCompleted = true;
             candidate.session.expired = true;
-            //candidate.report =
+            candidate.dateCompleted = convertDate(dateCompleted);
+            //candidate.report.completed = true;
+            candidate.report = report;
 
             for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
                 /* If final answer does not exist update from form */
@@ -157,4 +166,15 @@ exports.getThankYouPage = function (req, res) {
         textDirection: (req.client.language == 'en') ? 'ltr' : 'rtl',
         client: req.client
     });
+}
+
+function convertDate(date) {
+    var yyyy = date.getFullYear().toString();
+    var mm = (date.getMonth()+1).toString();
+    var dd  = date.getDate().toString();
+
+    var mmChars = mm.split('');
+    var ddChars = dd.split('');
+
+    return (ddChars[1]?dd:"0"+ddChars[0])  + '/' + (mmChars[1]?mm:"0"+mmChars[0]) + '/' + yyyy;
 }

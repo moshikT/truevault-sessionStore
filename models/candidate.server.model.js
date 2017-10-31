@@ -5,7 +5,7 @@ var candidateSchema = new Schema({
     fullName: String,
     id : Number,//{type: Number, required: true},
     email: String,
-    phoneNumber : Number,
+    phoneNumber : String,
     company: String,
     formDurationInMinutes : Number,
     //formData: JSON,
@@ -16,7 +16,7 @@ var candidateSchema = new Schema({
     report: JSON,
     //strengths: JSON,
     //weaknesses: JSON,
-    isMale: Boolean,
+    gender: String,
     recruitmentSource: String,
     dateCompleted: String
 });
