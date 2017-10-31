@@ -1,3 +1,8 @@
+@media (device-height: 568px) and (height: 529px),
+(device-height: 480px) and (height: 441px) {
+    /* minimal-ui is active */
+}
+
 @media screen
 and (min-device-width: 1200px)
 and (max-device-width: 1600px) {
@@ -206,7 +211,7 @@ form {
   width: 90%;
   padding: 5px 25px 5px 5px;
   right: 20px;
-  top: 110px;
+  top: 90px;
   text-align: right;
   color: white;
   letter-spacing: 1px;

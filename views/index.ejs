@@ -11,11 +11,13 @@
     </div>
     -->
 </header>
-<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: auto;width:100%;">
+<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 100%;width:100%;">
 <% include partials/indexPartial %>
 </div>
 <% include partials/footer %>
 <script>
+    window.addEventListener("load", function() { window. scrollTo(0, 0); });
+
     var isFirstPage = true;
     function goNext() {
         if(isFirstPage) {
