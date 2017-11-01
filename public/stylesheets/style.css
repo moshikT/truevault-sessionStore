@@ -88,6 +88,11 @@ and (max-device-width: 667px) {
     height: 100%;
 
   }
+
+  .screen {
+    padding-bottom:50px;
+  }
+
   .logo {
     /*zoom: 55%;*/
   }
@@ -131,10 +136,14 @@ float: right;
 and (min-device-width: 320px)
 and (max-device-width: 339px) {
   .introText {
-    line-height: 1.3;
-    font-size: medium;
-    font-weight: 600;
-    color: black;
+    font-family: Arial;
+    font-size: 13px; /* "Lucida Grande", Helvetica, Arial, sans-serif;*/
+    line-height: 1.1;
+    /*font-size: large;*/
+    font-weight: 100;
+    color: dimgray;
+    letter-spacing: 1px;
+    text-align: right;
     margin-top: 50px;
     padding: 25px;
     /*border-style: solid;
@@ -146,8 +155,12 @@ and (max-device-width: 339px) {
     /*opacity: 0.9;*/
     width: 100%;
     height: 100%;
-
   }
+
+  .screen {
+    padding-bottom:50px;
+  }
+
   .logo {
     /*zoom: 55%;*/
   }

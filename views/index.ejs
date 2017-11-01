@@ -11,12 +11,28 @@
     </div>
     -->
 </header>
-<div id="formContainer" class="container" style="padding-bottom:50px;scroll:hidden;overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 500px;width:100%;">
+<div id="formContainer" class="container screen" style="scroll:hidden;overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 500px;width:100%;">
 <% include partials/indexPartial %>
 </div>
 <% include partials/footer %>
 <script>
     window.addEventListener("load", function() { window. scrollTo(0, 0); });
+    var agreeChk = document.getElementById('agree');
+    var nextBtn = document.getElementById('next_btn');
+
+    document.addEventListener('DOMContentLoaded', function () {
+        document.querySelector('#agree').addEventListener('change', displayNext);
+    });
+
+    function displayNext(){
+        if(agreeChk.checked){
+            nextBtn.style.display = 'block';
+        }
+        else{
+            nextBtn.style.display = 'none'
+        }
+    }
+
 
     var isFirstPage = true;
     function goNext() {
