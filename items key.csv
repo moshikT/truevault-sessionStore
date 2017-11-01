@@ -233,7 +233,7 @@ competence_8,learning competence,learning competence,אני בעל/ת פתרונ
 competence_9,learning competence,learning competence,אני מלא/ה ברעיונות,I am full of ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,yes,,,,
 competence_10,learning competence,learning competence,אני יודע/ת איך ליישם את הידע שלי,I know how to apply my knowledge.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
 efficiency_1,efficiency,efficiency,אני מדייק/ת בעבודתי,I am exacting in my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-efficiency_2,efficiency,efficiency,אני מתכנן/ת תוכניות ודובק/ת בהן,I make plans and stick to them.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
+efficiency_2,efficiency,efficiency,אני מתכנן/ת תוכניות ודבק/ת בהן,I make plans and stick to them.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
 efficiency_3,efficiency,efficiency,אני מבצע/ת את תוכניותיי,I follow through with my plans.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
 efficiency_4r,efficiency,efficiency,אני מבזבז/ת את זמני,I waste my time.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
 efficiency_5r,efficiency,efficiency,אני מתקשה להתחיל לעבוד,I find it difficult to get down to work.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
@@ -458,6 +458,7 @@ app_exp_1,applicant experience,applicant experience,השאלות בשאלון ה
 app_exp_2r,applicant experience,applicant experience,השאלות בשאלון היו קשות,The questions in the questionnaire were difficult.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
 app_exp_3_r,applicant experience,applicant experience,מילוי השאלון היה מעייף,Filling out the questionnaire was exhausting.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
 app_exp_4_r,applicant experience,applicant experience,לקח לי הרבה זמן למלא את השאלון,It took me a long time to fill out the questionnaire.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
+app_exp_5,applicant experience,applicant experience,אנא דרג/י את חווית מילוי השאלון,,,,A,,,,,חוויה גרועה-חווית מצוינת,,,,,yes,,"AYALON,EH,"
 cognitive_arithmetic_1,cognitive - arithmetic,cognitive,"לפניך שאלת חשיבה <br>
 אנא סמן/י את התשובה הנכונה <br>
 במידה ואינך בטוח/ה, נחש/י <br>
