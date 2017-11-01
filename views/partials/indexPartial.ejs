@@ -1,15 +1,15 @@
     <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=' + sid %>>
 
-        <div id="intro1" style="height:auto;scroll:hidden;overflow: auto;">
+        <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
             <div class="headline" style="z-index: 10;"><p>
                 מבחן מיון למועמדים לתפקיד<br>
-                נציגי שירות ו/או מכירה בחברת איילון
+                נציגי שירות ו/או מכירה בחברת איילון.
                 </p> </div>
-            <div class="container introText" style="padding: 10px;margin-top: 0px; ">
+            <div class="container introText" style="padding: 10px;margin-top: 0px; height: 100%;">
                 <%=//indexPageText.instructionText%>
                 <div id="testInstructions" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
                 <p>
-                    לפניך שאלון שמילויו אורך כחצי שעה.
+                    לפניך שאלון שמילויו אורך כרבע שעה.
                     <br><br>
 <b>                    יש להשיב בסביבה נטולת הפרעות וברצף.</b>
                     <br><br>
@@ -23,8 +23,9 @@
                     <br><br>
                 חובה להשיב על כל השאלות בשאלון.
                     <br><br>
+                    <p><input id="agree" title="terms" name="agree" type="checkbox" required="true" value="" style="vertical-align: bottom;" >
+                     <b> קראתי את ההוראות ואני מסכים/ה למילוי השאלון </b></p>
 
-                    <b> אני מסכים/ה לתנאי השימוש</b>
                     <br><br>
                     בהצלחה,
                     <br>
@@ -47,7 +48,7 @@
                         מתאפיינת במצוינות, כבוד הדדי, אווירה משפחתית, יציבות ויכולת להתפתח ולהתקדם.
                     </p>
                 </div>
-                <div style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;">
+                <div id="next_btn" style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
                     <a onclick="goNext()" >
                     <img style="zoom:30%" src="/images/next_btn.png">
                     </a>

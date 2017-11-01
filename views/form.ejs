@@ -4,8 +4,9 @@
 <body class="content" dir=<%=textDirection%>>
 <header>
     <% include partials/logo %>
+
     <div class="container col-md-12">
-        <h1> <%=  title %> </h1>
+        <h1> <%=  //title %> </h1>
 
         <div class="container">
             <div class="progress" style="border-radius: 15px;">
@@ -17,7 +18,7 @@
         </div>
     </div>
 </header>
-    <div id="formContainer"  class="" style="scroll:hidden;overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 360px;width:100%">
+    <div id="formContainer"  class="" style="scroll:hidden;overflow-x: auto;overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 370px;width:100%;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
        <% include partials/formPartial %>
     </div>
     <% include partials/footer %>
