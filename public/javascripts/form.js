@@ -267,27 +267,33 @@ function gotoNextInvalid(errorList, nextError) {
     var container = $('#formContainer');
     // Are we at or beyond the end of the unanswered list?
     if (nextError >= errorList.length)
-    { // We are
-        // @@@ Jump to the submit button
+    { // We are at the end of the unanswered questions list
+        // Get the submit button element
+        let scrollTo = $('#submit');
+        console.log("scrollTo ", scrollTo);
+        // Do an animated scroll
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
+        }, 500);
 
         // Exit the function
         return nextError;
     }
 
-    var currentElementID = errorList[nextError].element.id; // The next item to jump to
-    var parent = $('[id="' + currentElementID + '"]').parent(); // The (div) container of the item
-    console.log("parent ", parent);
+    var nextElementID = errorList[nextError].element.id; // The next item to jump to
+    var containerElementID = $('[id="' + nextElementID + '"]').parent(); // The (div) container of the item
+    console.log("parent ", containerElementID);
     console.log("error list first element ", errorList[0]);
 
     // Is this the 'agree' checkbox?
-    if (currentElementID == 'agree') {
+    if (nextElementID == 'agree') {
         // It's an embedded container
-        parent = parent.parent();
+        containerElementID = containerElementID.parent();
     }
     console.log("container ", container);
 
     // Get the ID of the container we're going to scroll to
-    var scrollTo = $('#' + parent.attr('id'));
+    var scrollTo = $('#' + containerElementID.attr('id'));
     console.log("scrollTo ", scrollTo);
     // Do an animated scroll
     container.animate({
