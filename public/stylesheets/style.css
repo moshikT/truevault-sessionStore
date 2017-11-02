@@ -5,7 +5,7 @@
 
 @media screen
 and (min-device-width: 1200px)
-and (max-device-width: 1600px) {
+{
   .introText {
     font-family: Arial;
     line-height: 1.3;
