@@ -1,372 +1,372 @@
 Q_ID,FACTOR,SUPER FACTOR,ITEM HEBREW,ITEM ENGLISH,REV,RANK / SCALE,TYPE, FIT HEBREW,FIT ENGLISH,ANSWER HEBREW,ANSWER ENGLISH,ANS_OPT_HEBREW,ANS_OPT_ENGLISH,AYALON,NEW PILOT,DEMO,Ayalon pre-callibration,Nike,INCLUDED
-agreeableness_1,agreeableness,emotional intelligence,אני מזדהה עם רגשות של אחרים,I Sympathize with others' feelings.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,Yes,"AYALON,EH,NIKE"
-agreeableness_2r,agreeableness,emotional intelligence,אני לא מתעניין/ת בבעיות של אנשים אחרים,I am not interested in other people's problems.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,Yes,"AYALON,EH,NIKE"
-agreeableness_3,agreeableness,emotional intelligence,אני מרגיש/ה את הרגשות של אנשים אחרים,I feel others' emotions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-agreeableness_4r,agreeableness,emotional intelligence,אנשים אחרים לא באמת מעניינים אותי,I am not really interested in others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,Yes,"AYALON,EH,NIKE"
-agreeableness_5r,agreeableness,emotional intelligence,אני לא נפתח/ת לאחרים בקלות,I am hard to get to know.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,Yes,"AYALON,EH,NIKE"
-agreeableness_6,agreeableness,emotional intelligence,אני מאמין/ה שלאחרים יש כוונות טובות,I believe that others have good intentions.,,,,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-agreeableness_7,agreeableness,emotional intelligence,אני נוטה להאמין למה שאנשים אומרים,I trust what people say.,,,,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-agreeableness_8,agreeableness,emotional intelligence,קל לספק אותי,I am easy to satisfy.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,Yes,"AYALON,EH,NIKE"
-agreeableness_9r,agreeableness,emotional intelligence,"אני ""חריף/ה"" בדיבור שלי",I have a sharp tongue.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-conscientiousness_1,conscientiousness,efficiency,אני מסיים/ת מטלות באופן מיידי,I get chores done right away.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-conscientiousness_2r,conscientiousness,efficiency,לעתים קרובות אני שוכח/ת לשים דברים חזרה במקומם,I often forget to put things back in their proper place.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-conscientiousness_3,conscientiousness,efficiency,אני אוהב/ת סדר,I Like order.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-conscientiousness_4r,conscientiousness,efficiency,אני מבולגן/ת,I Make a mess of things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-conscientiousness_5,conscientiousness,efficiency,אני פועל/ת בצורה מתוכננת,I do things according to a plan.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-conscientiousness_6,conscientiousness,efficiency,אני  אוהב/ת לתכנן קדימה,I like to plan ahead.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-conscientiousness_7r,conscientiousness,efficiency,אני לוקח/ת דברים בקלות,I take tasks too lightly.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-conscientiousness_8r,conscientiousness,efficiency,אני נוטה לדחות דברים שלא בא לי לעשות,I put off unpleasant tasks.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-conscientiousness_9,conscientiousness,efficiency,"אני אוהב/ת לעבוד עם לו""ז מתוכנן",I follow a schedule.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-conscientiousness_10,conscientiousness,efficiency,"אני עושה דברים ""לפי הספר""",I do things by the book.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-extroversion_1,extroversion,emotional intelligence,אני הרוח החיה במסיבה,I am the life of the party.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-extroversion_2r,extroversion,emotional intelligence,אני לא מדבר/ת הרבה,I don't talk a lot.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-extroversion_3,extroversion,emotional intelligence,במסיבות אני מדבר/ת עם הרבה אנשים,I talk to a lot of different people at parties.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-extroversion_4r,extroversion,emotional intelligence,אני שומר/ת על פרופיל נמוך,I keep in the background.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
+agreeableness_1,agreeableness,emotional intelligence,אני מזדהה עם רגשות של אחרים,I Sympathize with others' feelings.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,Yes,"AYALON,EH,NIKE"
+agreeableness_2r,agreeableness,emotional intelligence,אני לא מתעניין/ת בבעיות של אנשים אחרים,I am not interested in other people's problems.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,Yes,"AYALON,EH,NIKE"
+agreeableness_3,agreeableness,emotional intelligence,אני מרגיש/ה את הרגשות של אנשים אחרים,I feel others' emotions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+agreeableness_4r,agreeableness,emotional intelligence,אנשים אחרים לא באמת מעניינים אותי,I am not really interested in others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,Yes,"AYALON,EH,NIKE"
+agreeableness_5r,agreeableness,emotional intelligence,אני לא נפתח/ת לאחרים בקלות,I am hard to get to know.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,Yes,"AYALON,EH,NIKE"
+agreeableness_6,agreeableness,emotional intelligence,אני מאמין/ה שלאחרים יש כוונות טובות,I believe that others have good intentions.,,,,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+agreeableness_7,agreeableness,emotional intelligence,אני נוטה להאמין למה שאנשים אומרים,I trust what people say.,,,,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+agreeableness_8,agreeableness,emotional intelligence,קל לספק אותי,I am easy to satisfy.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,Yes,"AYALON,EH,NIKE"
+agreeableness_9r,agreeableness,emotional intelligence,"אני ""חריף/ה"" בדיבור שלי",I have a sharp tongue.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+conscientiousness_1,conscientiousness,efficiency,אני מסיים/ת מטלות באופן מיידי,I get chores done right away.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+conscientiousness_2r,conscientiousness,efficiency,לעתים קרובות אני שוכח/ת לשים דברים חזרה במקומם,I often forget to put things back in their proper place.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+conscientiousness_3,conscientiousness,efficiency,אני אוהב/ת סדר,I Like order.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+conscientiousness_4r,conscientiousness,efficiency,אני מבולגן/ת,I Make a mess of things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+conscientiousness_5,conscientiousness,efficiency,אני פועל/ת בצורה מתוכננת,I do things according to a plan.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+conscientiousness_6,conscientiousness,efficiency,אני  אוהב/ת לתכנן קדימה,I like to plan ahead.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+conscientiousness_7r,conscientiousness,efficiency,אני לוקח/ת דברים בקלות,I take tasks too lightly.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+conscientiousness_8r,conscientiousness,efficiency,אני נוטה לדחות דברים שלא בא לי לעשות,I put off unpleasant tasks.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+conscientiousness_9,conscientiousness,efficiency,"אני אוהב/ת לעבוד עם לו""ז מתוכנן",I follow a schedule.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+conscientiousness_10,conscientiousness,efficiency,"אני עושה דברים ""לפי הספר""",I do things by the book.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+extroversion_1,extroversion,emotional intelligence,אני הרוח החיה במסיבה,I am the life of the party.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+extroversion_2r,extroversion,emotional intelligence,אני לא מדבר/ת הרבה,I don't talk a lot.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+extroversion_3,extroversion,emotional intelligence,במסיבות אני מדבר/ת עם הרבה אנשים,I talk to a lot of different people at parties.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+extroversion_4r,extroversion,emotional intelligence,אני שומר/ת על פרופיל נמוך,I keep in the background.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
 extroversion_5,extroversion,emotional intelligence,לא מפריע לי להיות במרכז העניינים,"I don't mind being the center of attention.
-",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-extroversion_6r,extroversion,emotional intelligence,אני לא אוהב/ת למשוך תשומת לב,I don't like to draw attention to myself.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-extroversion_7r,extroversion,emotional intelligence,אני נוטה להיות שקט/ה ליד אנשים שאיני מכיר,I am quiet around strangers.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-extroversion_8r,extroversion,emotional intelligence,אני בן/ת אדם פרטי/ת ,I am a very private person.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-extroversion_9r,extroversion,emotional intelligence,אני לא תמיד אומר/ת את מה שאני חושב/ת,I hold back my opinions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-extroversion_10r,extroversion,emotional intelligence,אני ביישן/ית,"I am sometimes shy, inhibited",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-openness_1,openness,learning competence,יש לי דימיון מפותח,I have a vivid imagination.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-openness_2r,openness,learning competence,"רעיונות מופשטים (לא מוחשיים,  לדוגמא: אהבה, כעס, פילוסופיה, אומנות) לא מעניינים אותי",I am not interested in abstract ideas.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-openness_3r,openness,learning competence,"קשה לי להבין רעיונות מופשטים (לא מוחשיים,  לדוגמא: אהבה, כעס, פילוסופיה, אומנות)",I have difficulty understanding abstract ideas.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-openness_4r,openness,learning competence,אין לי דימיון מפותח,I do not have a good imagination.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-openness_5,openness,learning competence,אני נהנה/ית  לשמוע רעיונות חדשים,I enjoy hearing new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=8",,,,,,
-openness_6r,openness,learning competence,אני לא אוהב/ת דיונים פילוסופיים,I avoid philosophical discussions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=9",,,,yes,,"AYALON,EH,"
-openness_7r,openness,learning competence,אני לא אוהב/ת ללכת למוזיאונים,I do not enjoy going to art museums.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=10",,,,,,
-openness_8,openness,learning competence,אני נהנה/ית לשבת ולחשוב,I enjoy thinking about things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=11",,,,yes,,"AYALON,EH,"
-openness_9,openness,learning competence,יש לי חברים ששונים ממני מאוד ,I have friends who are very different than me,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=12",,,,yes,,"AYALON,EH,"
-neuroticism_1r,un-neuroticism,emotional regulation,יש לי שינויים תכופים במצב הרוח,I have frequent mood swings.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-neuroticism_2,un-neuroticism,emotional regulation,רוב הזמן אני רגוע/ה,I am relaxed most of the time.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-neuroticism_3r,un-neuroticism,emotional regulation,אני מתרגז/ת בקלות,I get upset easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-neuroticism_4,un-neuroticism,emotional regulation,אני מרגיש/ה עצוב/ה לעיתים רחוקות,I seldom feel blue.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-outcome_1,outcome driven,persistence,אני מכוון/ת ישר למטרה,I go straight for the goal.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-outcome_3,outcome driven,persistence,אני הופך/ת תוכניות למעשים,I turn plans into actions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-outcome_4,outcome driven,persistence,אני מעמיק/ה במשימות עם כל הלב,I plunge into tasks with all my heart.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-outcome_5,outcome driven,persistence,אני עושה יותר ממה שמצופה ממני,I do more than what's expected of me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-outcome_6,outcome driven,persistence,אני מציב/ה סטנדרטים גבוהים לעצמי ולאחרים,I set high standards for myself and others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-outcome_7,outcome driven,persistence,אני דורש/ת איכות,I demand quality.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-outcome_8r,outcome driven,persistence,הייתי רוצה שתהיה לי יותר מוטיבציה להצליח,I would like to have more motivation to succeed.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-outcome_9r,outcome driven,persistence,אני עושה רק את מה שמספיק בשביל להסתדר,I do just enough work to get by.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-outcome_10r,outcome driven,persistence,אני משקיע/ה מעט זמן ומאמץ בעבודה שלי,I put little time and effort into my work.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-assertiveness_1,assertiveness,assertiveness,אני לוקח/ת פיקוד,I take charge.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-assertiveness_2,assertiveness,assertiveness,אני מנסה להוביל אחרים,I try to lead others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-assertiveness_3,assertiveness,assertiveness,אני יכול/ה לשכנע אחרים לעשות דברים,I can talk others into doing things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-assertiveness_4,assertiveness,assertiveness,אני מחפש/ת להשפיע על אחרים,I seek to influence others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-assertiveness_5,assertiveness,assertiveness,אני לוקח/ת אחריות על דברים,I take control of things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-assertiveness_6r,assertiveness,assertiveness,אני מחכה שאחרים יראו לי את הדרך,I wait for others to lead the way.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-assertiveness_7r,assertiveness,assertiveness,אני שומר/ת על פרופיל נמוך,I keep in the background.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-assertiveness_8r,assertiveness,assertiveness,יש לי מעט להגיד,I have little to say.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-assertiveness_9r,assertiveness,assertiveness,אני לא אוהב/ת למשוך תשומת לב לעצמי,I don't like to draw attention to myself.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-assertiveness_10r,assertiveness,assertiveness,אני בדרך כלל לא משמיע/ה את דעתי,I hold back my opinions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-persistence_1,persistence,persistence,אני לא מפסיק/ה משימה לפני השלמתה,I גon't quit a task before it is finished.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-persistence_2,persistence,persistence,אני אדם מוכוון-מטרה,I am a goal-oriented person.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-persistence_3,persistence,persistence,אני מסיים/ת דברים למרות קשיים בדרך,I finish things despite obstacles in the way.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-persistence_4,persistence,persistence,אני עובד/ת קשה,I am a hard worker.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-persistence_5,persistence,persistence,קשה להסיח את דעתי כשאני עובד/ת,I don't get sidetracked when I work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-persistence_6r,persistence,persistence,אני לא מסיים/ת מה שהתחלתי,I don't finish what I start.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-persistence_7r,persistence,persistence,אני מוותר/ת בקלות,I give up easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-persistence_8r,persistence,persistence,אני נוטה לא להתמיד בדברים שאני מחליט/ה לעשות,I do not tend to stick with what I decide to do.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,yes,,,,
-eq_1r,emotional intelligence,emotional intelligence,לוקח לי זמן להסתגל לשינויים,I am able to fit into any situation.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_2,emotional intelligence,emotional intelligence,אני יודע/ת לגרום לאנשים להרגיש שהם מעניינים,I have the ability to make others feel interesting.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-eq_3,emotional intelligence,emotional intelligence,אני יודע/ת מה גורם לאחרים לפעול,I know what makes others tick.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_4,emotional intelligence,emotional intelligence,אני מסתדר/ת היטב עם אנשים שזה עתה הכרתי,I get along well with people I have just met.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_5,emotional intelligence,emotional intelligence,אני טוב/ה בלזהות מה אנשים מרגישים,I am good at sensing what others are feeling.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_6,emotional intelligence,emotional intelligence,אני יודע/ת מה להגיד כדי לגרום לאנשים להרגיש טוב,I know what to say to make people feel good.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-eq_7r,emotional intelligence,emotional intelligence,אני לא יודע/ת איך להתנהג כשאני במצב חברתי חדש ולא מוכר,I don't know how to handle myself in a new social situation.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_8,emotional intelligence,emotional intelligence,אני יודע/ת איך לנחם אחרים,I know how to comfort others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-eq_9,emotional intelligence,emotional intelligence,אני חושב/ת על אחרים לפני עצמי,I think about others first.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_10,emotional intelligence,emotional intelligence,אני מכבד/ת רגשות של אחרים,I respect others' feelings,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_11,emotional intelligence,emotional intelligence,אני מכבד/ת דעות של אחרים,I respect the opinions of others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_12,emotional intelligence,emotional intelligence,אני דואג/ת לרווחת אחרים,Others' well-being is of concern for me,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_13,emotional intelligence,emotional intelligence,אני מתחשב/ת בצרכי אחרים,I consider others' needs.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_14,emotional intelligence,emotional intelligence,אני מתעדפ/ת את טובתם של אחרים על פני טובתי האישית,I consider others' interests above my own.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-eq_15,emotional intelligence,emotional intelligence,אני עושה דברים על מנת לשפר את ההרגשה של אחרים,I do things to enhance the well-being of others,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-eq_16,emotional intelligence,emotional intelligence,אני מנסה לנחם אחרים כשהם מוטרדים,I try to comfort others when they are distressed,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-ocb_1,organizational citizenship behavior,organizational citizenship behavior,אני עוזר/ת לעובדים אחרים שיש להם עומס רב בעבודה,I helped others who have heavy workloads.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-ocb_2,organizational citizenship behavior,organizational citizenship behavior,אני עוזר/ת למנהל/ת שלי עם העבודה שלו/ה (גם כשלא התבקשתי),I assisted my supervisor with his/her work (when not asked). ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-ocb_3,organizational citizenship behavior,organizational citizenship behavior,"אני מתעניין/ת בעובדים אחרים (אם מעולם לא עבדת בעבר, אנא השב/י ביחס לצבא או ללימודים)",I took a personal interest in other employees. ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-ocb_4,organizational citizenship behavior,organizational citizenship behavior,"הנוכחות שלי בעבודה גבוהה בהשוואה לאחרים (אם מעולם לא עבדת בעבר, אנא השב/י ביחס לצבא או ללימודים)",My attendance at work was above the norm.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-ocb_5,organizational citizenship behavior,organizational citizenship behavior,אני נותן/ת התראה מוקדמת כשאין באפשרותי להגיע לעבודה,I gave advance notice when I was unable to come to work. ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-ocb_6,organizational citizenship behavior,organizational citizenship behavior,אני שומר/ת ומגן/ה על ציוד של מקום העבודה שלי,I conserved and protected organizational property.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-self-efficacy_1,self-efficacy,self-efficacy,"אם אני מנסה מספיק, אני תמיד מצליח/ה לפתור בעיות קשות",I can always manage to solve difficult problems if I try hard enough.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_2,self-efficacy,self-efficacy,"אם מישהו/י מתנגד/ת לי, אני מסוגל/ת למצוא דרכים להשיג את מה שאני רוצה","If someone opposes me, I can find means and ways to get what I want.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_3,self-efficacy,self-efficacy,קל לי להיצמד למטרות שהצבתי לעצמי ולהשיג אותן,It is easy for me to stick to my aims and accomplish my goals.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_4,self-efficacy,self-efficacy,אני בטוח/ה שאני מסוגל/ת להתמודד ביעילות עם אירועים בלתי-צפויים,I am confident that I could deal efficiently with unexpected events.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_5,self-efficacy,self-efficacy,"הודות לתושייה שלי, אני יודע/ת להתמודד עם מצבים בלתי-צפויים","Thanks to my resourcefulness, I know how to handle unforeseen situations.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_6,self-efficacy,self-efficacy,אני יכול/ה לפתור את רוב הבעיות אם אני משקיע/ה את המאמץ הדרוש,I can solve most problems if I invest the necessary effort.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_7,self-efficacy,self-efficacy,אני נשאר/ת רגוע/ה כשאני מתמודד/ת עם קשיים כי אני סומך/ת על כושר ההתמודדות שלי,I can remain calm when facing difficulties because I can rely on my coping abilities.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_8,self-efficacy,self-efficacy,"כשאני מתמודד/ת עם בעיה, אני בדרך-כלל מוצא/ת לה כמה פתרונות","When I am confronted with a problem, I can usually find several solutions.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_9,self-efficacy,self-efficacy,אם אני מוכרח/ה אני יכול/ה לחשוב על משהו לעשות,"If I am in a bind, I can usually think of something to do.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_10,self-efficacy,self-efficacy,"לא משנה מה נקרה בדרכי, אני בדרך כלל מסוגל/ת להתמודד עם זה","No matter what comes my way, I'm usually able to handle it.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_11,self-efficacy,self-efficacy,אני משלים/ה משימות בהצלחה,I Complete tasks successfully.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_12,self-efficacy,self-efficacy,אני מבצע/ת משימות ללא תקלות,I handle tasks smoothly.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_13,self-efficacy,self-efficacy,אני יודע/ת כיצד לגרום לדברים להתבצע,I know how to get things done.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_14r,self-efficacy,self-efficacy,אני שופט/ת לא נכון מצבים,I misjudge situations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_15r,self-efficacy,self-efficacy,אני לא מבינ/ה דברים,I don't understand things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_16r,self-efficacy,self-efficacy,יש לי מעט לתרום,I have little to contribute.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-self-efficacy_17r,self-efficacy,self-efficacy,קשה לי להבין את ההשלכות של פעולות שלי ,I don't see the consequences of things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_1r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה אשם/ה על כך","When I'm upset, I feel guilty for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_2r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מתבייש/ת בהרגשה הזאת","When I'm upset, I feel ashamed with myself for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_3r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני נבוך/ה מההרגשה הזאת","When I'm upset, I become embarrased for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_4r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני כועס/ת על עצמי על ההרגשה הזאת","When I'm upset, I become angry with myself for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_5r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מתעצבן/ת על עצמי על ההרגשה הזאת","When I'm upset, I become irritated with myself for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_6r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה שאני חלש/ה","When I'm upset, I feel like I am weak.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_7r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי להתרכז","When I'm upset, I have difficulty concentrating.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_8r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי להתמקד בדברים אחרים","When I'm upset, I have difficulty focusing on other things.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_9r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי לסיים דברים","When I'm upset, I have difficulty getting work done.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_10r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי לחשוב על דברים אחרים","When I'm upset, I have difficulty thinking about anything else.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_11,emotional regulation,emotional regulation,"כשאני נסער/ת, אני עדיין מסוגל/ת לסיים דברים","When I'm upset, I can still get things done.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-regulation_12r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני יכול/ה לאבד שליטה על ההתנהגות שלי","When I'm upset, I lose control over my behaviors.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-regulation_13r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי לשלוט בהתנהגות שלי","When I'm upset, I have difficulty controlling my behaviors.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-regulation_14r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני יכול/ה לאבד שליטה","When I'm upset, I become out of control.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-regulation_15r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה חוסר שליטה","When I'm upset, I feel out of control.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_16r,emotional regulation,emotional regulation,"כשאני נסער/ת, הרגשות שלי משתוללים ומציפים אותי",I experience my emotions as overwhelming and out of control.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_17,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה שאני יכול/ה לשלוט בהתנהגות שלי","When I'm upset, I feel like I can remain in control of my behaviors.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-regulation_18,emotional regulation,emotional regulation,אני קשוב/ה לרגשות שלי,I am attentive to my feelings.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_19,emotional regulation,emotional regulation,אני שם/ה לב איך אני מרגיש/ה,I pay attention to how I feel.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_20,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מכיר ברגשות שלי","When I'm upset, I acknowledge my emotions.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_21,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שהרגשות שלי הגיוניים וחשובים","When I'm upset, I believe that my feelings are valid and important.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_22,emotional regulation,emotional regulation,איכפת לי מאיך שאני מרגיש/ה,I care about what I am feeling.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_23,emotional regulation,emotional regulation,"כשאני נסער/ת, אני לוקח/ת זמן לעצמי כדי להבין איך אני באמת מרגיש/ה","When I'm upset, I take time to figure out what I'm really feeling.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_24r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שזה ייגמר בכך שאני אהיה מאוד מדוכא/ת","When I'm upset, I believe that I'll end up feeling very depressed.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_25r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שאני אשאר כך הרבה זמן","When I'm upset, I believe that I will remain that way for a long time.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_26r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שכל מה שאני מסוגל/ת לעשות זה לשקוע בזה","When I'm upset, I believe that wallowing in it is all I can do.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_27r,emotional regulation,emotional regulation,"כשאני נסער/ת, לוקח לי הרבה זמן להרגיש טוב יותר","When I'm upset, it takes me a long time to feel better.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_28r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שאין דבר שאני יכול/ה לעשות שיגרום לי להרגיש טוב יותר","When I'm upset, I believe that there is nothing I can do to make myself feel better.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_29,emotional regulation,emotional regulation,"כשאני נסער/ת, אני יודע/ת שבסופו של דבר אני אמצא דרך להרגיש יותר טוב","When I'm upset, I know that I can find a way to eventually feel better.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-regulation_30r,emotional regulation,emotional regulation,"כשאני נסער/ת, הרגשות שלי מציפים אותי","When I'm upset, my emotions feel overwhelming.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_31r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מתחיל/ה להרגיש ממש רע עם עצמי","When I'm upset, I start to feel very bad about myself.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-regulation_32r,emotional regulation,emotional regulation,קשה לי למצוא הגיון ברגשות שלי,I have difficulty making sense out of my feelings.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_33r,emotional regulation,emotional regulation,אין לי מושג איך אני מרגיש/ה,I have no idea how I am feeling.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_34r,emotional regulation,emotional regulation,אני מבולבל/ת בנוגע לאיך שאני מרגיש/ה,I am confused about how I feel.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_35,emotional regulation,emotional regulation,אני יודע/ת בדיוק איך אני מרגיש/ה,I know exactly how I am feeling.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-regulation_36,emotional regulation,emotional regulation,אני ברור/ה בנוגע לרגשות שלי,I am clear about my feelings.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-profit_1,motivation to make money,motivation to make money,הדבר שהכי חשוב לי בעבודה זה להרוויח כסף,The most important thing for me at work is making money.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-profit_2,motivation to make money,motivation to make money,מה שמניע את רוב האנשים בעבודה זה כסף,Money motivates most people at work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-profit_3r,motivation to make money,motivation to make money,אין לי בעיה להיות תלוי/ה באנשים אחרים מבחינה כלכלית,I have no problem being dependet on other people financially.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-profit_4,motivation to make money,motivation to make money,כסף הופך אנשים למאושרים,Money makes people happy.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-profit_5,motivation to make money,motivation to make money,אני חולם/ת להתעשר,I dream of getting rich.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-profit_6,motivation to make money,motivation to make money,המחשבה על להרוויח הרבה כסף מלהיבה אותי,The thought of making a lot of money excites me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-profit_7,motivation to make money,motivation to make money,חשוב לי להתלבש במותגים,It is important for me to wear brands.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-profit_8,motivation to make money,motivation to make money,אני מקנא/ה באנשים עשירים,I envy rich people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-profit_9r,motivation to make money,motivation to make money,כסף הוא בשבילי אמצעי להתקיים ולא יותר מזה,Money for me is a means to exist and nothing more.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-general_1,general,general,אומרים עליי שיש לי כושר שכנוע,People say I am persuasive.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-general_2,general,general,אני מסוגל/ת לגרום לאדם לעשות משהו שהוא/היא לא התכוון/ת לעשות בעצמו/ה,I can make a person do something he didn't intend to do in the first place.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-general_3,general,general,"כשאני רוצה משהו, אני משיג/ה אותו","When I want something, I get it .",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-general_4r,general,general,"כשמשהו לא הולך לי, אני מעדיף/ה לוותר","When something does not work for me, I prefer to give up.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-general_5,general,general,"כשצריך, אני יודע/ת להיות עקשן/ית","When necessary, I know how to be stubborn.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-general_6r,general,general,יש אנשים שפשוט אי-אפשר לשנות את דעתם,There are people that are just impossible to change their minds.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_1,service orientation,service orientation,האינטראקציה עם לקוחות מהנה עבורי,Interacting with customers is enjoyable.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_2,service orientation,service orientation,חשוב לי שהלקוח/ה יהיה/תהיה מרוצה,It is important to me that the customer is satisfied.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_3,service orientation,service orientation,העובדים במקומות העבודה הקודמים שלי סיפקו שירות מצוין,The employees at my restaurant provide excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_4,service orientation,service orientation,מנהלים קודמים שלי עודדו אותי לספק שירות מצוין,My manager encourages me to provide excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_5,service orientation,service orientation,ההכשרה שקיבלתי בעבר הכינה אותי לספק שירות מצוין,The training I received prepared me to provide excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_6,service orientation,service orientation,לקוחות מתנהגים אליי בכבוד,Customers treat me with respect.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_7r,service orientation,service orientation,"במקומות עבודה קודמים, בשעות העומס היה כל כך עמוס שלא הצלחנו לספק שירות מצוין",At peak hours it's so busy we can't provide excellent service.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_8,service orientation,service orientation,נהלי העבודה במקומות העבודה הקודמים שלי אפשרו לספק שירות מצוין בקלות,Our service procedures make it easy for me to give excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-service_9r,service orientation,service orientation,"המנהל שלי מצפה ממני לעבוד לפי הנהלים, גם אם זה אומר לתת שירות פחות טוב","My manager expects us to always follow procedures, even if it means giving less than excellent service.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_1r,social desirability,social desirability,לפעמים אני משליך/ה אשפה לא בפח,I sometimes litter.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",?,,,,,
-desirability_2,social desirability,social desirability,אני תמיד מודה בטעויותיי ומתמודד/ת עם ההשלכות השליליות שלהן,I always admit my mistakes openly and face the potential negative consequences.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-desirability_3,social desirability,social desirability,בחיים אני תמיד מנומס/ת ומתחשב/ת באחרים,In life I am always polite and considerate of others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-desirability_4,social desirability,social desirability,"התנסיתי בסמים לא חוקיים (לדוגמא, מריחאונה, קוקאין, וכו')","I have tried illegal drugs (for example, marijuana, cocaine, etc.).",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_5,social desirability,social desirability,"אני תמיד מקבל/ת את דעותיהם של אחרים, אפילו כשהם/ן לא מסכימים/ות עם הדעות שלי","I always accept others' opinions, even when they don't agree with my own.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-desirability_6r,social desirability,social desirability,לפעמים אני מוציא/ה על אחרים את מצב הרוח הרע שלי,I take out my bad moods on others now and then.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_7r,social desirability,social desirability,קרה מקרה שבו ניצלתי מישהו/י אחר/ת,There has been an occasion when I took advantage of someone else.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_8,social desirability,social desirability,בשיחות אני תמיד מקשיב/ה ונותן/ת לאחרים/ות לסיים את המשפטים שלהם/ן,In conversation I always listen attentively and let others finish their sentences.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-desirability_9,social desirability,social desirability,אני אף פעם לא מהסס/ת לעזור למישהו/י במקרה חירום,I never hesitate to help someone in case of emergency.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-desirability_10,social desirability,social desirability,"כשאני מבטיח/ה משהו, אני מקיים/ת אותו - בלי ""אם"", ""או"" או ""אבל""","When I have made a promise, I keep it - no ifs, ands or buts.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_11r,social desirability,social desirability,לפעמים אני מדבר/ת לרעה על אחרים מאחורי גבם,I occasionally speak badly of others behind their back.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-desirability_12,social desirability,social desirability,לעולם לא אחיה על גבם של אנשים אחרים,I would never live off other people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_13,social desirability,social desirability,"אני תמיד נשאר/ת חברותי/ת ואדיב/ה לאנשים אחרים, גם כשאני מאוד לחוץ/ה","I always stay friendly and courteous with other people, even when I am stressed out.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_14,social desirability,social desirability,בוויכוחים אני תמיד שומר/ת על אובייקטיביות והיצמדות לעובדות,During arguments I always stay objective and matter-of-fact.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_15r,social desirability,social desirability,קרה ששכחתי להחזיר פריט ששאלתי ממישהו/י אחר/ת,There has been at least one occasion when I failed to return an item that I borrowed.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-desirability_16,social desirability,social desirability,אני תמיד אוכל/ת אוכל בריא,I always eat a healthy diet.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-desirability_17r,social desirability,social desirability,לפעמים אני עוזר/ת רק בגלל שאני מצפה לקבל משהו בתמורה,Sometimes I only help because I expect something in return.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-desirability_18r,social desirability,social desirability,לפעמים אני משקר/ת אם אין לי ברירה אחרת,I sometimes tell lies if I have to.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_19,social desirability,social desirability,לעולם איני מקלל,I never swear.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_20r,social desirability,social desirability,לפעמים אני מעדיף/ה להחזיר למי שפגע בי מאשר לסלוח ולשכוח,I sometimes try to get even rather than forgive and forget.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_21,social desirability,social desirability,"אני תמיד מציית לחוקים, גם אם אין סיכויי שאתפס","I always obey laws, even if I'm unlikely to get caught.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_22,social desirability,social desirability,"כאשר אני שומע/ת שאנשים מדברים ביניהם בפרטיות, אני נמנע/ת מלהקשיב","When I hear people talking privately, I avoid listening.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_23r,social desirability,social desirability,קיבלתי יותר עודף ממה שהגיע לי ממוכר בחנות מבלי ליידע אותו על כך,I have received too much change from a salesperson without telling him or her.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_24,social desirability,social desirability,אני תמיד מצהיר/ה במכס על כל מה שהבאתי,I always declare everything at customs.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_25r,social desirability,social desirability,"כשהייתי צעיר/ה, לפעמים גנבתי דברים",When I was young I sometimes stole things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_26r,social desirability,social desirability,יש דברים שעשיתי ואני לא מספר/ת עליהם לאנשים אחרים,I have done things that I don't tell other people about.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_27,social desirability,social desirability,לעולם איני לוקח דברים שאינם שייכים לי,I never take things that don't belong to me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_28r,social desirability,social desirability,לקחתי חופשת מחלה (מעבודה או לימודים) למרות שלא הייתי באמת חולה,I have taken sick-leave from work or school even though I wasn't really sick.,yes,,p,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_29,social desirability,social desirability,לא קרה שגרמתי נזק לספר בספריה או לסחורה בחנות מבלי שדיווחתי על כך,I have never damaged a library book or store merchandise without reporting it.,,,p,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-desirability_30r,social desirability,social desirability,יש לי כמה הרגלים ממש רעים,I have some pretty awful habits.,yes,,p,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_1,sociability,emotional intelligence,אני מרגיש/ה בנוח ליד אחרים,I feel comfortable around people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_2,sociability,emotional intelligence,אני מתנהג/ת בנוחות ליד אחרים,I act comfortably with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_3,sociability,emotional intelligence,אני מיומנ/ת בהתמודדות עם מצבים חברתיים,I am skilled in handling social situations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_4,sociability,emotional intelligence,אני מדבר/ת עם הרבה אנשים במסיבות,I talk to a lot of different people at parties.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_5,sociability,emotional intelligence,אני פותח/ת בשיחות,I Start conversations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_6r,sociability,emotional intelligence,לעיתים אני חש/ה לא בנוח ליד אחרים,I often feel uncomfortable around others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_7r,sociability,emotional intelligence,יש לי מעט להגיד,I have little to say.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_8r,sociability,emotional intelligence,יש לי קשיים לפנות אל אחרים,I find it difficult to approach others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_9r,sociability,emotional intelligence,יש לי קשיים לבטא את רגשותיי,I have difficulty expressing my feelings.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_10r,sociability,emotional intelligence,אני מרגיש/ה בנוח רק עם חבריי,I only feel comfortable with friends.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_11,sociability,emotional intelligence,אני גורמ/ת לאנשים להרגיש רצויים,I make people feel welcome.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_12,sociability,emotional intelligence,אני מסתדר/ת היטב עם רוב האנשים,I can get along with most people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_13,sociability,emotional intelligence,אני מתחבר/ת בקלות,I make friends easily.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_14,sociability,emotional intelligence,אנשים מרגישים נינוחים לידי,People feel at ease around me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_15,sociability,emotional intelligence,אחרים חושבים שאני חברותי/ת,Others consider me friendly.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_16,sociability,emotional intelligence,אני אוהב/ת לפגוש אנשים חדשים,I like meeting new people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_17,sociability,emotional intelligence,אני מתקשרת עם אחרים בקלות,I interact easily with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_18r,sociability,emotional intelligence,אני מעדיפ/ה לא לפגוש אנשים חדשים,I avoid meeting new people.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_19,sociability,emotional intelligence,אני חברותי/ת מטבעי,I have a friendly disposition.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_20,sociability,emotional intelligence,אני נהנה/ית מחברתם של אחרים,I enjoy the company of others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_21,sociability,emotional intelligence,נראה כי אנשים מחבבים אותי,People seem to like me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_22,sociability,emotional intelligence,אני נהנה/ית לדבר עם אחרים,I enjoy talking to others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_23,sociability,emotional intelligence,אני גורמת לאנשים שהרגע הכרתי להרגיש בנוח,I put new acquaintances at ease.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-sociability_24,sociability,emotional intelligence,אני מתחיל/ה שיחות עם אנשים שאיני מכירה בקלות,I start conversations with strangers easily.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-competence_1,learning competence,learning competence,אני לומד/ת במהירות,I learn quickly.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-competence_2,learning competence,learning competence,אני משתמש/ת בשכל שלי,I use my brain.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-competence_3,learning competence,learning competence,אני מצטיין/ת במה שאני עושה,I excel in what I do.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-competence_4,learning competence,learning competence,אני מסתכל/ת על העובדות,I look at the facts.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-competence_5,learning competence,learning competence,אני מתמודד/ת עם אתגרים,I meet challenges.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-competence_6,learning competence,learning competence,אני מחפש/ת הסברים לדברים,I seek explanations of things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-competence_7,learning competence,learning competence,אני צריך/ה שדברים יוסברו לי פעם אחת,I need things explained only once.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-competence_8,learning competence,learning competence,אני בעל/ת פתרונות טובים,I come up with good solutions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-competence_9,learning competence,learning competence,אני מלא/ה ברעיונות,I am full of ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,yes,,,,
-competence_10,learning competence,learning competence,אני יודע/ת איך ליישם את הידע שלי,I know how to apply my knowledge.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-efficiency_1,efficiency,efficiency,אני מדייק/ת בעבודתי,I am exacting in my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-efficiency_2,efficiency,efficiency,אני מתכנן/ת תוכניות ודבק/ת בהן,I make plans and stick to them.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-efficiency_3,efficiency,efficiency,אני מבצע/ת את תוכניותיי,I follow through with my plans.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-efficiency_4r,efficiency,efficiency,אני מבזבז/ת את זמני,I waste my time.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-efficiency_5r,efficiency,efficiency,אני מתקשה להתחיל לעבוד,I find it difficult to get down to work.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-efficiency_6r,efficiency,efficiency,אני דוחה החלטות,I postpone decisions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-efficiency_7r,efficiency,efficiency,אני מתקשה להתחיל משימות,I have difficulty starting tasks.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-efficiency_8r,efficiency,efficiency,"במה שקשור לביצוע משימות אני צריך/ה שיעזרו לי ""להתניע""",I need a push to get started.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-efficiency_9r,efficiency,efficiency,אני לעיתים קרובות שוכח/ת לעשות דברים,I frequently forget to do things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-resourcefulness_1,resourcefulness,learning competence,אני יכול/ה לעבוד תחת לחץ,I can work under pressure.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_2,resourcefulness,learning competence,אני צריכ/ה שיסבירו לי פעם אחת בלבד ,I need things explained only once.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_3,resourcefulness,learning competence,אני יכול/ה להתמודד עם הרבה מידע,I can handle a lot of information.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_4,resourcefulness,learning competence,אני יכול/ה להתמודד עם כל דבר,I can tackle anything.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_5,resourcefulness,learning competence,אני יכול/ה להתמודד עם הרבה דברים בו-זמנית,I can manage many things at the same time.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_6,resourcefulness,learning competence,אני טוב/ה בהרבה דברים,I am good at many things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_7r,resourcefulness,learning competence,אני לא שמ/ה לב,I don't pay attention.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-resourcefulness_8r,resourcefulness,learning competence,אני מוותר/ת בקלות,I Give up easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-growth_1,growth mindset,growth mindset,אני קורא/ת ספר הדרכה עצמי,I read a self-help book.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-growth_2,growth mindset,growth mindset,קניתי ספר הדרכה עצמי,I bought a self-help book.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-growth_3,growth mindset,growth mindset,למדתי נושאים,I have studied some subject.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-growth_4,growth mindset,growth mindset,למדתי מיומנות חדשה,I learned a new skill,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-growth_5,growth mindset,growth mindset,נרשמתי לקורס,I enrolled in a course of study.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-stability_1,emotional stability,emotional regulation,אני מתרגז/ת לעיתים רחוקות,I seldom get mad.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-stability_2,emotional stability,emotional regulation,אני לא מוטרד/ת בקלות,I am not easily bothered by things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-stability_3,emotional stability,emotional regulation,אני לא נהיה/נהיית מתוסכל/ת בקלות,I am not easily frustrated.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-stability_4,emotional stability,emotional regulation,אני לעיתים רחוקות נעלב/ת,I seldom take offense.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-stability_5,emotional stability,emotional regulation,אני שומר/ת על קור רוח,I keep my cool.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-stability_6r,emotional stability,emotional regulation,אני נלחץ/ת בקלות,I get stressed out easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-stability_7r,emotional stability,emotional regulation,אני מוטרד/ת בקלות,I am easily disturbed.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-stability_8r,emotional stability,emotional regulation,אני משנה את מצב רוחי הרבה,I change my mood a lot.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-stability_9r,emotional stability,emotional regulation,אני חושב/ת הרבה על הבעיות שלי,I get caught up in my problems.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-negotiation_1,Interest in Negotiation,Interest in Negotiation,אני נהנה/ית להתמקח,I enjoy bargaining.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_2,Interest in Negotiation,Interest in Negotiation,אני יכול/ה להציג את דעות הקבוצה שלי לאחרים,I can represent my group's views to others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_3,Interest in Negotiation,Interest in Negotiation,אני יכול/ה בדרך כלל להבין את שני הצדדים של בעיה מסוימת,I can usually understand both sides of an issue.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_4,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לתווך במריבות,I can mediate in quarrels.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_5,Interest in Negotiation,Interest in Negotiation,אני נהנה/ית לפתור מחלוקות,I enjoy resolving disputes.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_6,Interest in Negotiation,Interest in Negotiation,אני נהנה/ית לקחת חלק במשא ומתן,I enjoy negotiating.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_7,Interest in Negotiation,Interest in Negotiation,אני מוכנ/ה להקריב על מנת להגיע לפשרה,I will sacrifice to reach a compromise.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_8,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לפתור עימותים,I can resolve conflicts.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_9,Interest in Negotiation,Interest in Negotiation,אני מוכנ/ה להתפשר,I am willing to compromise.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_10,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לעזור לאחרים לגשר על ההבדלים ביניהם,I can help others reconcile their differences.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_11,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לחבר בין מתחרים,I can bring contesting people together.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_12,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לראות קווים משותפים גם בדעות מנוגדות,I can see common ground in opposing views.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-negotiation_13,Interest in Negotiation,Interest in Negotiation,אני אוהב/ת לנהל משא ומתן על מנת להגיע לפשרה,I like to negotiate compromise.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-confidence_1,confidence,confidence,אני בטוח/ה בעצמי,I am sure of my ground.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-confidence_2,confidence,confidence,אני מעריך/ה את עצמי,I think highly of myself.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-confidence_3,confidence,confidence,אני יודע/ת מיד מה עליי לעשות,I know immediately what to do.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-confidence_4r,confidence,confidence,אני לא מעריכ/ה את עצמי,I have a low opinion of myself.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-confidence_5r,confidence,confidence,ניתן להפחיד אותי בקלות,I am easily intimidated.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-confidence_6r,confidence,confidence,אני מרגיש/ה מאוים/ת בקלות,I feel threatened easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-work_tendency_1,work tendency,work tendency,אני מסוגל/ת לשתף פעולה עם אחרים,I am able to cooperate with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-work_tendency_2,work tendency,work tendency,אני עובד/ת טוב עם אחרים,I work well with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_3,work tendency,work tendency,אני נלהב/ת לעבוד עם אחרים,I'm eager to work with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_4,work tendency,work tendency,אני אוהב/ת לסייע ללקוחות,I like to assist clients or customers.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_5r,work tendency,work tendency,אני מעדיף/ה לעבוד לבד,I prefer to work alone.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-work_tendency_6r,work tendency,work tendency,אני לא אוהב/ת קבוצות עבודה,I dislike group projects.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_7,work tendency,work tendency,אני אוהב/ת להיות חלק מצוות,I like to be part of a team.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-work_tendency_8,work tendency,work tendency,הצלחת הצוות חשובה עבורי,Team success is important to me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-work_tendency_9,work tendency,work tendency,הצלחת הצוות חשובה עבורי יותר מרווח אישי,Team success is more important than personal gain.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_10,work tendency,work tendency,אני מוכן/ה להקריב בשביל הצוות,I will sacrifice for the team.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_11,work tendency,work tendency,אני נהנה/ית לשתף פעולה במשימות שקשורות לעבודה,I enjoy collaborating on work tasks.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_12,work tendency,work tendency,אני אוהב/ת להיות חלק מקבוצה עם מטרה משותפת,I like being part of a group with a  common goal.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-work_tendency_13,work tendency,work tendency,אני חושב/ת שקבוצות טובות על מנת לפתור בעיות,I think groups are good for solving problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-work_tendency_14r,work tendency,work tendency,זה לא כל כך משנה לי אם יהיו לי חברים במקום העבודה,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-work_tendency_15r,work tendency,work tendency,המפתח להצלחה בעבודה הוא להיות ממוקד/ת באופן בלעדי בהשגת המטרות והיעדים האישיים שלך,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-work_tendency_16,work tendency,work tendency,"המפתח להצלחה בעבודה הוא להיות ""שחקן/ית צוות""",,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-work_tendency_17r,work tendency,work tendency,הייתי יכול/ה לעבוד בעבודה שבה אני נמצא/ת לבדי במרבית שעות היום,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-details_1,Attentiveness to Details,Attentiveness to Details,אני שם/ה לב לפרטים,I pay attention to details.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-details_2,Attentiveness to Details,Attentiveness to Details,אני לא עוצר/ת עד שהכל מושלם,I continue until everything is perfect.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-details_3,Attentiveness to Details,Attentiveness to Details,אני לא אוהב/ת עבודה לא מושלמת,I dislike imperfect work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-details_4,Attentiveness to Details,Attentiveness to Details,אני מדויק/ת בעבודתי,I am exacting in my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-details_5,Attentiveness to Details,Attentiveness to Details,אני רוצה שהכל יהיה מדויק,"I want everything to be ""just right"".",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-details_6,Attentiveness to Details,Attentiveness to Details,אני רוצה שיתייחסו לכל פרט,I want every detail taken care of.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-details_7,Attentiveness to Details,Attentiveness to Details,באופן שגרתי אני עושה בקרה על עבודתי,I routinely double-check my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-details_8r,Attentiveness to Details,Attentiveness to Details,לעיתים רחוקות אני מבחין/ה בפרטים,I seldom notice details.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-details_9,Attentiveness to Details,Attentiveness to Details,אני פרפקציוניסט/ית,I'm a perfectionist.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-details_10r,Attentiveness to Details,Attentiveness to Details,אני לא דואג/ת לגבי פרטים קטנים,I don't worry about details.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-details_11,Attentiveness to Details,Attentiveness to Details,יש לי גישה קפדנית לעבודה,I take a meticulous approach to work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-details_12,Attentiveness to Details,Attentiveness to Details,אני שמ/ה לב לפרטים שאחרים לא שמים אליהם לב,I pay attention to details others might overlook.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,yes,,"AYALON,EH,"
-details_13,Attentiveness to Details,Attentiveness to Details,אני מפקח/ת ביסודיות על מה שאחרים עושים,I inspect thoroughly what others do.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-details_14,Attentiveness to Details,Attentiveness to Details,אני רואה את עצמי כעובד/ת זהיר/ה,I think of myself as a careful worker.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-details_15r,Attentiveness to Details,Attentiveness to Details,אני לא מבזבז/ת זמן בדאגה לפרטים הקטנים,I don't waste time worrying about details.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-creativity_1,Desire to Generate Ideas,Desire to Generate Ideas,אני מלא/ה ברעיונות,I am full of ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_2,Desire to Generate Ideas,Desire to Generate Ideas,אני אוהב/ת להמציא דרכים חדשות לעשות דברים,I like to think up new ways of doing things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_3,Desire to Generate Ideas,Desire to Generate Ideas,אני חושב/ת על רעיונות חדשים,I think up new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_4,Desire to Generate Ideas,Desire to Generate Ideas,אני חושב/ת על אלטרנטיבות,I come up with alternatives.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_6,Desire to Generate Ideas,Desire to Generate Ideas,יש לי רעיונות מעולים,I have excellent ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_7,Desire to Generate Ideas,Desire to Generate Ideas,אני מתרגש/ת מרעיונות חדשים,I get excited by new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_9,Desire to Generate Ideas,Desire to Generate Ideas,אני אוהב/ת לפתח רעיונות חדשים,I like to develop new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_10,Desire to Generate Ideas,Desire to Generate Ideas,אני אוהב/ת למצוא פתרונות ייחודיים לבעיות,I like to find unusual solutions to problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_11,Desire to Generate Ideas,Desire to Generate Ideas,אני מעדיפ/ה עבודה שדורשת חדשנות,I prefer jobs that require innovations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_12,Desire to Generate Ideas,Desire to Generate Ideas,קל לי לחשוב על דרכים לפתרון בעיות,I find it easy to think of new ways to approach problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-creativity_13,Desire to Generate Ideas,Desire to Generate Ideas,אני יצירתי/ת,I am creative.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_1,thinking things through,thinking things through,אני מהרהר/ת על דברים,I spend time reflecting on things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_2,thinking things through,thinking things through,אני אוהב/ת לפתור בעיות מסובכות,I like to solve complex problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_3,thinking things through,thinking things through,אני נהנה/ית לחשוב על דברים,I enjoy thinking about things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_4,thinking things through,thinking things through,אני יכול/ה לזהות חשיבה פגומה,I can spot faulty reasoning.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_5,thinking things through,thinking things through,אני חושב/ת לעומק על דברים,I think deeply about things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_6r,thinking things through,thinking things through,אני נמנע/ת מדיונים פילוסופיים,I avoid philosophical discussions .,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_7r,thinking things through,thinking things through,אני לא מתעניין/ת בהשערות לגבי דברים,I am not interested in speculating about things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_8r,thinking things through,thinking things through,אני לא אוהב/ת להרהר לגבי דברים,I don't like to ponder over things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_9r,thinking things through,thinking things through,אני שונא/ת לנתח דברים לעומק,I hate to analyze things too much.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_10,thinking things through,thinking things through,אני חושב/ת על השלכות של פעולות,I think about consequences of actions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_11,thinking things through,thinking things through,אני נוטה לעבור על התהליך במוחי לפני שאני מתחיל/ה משימה,I tend to go through procedures in my mind before actually starting a task.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_12,thinking things through,thinking things through,אני מעריכ/ה מידע לפני קבלתו,I evaluate information before accepting it.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_13,thinking things through,thinking things through,אני מנסה להבין את המצב לפני שאני מקבל/ת החלטה,I try to figure out what's going to happen before making a decision.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-think_through_14,thinking things through,thinking things through,אני מטיל/ה ספק בדברים שאני לא מבינ/ה,I question things I don't understand.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-conversation_dominnace_1,conversation_dominnace,assertiveness,"בשיחות שיש לי עם חברים, אני בדרך כלל מדבר/ת יותר מהם ","In conversations I have with friends, I usually talk more than they do.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-conversation_dominnace_2r,conversation_dominnace,assertiveness,קורה לי הרבה פעמים שקוטעים את דבריי ,"Very often, I find I am interrupted when speaking. ",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-conversation_dominnace_3,conversation_dominnace,assertiveness,קורה לא מעט שאני קוטע/ת את דבריהם של אחרים ,"Very often, I find myself interrupting others while they are speaking. ",,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-information_giving_1,information giving,information giving,אני אוהב/ת להסביר לאחרים על דברים שאני מבין/ה בהם ,I enjoy explaining things about which I am knowledgeable to others. ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-information_giving_2r,information giving,information giving,זה מעצבן אותי כשמבקשים ממני הסברים ,It annoys me when I'm asked to give explanations .,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-information_giving_3,information giving,information giving,לפעמים זה מרגיש לי שאני ממשיך/ה להסביר גם אחרי שאנשים כבר הבינו את כוונתי ,Sometimes it feels to me that I continue to explain even after people have already understood what I mean.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-fast_promotion1,fast promotion,fast promotion,אני שואף/ת להתקדם בתפקיד כמה שיותר מהר ,I aspire to get a promotion as quickly as possible.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-fast_promotion2,fast promotion,fast promotion,למלא שנתיים את אותו תפקיד זה יותר מדי זמן ,Two years in the same position is too long.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-fast_promotion3r,fast promotion,fast promotion,אני מעדיף/ה לצבור מומחיות בתפקיד אחד מאשר לעבור בין תפקידים ,I prefer to specialize in one job than to switch roles.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-openness_to_feedback_1,openness to feedback,learning competence,אני אוהב/ת לשמוע מה אנשים חושבים עליי ,I like to hear what people think of me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,yes,,,
-openness_to_feedback_2r,openness to feedback,learning competence,אני מעדיף/ה לא לדעת מה אנשים חושבים עליי ,I prefer not to know what people think of me.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-openness_to_feedback_3r,openness to feedback,learning competence,חשוב לי להיות צודק/ת בויכוחים ,It is important for me to be right in arguments.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-openness_to_feedback_4r,openness to feedback,learning competence,לא מעניין אותי מה אנשים חושבים עליי ,I do not care what people think of me.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-openness_to_feedback_5r,openness to feedback,learning competence,יש הרבה תחומים שאני רוצה להשתפר בהם ,There are many areas where I want to improve.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,yes,,"AYALON,EH,"
-openness_to_feedback_5,openness to feedback,learning competence,יש הרבה תחומים שאני רוצה להשתפר בהם ,There are many areas where I want to improve.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-openness_to_feedback_6r,openness to feedback,learning competence,אני מי שאני ולא אשתנה בשביל אחרים ,I am who I am and will not change for others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,yes,,"AYALON,EH,"
-openness_to_feedback_7r,openness to feedback,learning competence,אני מעדיף/ה לא להעיר לאנשים ושלא יעירו לי,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=8",,,,yes,,"AYALON,EH,"
-openness_to_feedback_8r,openness to feedback,learning competence,אנשים אחרים לא יכולים באמת לדעת מה טוב בשבילי,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=9",,,,yes,,"AYALON,EH,"
-openness_to_feedback_9r,openness to feedback,learning competence,זה מבלבל אותי להתייעץ עם הרבה אנשים,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=10",,,,yes,,"AYALON,EH,"
-openness_to_feedback_10,openness to feedback,learning competence,כשאני מתלבט/ת כיצד לפעול אני אוהב/ת להתייעץ,,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=11",,,,yes,,"AYALON,EH,"
-openness_to_feedback_11r,openness to feedback,learning competence,"כשמותחים עליי ביקורת, היא בדרך כלל לא מוצדקת",,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=12",,,,yes,,"AYALON,EH,"
-openness_to_feedback_12,openness to feedback,learning competence,אני אוהב/ת לשמוע מה אנשים חושבים על הדרך בה אני פועל /ת או עובד/ת,,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=13",,,,yes,,"AYALON,EH,"
-charisma_1,charisma,charisma,אני בעל/ת נוכחות בחדר,I am someone who has a presence in a room.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-charisma_2,charisma,charisma,אני בעל/ת יכולת להשפיע על אחרים,I am someone who has the ability to influence people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-charisma_3,charisma,charisma,אני יודע/ת איך להנהיג קבוצה,I am someone who knows how to lead a group.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-charisma_4,charisma,charisma,אני יודע/ת מה גורם לאנשים להרגיש בנוח,I am someone who makes people feel comfortable.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-charisma_5,charisma,charisma,אני מחייך/ת לאנשים לעיתים קרובות,I am someone who smiles at people often.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
-charisma_6,charisma,charisma,אני יכול/ה להסתדר עם כל אחד,I am someone who can get along with anyone.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",,,,,,
+",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+extroversion_6r,extroversion,emotional intelligence,אני לא אוהב/ת למשוך תשומת לב,I don't like to draw attention to myself.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+extroversion_7r,extroversion,emotional intelligence,אני נוטה להיות שקט/ה ליד אנשים שאיני מכיר,I am quiet around strangers.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+extroversion_8r,extroversion,emotional intelligence,אני בן/ת אדם פרטי/ת ,I am a very private person.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+extroversion_9r,extroversion,emotional intelligence,אני לא תמיד אומר/ת את מה שאני חושב/ת,I hold back my opinions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+extroversion_10r,extroversion,emotional intelligence,אני ביישן/ית,"I am sometimes shy, inhibited",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+openness_1,openness,learning competence,יש לי דימיון מפותח,I have a vivid imagination.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+openness_2r,openness,learning competence,"רעיונות מופשטים (לא מוחשיים,  לדוגמא: אהבה, כעס, פילוסופיה, אומנות) לא מעניינים אותי",I am not interested in abstract ideas.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+openness_3r,openness,learning competence,"קשה לי להבין רעיונות מופשטים (לא מוחשיים,  לדוגמא: אהבה, כעס, פילוסופיה, אומנות)",I have difficulty understanding abstract ideas.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+openness_4r,openness,learning competence,אין לי דימיון מפותח,I do not have a good imagination.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+openness_5,openness,learning competence,אני נהנה/ית  לשמוע רעיונות חדשים,I enjoy hearing new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+openness_6r,openness,learning competence,אני לא אוהב/ת דיונים פילוסופיים,I avoid philosophical discussions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_7r,openness,learning competence,אני לא אוהב/ת ללכת למוזיאונים,I do not enjoy going to art museums.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+openness_8,openness,learning competence,אני נהנה/ית לשבת ולחשוב,I enjoy thinking about things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_9,openness,learning competence,יש לי חברים ששונים ממני מאוד ,I have friends who are very different than me,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+neuroticism_1r,un-neuroticism,emotional regulation,יש לי שינויים תכופים במצב הרוח,I have frequent mood swings.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+neuroticism_2,un-neuroticism,emotional regulation,רוב הזמן אני רגוע/ה,I am relaxed most of the time.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+neuroticism_3r,un-neuroticism,emotional regulation,אני מתרגז/ת בקלות,I get upset easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+neuroticism_4,un-neuroticism,emotional regulation,אני מרגיש/ה עצוב/ה לעיתים רחוקות,I seldom feel blue.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+outcome_1,outcome driven,persistence,אני מכוון/ת ישר למטרה,I go straight for the goal.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+outcome_3,outcome driven,persistence,אני הופך/ת תוכניות למעשים,I turn plans into actions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+outcome_4,outcome driven,persistence,אני מעמיק/ה במשימות עם כל הלב,I plunge into tasks with all my heart.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+outcome_5,outcome driven,persistence,אני עושה יותר ממה שמצופה ממני,I do more than what's expected of me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+outcome_6,outcome driven,persistence,אני מציב/ה סטנדרטים גבוהים לעצמי ולאחרים,I set high standards for myself and others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+outcome_7,outcome driven,persistence,אני דורש/ת איכות,I demand quality.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+outcome_8r,outcome driven,persistence,הייתי רוצה שתהיה לי יותר מוטיבציה להצליח,I would like to have more motivation to succeed.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+outcome_9r,outcome driven,persistence,אני עושה רק את מה שמספיק בשביל להסתדר,I do just enough work to get by.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+outcome_10r,outcome driven,persistence,אני משקיע/ה מעט זמן ומאמץ בעבודה שלי,I put little time and effort into my work.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+assertiveness_1,assertiveness,assertiveness,אני לוקח/ת פיקוד,I take charge.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+assertiveness_2,assertiveness,assertiveness,אני מנסה להוביל אחרים,I try to lead others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+assertiveness_3,assertiveness,assertiveness,אני יכול/ה לשכנע אחרים לעשות דברים,I can talk others into doing things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+assertiveness_4,assertiveness,assertiveness,אני מחפש/ת להשפיע על אחרים,I seek to influence others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+assertiveness_5,assertiveness,assertiveness,אני לוקח/ת אחריות על דברים,I take control of things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+assertiveness_6r,assertiveness,assertiveness,אני מחכה שאחרים יראו לי את הדרך,I wait for others to lead the way.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+assertiveness_7r,assertiveness,assertiveness,אני שומר/ת על פרופיל נמוך,I keep in the background.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+assertiveness_8r,assertiveness,assertiveness,יש לי מעט להגיד,I have little to say.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+assertiveness_9r,assertiveness,assertiveness,אני לא אוהב/ת למשוך תשומת לב לעצמי,I don't like to draw attention to myself.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+assertiveness_10r,assertiveness,assertiveness,אני בדרך כלל לא משמיע/ה את דעתי,I hold back my opinions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+persistence_1,persistence,persistence,אני לא מפסיק/ה משימה לפני השלמתה,I גon't quit a task before it is finished.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+persistence_2,persistence,persistence,אני אדם מוכוון-מטרה,I am a goal-oriented person.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+persistence_3,persistence,persistence,אני מסיים/ת דברים למרות קשיים בדרך,I finish things despite obstacles in the way.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+persistence_4,persistence,persistence,אני עובד/ת קשה,I am a hard worker.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+persistence_5,persistence,persistence,קשה להסיח את דעתי כשאני עובד/ת,I don't get sidetracked when I work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+persistence_6r,persistence,persistence,אני לא מסיים/ת מה שהתחלתי,I don't finish what I start.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+persistence_7r,persistence,persistence,אני מוותר/ת בקלות,I give up easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+persistence_8r,persistence,persistence,אני נוטה לא להתמיד בדברים שאני מחליט/ה לעשות,I do not tend to stick with what I decide to do.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,yes,,,,
+eq_1r,emotional intelligence,emotional intelligence,לוקח לי זמן להסתגל לשינויים,I am able to fit into any situation.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_2,emotional intelligence,emotional intelligence,אני יודע/ת לגרום לאנשים להרגיש שהם מעניינים,I have the ability to make others feel interesting.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+eq_3,emotional intelligence,emotional intelligence,אני יודע/ת מה גורם לאחרים לפעול,I know what makes others tick.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_4,emotional intelligence,emotional intelligence,אני מסתדר/ת היטב עם אנשים שזה עתה הכרתי,I get along well with people I have just met.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_5,emotional intelligence,emotional intelligence,אני טוב/ה בלזהות מה אנשים מרגישים,I am good at sensing what others are feeling.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_6,emotional intelligence,emotional intelligence,אני יודע/ת מה להגיד כדי לגרום לאנשים להרגיש טוב,I know what to say to make people feel good.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+eq_7r,emotional intelligence,emotional intelligence,אני לא יודע/ת איך להתנהג כשאני במצב חברתי חדש ולא מוכר,I don't know how to handle myself in a new social situation.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_8,emotional intelligence,emotional intelligence,אני יודע/ת איך לנחם אחרים,I know how to comfort others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+eq_9,emotional intelligence,emotional intelligence,אני חושב/ת על אחרים לפני עצמי,I think about others first.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_10,emotional intelligence,emotional intelligence,אני מכבד/ת רגשות של אחרים,I respect others' feelings,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_11,emotional intelligence,emotional intelligence,אני מכבד/ת דעות של אחרים,I respect the opinions of others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_12,emotional intelligence,emotional intelligence,אני דואג/ת לרווחת אחרים,Others' well-being is of concern for me,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_13,emotional intelligence,emotional intelligence,אני מתחשב/ת בצרכי אחרים,I consider others' needs.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_14,emotional intelligence,emotional intelligence,אני מתעדפ/ת את טובתם של אחרים על פני טובתי האישית,I consider others' interests above my own.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+eq_15,emotional intelligence,emotional intelligence,אני עושה דברים על מנת לשפר את ההרגשה של אחרים,I do things to enhance the well-being of others,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+eq_16,emotional intelligence,emotional intelligence,אני מנסה לנחם אחרים כשהם מוטרדים,I try to comfort others when they are distressed,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+ocb_1,organizational citizenship behavior,organizational citizenship behavior,אני עוזר/ת לעובדים אחרים שיש להם עומס רב בעבודה,I helped others who have heavy workloads.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+ocb_2,organizational citizenship behavior,organizational citizenship behavior,אני עוזר/ת למנהל/ת שלי עם העבודה שלו/ה (גם כשלא התבקשתי),I assisted my supervisor with his/her work (when not asked). ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+ocb_3,organizational citizenship behavior,organizational citizenship behavior,"אני מתעניין/ת בעובדים אחרים (אם מעולם לא עבדת בעבר, אנא השב/י ביחס לצבא או ללימודים)",I took a personal interest in other employees. ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+ocb_4,organizational citizenship behavior,organizational citizenship behavior,"אני נוכח/ת בעבודה יותר בהשוואה לאנשים אחרים (אם מעולם לא עבדת בעבר, אנא השב/י ביחס לצבא או ללימודים)",My attendance at work was above the norm.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+ocb_5,organizational citizenship behavior,organizational citizenship behavior,אני נותן/ת התראה מוקדמת כשאין באפשרותי להגיע לעבודה,I gave advance notice when I was unable to come to work. ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+ocb_6,organizational citizenship behavior,organizational citizenship behavior,אני שומר/ת ומגן/ה על ציוד של מקום העבודה שלי,I conserved and protected organizational property.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+self-efficacy_1,self-efficacy,self-efficacy,"אם אני מנסה מספיק, אני תמיד מצליח/ה לפתור בעיות קשות",I can always manage to solve difficult problems if I try hard enough.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_2,self-efficacy,self-efficacy,"אם מישהו/י מתנגד/ת לי, אני מסוגל/ת למצוא דרכים להשיג את מה שאני רוצה","If someone opposes me, I can find means and ways to get what I want.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_3,self-efficacy,self-efficacy,קל לי להיצמד למטרות שהצבתי לעצמי ולהשיג אותן,It is easy for me to stick to my aims and accomplish my goals.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_4,self-efficacy,self-efficacy,אני בטוח/ה שאני מסוגל/ת להתמודד ביעילות עם אירועים בלתי-צפויים,I am confident that I could deal efficiently with unexpected events.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_5,self-efficacy,self-efficacy,"הודות לתושייה שלי, אני יודע/ת להתמודד עם מצבים בלתי-צפויים","Thanks to my resourcefulness, I know how to handle unforeseen situations.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_6,self-efficacy,self-efficacy,אני יכול/ה לפתור את רוב הבעיות אם אני משקיע/ה את המאמץ הדרוש,I can solve most problems if I invest the necessary effort.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_7,self-efficacy,self-efficacy,אני נשאר/ת רגוע/ה כשאני מתמודד/ת עם קשיים כי אני סומך/ת על כושר ההתמודדות שלי,I can remain calm when facing difficulties because I can rely on my coping abilities.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_8,self-efficacy,self-efficacy,"כשאני מתמודד/ת עם בעיה, אני בדרך-כלל מוצא/ת לה כמה פתרונות","When I am confronted with a problem, I can usually find several solutions.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_9,self-efficacy,self-efficacy,אם אני מוכרח/ה אני יכול/ה לחשוב על משהו לעשות,"If I am in a bind, I can usually think of something to do.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_10,self-efficacy,self-efficacy,"לא משנה מה נקרה בדרכי, אני בדרך כלל מסוגל/ת להתמודד עם זה","No matter what comes my way, I'm usually able to handle it.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_11,self-efficacy,self-efficacy,אני משלים/ה משימות בהצלחה,I Complete tasks successfully.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_12,self-efficacy,self-efficacy,אני מבצע/ת משימות ללא תקלות,I handle tasks smoothly.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_13,self-efficacy,self-efficacy,אני יודע/ת כיצד לגרום לדברים להתבצע,I know how to get things done.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_14r,self-efficacy,self-efficacy,אני שופט/ת לא נכון מצבים,I misjudge situations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_15r,self-efficacy,self-efficacy,אני לא מבינ/ה דברים,I don't understand things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_16r,self-efficacy,self-efficacy,יש לי מעט לתרום,I have little to contribute.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+self-efficacy_17r,self-efficacy,self-efficacy,קשה לי להבין את ההשלכות של פעולות שלי ,I don't see the consequences of things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_1r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה אשם/ה על כך","When I'm upset, I feel guilty for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_2r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מתבייש/ת בהרגשה הזאת","When I'm upset, I feel ashamed with myself for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_3r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני נבוך/ה מההרגשה הזאת","When I'm upset, I become embarrased for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_4r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני כועס/ת על עצמי על ההרגשה הזאת","When I'm upset, I become angry with myself for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_5r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מתעצבן/ת על עצמי על ההרגשה הזאת","When I'm upset, I become irritated with myself for feeling that way.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_6r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה שאני חלש/ה","When I'm upset, I feel like I am weak.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_7r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי להתרכז","When I'm upset, I have difficulty concentrating.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_8r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי להתמקד בדברים אחרים","When I'm upset, I have difficulty focusing on other things.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_9r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי לסיים דברים","When I'm upset, I have difficulty getting work done.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_10r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי לחשוב על דברים אחרים","When I'm upset, I have difficulty thinking about anything else.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_11,emotional regulation,emotional regulation,"כשאני נסער/ת, אני עדיין מסוגל/ת לסיים דברים","When I'm upset, I can still get things done.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+regulation_12r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני יכול/ה לאבד שליטה על ההתנהגות שלי","When I'm upset, I lose control over my behaviors.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+regulation_13r,emotional regulation,emotional regulation,"כשאני נסער/ת, קשה לי לשלוט בהתנהגות שלי","When I'm upset, I have difficulty controlling my behaviors.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+regulation_14r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני יכול/ה לאבד שליטה","When I'm upset, I become out of control.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+regulation_15r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה חוסר שליטה","When I'm upset, I feel out of control.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_16r,emotional regulation,emotional regulation,"כשאני נסער/ת, הרגשות שלי משתוללים ומציפים אותי",I experience my emotions as overwhelming and out of control.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_17,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מרגיש/ה שאני יכול/ה לשלוט בהתנהגות שלי","When I'm upset, I feel like I can remain in control of my behaviors.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+regulation_18,emotional regulation,emotional regulation,אני קשוב/ה לרגשות שלי,I am attentive to my feelings.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_19,emotional regulation,emotional regulation,אני שם/ה לב איך אני מרגיש/ה,I pay attention to how I feel.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_20,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מכיר ברגשות שלי","When I'm upset, I acknowledge my emotions.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_21,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שהרגשות שלי הגיוניים וחשובים","When I'm upset, I believe that my feelings are valid and important.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_22,emotional regulation,emotional regulation,איכפת לי מאיך שאני מרגיש/ה,I care about what I am feeling.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_23,emotional regulation,emotional regulation,"כשאני נסער/ת, אני לוקח/ת זמן לעצמי כדי להבין איך אני באמת מרגיש/ה","When I'm upset, I take time to figure out what I'm really feeling.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_24r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שזה ייגמר בכך שאני אהיה מאוד מדוכא/ת","When I'm upset, I believe that I'll end up feeling very depressed.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_25r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שאני אשאר כך הרבה זמן","When I'm upset, I believe that I will remain that way for a long time.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_26r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שכל מה שאני מסוגל/ת לעשות זה לשקוע בזה","When I'm upset, I believe that wallowing in it is all I can do.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_27r,emotional regulation,emotional regulation,"כשאני נסער/ת, לוקח לי הרבה זמן להרגיש טוב יותר","When I'm upset, it takes me a long time to feel better.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_28r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מאמין/ה שאין דבר שאני יכול/ה לעשות שיגרום לי להרגיש טוב יותר","When I'm upset, I believe that there is nothing I can do to make myself feel better.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_29,emotional regulation,emotional regulation,"כשאני נסער/ת, אני יודע/ת שבסופו של דבר אני אמצא דרך להרגיש יותר טוב","When I'm upset, I know that I can find a way to eventually feel better.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+regulation_30r,emotional regulation,emotional regulation,"כשאני נסער/ת, הרגשות שלי מציפים אותי","When I'm upset, my emotions feel overwhelming.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_31r,emotional regulation,emotional regulation,"כשאני נסער/ת, אני מתחיל/ה להרגיש ממש רע עם עצמי","When I'm upset, I start to feel very bad about myself.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+regulation_32r,emotional regulation,emotional regulation,קשה לי למצוא הגיון ברגשות שלי,I have difficulty making sense out of my feelings.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_33r,emotional regulation,emotional regulation,אין לי מושג איך אני מרגיש/ה,I have no idea how I am feeling.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_34r,emotional regulation,emotional regulation,אני מבולבל/ת בנוגע לאיך שאני מרגיש/ה,I am confused about how I feel.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_35,emotional regulation,emotional regulation,אני יודע/ת בדיוק איך אני מרגיש/ה,I know exactly how I am feeling.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+regulation_36,emotional regulation,emotional regulation,אני ברור/ה בנוגע לרגשות שלי,I am clear about my feelings.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+profit_1,motivation to make money,motivation to make money,הדבר שהכי חשוב לי בעבודה זה להרוויח כסף,The most important thing for me at work is making money.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+profit_2,motivation to make money,motivation to make money,מה שמניע את רוב האנשים בעבודה זה כסף,Money motivates most people at work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+profit_3r,motivation to make money,motivation to make money,אין לי בעיה להיות תלוי/ה באנשים אחרים מבחינה כלכלית,I have no problem being dependet on other people financially.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+profit_4,motivation to make money,motivation to make money,כסף הופך אנשים למאושרים,Money makes people happy.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+profit_5,motivation to make money,motivation to make money,אני חולם/ת להתעשר,I dream of getting rich.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+profit_6,motivation to make money,motivation to make money,המחשבה על להרוויח הרבה כסף מלהיבה אותי,The thought of making a lot of money excites me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+profit_7,motivation to make money,motivation to make money,חשוב לי להתלבש במותגים,It is important for me to wear brands.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+profit_8,motivation to make money,motivation to make money,אני מקנא/ה באנשים עשירים,I envy rich people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+profit_9r,motivation to make money,motivation to make money,כסף הוא בשבילי אמצעי להתקיים ולא יותר מזה,Money for me is a means to exist and nothing more.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+general_1,general,general,אומרים עליי שיש לי כושר שכנוע,People say I am persuasive.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+general_2,general,general,אני מסוגל/ת לגרום לאדם לעשות משהו שהוא/היא לא התכוון/ת לעשות בעצמו/ה,I can make a person do something he didn't intend to do in the first place.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+general_3,general,general,"כשאני רוצה משהו, אני משיג/ה אותו","When I want something, I get it .",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+general_4r,general,general,"כשמשהו לא הולך לי, אני מעדיף/ה לוותר","When something does not work for me, I prefer to give up.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+general_5,general,general,"כשצריך, אני יודע/ת להיות עקשן/ית","When necessary, I know how to be stubborn.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+general_6r,general,general,יש אנשים שפשוט אי-אפשר לשנות את דעתם,There are people that are just impossible to change their minds.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_1,service orientation,service orientation,האינטראקציה עם לקוחות מהנה עבורי,Interacting with customers is enjoyable.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_2,service orientation,service orientation,חשוב לי שהלקוח/ה יהיה/תהיה מרוצה,It is important to me that the customer is satisfied.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_3,service orientation,service orientation,העובדים במקומות העבודה הקודמים שלי סיפקו שירות מצוין,The employees at my restaurant provide excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_4,service orientation,service orientation,מנהלים קודמים שלי עודדו אותי לספק שירות מצוין,My manager encourages me to provide excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_5,service orientation,service orientation,ההכשרה שקיבלתי בעבר הכינה אותי לספק שירות מצוין,The training I received prepared me to provide excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_6,service orientation,service orientation,לקוחות מתנהגים אליי בכבוד,Customers treat me with respect.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_7r,service orientation,service orientation,"במקומות עבודה קודמים, בשעות העומס היה כל כך עמוס שלא הצלחנו לספק שירות מצוין",At peak hours it's so busy we can't provide excellent service.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_8,service orientation,service orientation,נהלי העבודה במקומות העבודה הקודמים שלי אפשרו לספק שירות מצוין בקלות,Our service procedures make it easy for me to give excellent service.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+service_9r,service orientation,service orientation,"המנהל שלי מצפה ממני לעבוד לפי הנהלים, גם אם זה אומר לתת שירות פחות טוב","My manager expects us to always follow procedures, even if it means giving less than excellent service.",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_1r,social desirability,social desirability,לפעמים אני משליך/ה אשפה לא בפח,I sometimes litter.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,?,,,,,
+desirability_2,social desirability,social desirability,אני תמיד מודה בטעויותיי ומתמודד/ת עם ההשלכות השליליות שלהן,I always admit my mistakes openly and face the potential negative consequences.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+desirability_3,social desirability,social desirability,בחיים אני תמיד מנומס/ת ומתחשב/ת באחרים,In life I am always polite and considerate of others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+desirability_4,social desirability,social desirability,"התנסיתי בסמים לא חוקיים (לדוגמא, מריחאונה, קוקאין, וכו')","I have tried illegal drugs (for example, marijuana, cocaine, etc.).",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_5,social desirability,social desirability,"אני תמיד מקבל/ת את דעותיהם של אחרים, אפילו כשהם/ן לא מסכימים/ות עם הדעות שלי","I always accept others' opinions, even when they don't agree with my own.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+desirability_6r,social desirability,social desirability,לפעמים אני מוציא/ה על אחרים את מצב הרוח הרע שלי,I take out my bad moods on others now and then.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_7r,social desirability,social desirability,קרה מקרה שבו ניצלתי מישהו/י אחר/ת,There has been an occasion when I took advantage of someone else.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_8,social desirability,social desirability,בשיחות אני תמיד מקשיב/ה ונותן/ת לאחרים/ות לסיים את המשפטים שלהם/ן,In conversation I always listen attentively and let others finish their sentences.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+desirability_9,social desirability,social desirability,אני אף פעם לא מהסס/ת לעזור למישהו/י במקרה חירום,I never hesitate to help someone in case of emergency.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+desirability_10,social desirability,social desirability,"כשאני מבטיח/ה משהו, אני מקיים/ת אותו - בלי ""אם"", ""או"" או ""אבל""","When I have made a promise, I keep it - no ifs, ands or buts.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_11r,social desirability,social desirability,לפעמים אני מדבר/ת לרעה על אחרים מאחורי גבם,I occasionally speak badly of others behind their back.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+desirability_12,social desirability,social desirability,לעולם לא אחיה על גבם של אנשים אחרים,I would never live off other people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_13,social desirability,social desirability,"אני תמיד נשאר/ת חברותי/ת ואדיב/ה לאנשים אחרים, גם כשאני מאוד לחוץ/ה","I always stay friendly and courteous with other people, even when I am stressed out.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_14,social desirability,social desirability,בוויכוחים אני תמיד שומר/ת על אובייקטיביות והיצמדות לעובדות,During arguments I always stay objective and matter-of-fact.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_15r,social desirability,social desirability,קרה ששכחתי להחזיר פריט ששאלתי ממישהו/י אחר/ת,There has been at least one occasion when I failed to return an item that I borrowed.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+desirability_16,social desirability,social desirability,אני תמיד אוכל/ת אוכל בריא,I always eat a healthy diet.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+desirability_17r,social desirability,social desirability,לפעמים אני עוזר/ת רק בגלל שאני מצפה לקבל משהו בתמורה,Sometimes I only help because I expect something in return.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+desirability_18r,social desirability,social desirability,לפעמים אני משקר/ת אם אין לי ברירה אחרת,I sometimes tell lies if I have to.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_19,social desirability,social desirability,לעולם איני מקלל,I never swear.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_20r,social desirability,social desirability,לפעמים אני מעדיף/ה להחזיר למי שפגע בי מאשר לסלוח ולשכוח,I sometimes try to get even rather than forgive and forget.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_21,social desirability,social desirability,"אני תמיד מציית לחוקים, גם אם אין סיכויי שאתפס","I always obey laws, even if I'm unlikely to get caught.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_22,social desirability,social desirability,"כאשר אני שומע/ת שאנשים מדברים ביניהם בפרטיות, אני נמנע/ת מלהקשיב","When I hear people talking privately, I avoid listening.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_23r,social desirability,social desirability,קיבלתי יותר עודף ממה שהגיע לי ממוכר בחנות מבלי ליידע אותו על כך,I have received too much change from a salesperson without telling him or her.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_24,social desirability,social desirability,אני תמיד מצהיר/ה במכס על כל מה שהבאתי,I always declare everything at customs.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_25r,social desirability,social desirability,"כשהייתי צעיר/ה, לפעמים גנבתי דברים",When I was young I sometimes stole things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_26r,social desirability,social desirability,יש דברים שעשיתי ואני לא מספר/ת עליהם לאנשים אחרים,I have done things that I don't tell other people about.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_27,social desirability,social desirability,לעולם איני לוקח דברים שאינם שייכים לי,I never take things that don't belong to me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_28r,social desirability,social desirability,לקחתי חופשת מחלה (מעבודה או לימודים) למרות שלא הייתי באמת חולה,I have taken sick-leave from work or school even though I wasn't really sick.,yes,,p,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_29,social desirability,social desirability,לא קרה שגרמתי נזק לספר בספריה או לסחורה בחנות מבלי שדיווחתי על כך,I have never damaged a library book or store merchandise without reporting it.,,,p,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+desirability_30r,social desirability,social desirability,יש לי כמה הרגלים ממש רעים,I have some pretty awful habits.,yes,,p,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_1,sociability,emotional intelligence,אני מרגיש/ה בנוח ליד אחרים,I feel comfortable around people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_2,sociability,emotional intelligence,אני מתנהג/ת בנוחות ליד אחרים,I act comfortably with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_3,sociability,emotional intelligence,אני מיומנ/ת בהתמודדות עם מצבים חברתיים,I am skilled in handling social situations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_4,sociability,emotional intelligence,אני מדבר/ת עם הרבה אנשים במסיבות,I talk to a lot of different people at parties.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_5,sociability,emotional intelligence,אני פותח/ת בשיחות,I Start conversations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_6r,sociability,emotional intelligence,לעיתים אני חש/ה לא בנוח ליד אחרים,I often feel uncomfortable around others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_7r,sociability,emotional intelligence,יש לי מעט להגיד,I have little to say.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_8r,sociability,emotional intelligence,יש לי קשיים לפנות אל אחרים,I find it difficult to approach others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_9r,sociability,emotional intelligence,יש לי קשיים לבטא את רגשותיי,I have difficulty expressing my feelings.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_10r,sociability,emotional intelligence,אני מרגיש/ה בנוח רק עם חבריי,I only feel comfortable with friends.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_11,sociability,emotional intelligence,אני גורמ/ת לאנשים להרגיש רצויים,I make people feel welcome.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_12,sociability,emotional intelligence,אני מסתדר/ת היטב עם רוב האנשים,I can get along with most people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_13,sociability,emotional intelligence,אני מתחבר/ת בקלות,I make friends easily.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_14,sociability,emotional intelligence,אנשים מרגישים נינוחים לידי,People feel at ease around me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_15,sociability,emotional intelligence,אחרים חושבים שאני חברותי/ת,Others consider me friendly.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_16,sociability,emotional intelligence,אני אוהב/ת לפגוש אנשים חדשים,I like meeting new people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_17,sociability,emotional intelligence,אני מתקשרת עם אחרים בקלות,I interact easily with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_18r,sociability,emotional intelligence,אני מעדיפ/ה לא לפגוש אנשים חדשים,I avoid meeting new people.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_19,sociability,emotional intelligence,אני חברותי/ת מטבעי,I have a friendly disposition.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_20,sociability,emotional intelligence,אני נהנה/ית מחברתם של אחרים,I enjoy the company of others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_21,sociability,emotional intelligence,נראה כי אנשים מחבבים אותי,People seem to like me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_22,sociability,emotional intelligence,אני נהנה/ית לדבר עם אחרים,I enjoy talking to others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_23,sociability,emotional intelligence,אני גורמת לאנשים שהרגע הכרתי להרגיש בנוח,I put new acquaintances at ease.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+sociability_24,sociability,emotional intelligence,אני מתחיל/ה שיחות עם אנשים שאיני מכירה בקלות,I start conversations with strangers easily.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+competence_1,learning competence,learning competence,אני לומד/ת במהירות,I learn quickly.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+competence_2,learning competence,learning competence,אני משתמש/ת בשכל שלי,I use my brain.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+competence_3,learning competence,learning competence,אני מצטיין/ת במה שאני עושה,I excel in what I do.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+competence_4,learning competence,learning competence,אני מסתכל/ת על העובדות,I look at the facts.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+competence_5,learning competence,learning competence,אני מתמודד/ת עם אתגרים,I meet challenges.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+competence_6,learning competence,learning competence,אני מחפש/ת הסברים לדברים,I seek explanations of things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+competence_7,learning competence,learning competence,אני צריך/ה שדברים יוסברו לי פעם אחת,I need things explained only once.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+competence_8,learning competence,learning competence,אני בעל/ת פתרונות טובים,I come up with good solutions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+competence_9,learning competence,learning competence,אני מלא/ה ברעיונות,I am full of ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,yes,,,,
+competence_10,learning competence,learning competence,אני יודע/ת איך ליישם את הידע שלי,I know how to apply my knowledge.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+efficiency_1,efficiency,efficiency,אני מדייק/ת בעבודתי,I am exacting in my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+efficiency_2,efficiency,efficiency,אני מתכנן/ת תוכניות ודבק/ת בהן,I make plans and stick to them.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+efficiency_3,efficiency,efficiency,אני מבצע/ת את תוכניותיי,I follow through with my plans.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+efficiency_4r,efficiency,efficiency,אני מבזבז/ת את זמני,I waste my time.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+efficiency_5r,efficiency,efficiency,אני מתקשה להתחיל לעבוד,I find it difficult to get down to work.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+efficiency_6r,efficiency,efficiency,אני דוחה החלטות,I postpone decisions.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+efficiency_7r,efficiency,efficiency,אני מתקשה להתחיל משימות,I have difficulty starting tasks.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+efficiency_8r,efficiency,efficiency,"במה שקשור לביצוע משימות אני צריך/ה שיעזרו לי ""להתניע""",I need a push to get started.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+efficiency_9r,efficiency,efficiency,אני לעיתים קרובות שוכח/ת לעשות דברים,I frequently forget to do things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+resourcefulness_1,resourcefulness,learning competence,אני יכול/ה לעבוד תחת לחץ,I can work under pressure.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_2,resourcefulness,learning competence,אני צריכ/ה שיסבירו לי פעם אחת בלבד ,I need things explained only once.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_3,resourcefulness,learning competence,אני יכול/ה להתמודד עם הרבה מידע,I can handle a lot of information.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_4,resourcefulness,learning competence,אני יכול/ה להתמודד עם כל דבר,I can tackle anything.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_5,resourcefulness,learning competence,אני יכול/ה להתמודד עם הרבה דברים בו-זמנית,I can manage many things at the same time.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_6,resourcefulness,learning competence,אני טוב/ה בהרבה דברים,I am good at many things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_7r,resourcefulness,learning competence,אני לא שמ/ה לב,I don't pay attention.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+resourcefulness_8r,resourcefulness,learning competence,אני מוותר/ת בקלות,I Give up easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+growth_1,growth mindset,growth mindset,אני קורא/ת ספר הדרכה עצמי,I read a self-help book.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+growth_2,growth mindset,growth mindset,קניתי ספר הדרכה עצמי,I bought a self-help book.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+growth_3,growth mindset,growth mindset,למדתי נושאים,I have studied some subject.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+growth_4,growth mindset,growth mindset,למדתי מיומנות חדשה,I learned a new skill,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+growth_5,growth mindset,growth mindset,נרשמתי לקורס,I enrolled in a course of study.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+stability_1,emotional stability,emotional regulation,אני מתרגז/ת לעיתים רחוקות,I seldom get mad.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+stability_2,emotional stability,emotional regulation,אני לא מוטרד/ת בקלות,I am not easily bothered by things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+stability_3,emotional stability,emotional regulation,אני לא נהיה/נהיית מתוסכל/ת בקלות,I am not easily frustrated.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+stability_4,emotional stability,emotional regulation,אני לעיתים רחוקות נעלב/ת,I seldom take offense.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+stability_5,emotional stability,emotional regulation,אני שומר/ת על קור רוח,I keep my cool.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+stability_6r,emotional stability,emotional regulation,אני נלחץ/ת בקלות,I get stressed out easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+stability_7r,emotional stability,emotional regulation,אני מוטרד/ת בקלות,I am easily disturbed.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+stability_8r,emotional stability,emotional regulation,אני משנה את מצב רוחי הרבה,I change my mood a lot.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+stability_9r,emotional stability,emotional regulation,אני חושב/ת הרבה על הבעיות שלי,I get caught up in my problems.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+negotiation_1,Interest in Negotiation,Interest in Negotiation,אני נהנה/ית להתמקח,I enjoy bargaining.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_2,Interest in Negotiation,Interest in Negotiation,אני יכול/ה להציג את דעות הקבוצה שלי לאחרים,I can represent my group's views to others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_3,Interest in Negotiation,Interest in Negotiation,אני יכול/ה בדרך כלל להבין את שני הצדדים של בעיה מסוימת,I can usually understand both sides of an issue.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_4,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לתווך במריבות,I can mediate in quarrels.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_5,Interest in Negotiation,Interest in Negotiation,אני נהנה/ית לפתור מחלוקות,I enjoy resolving disputes.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_6,Interest in Negotiation,Interest in Negotiation,אני נהנה/ית לקחת חלק במשא ומתן,I enjoy negotiating.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_7,Interest in Negotiation,Interest in Negotiation,אני מוכנ/ה להקריב על מנת להגיע לפשרה,I will sacrifice to reach a compromise.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_8,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לפתור עימותים,I can resolve conflicts.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_9,Interest in Negotiation,Interest in Negotiation,אני מוכנ/ה להתפשר,I am willing to compromise.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_10,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לעזור לאחרים לגשר על ההבדלים ביניהם,I can help others reconcile their differences.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_11,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לחבר בין מתחרים,I can bring contesting people together.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_12,Interest in Negotiation,Interest in Negotiation,אני יכול/ה לראות קווים משותפים גם בדעות מנוגדות,I can see common ground in opposing views.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+negotiation_13,Interest in Negotiation,Interest in Negotiation,אני אוהב/ת לנהל משא ומתן על מנת להגיע לפשרה,I like to negotiate compromise.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+confidence_1,confidence,confidence,אני בטוח/ה בעצמי,I am sure of my ground.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+confidence_2,confidence,confidence,אני מעריך/ה את עצמי,I think highly of myself.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+confidence_3,confidence,confidence,אני יודע/ת מיד מה עליי לעשות,I know immediately what to do.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+confidence_4r,confidence,confidence,אני לא מעריכ/ה את עצמי,I have a low opinion of myself.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+confidence_5r,confidence,confidence,ניתן להפחיד אותי בקלות,I am easily intimidated.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+confidence_6r,confidence,confidence,אני מרגיש/ה מאוים/ת בקלות,I feel threatened easily.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+work_tendency_1,work tendency,work tendency,אני מסוגל/ת לשתף פעולה עם אחרים,I am able to cooperate with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+work_tendency_2,work tendency,work tendency,אני עובד/ת טוב עם אחרים,I work well with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_3,work tendency,work tendency,אני נלהב/ת לעבוד עם אחרים,I'm eager to work with others.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_4,work tendency,work tendency,אני אוהב/ת לסייע ללקוחות,I like to assist clients or customers.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_5r,work tendency,work tendency,אני מעדיף/ה לעבוד לבד,I prefer to work alone.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+work_tendency_6r,work tendency,work tendency,אני לא אוהב/ת קבוצות עבודה,I dislike group projects.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_7,work tendency,work tendency,אני אוהב/ת להיות חלק מצוות,I like to be part of a team.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+work_tendency_8,work tendency,work tendency,הצלחת הצוות חשובה עבורי,Team success is important to me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+work_tendency_9,work tendency,work tendency,הצלחת הצוות חשובה עבורי יותר מרווח אישי,Team success is more important than personal gain.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_10,work tendency,work tendency,אני מוכן/ה להקריב בשביל הצוות,I will sacrifice for the team.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_11,work tendency,work tendency,אני נהנה/ית לשתף פעולה במשימות שקשורות לעבודה,I enjoy collaborating on work tasks.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_12,work tendency,work tendency,אני אוהב/ת להיות חלק מקבוצה עם מטרה משותפת,I like being part of a group with a  common goal.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+work_tendency_13,work tendency,work tendency,אני חושב/ת שקבוצות טובות על מנת לפתור בעיות,I think groups are good for solving problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+work_tendency_14r,work tendency,work tendency,זה לא כל כך משנה לי אם יהיו לי חברים במקום העבודה,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+work_tendency_15r,work tendency,work tendency,המפתח להצלחה בעבודה הוא להיות ממוקד/ת באופן בלעדי בהשגת המטרות והיעדים האישיים שלך,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+work_tendency_16,work tendency,work tendency,"המפתח להצלחה בעבודה הוא להיות ""שחקן/ית צוות""",,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+work_tendency_17r,work tendency,work tendency,הייתי יכול/ה לעבוד בעבודה שבה אני נמצא/ת לבדי במרבית שעות היום,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+details_1,Attentiveness to Details,Attentiveness to Details,אני שם/ה לב לפרטים,I pay attention to details.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+details_2,Attentiveness to Details,Attentiveness to Details,אני לא עוצר/ת עד שהכל מושלם,I continue until everything is perfect.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+details_3,Attentiveness to Details,Attentiveness to Details,אני לא אוהב/ת עבודה לא מושלמת,I dislike imperfect work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+details_4,Attentiveness to Details,Attentiveness to Details,אני מדויק/ת בעבודתי,I am exacting in my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+details_5,Attentiveness to Details,Attentiveness to Details,אני רוצה שהכל יהיה מדויק,"I want everything to be ""just right"".",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+details_6,Attentiveness to Details,Attentiveness to Details,אני רוצה שיתייחסו לכל פרט,I want every detail taken care of.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+details_7,Attentiveness to Details,Attentiveness to Details,באופן שגרתי אני עושה בקרה על עבודתי,I routinely double-check my work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+details_8r,Attentiveness to Details,Attentiveness to Details,לעיתים רחוקות אני מבחין/ה בפרטים,I seldom notice details.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+details_9,Attentiveness to Details,Attentiveness to Details,אני פרפקציוניסט/ית,I'm a perfectionist.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+details_10r,Attentiveness to Details,Attentiveness to Details,אני לא דואג/ת לגבי פרטים קטנים,I don't worry about details.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+details_11,Attentiveness to Details,Attentiveness to Details,יש לי גישה קפדנית לעבודה,I take a meticulous approach to work.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+details_12,Attentiveness to Details,Attentiveness to Details,אני שמ/ה לב לפרטים שאחרים לא שמים אליהם לב,I pay attention to details others might overlook.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,yes,,"AYALON,EH,"
+details_13,Attentiveness to Details,Attentiveness to Details,אני מפקח/ת ביסודיות על מה שאחרים עושים,I inspect thoroughly what others do.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+details_14,Attentiveness to Details,Attentiveness to Details,אני רואה את עצמי כעובד/ת זהיר/ה,I think of myself as a careful worker.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+details_15r,Attentiveness to Details,Attentiveness to Details,אני לא מבזבז/ת זמן בדאגה לפרטים הקטנים,I don't waste time worrying about details.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+creativity_1,Desire to Generate Ideas,Desire to Generate Ideas,אני מלא/ה ברעיונות,I am full of ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_2,Desire to Generate Ideas,Desire to Generate Ideas,אני אוהב/ת להמציא דרכים חדשות לעשות דברים,I like to think up new ways of doing things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_3,Desire to Generate Ideas,Desire to Generate Ideas,אני חושב/ת על רעיונות חדשים,I think up new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_4,Desire to Generate Ideas,Desire to Generate Ideas,אני חושב/ת על אלטרנטיבות,I come up with alternatives.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_6,Desire to Generate Ideas,Desire to Generate Ideas,יש לי רעיונות מעולים,I have excellent ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_7,Desire to Generate Ideas,Desire to Generate Ideas,אני מתרגש/ת מרעיונות חדשים,I get excited by new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_9,Desire to Generate Ideas,Desire to Generate Ideas,אני אוהב/ת לפתח רעיונות חדשים,I like to develop new ideas.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_10,Desire to Generate Ideas,Desire to Generate Ideas,אני אוהב/ת למצוא פתרונות ייחודיים לבעיות,I like to find unusual solutions to problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_11,Desire to Generate Ideas,Desire to Generate Ideas,אני מעדיפ/ה עבודה שדורשת חדשנות,I prefer jobs that require innovations.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_12,Desire to Generate Ideas,Desire to Generate Ideas,קל לי לחשוב על דרכים לפתרון בעיות,I find it easy to think of new ways to approach problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+creativity_13,Desire to Generate Ideas,Desire to Generate Ideas,אני יצירתי/ת,I am creative.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_1,thinking things through,thinking things through,אני מהרהר/ת על דברים,I spend time reflecting on things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_2,thinking things through,thinking things through,אני אוהב/ת לפתור בעיות מסובכות,I like to solve complex problems.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_3,thinking things through,thinking things through,אני נהנה/ית לחשוב על דברים,I enjoy thinking about things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_4,thinking things through,thinking things through,אני יכול/ה לזהות חשיבה פגומה,I can spot faulty reasoning.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_5,thinking things through,thinking things through,אני חושב/ת לעומק על דברים,I think deeply about things.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_6r,thinking things through,thinking things through,אני נמנע/ת מדיונים פילוסופיים,I avoid philosophical discussions .,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_7r,thinking things through,thinking things through,אני לא מתעניין/ת בהשערות לגבי דברים,I am not interested in speculating about things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_8r,thinking things through,thinking things through,אני לא אוהב/ת להרהר לגבי דברים,I don't like to ponder over things.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_9r,thinking things through,thinking things through,אני שונא/ת לנתח דברים לעומק,I hate to analyze things too much.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_10,thinking things through,thinking things through,אני חושב/ת על השלכות של פעולות,I think about consequences of actions.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_11,thinking things through,thinking things through,אני נוטה לעבור על התהליך במוחי לפני שאני מתחיל/ה משימה,I tend to go through procedures in my mind before actually starting a task.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_12,thinking things through,thinking things through,אני מעריכ/ה מידע לפני קבלתו,I evaluate information before accepting it.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_13,thinking things through,thinking things through,אני מנסה להבין את המצב לפני שאני מקבל/ת החלטה,I try to figure out what's going to happen before making a decision.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+think_through_14,thinking things through,thinking things through,אני מטיל/ה ספק בדברים שאני לא מבינ/ה,I question things I don't understand.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+conversation_dominnace_1,conversation_dominnace,assertiveness,"בשיחות שיש לי עם חברים, אני בדרך כלל מדבר/ת יותר מהם ","In conversations I have with friends, I usually talk more than they do.",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+conversation_dominnace_2r,conversation_dominnace,assertiveness,קורה לי הרבה פעמים שקוטעים את דבריי ,"Very often, I find I am interrupted when speaking. ",yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+conversation_dominnace_3,conversation_dominnace,assertiveness,קורה לא מעט שאני קוטע/ת את דבריהם של אחרים ,"Very often, I find myself interrupting others while they are speaking. ",,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+information_giving_1,information giving,information giving,אני אוהב/ת להסביר לאחרים על דברים שאני מבין/ה בהם ,I enjoy explaining things about which I am knowledgeable to others. ,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+information_giving_2r,information giving,information giving,זה מעצבן אותי כשמבקשים ממני הסברים ,It annoys me when I'm asked to give explanations .,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+information_giving_3,information giving,information giving,לפעמים זה מרגיש לי שאני ממשיך/ה להסביר גם אחרי שאנשים כבר הבינו את כוונתי ,Sometimes it feels to me that I continue to explain even after people have already understood what I mean.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+fast_promotion1,fast promotion,fast promotion,אני שואף/ת להתקדם בתפקיד כמה שיותר מהר ,I aspire to get a promotion as quickly as possible.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+fast_promotion2,fast promotion,fast promotion,למלא שנתיים את אותו תפקיד זה יותר מדי זמן ,Two years in the same position is too long.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+fast_promotion3r,fast promotion,fast promotion,אני מעדיף/ה לצבור מומחיות בתפקיד אחד מאשר לעבור בין תפקידים ,I prefer to specialize in one job than to switch roles.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+openness_to_feedback_1,openness to feedback,learning competence,אני אוהב/ת לשמוע מה אנשים חושבים עליי ,I like to hear what people think of me.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,yes,,,
+openness_to_feedback_2r,openness to feedback,learning competence,אני מעדיף/ה לא לדעת מה אנשים חושבים עליי ,I prefer not to know what people think of me.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+openness_to_feedback_3r,openness to feedback,learning competence,חשוב לי להיות צודק/ת בויכוחים ,It is important for me to be right in arguments.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+openness_to_feedback_4r,openness to feedback,learning competence,לא מעניין אותי מה אנשים חושבים עליי ,I do not care what people think of me.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+openness_to_feedback_5r,openness to feedback,learning competence,יש הרבה תחומים שאני רוצה להשתפר בהם ,There are many areas where I want to improve.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_to_feedback_5,openness to feedback,learning competence,יש הרבה תחומים שאני רוצה להשתפר בהם ,There are many areas where I want to improve.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+openness_to_feedback_6r,openness to feedback,learning competence,אני מי שאני ולא אשתנה בשביל אחרים ,I am who I am and will not change for others.,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,yes,,"AYALON,EH,"
+openness_to_feedback_7r,openness to feedback,learning competence,אני מעדיף/ה לא להעיר לאנשים ושלא יעירו לי,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_to_feedback_8r,openness to feedback,learning competence,אנשים אחרים לא יכולים באמת לדעת מה טוב בשבילי,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_to_feedback_9r,openness to feedback,learning competence,זה מבלבל אותי להתייעץ עם הרבה אנשים,,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_to_feedback_10,openness to feedback,learning competence,כשאני מתלבט/ת כיצד לפעול אני אוהב/ת להתייעץ,,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_to_feedback_11r,openness to feedback,learning competence,"כשמותחים עליי ביקורת, היא בדרך כלל לא מוצדקת",,yes,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+openness_to_feedback_12,openness to feedback,learning competence,אני אוהב/ת לשמוע מה אנשים חושבים על הדרך בה אני פועל /ת או עובד/ת,,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,yes,,"AYALON,EH,"
+charisma_1,charisma,charisma,אני בעל/ת נוכחות בחדר,I am someone who has a presence in a room.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+charisma_2,charisma,charisma,אני בעל/ת יכולת להשפיע על אחרים,I am someone who has the ability to influence people.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+charisma_3,charisma,charisma,אני יודע/ת איך להנהיג קבוצה,I am someone who knows how to lead a group.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+charisma_4,charisma,charisma,אני יודע/ת מה גורם לאנשים להרגיש בנוח,I am someone who makes people feel comfortable.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+charisma_5,charisma,charisma,אני מחייך/ת לאנשים לעיתים קרובות,I am someone who smiles at people often.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
+charisma_6,charisma,charisma,אני יכול/ה להסתדר עם כל אחד,I am someone who can get along with anyone.,,,P,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,,,,,,
 liescale_instruc,,,סמן/י את המילים שאת/ה מכיר מתוך רשימת המילים הבאה:,,,,,,,,,,,,,,yes,,"AYALON,EH,"
 liescale_1,lie scale,,אצטבה,,,,L,,,,TRUE,מכיר / לא מכיר,,,yes,,yes,,"AYALON,EH,"
 liescale_2,lie scale,,ברדס ,,,,L,,,,TRUE,מכיר / לא מכיר,,,yes,,yes,,"AYALON,EH,"
@@ -454,11 +454,11 @@ cultural_dynamic_5r,cultural dynamic,cultural fit,"בשאלה הבאה מופי�
 סביבה רגועה (רמת לחץ נמוכה)",Calm environment (low pressure level).,yes,SCALE,F,,,,,"הכי פחות חשוב לי=1, הכי חשוב לי=7","1= The least important, 7=The most important",,,,yes,,"AYALON,EH,"
 cultural_interpersonal_7r,cultural interpersonal,cultural fit,"
 יחס מכבד של ההנהלה",Respectful treatment from management.,yes,RANK,F,,,,,"הכי חשוב לי=1, הכי פחות חשוב לי=7","1=The most important, 7=The least important",yes,,,,,
-app_exp_1,applicant experience,applicant experience,השאלות בשאלון היו ברורות (מנוסחות בצורה מובנת),The questions in the questionnaire were clear (phrased in understandable terms).,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-app_exp_2r,applicant experience,applicant experience,השאלות בשאלון היו קשות,The questions in the questionnaire were difficult.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-app_exp_3_r,applicant experience,applicant experience,מילוי השאלון היה מעייף,Filling out the questionnaire was exhausting.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-app_exp_4_r,applicant experience,applicant experience,לקח לי הרבה זמן למלא את השאלון,It took me a long time to fill out the questionnaire.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,"Disagree=1, Netural=3, Agree=7",yes,yes,,,,
-app_exp_5,applicant experience,applicant experience,אנא דרג/י את חווית מילוי השאלון,,,,A,,,,,חוויה גרועה-חווית מצוינת,,,,,yes,,"AYALON,EH,"
+app_exp_1,applicant experience,applicant experience,השאלות בשאלון היו ברורות (מנוסחות בצורה מובנת),The questions in the questionnaire were clear (phrased in understandable terms).,,,A,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+app_exp_2r,applicant experience,applicant experience,השאלות בשאלון היו קשות,The questions in the questionnaire were difficult.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+app_exp_3_r,applicant experience,applicant experience,מילוי השאלון היה מעייף,Filling out the questionnaire was exhausting.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+app_exp_4_r,applicant experience,applicant experience,לקח לי הרבה זמן למלא את השאלון,It took me a long time to fill out the questionnaire.,,,A,,,,,לא מסכים בכלל-מסכים מאוד,Disagree-Agree,yes,yes,,,,
+app_exp_5,applicant experience,applicant experience,אנא דרג/י את חווית מילוי השאלון,,,,A,,,,,חוויה גרועה-חווית מצוינת,Bad Experience-Great Experience,,,,yes,,"AYALON,EH,"
 cognitive_arithmetic_1,cognitive - arithmetic,cognitive,"לפניך שאלת חשיבה <br>
 אנא סמן/י את התשובה הנכונה <br>
 במידה ואינך בטוח/ה, נחש/י <br>

@@ -438,11 +438,10 @@
     }
 }(this);
 
-function convert2image() {
-    var node = document.getElementById('page-container');
-    //var node = document.getElementById('features-list-2');
-    domtoimage.toSvg(node)
-    //domtoimage.toPng(node)
+function convert2image(elementId) {
+    var node = document.getElementById(elementId);
+    //domtoimage.toSvg(node)
+    domtoimage.toPng(node)
         .then(function (dataUrl) {
             var img = new Image();
             img.src = dataUrl;
@@ -453,3 +452,22 @@ function convert2image() {
             console.error('oops, something went wrong!', error);
         });
 }
+
+/**************************************************
+ * Example HTML to use this code                  *
+ **************************************************
+ <!-- This code doesn't work well with comments in the page -->
+ <!-- Not sure why -->
+ <script src="/javascripts/convert2image.js"> </script>
+
+ <div class="header__copy">
+ <h1 class="header__title">
+ <img style="height: 100px;padding-top:0px;zoom: 1.4;" src="/images/EH_logo.png" />
+ <span class="header__title--small"></span>
+ <span><button id="print-button" style="height: 50px; width: 50px;" name="Push me" onClick="convert2image('full-body')" /><div id="here-appear-theimages"></div></span>
+ </h1>
+ <p class="header__subtitle">
+ <br></p>
+ </div>
+
+ **************************************************/

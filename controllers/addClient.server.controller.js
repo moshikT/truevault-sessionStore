@@ -60,7 +60,7 @@ exports.addClient = function (req, res) {
                     for(var field in req.body ) {
                         console.log(field);
                         /* Update only unempty fields */
-                         if(field !== '') {
+                         if(newClientEntry[field] != '') {
                              client[field] = newClientEntry[field];// handle document
                          }
                     }
