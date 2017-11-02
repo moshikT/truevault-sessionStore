@@ -19,7 +19,7 @@ class userData {
 }
 */
 exports.getAddClientPage = function (req, res) {
-    res.render('addClient', { title: '' });
+    res.render('addClient', { title: 'Add New Client', client: ''});
 }
 
 exports.addClient = function (req, res) {
@@ -43,7 +43,7 @@ exports.addClient = function (req, res) {
             logoStyle : req.body.logoStyle,
             title : req.body.title,
             headlineText: req.body.headlineText,
-            CompanyDescription : req.body.CompanyDescription,
+            companyDescription : req.body.companyDescription,
             instructionText: req.body.instructionText,
             thankYouText: req.body.thankYouText,
             language : req.body.language,
@@ -91,4 +91,21 @@ exports.addClient = function (req, res) {
          });
      });
     res.redirect('/addClient');
+}
+
+exports.loadClient = function(req, res) {
+    var clientName = req.body.clientName;
+    //var filterbyClientName = "\"" + clientName + "\""
+
+    //var query = Client.find({$text: {$search: filterbyClientName}});
+    var query = Client.findOne({name: clientName.trim()});
+    query.exec(function(err, client) {
+        console.log("filter results: ",  client);
+        if(client) {
+            res.render('addClient', {title: 'Update Client', client: client});
+        }
+        else {
+            res.status(404).send("A client with that name could not be found");
+        }
+    });
 }

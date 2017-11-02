@@ -106,5 +106,9 @@ router.get('/clients/:cid/recruiterReport', function(req, res) {
     return recruiterReport_Ctrl.generateRecruiterReport(req, res);
 });
 
+router.post('/loadClient', function(req, res) {
+    return addClient_Ctrl.loadClient(req,res);
+});
+
 
 module.exports = router;

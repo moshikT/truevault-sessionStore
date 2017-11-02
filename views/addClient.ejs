@@ -13,75 +13,103 @@
     <div class="container col-md-12" style="text-align: center;">
         <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
     </div>
-    <div class="container col-md-12">
-        <h1>Add new client</h1>
-    </div>
 </header>
 <body>
-<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 100%;width:100%;">
-<form id="addClient" method="post" enctype="multipart/form-data" action="/addClient">
-    <div class="container">
-        <div id="clientName" style="padding: 20px;">
-            <input class="inputs" name="name" type="text"
-                   placeholder='Client Name' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-        </div>
-        <div id="clientLogo" style="padding: 20px;">
-            <input class="inputs" name="logo" type="file" accept="image/png"
-                   style="border-style: none none solid none;text-align: center;opacity: 0.7;margin-right:auto;margin-left: auto;">
-        </div>
-        <div id="clientLogoStyle" style="padding: 20px;">
-            <input onclick="scrollToNextElement('LogoStyle')" id="LogoStyle" class="inputs" name="logoStyle" type="text"
-                   placeholder='Client Logo Style' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-        </div>
-        <div id="clientTitle" style="padding: 20px;">
-            <input onclick="scrollToNextElement('title')" id="title" class="inputs" name="title" type="text"
-                   placeholder='Title' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-        </div>
-        <div id="clientHeadlineText" style="padding: 20px;">
-            <textarea onclick="scrollToNextElement('headlineText')" id="headlineText" class="inputs" name="headlineText"
-                      placeholder='Headline Text' cols="40" rows="2" style="opacity: 0.7"></textarea>
-            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
-                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
-        </div>
-        <div id="clientInstructionText" style="padding: 20px;">
-            <textarea onclick="scrollToNextElement('instructionText')" id="instructionText" class="inputs" name="instructionText"
-                      placeholder='Instructions Text' cols="40" rows="5" style="opacity: 0.7"></textarea>
-            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
-                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
-        </div>
-        <div id="clientCompanyDescription" style="padding: 20px;">
-            <textarea onclick="scrollToNextElement('CompanyDescription')" id="CompanyDescription" class="inputs" name="CompanyDescription"
-                      placeholder='Company Description' cols="40" rows="5" style="opacity: 0.7"></textarea>
-            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
-                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
-        </div>
-        <div id="clientThankYouText" style="padding: 20px;">
-            <textarea onclick="scrollToNextElement('thankYouText')" id="thankYouText" class="inputs" name="thankYouText"
-                      placeholder='Thank You Text' cols="40" rows="2" style="opacity: 0.7"></textarea>
-            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
-                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
-        </div>
-        <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
-            <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
-                   value="en" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">English</span>
+<div id="formContainer" class="container" style="padding:50px;scroll:hidden;overflow: auto; height: 100%;width:70%;">
+    <ul class="nav nav-tabs">
+        <li class="active"><a data-toggle="tab" href="#addNewCandidate">Add New Client</a></li>
+        <li><a data-toggle="tab" href="#updateClient">Update Client</a></li>
+    </ul>
+
+    <div class="tab-content">
+        <div id="addNewCandidate" class="tab-pane fade in active">
+            <h4><%= title %></h4>
+            <form id="addClient" method="post" enctype="multipart/form-data" action="/addClient">
+                <div class="">
+                <div id="clientName" style="padding: 20px;">
+                    <input class="inputs" name="name" type="text" value='<%= (client.name) ? client.name : ''%>'
+                           placeholder='Client Name' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                </div>
+                    <% if(client.logoImg) { %>
+                        <span style="color: #3276b1;">Current logo: </span><%= client.logoImg.fileName %>
+                    <br>
+                    <br>
+                    <p style="font-size: 12px; color: #878787;">&bull; Choose file to replace: </p>
+                    <% } %>
+                <div id="clientLogo" style="padding: 20px;">
+                    <input class="inputs" name="logo" type="file" accept="image/png"
+                           style="border-style: none none solid none;text-align: center;opacity: 0.7;margin-right:auto;margin-left: auto;">
+                </div>
+                <div id="clientLogoStyle" style="padding: 20px;">
+                    <input onclick="scrollToNextElement('logoStyle')" id="LogoStyle" class="inputs" name="logoStyle" type="text"
+                           value='<%= (client.logoStyle) ? client.logoStyle : ''%>' placeholder='Client Logo Style' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                </div>
+                <div id="clientTitle" style="padding: 20px;">
+                    <input onclick="scrollToNextElement('title')" id="title" class="inputs" name="title" type="text"
+                           value='<%= (client.title) ? client.title : ''%>' placeholder='Title' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                </div>
+                <div id="clientHeadlineText" style="padding: 20px;">
+                <textarea onclick="scrollToNextElement('headlineText')" id="headlineText" class="inputs" name="headlineText"
+                           placeholder='Headline Text' cols="40" rows="2" style="opacity: 0.7"><%= (client.headlineText) ? client.headlineText : ''%></textarea>
+                    <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
+                            placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
+                            </div>
+                            <div id="clientInstructionText" style="padding: 20px;">
+                    <textarea onclick="scrollToNextElement('instructionText')" id="instructionText" class="inputs" name="instructionText"
+                              placeholder='Instructions Text' cols="40" rows="5" style="opacity: 0.7"><%= (client.instructionText) ? client.instructionText : ''%></textarea>
+                               </div>
+                             <div id="clientCompanyDescription" style="padding: 20px;">
+                     <textarea onclick="scrollToNextElement('companyDescription')" id="companyDescription" class="inputs" name="companyDescription"
+                                placeholder='Company Description' cols="40" rows="5" style="opacity: 0.7"><%= (client.companyDescription) ? client.companyDescription : ''%></textarea>
+                                    </div>
+                                  <div id="clientThankYouText" style="padding: 20px;">
+                          <textarea onclick="scrollToNextElement('thankYouText')" id="thankYouText" class="inputs" name="thankYouText"
+                                    placeholder='Thank You Text' cols="40" rows="2" style="opacity: 0.7"><%= (client.thankYouText) ? client.thankYouText : ''%></textarea>
+                                    </div>
+                                  <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
+                                      <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
+                                             <%= (client.language == 'en') ? 'checked' : ''%> value="en" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">English</span>
 
 
-                <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
-                   value="he" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">Hebrew</span>
+                                      <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
+                                             <%= (client.language == 'he') ? 'checked' : ''%> value="he" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">Hebrew</span>
 
+                                  </div>
+                                  <div>
+                                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="questionsKeyword" type="text"
+                                               value='<%= (client.keyword) ? client.keyword : ''%>' placeholder='Questions Keyword' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                                        </div>
+                                        </div>
+                <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
+                                        <button href="/addClient" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add Client</button>
+                                    </div>
+            </form>
         </div>
-        <div>
-            <!--<input  onclick="scrollToNextElement('btn_submit')" class="inputs" name="isDemo" type="checkbox"
-                   style="vertical-align: bottom;" > Is Demo -->
-            <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="questionsKeyword" type="text"
-                   placeholder='Questions Keyword' style="border-style: none none solid none;text-align: center;opacity: 0.7">
+        <div id="updateClient" class="tab-pane fade">
+            <h4>Load Client</h4>
+            <form action="/loadClient" method="post">
+                <div class="row clearfix">
+                    <div class="col-md-4 column">
+                        <input id="clientName" name="clientName" class="form-control">
+                        <!--
+                        <option value=""> (Show All)</option>
+                        <option value="Fran"> Fran</option>
+                        <option value="Elizabeth"> Elizabeth</option>
+                        <option value="Diane"> Diane</option>
+                        -->
+                        </input>
+
+                    </div>
+                    <div class="col-md-4 column">
+                        <button id="btnLoadClient" name="btnLoadClient" class="btn btn-print">Load Client</button>
+                    </div>
+                </div>
+
+            </form>
         </div>
     </div>
-    <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
-    <button href="/addClient" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add Client</button>
-    </div>
-</form>
 </div>
+
 <% include partials/footer %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
