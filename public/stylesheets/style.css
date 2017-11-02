@@ -299,6 +299,7 @@ a {
   bottom: 0;
   z-index: -1;
 
+
   display: block;
   background-image: url("../images/EH_bg.png");
 
@@ -308,12 +309,12 @@ a {
   -o-filter: blur(10px);
   -ms-filter: blur(10px);
   filter: blur(10px);
- /*
-  background: black; /* For browsers that do not support gradients */
-  /*background: -webkit-linear-gradient(black, white); /* For Safari 5.1 to 6.0 */
-  /*background: -o-linear-gradient(black, white); /* For Opera 11.1 to 12.0 */
-  /*background: -moz-linear-gradient(black, white); /* For Firefox 3.6 to 15 */
-  /*background: linear-gradient(black, white); /* Standard syntax */
+
+ /* background: black; /* For browsers that do not support gradients */
+ /* background: -webkit-linear-gradient(black, white); /* For Safari 5.1 to 6.0 */
+ /* background: -o-linear-gradient(black, white); /* For Opera 11.1 to 12.0 */
+ /* background: -moz-linear-gradient(black, white); /* For Firefox 3.6 to 15 */
+ /* background: linear-gradient(black, white); /* Standard syntax */
 }
 
 .content {
@@ -336,9 +337,9 @@ a {
 /*
 .grad {
   background: black; /* For browsers that do not support gradients */
- /* background: -webkit-linear-gradient(black, white); *//* For Safari 5.1 to 6.0 */
- /* background: -o-linear-gradient(black, white); /* For Opera 11.1 to 12.0 */
- /* background: -moz-linear-gradient(black, white); /* For Firefox 3.6 to 15 */
- /* background: linear-gradient(black, white); /* Standard syntax */
+ /* background: -webkit-linear-gradient(black, white); /* For Safari 5.1 to 6.0 */
+  /* background: -o-linear-gradient(black, white); /* For Opera 11.1 to 12.0 */
+  /* background: -moz-linear-gradient(black, white); /* For Firefox 3.6 to 15 */
+  /* background: linear-gradient(black, white); /* Standard syntax */
 /*}
 

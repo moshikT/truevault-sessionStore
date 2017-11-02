@@ -4,11 +4,13 @@ var Schema = mongoose.Schema;
 var clientSchema = new Schema({
     name: {type: String, required: true},
     //id : Number,//{type: Number, required: true},
-    logoImg: { data: Buffer, contentType: String },
+    logoImg: { data: Buffer, contentType: String, fileName: String },
     logoStyle : String,
     title : String,
-    introText : String,
+    headlineText: String,
+    CompanyDescription : String,
     instructionText: String,
+    thankYouText: String,
     language : String,
     isDemo : Boolean,
     /* userType: String //candidate, employee */

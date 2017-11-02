@@ -11,14 +11,14 @@
 </head>
 <header>
     <div class="container col-md-12" style="text-align: center;">
-        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/empiricalhire.png" />
+        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
     </div>
     <div class="container col-md-12">
         <h1>Add new client</h1>
     </div>
 </header>
 <body>
-<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 370px;width:100%;">
+<div id="formContainer" class="container" style="scroll:hidden;overflow: auto; height: 100%;width:100%;">
 <form id="addClient" method="post" enctype="multipart/form-data" action="/addClient">
     <div class="container">
         <div id="clientName" style="padding: 20px;">
@@ -37,15 +37,27 @@
             <input onclick="scrollToNextElement('title')" id="title" class="inputs" name="title" type="text"
                    placeholder='Title' style="border-style: none none solid none;text-align: center;opacity: 0.7">
         </div>
-        <div id="clientIntroText" style="padding: 20px;">
-            <textarea onclick="scrollToNextElement('introText')" id="introText" class="inputs" name="introText"
-                      placeholder='Introduction Text' cols="40" rows="5" style="opacity: 0.7"></textarea>
-           <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
-                   placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
+        <div id="clientHeadlineText" style="padding: 20px;">
+            <textarea onclick="scrollToNextElement('headlineText')" id="headlineText" class="inputs" name="headlineText"
+                      placeholder='Headline Text' cols="40" rows="2" style="opacity: 0.7"></textarea>
+            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
+                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
         </div>
         <div id="clientInstructionText" style="padding: 20px;">
             <textarea onclick="scrollToNextElement('instructionText')" id="instructionText" class="inputs" name="instructionText"
                       placeholder='Instructions Text' cols="40" rows="5" style="opacity: 0.7"></textarea>
+            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
+                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
+        </div>
+        <div id="clientCompanyDescription" style="padding: 20px;">
+            <textarea onclick="scrollToNextElement('CompanyDescription')" id="CompanyDescription" class="inputs" name="CompanyDescription"
+                      placeholder='Company Description' cols="40" rows="5" style="opacity: 0.7"></textarea>
+            <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
+                    placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
+        </div>
+        <div id="clientThankYouText" style="padding: 20px;">
+            <textarea onclick="scrollToNextElement('thankYouText')" id="thankYouText" class="inputs" name="thankYouText"
+                      placeholder='Thank You Text' cols="40" rows="2" style="opacity: 0.7"></textarea>
             <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
                     placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
         </div>

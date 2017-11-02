@@ -1,50 +1,16 @@
     <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=' + sid %>>
 
         <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
-            <div class="headline" style="z-index: 10;"><p>
-                מבחן מיון למועמדים לתפקיד<br>
-                נציגי שירות ו/או מכירה בחברת איילון.
-                </p> </div>
+            <div class="headline" style="z-index: 10;"><p><%- client.headlineText %></p> </div>
             <div class="container introText" style="padding: 10px;margin-top: 0px; height: 100%;">
-                <%=//indexPageText.instructionText%>
+                <%=/*indexPageText.instructionText*/%>
                 <div id="testInstructions" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
-                <p>
-                    לפניך שאלון שמילויו אורך כרבע שעה.
-                    <br><br>
-<b>                    יש להשיב בסביבה נטולת הפרעות וברצף.</b>
-                    <br><br>
-                    ברוב השאלות בשאלון (אלא אם כן נאמר אחרת) עלייך לבחור בתשובה המשקפת בצורה הטובה ביותר את עמדתך/התנהגותך.<b> פרט לשאלות שכותרתן "שאלות חשיבה", אין תשובות נכונות או לא נכונות בשאלון.</b>
-                    <br><br>
-                    <b> השאלון יודע לאבחן דפוסי תשובה כנים יותר ופחות ולכן מומלץ להשיב בכנות ובפתיחות.</b>
-                    <br><br>
-                בשאלות החשיבה יש לסמן את התשובה הנכונה לדעתך, במידה ואינך בטוח/ה - יש לנחש.
-                    <br><br>
-                לא ניתן למלא את השאלון יותר מפעם אחת וכן לא ניתן להעבירו.
-                    <br><br>
-                חובה להשיב על כל השאלות בשאלון.
-                    <br><br>
-                    <p><input id="agree" title="terms" name="agree" type="checkbox" required="true" value="" style="vertical-align: bottom;" >
-                     <b> קראתי את ההוראות ואני מסכים/ה למילוי השאלון </b></p>
-
-                    <br><br>
-                    בהצלחה,
-                    <br>
-                צוות הגיוס
+                <p><%- client.instructionText.replace('$checkbox',
+                            "<input id='agree' name='agree' type='checkbox' value='' style='vertical-align: bottom;' >") %>
                 </p>
                 </div>
-
                 <div id="companyDescription" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;display: none;">
-                    <p>
-                        אנו בסוכנות
-<b>                        "הכי בריא" </b>,
-                            המהווה חלק מקבוצת איילון.
-                        <br><br>
-                        שמים דגש בבחירת עובדינו ומאמינים כי הצלחת הארגון מבוססת על הון אנושי איכותי, מקצועי ואמין.
-                        <br><br>
-                        העבודה ב
-                        <b>                        "הכי בריא" </b>
-                        מתאפיינת במצוינות, כבוד הדדי, אווירה משפחתית, יציבות ויכולת להתפתח ולהתקדם.
-                    </p>
+                    <p><%- client.CompanyDescription %></p>
                 </div>
                 <div id="next_btn" style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
                     <a onclick="goNext()" >
@@ -58,23 +24,4 @@
                 </div>
             </div>
         </div>
-                <!--
-        <div id="intro2" style="height:370px;">
-            <div class="container introText" style="padding: 10px;margin-top: 0px; ">
-                <%=//client.introText%>
-            </div>
-
-            <div style="padding: 30px;">
-                <a onclick="scrollToNextElement('intro3')" class="btn btn-primary"><%=  indexPageText.next %></a>
-            </div>
-        </div>
-
-
-        <div id="intro3" style="height:600px;">
-
-            <div style="padding-top: 25px; padding-bottom: 50px;">
-                <button href="/form" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary inputs"><%= indexPageText.submitBtn %></button>
-            </div>
-        </div>
-        -->
     </form>

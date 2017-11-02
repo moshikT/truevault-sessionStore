@@ -6,8 +6,6 @@ var upload = multer({ dest: '/tmp/uploads/' });
 var Client = require('../models/addClient.server.model.js');
 //var Candidate = require('../models/candidate.server.model.js');
 var generateLink = require('../controllers/linkGenerator.server.controller');
-//var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
-//var uuidv1 = require('uuid/v1');
 
 /*
 class userData {
@@ -26,8 +24,11 @@ exports.getAddClientPage = function (req, res) {
 
 exports.addClient = function (req, res) {
     var logoImg = {};
-    logoImg.data = fs.readFileSync(req.file.path);
-    logoImg.contentType = 'image/png';
+    if(req.file) {
+        logoImg.fileName = req.file.originalname;
+        logoImg.data = fs.readFileSync(req.file.path);
+        logoImg.contentType = 'image/png';
+    }
 
     var companyName = req.body.name;
 
@@ -36,38 +37,58 @@ exports.addClient = function (req, res) {
 
     generateLink(url, function(shortendLink) {
        // console.log("generate Link " , shortendLink);
-
-        var newClientEntry = {
-            name: req.body.name,
+        var newClientEntry = new Client ({
+            name: companyName.trim(),
             logoImg : logoImg,
             logoStyle : req.body.logoStyle,
             title : req.body.title,
-            introText : req.body.introText,
+            headlineText: req.body.headlineText,
+            CompanyDescription : req.body.CompanyDescription,
             instructionText: req.body.instructionText,
+            thankYouText: req.body.thankYouText,
             language : req.body.language,
             isDemo : (req.body.isDemo == 'on'),
             link: shortendLink,
-            keyword: req.body.questionsKeyword
-        }
+            keyword: req.body.questionsKeyword,
+        });
 
-        Client.findOneAndUpdate(
-            {name: req.body.name}, // find a document with that filter
-            newClientEntry, // document to insert when nothing was found
-            {upsert: true, new: true, runValidators: true}, // options
-            function (err, doc) { // callback
+        Client.findOne({name: companyName.trim()}, function (err, client) { // callback
                 if (err) {
-                     throw err;
-                } else {
-                    for(var field in re.body) {
-                        /* Update only unempty fields */
-                        if(field !== '') {
-                            doc[field] = newClientEntry[field];// handle document
-                        }
-                    }
-                    console.log("update doc: ", doc);
+                    throw err;
                 }
-            }
-        );
-    });
+                if (client) {
+                    for(var field in req.body ) {
+                        console.log(field);
+                        /* Update only unempty fields */
+                         if(field !== '') {
+                             client[field] = newClientEntry[field];// handle document
+                         }
+                    }
+                    if(req.file) {
+                        client.markModified('logoImg');
+                        client.logoImg = newClientEntry['logoImg'];
+                        console.log("file exists!!", client.logoImg);
+                    }
+                    client.save(function (err) {
+                        if (err) {
+                            console.log(err);
+                        }
+                        else {
+                            console.log("update new client! ");
+                        }
+                    });
+                }
+                else {
+                     newClientEntry.save(function (err) {
+                         if (err) {
+                             console.log(err);
+                         }
+                         else {
+                             console.log("save new client! ");
+                         }
+                     });
+                 }
+         });
+     });
     res.redirect('/addClient');
 }
