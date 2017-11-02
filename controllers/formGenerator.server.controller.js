@@ -115,9 +115,13 @@ function parseQuestions(qJSON, isInEnglish) {
             scalaEdges[1] = scalaEdges[1].replace(/\s+/g, '<br>');
         }
 
+        /*$$$ Old code - hardcoded text for answer scale
         parsedQuestion.scalaEdges = isInEnglish ?
             ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? ["Disagree","Agree"] : ["Not <br>important <br>at all","Very <br> important"]) :
-            ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? scalaEdges : ['הכי חשוב <br> לי', 'הכי פחות <br> חשוב לי']);
+            ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? scalaEdges : ['הכי חשוב <br> לי', 'הכי פחות <br> חשוב לי']); */
+
+        // Use text for answer scale as provided in the CSV
+        parsedQuestion.scalaEdges = scalaEdges;
 
 
     }
