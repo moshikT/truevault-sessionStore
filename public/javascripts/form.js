@@ -222,7 +222,7 @@ $("#form").validate({
         //console.log("before mix panel form submitted");
 
         var dateSubmitted = new Date();
-        mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate' });
+        mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate', 'fullname': fullName });
 
         //console.log("after mix panel form submitted");
         //$('#formDuration').prop('value', totalTime);
