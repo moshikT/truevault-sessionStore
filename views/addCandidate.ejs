@@ -113,7 +113,8 @@
             submitHandler: function (form) {
                 var formData =  JSON.stringify($('#addCandidate').serializeArray());
                 var cid = getCid();
-                mixpanel.track('New User', { 'userData': formData, 'userType': 'candidate', 'date': newUserDate.toString(), 'cid': cid });
+                var newUserDate = new Date();
+                mixpanel.track('New candidate added', { 'userData': formData, 'userType': 'candidate', 'date': newUserDate.toString(), 'cid': cid });
 
                 /*$.ajax({
                     url:'/addCandidate',
