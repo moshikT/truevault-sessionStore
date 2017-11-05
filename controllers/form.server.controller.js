@@ -114,7 +114,7 @@ exports.saveFormResults = function (req, res) {
 
 exports.getIndex = function (req, res) {
     // TODO: export to different module
-    textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, isCandidate, (req.client.language == 'en'), function (indexText) {
+    textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
         res.render('index', {
             title: '',
             indexPageText : indexText,
@@ -144,7 +144,7 @@ exports.getForm = function (req, res) {
                             formjson: candidate.form,
                             isInEnglish: isInEnglish,
                             textDirection: isInEnglish ? 'ltr' : 'rtl',
-                            terms : formText.terms,
+                            //terms : formText.terms,
                             submitText : formText.submitText,
                             sid: candidate.session.id,
                             client: req.client

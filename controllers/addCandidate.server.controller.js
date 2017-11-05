@@ -2,6 +2,7 @@ var express = require('express');
 var Candidate = require('../models/candidate.server.model.js');
 var generateLink = require('../controllers/linkGenerator.server.controller');
 var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
 var uuidv1 = require('uuid/v1');
 
 class userData {
@@ -17,18 +18,12 @@ class userData {
 }
 
 exports.getAddCandidatePage = function (req, res) {
-    var addCandidateText = {};
-    addCandidateText.personalInfoText = "Please fill your personal details";
-    addCandidateText.nameField = "Full Name";
-    addCandidateText.phoneField = "Phone Number";
-    addCandidateText.idField = "ID";
-    addCandidateText.emailField = "Email";
-    addCandidateText.recruitmentSourcelField = "Recruitment Source";
-    //textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, isCandidate, (req.client.language == 'en'), function (indexText) {
-    res.render('addCandidate', {
-        title: '',
-        indexPageText : addCandidateText,
-        client: req.client
+    textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (addCandidateText) {
+        res.render('addCandidate', {
+            title: '',
+            indexPageText : addCandidateText,
+            client: req.client
+        });
     });
 }
 
