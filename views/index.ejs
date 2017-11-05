@@ -45,6 +45,8 @@
         }
         else {
             //console.log("redirect to form");
+            var startFormDate = new Date();
+            mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
             document.getElementById("formInfo").submit();
         }
     }

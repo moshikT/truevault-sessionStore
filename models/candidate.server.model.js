@@ -3,7 +3,7 @@ var Schema = mongoose.Schema;
 
 var candidateSchema = new Schema({
     fullName: String,
-    id : Number,//{type: Number, required: true},
+    id : String,//{type: Number, required: true},
     email: String,
     phoneNumber : String,
     company: String,
