@@ -164,7 +164,7 @@
                 data:$('#addClient').serialize() ,//+ fileData,
                 async: false,
                 success:function(){
-                    //console.log(form.user_id.value);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, form.user_id.value);
                     mixpanel.track('New Client added', {'uid': form.user_id.value/* candidate/employee */});
 
                     // TODO: scrollTo block user authentication display

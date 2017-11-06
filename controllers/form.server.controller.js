@@ -53,7 +53,7 @@ exports.getInfo = function (req, res) {
                 });
                 entry.save(function (err) {
                     if(err) {
-                        console.log(err);
+                        console.log("%s.%s:%s -", __file, __ext, __line, err);
                     }
                     // TODO: send SMS with varification code
                     res.redirect('/clients/' + req.client._id + '/form/?sid=' + sid);
@@ -64,7 +64,7 @@ exports.getInfo = function (req, res) {
 }
 
 exports.saveFormResults = function (req, res) {
-    console.log("form details", req.body);
+    console.log("%s.%s:%s -", __file, __ext, __line, "form details", req.body);
     var formData = req.body;
     delete formData['agree'];
     delete formData['submit_btn'];
@@ -92,21 +92,21 @@ exports.saveFormResults = function (req, res) {
                 /* If final answer does not exist update from form */
                 if(!candidate.form[qIndex].finalAnswer) {
                     candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];
-                    console.log("updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
                 }
             }
             candidate.save(function(err, entry){
                 if(err) {
-                    console.log("unable To save", err);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "unable To save", err);
                 }
                 else {
-                    console.log("succeed update final answer");
+                    console.log("%s.%s:%s -", __file, __ext, __line, "succeed update final answer");
                 }
             });
 
         }
         else {
-            console.log("Unable to save all form data");
+            console.log("%s.%s:%s -", __file, __ext, __line, "Unable to save all form data");
         }
         res.redirect('/clients/' + req.client._id + '/thankYou');
     });
@@ -115,7 +115,7 @@ exports.saveFormResults = function (req, res) {
 exports.getIndex = function (req, res) {
     // TODO: export to different module
     textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
-        console.log("Rendering client: ", req.client);
+        console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client);
         res.render('index', {
             title: '',
             indexPageText : indexText,

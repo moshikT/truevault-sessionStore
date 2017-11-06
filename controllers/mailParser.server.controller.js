@@ -27,27 +27,27 @@ exports.onMailArrived = function () {
     mailListener.start();
 
     mailListener.on("server:connected", function(){
-        console.log("imapConnected");
+        console.log("%s.%s:%s -", __file, __ext, __line, "imapConnected");
     });
 
     mailListener.on("server:disconnected", function(){
-        console.log("imapDisconnected");
+        console.log("%s.%s:%s -", __file, __ext, __line, "imapDisconnected");
     });
 
     mailListener.on("error", function(err){
-        console.log(err);
+        console.log("%s.%s:%s -", __file, __ext, __line, err);
     });
 
     mailListener.on("mail", function(mail, seqno, attributes){
         // do something with mail object including attachments
-        console.log("emailParsed", mail.subject);
+        console.log("%s.%s:%s -", __file, __ext, __line, "emailParsed", mail.subject);
         if(mail.subject.indexOf("Invitation") == '-1') {
-            console.log("email Text: ", mail.text);
-            console.log("email subject: ", mail.subject);
-            console.log("email from: ", mail.from[0].address);
-            console.log("email date sent: ", mail.date);
-            console.log("email attachments: ", mail.attachments);
-            //console.log("email return path", mail.headers['return-path']);
+            console.log("%s.%s:%s -", __file, __ext, __line, "email Text: ", mail.text);
+            console.log("%s.%s:%s -", __file, __ext, __line, "email subject: ", mail.subject);
+            console.log("%s.%s:%s -", __file, __ext, __line, "email from: ", mail.from[0].address);
+            console.log("%s.%s:%s -", __file, __ext, __line, "email date sent: ", mail.date);
+            console.log("%s.%s:%s -", __file, __ext, __line, "email attachments: ", mail.attachments);
+            //console.log("%s.%s:%s -", __file, __ext, __line, "email return path", mail.headers['return-path']);
 
             var attachmentsArray = mail['attachments'];
             if (typeof attachmentsArray !== 'undefined')  {
@@ -55,7 +55,7 @@ exports.onMailArrived = function () {
                     var fileName = attachmentsArray[index].generatedFileName.toString();
                     if(fileName.indexOf('ics') == '-1' && fileName.indexOf('pdf') != '-1') {
 
-                        console.log(fileName);
+                        console.log("%s.%s:%s -", __file, __ext, __line, fileName);
                         var buffer = attachmentsArray[index].content;
                         let pdfParser = new PDFParser(this,1);
 
@@ -63,7 +63,7 @@ exports.onMailArrived = function () {
 
                         pdfParser.on("pdfParser_dataError", errData => console.error(errData.parserError) );
                         pdfParser.on("pdfParser_dataReady", pdfData => {
-                            console.log(pdfParser.getRawTextContent());
+                            console.log("%s.%s:%s -", __file, __ext, __line, pdfParser.getRawTextContent());
                         });
 
                     }

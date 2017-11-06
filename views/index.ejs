@@ -44,7 +44,7 @@
             isFirstPage = false;
         }
         else {
-            //console.log("redirect to form");
+            //console.log("%s.%s:%s -", __file, __ext, __line, "redirect to form");
             var startFormDate = new Date();
             mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
             document.getElementById("formInfo").submit();

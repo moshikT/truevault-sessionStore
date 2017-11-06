@@ -17,7 +17,7 @@
         }
         if (formjson[i].type == 'B')  { %>
         <div id="radioBtn" class="a bTypeGroup">
-            <% for (var j=0;j <formjson[i]['answer'].length; j++) { console.log(formjson[i].finalAnswer) %>
+            <% for (var j=0;j <formjson[i]['answer'].length; j++) { console.log("%s.%s:%s -", __file, __ext, __line, formjson[i].finalAnswer) %>
             <a class='<%- (formjson[i]['answer'][j] == formjson[i].finalAnswer) ?
                     'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
                    style="<% if (isInEnglish) { %>text-align: left;<% } %>"
@@ -42,7 +42,7 @@
                 <% }
         if (formjson[i].type == 'C')  { %>
             <div id="radioBtn" class="a bTypeGroup">
-            <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log(formjson[i].finalAnswer)%>
+            <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { console.log("%s.%s:%s -", __file, __ext, __line, formjson[i].finalAnswer)%>
                 <a class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
                         'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
                style="<% if (isInEnglish) { %>text-align: left;<% } %>"

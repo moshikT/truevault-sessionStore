@@ -355,7 +355,7 @@
                     try {
                         n.asArray(a.cssRules || []).forEach(b.push.bind(b))
                     } catch (c) {
-                        console.log("Error while reading CSS rules from " + a.href, c.toString())
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Error while reading CSS rules from " + a.href, c.toString())
                     }
                 }), b
             }

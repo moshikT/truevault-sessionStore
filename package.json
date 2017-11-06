@@ -15,6 +15,7 @@
     "google-url": "0.0.4",
     "grunt-reload": "^0.2.0",
     "json2csv": "^3.11.1",
+    "magic-globals": "^0.9.1",
     "mail-listener2": "^0.3.1",
     "mailparser": "^2.0.5",
     "mongoose": "^4.11.14",
