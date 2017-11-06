@@ -31,10 +31,12 @@ router.use(function (req, res, next) {
     console.log("cid: ", cid);
     Client.findById(cid, function (err, client) {
         if (err) {
+            console.log("Client not found: ", cid);
             next();
             return;
         };
         if(client) {
+            console.log("client found: ", client.name);
            /* console.log("client name: ", client.name);
             console.log("client id: ", client._id);
             console.log("client logo style: ", client.logoStyle);
