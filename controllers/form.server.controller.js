@@ -147,7 +147,8 @@ exports.getForm = function (req, res) {
                             //terms : formText.terms,
                             submitText : formText.submitText,
                             sid: candidate.session.id,
-                            client: req.client
+                            client: req.client,
+                            fullName: candidate.fullName
                         });
                     })
                     // TODO: update and delete unnecessary fields render.
