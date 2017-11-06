@@ -5,8 +5,8 @@
             <div class="container introText" style="padding: 10px;margin-top: 0px; height: 100%;">
                 <%=/*indexPageText.instructionText*/%>
                 <div id="testInstructions" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
-                <p><%- client.instructionText.replace('$checkbox',
-                            "<input id='agree' name='agree' type='checkbox' value='' style='vertical-align: bottom;' >") %>
+                <p><%- (client.instructionText!==undefined)?client.instructionText.replace('$checkbox',
+                            "<input id='agree' name='agree' type='checkbox' value='' style='vertical-align: bottom;' >"):"Missing instruction text" %>
                 </p>
                 </div>
                 <div id="companyDescription" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;display: none;">

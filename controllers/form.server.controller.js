@@ -115,6 +115,7 @@ exports.saveFormResults = function (req, res) {
 exports.getIndex = function (req, res) {
     // TODO: export to different module
     textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
+        console.log("Rendering client: ", req.client);
         res.render('index', {
             title: '',
             indexPageText : indexText,
