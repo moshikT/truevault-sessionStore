@@ -1,7 +1,7 @@
 var sid = getParameterByName('sid');
 var cid = getCid();
 
-//console.log("%s.%s:%s -", __file, __ext, __line, sid);
+//console.log(sid);
 
 function getParameterByName(name) {
     var url = window.location.href;
@@ -35,7 +35,7 @@ for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
     rules[key] = "required";
 }
-//console.log("%s.%s:%s -", __file, __ext, __line, rules);
+//console.log(rules);
 
 $("#formInfo").validate({
     ignore: "",
@@ -74,7 +74,7 @@ $("#formInfo").validate({
              data:$('#formInfo').serialize(),
              success:function(){
                  //whatever you wanna do after the form is successfully submitted
-                 console.log("%s.%s:%s -", __file, __ext, __line, form.user_id.value);
+                 console.log(form.user_id.value);
                  mixpanel.track('New User', {'uid': form.user_id.value, 'userType': 'cocacola_user'/* candidate/employee });
 
                  // TODO: scrollTo block user authentication display

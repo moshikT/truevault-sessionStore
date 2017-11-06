@@ -47,7 +47,7 @@ $('#radioBtn a').on('touchstart', function(){
     // Check if already marked (meaning this is a previously selected answer)
     if ($('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').hasClass('active'))
     {   // If it is, we don't want to touch it because touching it will cause it to be unmarked when moving (touchMove)
-        console.log("%s.%s:%s -", __file, __ext, __line, "Already active");
+        console.log("Already active");
         return;
     }
     // Remember the highlighted question & answer
@@ -93,7 +93,7 @@ $('#radioBtn a').on('click', function(){
         numOfQuestionsAnswered++;
 
         var timeAnswered = Math.abs((new Date() - lastQuestionAnswered)/1000).toFixed(0);
-        console.log("%s.%s:%s -", __file, __ext, __line, timeAnswered);
+        console.log(timeAnswered);
 
         patchData.finalAnswer = answer.toString();
         patchData.timeAnsweredInSeconds = timeAnswered;
@@ -110,7 +110,7 @@ $('#radioBtn a').on('click', function(){
     }
 
     // Are we at the point after clicking the submit button and going through unanswered items?
-    if (formNextError != undefined) {
+    if (formNextError !== undefined) {
         // We are - so jump to the next unanswered item
         formNextError = gotoNextInvalid(formErrorList, formNextError);
     }
@@ -122,13 +122,13 @@ $('#radioBtn a').on('click', function(){
     }
 
     var patchUrl = '/' + 'clients' +  '/api/' + sid + '/' + qid;
-    console.log("%s.%s:%s -", __file, __ext, __line, patchUrl);
+    console.log(patchUrl);
 
 
     sendResult(patchUrl, patchData)
         .then(function(result) {
             // Code depending on result
-            console.log("%s.%s:%s -", __file, __ext, __line, "result ", result);
+            console.log("result ", result);
             var dateAnswered = new Date();
             mixpanel.track('Question Answered', {'sid': sid, 'qData': result, 'date': dateAnswered.toString(), 'cid': cid});
         })
@@ -137,7 +137,7 @@ $('#radioBtn a').on('click', function(){
             requests.push(rejected);
             var dateAnswered = new Date();
             mixpanel.track('Unable to send question data to server', {'sid': sid, 'qData': rejected, 'date': dateAnswered.toString(), 'cid': cid});
-            console.log("%s.%s:%s -", __file, __ext, __line, "pushed new rejected req to array ", rejected);
+            console.log("pushed new rejected req to array ", rejected);
         });
 
     //setTimeout(function() {
@@ -160,14 +160,14 @@ function sendResult(patchUrl, patchData) {
             //async: false,
             success:function(){
                 //whatever you wanna do after the form is successfully submitted
-                console.log("%s.%s:%s -", __file, __ext, __line, "success patch request ", patchData);
+                console.log("success patch request ", patchData);
                 resolve(request);
                 //mixpanel.track('Question Answered, {'uid': form.user_id.value,
                 // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
             },
             error: function (err) {
                 // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
-                console.log("%s.%s:%s -", __file, __ext, __line, err);
+                console.log(err);
                 reject(request);
             }     //return;  // it's not really an error
             // Do normal error handling
@@ -183,7 +183,7 @@ for (var index = 0; index < keys.length; index++) {
     rules[key] = "required";
 }
 
-console.log("%s.%s:%s -", __file, __ext, __line, rules);
+console.log(rules);
 
 let formErrorList;
 let formNextError;
@@ -193,8 +193,8 @@ $("#form").validate({
     /*success: function(label,element) {
         //element.find("input").css( "border", "solid green 1px" );
         element.style.border= "solid green 1px" ;
-        //console.log("%s.%s:%s -", __file, __ext, __line, element);
-        //console.log("%s.%s:%s -", __file, __ext, __line, label);
+        //console.log(element);
+        //console.log(label);
     },*/
     //debug: true,
     rules: rules,
@@ -219,12 +219,12 @@ $("#form").validate({
     submitHandler: function (form) {
         //var totalTime = Math.abs((new Date() - startDate)/1000/60).toFixed(0) + " Minutes";
         /* Send form data to mixpanel */
-        //console.log("%s.%s:%s -", __file, __ext, __line, "before mix panel form submitted");
+        //console.log("before mix panel form submitted");
 
         var dateSubmitted = new Date();
         mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate', 'fullname': fullName });
 
-        //console.log("%s.%s:%s -", __file, __ext, __line, "after mix panel form submitted");
+        //console.log("after mix panel form submitted");
         //$('#formDuration').prop('value', totalTime);
        /* while(requests.length > 0) {
             for(var i = 0; i < requests.length; i++) {
@@ -237,9 +237,9 @@ $("#form").validate({
                     success:function(){
 
                         //whatever you wanna do after the form is successfully submitted
-                        //console.log("%s.%s:%s -", __file, __ext, __line, "success patch request ", requests[i].data);
+                        //console.log("success patch request ", requests[i].data);
                         //requests.pop();
-                        //console.log("%s.%s:%s -", __file, __ext, __line, "request array size", requests.length);
+                        //console.log("request array size", requests.length);
                         //if(requests.length < 1) {
 
                         //}
@@ -248,7 +248,7 @@ $("#form").validate({
                     },
                     error: function (err) {
                         // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
-                        console.log("%s.%s:%s -", __file, __ext, __line, err);
+                        console.log(err);
                         //reject(request);
                     }     //return;  // it's not really an error
                     // Do normal error handling
@@ -270,7 +270,7 @@ function gotoNextInvalid(errorList, nextError) {
     { // We are at the end of the unanswered questions list
         // Get the submit button element
         let scrollTo = $('#submit');
-        console.log("%s.%s:%s -", __file, __ext, __line, "scrollTo ", scrollTo);
+        console.log("scrollTo ", scrollTo);
         // Do an animated scroll
         container.animate({
             scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
@@ -282,19 +282,19 @@ function gotoNextInvalid(errorList, nextError) {
 
     var nextElementID = errorList[nextError].element.id; // The next item to jump to
     var containerElementID = $('[id="' + nextElementID + '"]').parent(); // The (div) container of the item
-    console.log("%s.%s:%s -", __file, __ext, __line, "parent ", containerElementID);
-    console.log("%s.%s:%s -", __file, __ext, __line, "error list first element ", errorList[0]);
+    console.log("parent ", containerElementID);
+    console.log("error list first element ", errorList[0]);
 
     // Is this the 'agree' checkbox?
     if (nextElementID == 'agree') {
         // It's an embedded container
         containerElementID = containerElementID.parent();
     }
-    console.log("%s.%s:%s -", __file, __ext, __line, "container ", container);
+    console.log("container ", container);
 
     // Get the ID of the container we're going to scroll to
     var scrollTo = $('#' + containerElementID.attr('id'));
-    console.log("%s.%s:%s -", __file, __ext, __line, "scrollTo ", scrollTo);
+    console.log("scrollTo ", scrollTo);
     // Do an animated scroll
     container.animate({
         scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()
@@ -338,7 +338,7 @@ $(function() {
             var nbElems = inputs.length;
             $('input.currentposition').each(function(idx) {
                 $(this).val(nbElems - idx);
-                console.log("%s.%s:%s -", __file, __ext, __line, $(this).val);
+                console.log($(this).val);
             });
         }
     });
