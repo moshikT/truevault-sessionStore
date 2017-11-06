@@ -168,9 +168,11 @@
                                                 <br>
                                         <%  } else if (candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].charAt(candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].length - 1) == '-' ||
                                                 candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].charAt(candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex].length - 2) == '-') { %>
-                                                <p style="font-weight: bold;"> בצוות ובארגון- </p>
+                                                <p><b> בצוות ובארגון- </b></p>
                                         <%  } else { %>
-                                        <li class="features__item-list__item"><%= candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] %></li>
+                                        <li class="features__item-list__item">
+                                            <p><%- candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] %></p>
+                                        </li>
                                         <%  } %>
                                     <%  } %>
                                     </ul>
@@ -230,9 +232,11 @@
                                                 <br>
                                                 <%  } else if (candidate.report.strengths[strengthsIndex]['text'][txtIndex].charAt(candidate.report.strengths[strengthsIndex]['text'][txtIndex].length - 1) == '-' ||
                                                         candidate.report.strengths[strengthsIndex]['text'][txtIndex].charAt(candidate.report.strengths[strengthsIndex]['text'][txtIndex].length - 2) == '-'){ %>
-                                                    <p style="font-weight: bold;"> בצוות ובארגון- </p>
+                                                    <p><b> בצוות ובארגון- </b></p>
                                                 <%  } else { %>
-                                                    <li class="features__item-list__item"><%= candidate.report.strengths[strengthsIndex]['text'][txtIndex] %></li>
+                                                    <li class="features__item-list__item">
+                                                    <p>    <%- candidate.report.strengths[strengthsIndex]['text'][txtIndex] %></p>
+                                                    </li>
                                                 <%  } %>
                                             <%  } %>
                                         </ul>

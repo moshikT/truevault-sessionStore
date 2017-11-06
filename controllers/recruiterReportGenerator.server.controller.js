@@ -17,7 +17,7 @@ exports.generateRecruiterReport = function (req, res) {
             getFactorsAvg(candidate, function (factorsData, finalScore) {
 
                 var isMale = (candidate.gender == 'male'); // TODO: get from candidate's doc
-                getVerbalText(factorsData, isMale, function (strengths, weaknesses) {
+                getVerbalText(factorsData, isMale, req.client.keyword, function (strengths, weaknesses) {
                     //console.log("strengths ", strengths);
                     //console.log("weaknesses ", weaknesses);
                     var report = {}
@@ -72,6 +72,8 @@ function getFactorsAvg(candidate, callback) {
             var factorAvg = 0;
             var numOfElementsInFactor = 0;
             var factor  = csvRow[0];
+            //var isRevereRelation = csvRow[1];
+            //console.log("reverse realtion: ", isRevereRelation);
             for (var factorElementIndex = 1; factorElementIndex < csvRow.length; factorElementIndex++) {
                 if (csvRow[factorElementIndex] == '') {}
                 else {
@@ -96,6 +98,7 @@ function getFactorsAvg(candidate, callback) {
             var factorData = {};
             factorData.name = factor;
             factorData.avg = factorAvg/numOfElementsInFactor;
+            //factorData.isRevereRelation = isRevereRelation;
             testScore += factorData.avg;
 
             console.log("factor: " + factor + " avg: " + factorData.avg);
@@ -130,25 +133,39 @@ function getFactorsAvg(candidate, callback) {
             console.log("test avg conversion to 1-5 ", finalScore);
             callback(factors, finalScore);
         })
+        .on('error',(err)=>{
+            console.log("Unable to read csv file 'factorsTranspose.csv ", err)
+        })
 }
 
-function getVerbalText(factorsData, isMale, callback) {
+function getVerbalText(factorsData, isMale, companyKeyword, callback) {
     var strengths = [];
     var weaknesses = [];
+    var fileName = 'report factors - verbal.csv';
+
+
+    if(companyKeyword != 'default' && companyKeyword != '') {
+        fileName = 'report factors - verbal' + '.' + companyKeyword + '.csv'
+    }
+
+    console.log("file name: ", fileName);
 
     csv()
-        .fromFile('report factors - verbal.csv')
+        .fromFile(fileName)
         .on('data',(data)=>{
             //data is a buffer object
-
+            //parseVerbalData(factorsData, isMale, data);
             const jsonStr= data.toString('utf8');
             var factorVerbal = JSON.parse(jsonStr);
 
             factorsData.forEach(function (factor) {
                 //console.log(factor.name);
                 if(factor.name == factorVerbal['SHORT NAME']) {
-                    var isStrength = (factor.avg >= 4.5);
-                    var isWeakness = (factor.avg <= 3.5);
+                    /* if reverse relation exists (0) thank put the factor in the opposite column. */
+                    var isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
+                                        (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
+                    var isWeakness = ((factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '1')||
+                                        (factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '0'));
                     var verbalKey = isStrength ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                         : isWeakness ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                         : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
@@ -159,15 +176,29 @@ function getVerbalText(factorsData, isMale, callback) {
                     verbalData.text = factorVerbal[verbalKey].split('\n');
 
                     if(isStrength) {
+                        console.log("strength added ", factor);
                         strengths.push(verbalData);
                     }
                     else if (isWeakness) {
+                        console.log("weaknes added ", factor);
                         weaknesses.push(verbalData);
                     }
                 }
             })
         })
         .on('done',(error)=>{
-            callback(strengths, weaknesses);
+            if(!error) {
+                console.log("weaknesses: " + weaknesses);
+                console.log("strengths: " + strengths);
+                callback(strengths, weaknesses);
+            }
+            else {
+                console.log("error occur at done ", error);
+                getVerbalText(factorsData, isMale, 'default', callback);
+            }
+
+        })
+        .on('error',(err)=>{
+            console.log("Unable to read csv file " + fileName + ", err: " + err + "! reading default instead");
         })
 }
