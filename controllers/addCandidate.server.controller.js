@@ -6,7 +6,7 @@ var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller
 var uuidv1 = require('uuid/v1');
 
 class userData {
-    constructor(fullName, id, email, phoneNumber, company, gender, recruitmentSource) {
+    constructor(fullName, id, email, phoneNumber, company, gender, recruitmentSource, linkToCV) {
         this.fullName = fullName;
         this.id = id;
         this.email = email;
@@ -14,6 +14,7 @@ class userData {
         this.company = company;
         this.gender = gender;
         this.recruitmentSource = recruitmentSource;
+        this.linkToCV = linkToCV;
     }
 }
 
@@ -29,7 +30,8 @@ exports.getAddCandidatePage = function (req, res) {
 
 exports.addCandidate = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
-        req.body['user_email'], req.body['user_tel'], req.client.name, req.body['gender'], req.body['recruitmentSource']);
+        req.body['user_email'], req.body['user_tel'], req.client.name, req.body['gender'],
+        req.body['recruitmentSource'], req.body['linkToCV']);
 
     // Removed search for candidate because we would like to create a new entry for the candidate in any case
     // If this is returned to active state then the behavior MUST change because currently it appears to the admin
@@ -85,7 +87,8 @@ exports.addCandidate = function (req, res) {
                         gender: newUser.gender,
                         report: report,
                         recruitmentSource: newUser.recruitmentSource,
-                        dateCompleted: ''
+                        dateCompleted: '',
+                        linkToCV: newUser.linkToCV
                     });
 
                     newCandidateEntry.save(function (err) {

@@ -18,7 +18,8 @@ var candidateSchema = new Schema({
     //weaknesses: JSON,
     gender: String,
     recruitmentSource: String,
-    dateCompleted: String
+    dateCompleted: String,
+    linkToCV: String
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

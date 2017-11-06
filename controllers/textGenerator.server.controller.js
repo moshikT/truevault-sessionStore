@@ -7,6 +7,7 @@ exports.initIndexText = function (companyName, isDemo, isInEnglish, callback) {
         idField : isInEnglish ? "ID" : "ת.ז.",
         emailField : isInEnglish ? "Email" : "דואר אלקטרוני",
         recruitmentSourcelField : isInEnglish ? "Recruitment Source" : "מקור גיוס",
+        linkToCVField : isInEnglish ? "Link to CV" : "קישור לקו״ח",
         textDirection : isInEnglish ? "ltr" : "rtl"
         //personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
         //submitBtn : isInEnglish ? "Start Questionnaire" : "להתחלת השאלון",
