@@ -125,5 +125,11 @@ router.post('/loadClient', function(req, res) {
     return addClient_Ctrl.loadClient(req,res);
 });
 
+router.get('/terms', function(req, res) {
+    res.render('terms');
+});
 
+router.get('/privacy', function(req, res) {
+    res.render('privacy');
+});
 module.exports = router;

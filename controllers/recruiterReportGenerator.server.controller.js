@@ -2,6 +2,8 @@ var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
 var Candidate = require('../models/candidate.server.model.js');
+var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+
 
 //['EQ', 'LEARNING', 'OUTCOME DRIVEN', 'EMOTIONAL STABILITY', 'ASSERTIVENESS',
     //'MOTIVATION TO MAKE MONEY', 'SOCIAL DESIRABILITY', 'ATTENTIVENESS TO DETAILS', 'WORK TENDENCY'];
@@ -48,12 +50,14 @@ exports.generateRecruiterReport = function (req, res) {
                             console.log("%s.%s:%s -", __file, __ext, __line, "succeed update final answer");
                         }
                     });*/
-
-                    res.render('recruiterReport', {
-                        title: '',
-                        client: req.client,
-                        sid: req.sid,
-                        candidate: candidate
+                    textGenerator_Ctrl.initRecruiterReportText((req.client.language == 'en'), function (recruiterReportText) {
+                        res.render('recruiterReport', {
+                            title: '',
+                            client: req.client,
+                            sid: req.sid,
+                            candidate: candidate,
+                            text: recruiterReportText
+                        });
                     });
                 });
             });
