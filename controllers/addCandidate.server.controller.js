@@ -41,7 +41,7 @@ exports.addCandidate = function (req, res) {
         if (err) throw err;
         // load default params
         if (candidate) {
-            console.log("found candidate");
+            console.log("%s.%s:%s -", __file, __ext, __line, "found candidate");
             res.render('displayLink', {
                 title: '',
                 candidate : candidate,
@@ -50,7 +50,7 @@ exports.addCandidate = function (req, res) {
             });
         }
         else */ {
-        console.log("Creating candidate for keyword:", req.client.keyword);
+        console.log("%s.%s:%s -", __file, __ext, __line, "Creating candidate for keyword:", req.client.keyword);
         var isInEnglish = (req.client.language == 'en');
         formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
             var sid = uuidv1();
@@ -59,7 +59,7 @@ exports.addCandidate = function (req, res) {
             session.expired = false;
 
             var recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/recruiterReport?sid=' + session.id;//+ req.originalUrl;
-            console.log(recruiterReportUrl);
+            console.log("%s.%s:%s -", __file, __ext, __line, recruiterReportUrl);
             generateLink(recruiterReportUrl, function(shortendLinkToReport) {
 
                 var report = {};
@@ -70,8 +70,8 @@ exports.addCandidate = function (req, res) {
                 //report.completed = false;
 
                 var url = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/?sid=' + session.id;//+ req.originalUrl;
-                console.log("URL: ", url);
-                console.log("Form length:", form.length);
+                console.log("%s.%s:%s -", __file, __ext, __line, "URL: ", url);
+                console.log("%s.%s:%s -", __file, __ext, __line, "Form length:", form.length);
                 generateLink(url, function(shortendLink) {
                     var newCandidateEntry = new Candidate({
                         fullName: newUser.fullName,
@@ -93,9 +93,9 @@ exports.addCandidate = function (req, res) {
 
                     newCandidateEntry.save(function (err) {
                         if (err) {
-                            console.log(err);
+                            console.log("%s.%s:%s -", __file, __ext, __line, err);
                         }
-                        console.log(newCandidateEntry);
+                        console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
                         // TODO: send SMS with varification code
                         newUser.linkToForm = shortendLink;
                             newUser.linkToReport = shortendLinkToReport;

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+</head>
+<!-- Define styles for a nice clients table -->
+<style>
+    #clients {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #clients td, #clients th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #clients tr:nth-child(even){background-color: #f2f2f2;}
+
+    #clients tr:hover {background-color: #ddd;}
+
+    #clients th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+<header>
+    <div class="container col-md-12" style="text-align: center;">
+        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
+    </div>
+</header>
+<body>
+    <ul>
+    </ul>
+    <table id="clients" style="width:100%">
+        <tr>
+            <th>Name</th>
+            <th>Add Candidate</th>
+            <th>Intro</th>
+            <th>Thank You</th>
+        </tr>
+        <% for (let i=0;i<clients.length;i++) { %>
+        <tr>
+            <td><%- clients[i].name %></td>
+            <td><a href="/clients/<%= clients[i]._id %>/addCandidate">Add Candidate</a></td>
+            <td><a href="/clients/<%= clients[i]._id %>/">View Intro</a></td>
+            <td><a href="/clients/<%= clients[i]._id %>/thankYou">View Thankyou</a></td>
+        </tr>
+        <% } %>
+    </table>
+</body>

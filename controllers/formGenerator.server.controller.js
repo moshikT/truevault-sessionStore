@@ -31,23 +31,23 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
             // combine csv header row and csv line to a json object
             // jsonObj.a ==> 1 or 4
             // formJSON = jsonObj
-            //console.log(jsonObj);
+            //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
         })
         .on('data',(data)=>{
             //data is a buffer object
             const jsonStr= data.toString('utf8');
             var questionsJSON = JSON.parse(jsonStr);
 
-            //console.log(questionsJSON);
-            //console.log(questionsJSON['INCLUDED']);
-            //console.log(questionsJSON['INCLUDED'].indexOf(companyForm));
+            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON);
+            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
+            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
 
             if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
                 question = parseQuestions(questionsJSON, isInEnglish);
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
                 } else if (question.type == 'F' && question.answerOptions.length > 2) {
-                    //console.log("pushed f type: ", question.id);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
                     //questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
@@ -89,10 +89,10 @@ function parseQuestions(qJSON, isInEnglish) {
             if (answer.length == 2) {
                 parsedAnswers.push(answer[0]);
                 parsedAnswersWeight.push(answer[1]);
-                //console.log(answer);
+                //console.log("%s.%s:%s -", __file, __ext, __line, answer);
             }
             else {
-                //console.log("Wrong structure for question type B: " + qJSON);
+                //console.log("%s.%s:%s -", __file, __ext, __line, "Wrong structure for question type B: " + qJSON);
             }
         }
         parsedQuestion.answer = parsedAnswers; /* TODO: check if possible to change to answer options for uniformity between questions types */
@@ -130,8 +130,8 @@ function parseQuestions(qJSON, isInEnglish) {
         var fitItemString = qJSON['FIT HEBREW'].toString();
         //if()
         var itemsCollection = fitItemString.split(/\,\s?(?![^\(]*\))/);
-        //console.log("coltural fit qid: ", parsedQuestion.id);
-        //console.log("coltural fit asnwers: ", itemsCollection);
+        //console.log("%s.%s:%s -", __file, __ext, __line, "coltural fit qid: ", parsedQuestion.id);
+        //console.log("%s.%s:%s -", __file, __ext, __line, "coltural fit asnwers: ", itemsCollection);
         parsedQuestion.answerOptions = itemsCollection;
         parsedQuestion.dataTitle = itemsCollection;
     }

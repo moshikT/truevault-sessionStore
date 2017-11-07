@@ -110,7 +110,7 @@ $('#radioBtn a').on('click', function(){
     }
 
     // Are we at the point after clicking the submit button and going through unanswered items?
-    if (formNextError != undefined) {
+    if (formNextError !== undefined) {
         // We are - so jump to the next unanswered item
         formNextError = gotoNextInvalid(formErrorList, formNextError);
     }

@@ -33,10 +33,10 @@ exports.addClient = function (req, res) {
     var companyName = req.body.name;
 
     var url = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id;//+ req.originalUrl;
-    console.log(url);
+    console.log("%s.%s:%s -", __file, __ext, __line, url);
 
     generateLink(url, function(shortendLink) {
-       // console.log("generate Link " , shortendLink);
+       // console.log("%s.%s:%s -", __file, __ext, __line, "generate Link " , shortendLink);
         var newClientEntry = new Client ({
             name: companyName.trim(),
             logoImg : logoImg,
@@ -58,7 +58,7 @@ exports.addClient = function (req, res) {
                 }
                 if (client) {
                     for(var field in req.body ) {
-                        console.log(field);
+                        console.log("%s.%s:%s -", __file, __ext, __line, field);
                         /* Update only unempty fields */
                          if(newClientEntry[field] != '') {
                              client[field] = newClientEntry[field];// handle document
@@ -67,24 +67,24 @@ exports.addClient = function (req, res) {
                     if(req.file) {
                         client.markModified('logoImg');
                         client.logoImg = newClientEntry['logoImg'];
-                        console.log("file exists!!", client.logoImg);
+                        console.log("%s.%s:%s -", __file, __ext, __line, "file exists!!", client.logoImg);
                     }
                     client.save(function (err) {
                         if (err) {
-                            console.log(err);
+                            console.log("%s.%s:%s -", __file, __ext, __line, err);
                         }
                         else {
-                            console.log("update new client! ");
+                            console.log("%s.%s:%s -", __file, __ext, __line, "update new client! ");
                         }
                     });
                 }
                 else {
                      newClientEntry.save(function (err) {
                          if (err) {
-                             console.log(err);
+                             console.log("%s.%s:%s -", __file, __ext, __line, err);
                          }
                          else {
-                             console.log("save new client! ");
+                             console.log("%s.%s:%s -", __file, __ext, __line, "save new client! ");
                          }
                      });
                  }
@@ -100,7 +100,7 @@ exports.loadClient = function(req, res) {
     //var query = Client.find({$text: {$search: filterbyClientName}});
     var query = Client.findOne({name: clientName.trim()});
     query.exec(function(err, client) {
-        console.log("filter results: ",  client);
+        console.log("%s.%s:%s -", __file, __ext, __line, "filter results: ",  client);
         if(client) {
             res.render('addClient', {title: 'Update Client', client: client});
         }
