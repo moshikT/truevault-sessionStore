@@ -61,3 +61,29 @@ exports.initFormPageText = function(isInEnglish, callback) {
     }*/
     callback(pageText);
 }
+
+exports.initRecruiterReportText = function (isInEnglish, callback) {
+    var recruiterReportText = {
+        idField : isInEnglish ? "ID: " : "ת.ז: ",
+        dateFormCompletedField : isInEnglish ? "Date form completed: " : "מילוי השאלון: ",
+        beforeXdaysField : isInEnglish ? "(Before X days)" : "  (לפני X ימים)",
+        phoneField : isInEnglish ? "Phone: " : "טלפון: ",
+        positionDescriptionField : isInEnglish ? "Sales representative" : "נציג/ת שירות ומכירות",
+        recruiterSourceField : isInEnglish ? "Recruitment Source: " : "מקור גיוס: ",
+        CVField : isInEnglish ? "CV" : "קו״ח",
+        formResultField : isInEnglish ? "Test results (before calibration):" : "ציון מבחן (לפני כיול):",
+        lowField : isInEnglish ? "Low" : "תחתונים",
+        avgField: isInEnglish ? "Average" : "מרכזיים",
+        highField : isInEnglish ? "High" : "עליונים",
+        dontRecommendField : isInEnglish ? "Recommended not to hire" : "מומלץ לא להעסיק",
+        furtherStepsField : isInEnglish ? "Recommended to proceed with the hiring process and check for a match" : "מומלץ להמשיך בתהליך המיון ולברר התאמה",
+        RecommendField : isInEnglish ? "Recommended to hire" : "מומלץ להעסיק",
+        issuesToTestField : isInEnglish ? "Issues to check" : "נקודות לבירור",
+        expectedBehaviorField : isInEnglish ? 'The candidate <br> <b>expected</b> to present<br> the next behaviors: ' :
+            'המועמד\n' + '<b>סביר</b> להציג את ההתנהגויות\n' + '<br>או הנטיות הבאות:',
+        inATeamField : isInEnglish ? "In a team-" : "בצוות ובארגון-\n",
+        strengthsField : isInEnglish ? "Strengths" : "נקודות עוצמה",
+        direction: isInEnglish ? "ltr" : "rtl"
+    };
+    callback(recruiterReportText);
+}
