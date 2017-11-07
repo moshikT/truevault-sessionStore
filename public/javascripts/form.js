@@ -19,6 +19,12 @@ if(numOfQuestionsAnswered !== 0) {
         scrollTo = $('#' + nextQuestion);
     container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
 
+    _LTracker.push({
+        'text': 'Form reloaded',
+        'sid': sid,
+        'date': startDate.toString(),
+        'cid': cid
+    });
     mixpanel.track('Form reloaded', {'sid': sid, 'date': startDate.toString(), 'cid': cid});
 }
 var totalQuestions = document.getElementsByClassName('q').length;
@@ -130,12 +136,26 @@ $('#radioBtn a').on('click', function(){
             // Code depending on result
             console.log("result ", result);
             var dateAnswered = new Date();
+            _LTracker.push({
+                'text': 'Question Answered',
+                'sid': sid,
+                'qData': result,
+                'date': dateAnswered.toString(),
+                'cid': cid
+            });
             mixpanel.track('Question Answered', {'sid': sid, 'qData': result, 'date': dateAnswered.toString(), 'cid': cid});
         })
         .catch(function(rejected) {
             // An error occurred
             requests.push(rejected);
             var dateAnswered = new Date();
+            _LTracker.push({
+                'text': 'Unable to send question data to server',
+                'sid': sid,
+                'qData': rejected,
+                'date': dateAnswered.toString(),
+                'cid': cid
+            });
             mixpanel.track('Unable to send question data to server', {'sid': sid, 'qData': rejected, 'date': dateAnswered.toString(), 'cid': cid});
             console.log("pushed new rejected req to array ", rejected);
         });
@@ -222,6 +242,14 @@ $("#form").validate({
         //console.log("before mix panel form submitted");
 
         var dateSubmitted = new Date();
+        _LTracker.push({
+            'text': 'Form submitted',
+            'sid': sid,
+            'date': dateSubmitted.toString(),
+            'cid': cid,
+            'userType' : 'candidate',
+            'fullname': fullName
+        });
         mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate', 'fullname': fullName });
 
         //console.log("after mix panel form submitted");

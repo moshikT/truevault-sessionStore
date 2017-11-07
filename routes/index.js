@@ -18,6 +18,7 @@ var Client = require('../models/addClient.server.model.js');
 router.use(function (req, res, next) {
     var parts = req.path.split('/');
     console.log("%s.%s:%s -", __file, __ext, __line, "Path: ", req.path);
+    console.log("%s.%s:%s -", __file, __ext, __line, "Parts: ", parts);
     if ((parts[1]!="clients") ||
         (!parts[2])) {
         next();
