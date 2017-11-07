@@ -65,24 +65,24 @@ exports.initFormPageText = function(isInEnglish, callback) {
 exports.initRecruiterReportText = function (isInEnglish, callback) {
     var recruiterReportText = {
         idField : isInEnglish ? "ID: " : "ת.ז: ",
-        dateFormCompletedField : isInEnglish ? "Date form completed: " : "מילוי השאלון: ",
-        beforeXdaysField : isInEnglish ? "(Before X days)" : "  (לפני X ימים)",
+        dateFormCompletedField : isInEnglish ? "Test Date: " : "מילוי השאלון: ",
+        beforeXdaysField : isInEnglish ? "(X days ago)" : "  (לפני X ימים)",
         phoneField : isInEnglish ? "Phone: " : "טלפון: ",
-        positionDescriptionField : isInEnglish ? "Sales representative" : "נציג/ת שירות ומכירות",
-        recruiterSourceField : isInEnglish ? "Recruitment Source: " : "מקור גיוס: ",
-        CVField : isInEnglish ? "CV" : "קו״ח",
+        positionDescriptionField : isInEnglish ? "Sales Representative" : "נציג/ת שירות ומכירות",
+        recruiterSourceField : isInEnglish ? "Recruiting Sources: " : "מקור גיוס: ",
+        CVField : isInEnglish ? "CV" : "קורות חיים",
         formResultField : isInEnglish ? "Test results (before calibration):" : "ציון מבחן (לפני כיול):",
         lowField : isInEnglish ? "Low" : "תחתונים",
         avgField: isInEnglish ? "Average" : "מרכזיים",
-        highField : isInEnglish ? "High" : "עליונים",
-        dontRecommendField : isInEnglish ? "Recommended not to hire" : "מומלץ לא להעסיק",
-        furtherStepsField : isInEnglish ? "Recommended to proceed with the hiring process and check for a match" : "מומלץ להמשיך בתהליך המיון ולברר התאמה",
-        RecommendField : isInEnglish ? "Recommended to hire" : "מומלץ להעסיק",
-        issuesToTestField : isInEnglish ? "Issues to check" : "נקודות לבירור",
-        expectedBehaviorField : isInEnglish ? 'The candidate <br> <b>expected</b> to present<br> the next behaviors: ' :
+        highField : isInEnglish ? "Top" : "עליונים",
+        dontRecommendField : isInEnglish ? "Do not hire" : "מומלץ לא להעסיק",
+        furtherStepsField : isInEnglish ? "Requires further assessment" : "מומלץ להמשיך בתהליך המיון ולברר התאמה",
+        RecommendField : isInEnglish ? "Hire" : "מומלץ להעסיק",
+        issuesToTestField : isInEnglish ? "Points for Inquiry" : "נקודות לבירור",
+        expectedBehaviorField : isInEnglish ? 'The candidate is <b>likely</b> to display the following<br> behaviors or tendencies: ' :
             'המועמד\n' + '<b>סביר</b> להציג את ההתנהגויות\n' + '<br>או הנטיות הבאות:',
         inATeamField : isInEnglish ? "In a team-" : "בצוות ובארגון-\n",
-        strengthsField : isInEnglish ? "Strengths" : "נקודות עוצמה",
+        strengthsField : isInEnglish ? "Main Strengths" : "נקודות עוצמה",
         direction: isInEnglish ? "ltr" : "rtl"
     };
     callback(recruiterReportText);

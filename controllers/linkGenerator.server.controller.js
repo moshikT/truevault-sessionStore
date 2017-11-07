@@ -10,7 +10,7 @@ generateLink = function (link, callback) {
     googleUrl.shorten(link , function( err, shortUrl ) {
         // shortUrl should be http://goo.gl/BzpZ54
         // We get here after the URL is generated or if there's an error
-        console.log("Short URL: ", shortUrl);
+        console.log("%s.%s:%s -", __file, __ext, __line, "Short URL: ", shortUrl);
         // @@@ For now throw an exception but need to handle this better
         if(err) throw err;
         // Notify the caller that the URL is ready

@@ -1,4 +1,5 @@
 var express = require('express');
+require('magic-globals'); //__file, __ext & __line come from here
 //var multer  = require('multer');
 //var upload = multer({ dest: 'uploads/' });
 var path = require('path');
@@ -15,7 +16,7 @@ var dbName = process.env.DB_URL;
     //'mongodb://emphireDB:nD9yncX1bf@ds115035.mlab.com:15035/empiricalhire'; //mLab
     //'mongodb://emphireDB:nD9yncX1bf@ds231245.mlab.com:31245/empiricalhire_dev'; //mLab dev
 
-console.log("Connecting to MongoDB - DB URL: \n  ", dbName);
+console.log("%s.%s:%s -", __file, __ext, __line, "Connecting to MongoDB - DB URL: ", dbName);
 
 //mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire
 //mongodb://emphireDB:nD9yncX1bf@ds115035.mlab.com:15035/empiricalhire
@@ -31,7 +32,7 @@ mongoose.connect(dbName, {
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
-    console.log("Connected to mongodb!");
+    console.log("%s.%s:%s -", __file, __ext, __line, "Connected to mongodb!");
 });
 
 var app = express();

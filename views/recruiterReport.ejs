@@ -67,15 +67,29 @@
     <section class="container-fluid banner" style="margin-top: 0rem;" >
         <div class="container">
             <div class="row">
+                    <% if(text.direction == 'rtl')  { %>
                 <div class="col-xs-12 banner__content">
-                    <div class="banner__main">
+                    <div class='banner__main'>
                         <h2 class="banner__title"><%= candidate.fullName %></h2>
                     </div>
-                    <div class="banner__info">
+                    <div class='banner__info'>
                         <h3 class="banner__phone"><%= text.idField %><%= candidate.id %></h3>
                         <p class="banner__text" style='direction:<%= text.direction %>' >
                             <b><%= text.dateFormCompletedField %></b> <%= candidate.dateCompleted %> <%= text.beforeXdaysField %></p>
                     </div>
+                    <% }
+                    else { %>
+                    <div class="col-xs-12 banner__content" style="direction: ltr;">
+                        <div class='' style="width: auto;border-bottom: 0;padding-right: 4rem;direction:ltr;border-right: 0.375rem;border-right: 0.375rem solid #ffffff; ">
+                            <h2 class="banner__title"><%= candidate.fullName %></h2>
+                        </div>
+                        <div class='banner__info' style="direction:ltr;">
+                            <h3 class="banner__phone">&nbsp;<%= text.idField %><%= candidate.id %></h3>
+                            <p class="banner__text" style='direction:<%= text.direction %>' >
+                                <b><%= text.dateFormCompletedField %></b> <%= candidate.dateCompleted %> <%= text.beforeXdaysField %></p>
+                        </div>
+                    <% }
+                    %>
                 </div>
             </div>
         </div>

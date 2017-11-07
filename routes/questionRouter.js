@@ -29,7 +29,7 @@ var Client = require('../models/addClient.server.model.js');
 */
 /* Using a middleware, in order to pass question found by id, from the form */
 router.use('/:sid/:qid', function (req, res, next) {
-    //console.log("api params: ", req.params);
+    //console.log("%s.%s:%s -", __file, __ext, __line, "api params: ", req.params);
     Candidate.findOne({'session.id': req.params.sid}, function (err, candidate) {
         if (err) {
             res.status(500).send(err);
@@ -57,7 +57,7 @@ router.route('/:sid/:qid')
     })
     .patch(function (req, res, next) {
         req.candidate.markModified('form');
-        console.log("patch question: ", req.params.qid);
+        console.log("%s.%s:%s -", __file, __ext, __line, "patch question: ", req.params.qid);
         for (var index = 0; index < req.candidate.form.length; index++) {
             if(req.candidate.form[index].id == req.params.qid) {
                 if(req.body._id) {
@@ -72,7 +72,7 @@ router.route('/:sid/:qid')
                         res.status(500).send(err);
                     }
                     else {
-                        console.log("entry saved!");
+                        console.log("%s.%s:%s -", __file, __ext, __line, "entry saved!");
                         res.json(entry);
                     }
                 });
