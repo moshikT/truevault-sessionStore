@@ -9,7 +9,7 @@ let clients;
 
 exports.mngClients = function (req, res) {
     // Retrieve all clients
-    Client.find(function(err, clientItems) {
+    Client.find('name _id', function(err, clientItems) {
         // Render the clients view in a callback because the retrieval from the DB is async
         res.render('clients', { title: 'Manage Clients', clients: clientItems}); // Clients management page
     });

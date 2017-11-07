@@ -45,6 +45,7 @@
     <table id="clients" style="width:100%">
         <tr>
             <th>Name</th>
+            <th>Candidates</th>
             <th>Add Candidate</th>
             <th>Intro</th>
             <th>Thank You</th>
@@ -52,6 +53,7 @@
         <% for (let i=0;i<clients.length;i++) { %>
         <tr>
             <td><%- clients[i].name %></td>
+            <td><a href="/clients/<%= clients[i]._id %>/candidates">Status</a></td>
             <td><a href="/clients/<%= clients[i]._id %>/addCandidate">Add Candidate</a></td>
             <td><a href="/clients/<%= clients[i]._id %>/">View Intro</a></td>
             <td><a href="/clients/<%= clients[i]._id %>/thankYou">View Thankyou</a></td>

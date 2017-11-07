@@ -6,6 +6,7 @@ var addClient_Ctrl = require('../controllers/addClient.server.controller');
 var addCandidate_Ctrl = require('../controllers/addCandidate.server.controller');
 var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
 let mngClients_Ctrl = require('../controllers/clients.server.controller'); // Controller for clients management page
+let candidatesStatus_Ctrl = require('../controllers/candidatesStatus.server.controller'); // Controller for candidates status management page
 var multer  = require('multer');
 var upload = multer({ dest: '/tmp/uploads/' });
 var fs = require('fs');
@@ -104,6 +105,11 @@ router.post('/addClient', upload.single('logo'), function(req, res) {
 
 router.get('/test', function (req, res) {
     return form_Ctrl.getTest(req, res);
+});
+
+// Candidates status
+router.get('/clients/:cid/candidates', function(req, res) {
+    return candidatesStatus_Ctrl.candidatesStatus(req, res);
 });
 
 // Clients management
