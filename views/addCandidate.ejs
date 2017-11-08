@@ -117,6 +117,13 @@
                 var formData =  JSON.stringify($('#addCandidate').serializeArray());
                 var cid = getCid();
                 var newUserDate = new Date();
+                _LTracker.push({
+                    'text': 'New candidate added',
+                    'userData': formData,
+                    'userType': 'candidate',
+                    'date': newUserDate.toString(),
+                    'cid': cid
+                });
                 mixpanel.track('New candidate added', { 'userData': formData, 'userType': 'candidate', 'date': newUserDate.toString(), 'cid': cid });
 
                 /*$.ajax({

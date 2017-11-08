@@ -6,6 +6,7 @@ var addClient_Ctrl = require('../controllers/addClient.server.controller');
 var addCandidate_Ctrl = require('../controllers/addCandidate.server.controller');
 var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
 let mngClients_Ctrl = require('../controllers/clients.server.controller'); // Controller for clients management page
+let candidatesStatus_Ctrl = require('../controllers/candidatesStatus.server.controller'); // Controller for candidates status management page
 var multer  = require('multer');
 var upload = multer({ dest: '/tmp/uploads/' });
 var fs = require('fs');
@@ -18,6 +19,7 @@ var Client = require('../models/addClient.server.model.js');
 router.use(function (req, res, next) {
     var parts = req.path.split('/');
     console.log("%s.%s:%s -", __file, __ext, __line, "Path: ", req.path);
+    console.log("%s.%s:%s -", __file, __ext, __line, "Parts: ", parts);
     if ((parts[1]!="clients") ||
         (!parts[2])) {
         next();
@@ -103,6 +105,11 @@ router.post('/addClient', upload.single('logo'), function(req, res) {
 
 router.get('/test', function (req, res) {
     return form_Ctrl.getTest(req, res);
+});
+
+// Candidates status
+router.get('/clients/:cid/candidates', function(req, res) {
+    return candidatesStatus_Ctrl.candidatesStatus(req, res);
 });
 
 // Clients management

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+</head>
+<!-- Define styles for a nice candidates table -->
+<style>
+    #candidates {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+    #candidates td, #candidates th {
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    #candidates tr:nth-child(even){background-color: #f2f2f2;}
+
+    #candidates tr:hover {background-color: #ddd;}
+
+    #candidates th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: left;
+        background-color: #4CAF50;
+        color: white;
+    }
+</style>
+<header>
+    <div class="container col-md-12" style="text-align: center;">
+        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
+    </div>
+</header>
+<body>
+<ul>
+</ul>
+<table id="candidates" style="width:100%">
+    <tr>
+        <th>Name</th>
+        <th>Completed</th>
+        <th>Date</th>
+        <th>Experience</th>
+    </tr>
+    <% for (let i=0;i<candidates.length;i++) {
+        formjson = candidates[i].form; // Get the answers
+        let appExp = ''; // For holding the app experience response
+        for (let j = 0; j < formjson.length; j++) {
+            if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
+                if (formjson[j].type === 'A') { //is this an app exp type question?
+                    if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                        appExp = formjson[j].finalAnswer; //save the final answer
+                    }
+                    break;
+                }
+            }
+        }
+    %>
+    <tr>
+        <td><%- candidates[i].fullName %></td>
+        <td><%- candidates[i].formCompleted %></td>
+        <td><%- candidates[i].dateCompleted %></td>
+        <td><%- appExp %></td>
+    </tr>
+    <% } %>
+</table>
+</body>

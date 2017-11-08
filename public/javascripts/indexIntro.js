@@ -81,6 +81,13 @@ $("#formInfo").validate({
             // }
          //});*/
         var startFormDate = new Date();
+        _LTracker.push({
+            'text': 'User Start Form',
+            'sid': sid,
+            'userType': 'candidate',
+            'date': startFormDate.toString(),
+            'cid': cid
+        });
         mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
         form.submit();
     }
