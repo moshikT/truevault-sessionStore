@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <% include partials/head %>
-<body class="content" dir=<%=textDirection%>>
+<body onload="formDisplay()" class="content" dir=<%=textDirection%>>
 <script>
     var fullName = "<%- fullName %>";
 </script>
 <header>
     <% include partials/logo %>
 
-    <div class="container col-md-12">
+    <div id="progressBarDiv" class="container col-md-12" style="display: none;">
         <h1> <%=  //title %> </h1>
 
         <div class="container">
@@ -21,7 +21,10 @@
         </div>
     </div>
 </header>
-    <div id="formContainer"  class="" style="scroll:hidden;overflow-x: auto;overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 370px;width:100%;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
+    <div id="success" style="display: none;">
+        <% include partials/thankYouPartial %>
+    </div>
+    <div id="formContainer"  class="" style="display:none;scroll:hidden;overflow-x: auto;overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 370px;width:100%;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
        <% include partials/formPartial %>
     </div>
     <% include partials/footer %>

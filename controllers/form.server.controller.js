@@ -68,6 +68,7 @@ exports.saveFormResults = function (req, res) {
     var formData = req.body;
     delete formData['agree'];
     delete formData['submit_btn'];
+    delete  formData['isCompleted'];
     Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
@@ -108,6 +109,13 @@ exports.saveFormResults = function (req, res) {
         else {
             console.log("%s.%s:%s -", __file, __ext, __line, "Unable to save all form data");
         }
+        /*res.render('thankYou', { title: 'Empiricalhire',
+            isInEnglish: (req.client.language == 'en'),
+            textDirection: (req.client.language == 'en') ? 'ltr' : 'rtl',
+            client: req.client
+        });*/
+        //res.status(200);//.send("success!");
+        //res.end();
         res.redirect('/clients/' + req.client._id + '/thankYou');
     });
 }
