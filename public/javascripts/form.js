@@ -1,10 +1,12 @@
 var numOfQuestionsAnswered = document.getElementsByClassName('active').length;
 var qAnsweredArray = document.getElementsByClassName('active');
+
 var questionsAnsweredID = [];
 var sid = getParameterByName('sid');
 var cid = getCid();
-var startDate = new Date();
 var lastQuestionAnswered = startDate;
+var startDate = new Date();
+//var formCompleted = false;
 
 
 for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswered; questionsAnsweredIndex++) {
@@ -200,7 +202,9 @@ var rules = {};
 
 for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
-    rules[key] = "required";
+    if(key != "isCompleted"){
+        rules[key] = "required";
+    }
 }
 
 console.log(rules);
@@ -251,7 +255,8 @@ $("#form").validate({
             'fullname': fullName
         });
         mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate', 'fullname': fullName });
-
+        document.getElementById('isCompleted').checked = true;
+        formDisplay();
         //console.log("after mix panel form submitted");
         //$('#formDuration').prop('value', totalTime);
        /* while(requests.length > 0) {
@@ -285,7 +290,26 @@ $("#form").validate({
 
         }*/
 
+
+
+       /* $.ajax({
+            url : '/clients/' + client._id + '/form?sid=' + sid,
+            data : $('#form').serialize(),
+            type : 'POST',
+            success:function(){
+                //whatever you wanna do after the form is successfully submitted
+                console.log("success");
+            },
+            error: function (err) {
+                console.log(err);
+            }     //return;  // it's not really an error
+            // Do normal error handling
+        });*/
+        //window.open('/clients/' + client._id + '/thankYou', '_blank');
+
         form.submit();
+        //event.preventDefault();
+        //return false;
     }
 });
 
@@ -372,3 +396,17 @@ $(function() {
     });
     $( "#sortable" ).disableSelection();
 });
+
+
+function formDisplay() {
+    var isCompleted = document.getElementById('isCompleted').checked;
+    if(isCompleted){
+        document.getElementById('formContainer').style.display = 'none';
+        document.getElementById('progressBarDiv').style.display = 'none';
+        document.getElementById('success').style.display = 'block';
+    }
+    else {
+        document.getElementById('formContainer').style.display = 'block';
+        document.getElementById('progressBarDiv').style.display = 'block';
+    }
+}
