@@ -6,8 +6,6 @@ var sid = getParameterByName('sid');
 var cid = getCid();
 var lastQuestionAnswered = startDate;
 var startDate = new Date();
-//var formCompleted = false;
-
 
 for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswered; questionsAnsweredIndex++) {
     questionsAnsweredID.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
@@ -133,6 +131,8 @@ $('#radioBtn a').on('click', function(){
     console.log(patchUrl);
 
 
+    // Using promises in order to track which requests have been processed and which are not.
+    // Rejected request inserted to request array in order to handle them later in some way.
     sendResult(patchUrl, patchData)
         .then(function(result) {
             // Code depending on result
@@ -161,10 +161,6 @@ $('#radioBtn a').on('click', function(){
             mixpanel.track('Unable to send question data to server', {'sid': sid, 'qData': rejected, 'date': dateAnswered.toString(), 'cid': cid});
             console.log("pushed new rejected req to array ", rejected);
         });
-
-    //setTimeout(function() {
-
-    //}, 1)
 });
 
 var requests = [];
@@ -179,13 +175,10 @@ function sendResult(patchUrl, patchData) {
             data : JSON.stringify(patchData),
             type : 'PATCH',
             contentType : 'application/json',
-            //async: false,
             success:function(){
                 //whatever you wanna do after the form is successfully submitted
                 console.log("success patch request ", patchData);
                 resolve(request);
-                //mixpanel.track('Question Answered, {'uid': form.user_id.value,
-                // 'qid': {qid}, finalAnswer: answer, SwitchedAnswer: true/false/* candidate/employee */});
             },
             error: function (err) {
                 // if(xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0)
@@ -197,6 +190,7 @@ function sendResult(patchUrl, patchData) {
     });
 }
 
+// set required rules for the jQuery form validation.
 var keys = document.getElementsByTagName("input");
 var rules = {};
 
@@ -257,9 +251,10 @@ $("#form").validate({
         mixpanel.track('Form submitted', { 'sid': sid, 'date': dateSubmitted.toString(), 'cid': cid, 'userType' : 'candidate', 'fullname': fullName });
         document.getElementById('isCompleted').checked = true;
         formDisplay();
-        //console.log("after mix panel form submitted");
-        //$('#formDuration').prop('value', totalTime);
-       /* while(requests.length > 0) {
+       /* Loop over request array and execute all the requests that failed to send to server.
+       // Commented out beacause the form submitted before the array is empty - meaning the
+       // code still not execute all the requests before form submitted (probably because of asyncroniztion).
+        while(requests.length > 0) {
             for(var i = 0; i < requests.length; i++) {
                 $.ajax({
                     url : requests[i].url,
@@ -289,27 +284,7 @@ $("#form").validate({
             }
 
         }*/
-
-
-
-       /* $.ajax({
-            url : '/clients/' + client._id + '/form?sid=' + sid,
-            data : $('#form').serialize(),
-            type : 'POST',
-            success:function(){
-                //whatever you wanna do after the form is successfully submitted
-                console.log("success");
-            },
-            error: function (err) {
-                console.log(err);
-            }     //return;  // it's not really an error
-            // Do normal error handling
-        });*/
-        //window.open('/clients/' + client._id + '/thankYou', '_blank');
-
         form.submit();
-        //event.preventDefault();
-        //return false;
     }
 });
 
@@ -368,6 +343,7 @@ function updateProgressbar(numOfQuestionsAnswered, totalQuestions) {
     }
 }
 
+// extract queryString parameters' value
 function getParameterByName(name) {
     var url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");
@@ -384,6 +360,7 @@ function getCid() {
     return cid[2];
 }
 
+// For further use - in order to style Coltural fit questions
 $(function() {
     $( "#sortable" ).sortable({
         stop: function () {
@@ -397,7 +374,7 @@ $(function() {
     $( "#sortable" ).disableSelection();
 });
 
-
+// prevent from user to reSubmit his form - block the view of the form if completed
 function formDisplay() {
     var isCompleted = document.getElementById('isCompleted').checked;
     if(isCompleted){

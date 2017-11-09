@@ -1,3 +1,7 @@
+/*
+Restful API for questions submissions
+ */
+
 var express = require('express');
 var router = express.Router();
 var Candidate = require('../models/candidate.server.model.js');
@@ -12,7 +16,7 @@ var Client = require('../models/addClient.server.model.js');
             if (candidate) {
                 if (req.query.f == 0) {
                     res.json(candidate.form/* change to form *///)
-  /*              }
+/*              }
                 else {
                     res.json(candidate);
                 }
@@ -27,6 +31,7 @@ var Client = require('../models/addClient.server.model.js');
         res.json(req.body);
     });
 */
+
 /* Using a middleware, in order to pass question found by id, from the form */
 router.use('/:sid/:qid', function (req, res, next) {
     //console.log("%s.%s:%s -", __file, __ext, __line, "api params: ", req.params);

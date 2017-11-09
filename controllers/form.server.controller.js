@@ -22,6 +22,7 @@ class userData {
     }
 }
 
+// get users data (currently setted via addCandidate) and generate form f user is new
 exports.getInfo = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
         req.body['user_email'], req.body['user_tel'], req.client.name);
@@ -76,7 +77,8 @@ exports.saveFormResults = function (req, res) {
             candidate.markModified('formCompleted');
             candidate.markModified('session');
 
-            var recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
+            var recruiterReportUrl = req.protocol + '://' + req.get('host') +
+                '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
             var report = {};
             report.link = recruiterReportUrl;
             report.completed = true;
@@ -89,6 +91,8 @@ exports.saveFormResults = function (req, res) {
             //candidate.report.completed = true;
             candidate.report = report;
 
+            // Iterate through the candidates form and update all failed patch request -
+            // unAnswered question with the users' final answer.
             for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
                 /* If final answer does not exist update from form */
                 if(!candidate.form[qIndex].finalAnswer) {
@@ -109,19 +113,11 @@ exports.saveFormResults = function (req, res) {
         else {
             console.log("%s.%s:%s -", __file, __ext, __line, "Unable to save all form data");
         }
-        /*res.render('thankYou', { title: 'Empiricalhire',
-            isInEnglish: (req.client.language == 'en'),
-            textDirection: (req.client.language == 'en') ? 'ltr' : 'rtl',
-            client: req.client
-        });*/
-        //res.status(200);//.send("success!");
-        //res.end();
         res.redirect('/clients/' + req.client._id + '/thankYou');
     });
 }
 
 exports.getIndex = function (req, res) {
-    // TODO: export to different module
     textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
         console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client);
         res.render('index', {
@@ -178,6 +174,7 @@ exports.getThankYouPage = function (req, res) {
     });
 }
 
+// Set Date Time object to the format of dd/mm/yyyy
 function convertDate(date) {
     var yyyy = date.getFullYear().toString();
     var mm = (date.getMonth()+1).toString();

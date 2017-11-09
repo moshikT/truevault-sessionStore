@@ -16,56 +16,7 @@
 </div>
 <% include partials/footer %>
 <script>
-    window.addEventListener("load", function() { window. scrollTo(0, 0); });
-    var agreeChk = document.getElementById('agree');
-    var nextBtn = document.getElementById('next_btn');
 
-    document.addEventListener('DOMContentLoaded', function () {
-        document.querySelector('#agree').addEventListener('change', displayNext);
-    displayNext();
-    });
-
-    function displayNext(){
-        if(agreeChk.checked){
-            nextBtn.style.display = 'block';
-        }
-        else{
-            nextBtn.style.display = 'none';
-        }
-    }
-
-
-    var isFirstPage = true;
-    function goNext() {
-        if(isFirstPage) {
-            document.getElementById('testInstructions').style.display = 'none';
-            document.getElementById('companyDescription').style.display = 'block';
-            document.getElementById('back_btn').style.display = 'block';
-            isFirstPage = false;
-        }
-        else {
-            //console.log("redirect to form");
-            var startFormDate = new Date();
-            _LTracker.push({
-                'text': 'User Start Form',
-                'sid': sid,
-                'userType': 'candidate',
-                'date': startFormDate.toString(),
-                'cid': cid
-            });
-            mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
-            document.getElementById("formInfo").submit();
-        }
-    }
-
-    function goBack() {
-        if (!isFirstPage) {
-            document.getElementById('testInstructions').style.display = 'block';
-            document.getElementById('companyDescription').style.display = 'none';
-            document.getElementById('back_btn').style.display = 'none';
-            isFirstPage = true;
-        }
-    }
 
 
 </script>

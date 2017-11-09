@@ -3,6 +3,7 @@
     /* minimal-ui is active */
 }
 
+/* desktop, laptop and above  */
 @media screen
 and (min-device-width: 1200px)
 {
@@ -249,7 +250,8 @@ h1 {
 
 .container {
 }
- p {
+
+p {
    /*float: right;*/
    margin: 0px 0px 0px 0px;
  }
@@ -279,7 +281,6 @@ div.error {
   zoom: 100%;
 }
 */
-
 
 #radioBtn .notActive{
   color: #3276b1;

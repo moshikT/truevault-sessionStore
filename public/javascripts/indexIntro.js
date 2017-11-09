@@ -1,7 +1,56 @@
+window.addEventListener("load", function() { window. scrollTo(0, 0); });
+var agreeChk = document.getElementById('agree');
+var nextBtn = document.getElementById('next_btn');
 var sid = getParameterByName('sid');
 var cid = getCid();
 
-//console.log(sid);
+document.addEventListener('DOMContentLoaded', function () {
+    document.querySelector('#agree').addEventListener('change', displayNext);
+    displayNext();
+});
+
+function displayNext(){
+    if(agreeChk.checked){
+        nextBtn.style.display = 'block';
+    }
+    else{
+        nextBtn.style.display = 'none';
+    }
+}
+
+// Display next button only after terms confirmation checkbox is checked.
+// If second page submit form and continue to questionnaire.
+var isFirstPage = true;
+function goNext() {
+    if(isFirstPage) {
+        document.getElementById('testInstructions').style.display = 'none';
+        document.getElementById('companyDescription').style.display = 'block';
+        document.getElementById('back_btn').style.display = 'block';
+        isFirstPage = false;
+    }
+    else {
+        //console.log("redirect to form");
+        var startFormDate = new Date();
+        _LTracker.push({
+            'text': 'User Start Form',
+            'sid': sid,
+            'userType': 'candidate',
+            'date': startFormDate.toString(),
+            'cid': cid
+        });
+        mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
+        document.getElementById("formInfo").submit();
+    }
+}
+
+function goBack() {
+    if (!isFirstPage) {
+        document.getElementById('testInstructions').style.display = 'block';
+        document.getElementById('companyDescription').style.display = 'none';
+        document.getElementById('back_btn').style.display = 'none';
+        isFirstPage = true;
+    }
+}
 
 function getParameterByName(name) {
     var url = window.location.href;
@@ -13,6 +62,8 @@ function getParameterByName(name) {
     return decodeURIComponent(results[2].replace(/\+/g, " "));
 }
 
+// create array of all input elements with class inputs in order to iterate through
+// the element with the 'Enter' key.
 $('.inputs').keydown(function (e) {
     if (e.which === 13) {
         var index = $('.inputs').index(this) + 1;
@@ -35,7 +86,6 @@ for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
     rules[key] = "required";
 }
-//console.log(rules);
 
 $("#formInfo").validate({
     ignore: "",
@@ -46,9 +96,6 @@ $("#formInfo").validate({
     //debug: true,
     rules: rules,
     messages: {
-        /*"agreeableness_1": {
-            //required: "Please, enter a date"
-        },*/
     },
     errorElement: "div",
     wrapper: "div",  // a wrapper around the error message
@@ -67,7 +114,7 @@ $("#formInfo").validate({
             return;
     },
     submitHandler: function (form) {
-        /* might send twice because form 'action' test it! */
+        /* commented out because send post request twice (in addition to form 'action') */
         /* $.ajax({
              url:'/',
              type:'post',
