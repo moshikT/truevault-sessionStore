@@ -47,6 +47,7 @@
         <th>Name</th>
         <th>Completed</th>
         <th>Date</th>
+        <th>Report</th>
         <th>Experience</th>
     </tr>
     <% for (let i=0;i<candidates.length;i++) {
@@ -67,6 +68,7 @@
         <td><%- candidates[i].fullName %></td>
         <td><%- candidates[i].formCompleted %></td>
         <td><%- candidates[i].dateCompleted %></td>
+        <td><a href=''./recruiterReport?sid=<%- candidates[i].session.id %>' target='_blank'>Report</a></td>
         <td><%- appExp %></td>
     </tr>
     <% } %>

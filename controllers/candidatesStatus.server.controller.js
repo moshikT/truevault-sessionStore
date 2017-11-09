@@ -9,7 +9,7 @@ let candidates;
 
 exports.candidatesStatus = function (req, res) {
     // Retrieve all candidates
-    Candidate.find({ 'cid': req.client.cid }, 'fullName formCompleted dateCompleted form', {sort: {'dateCompleted': -1}}, function(err, candidateItems) {
+    Candidate.find({ 'cid': req.client.cid }, 'fullName formCompleted dateCompleted form session', {sort: {'dateCompleted': -1}}, function(err, candidateItems) {
         // Render the candidates view in a callback because the retrieval from the DB is async
         res.render('candidates', { title: 'Manage Clients', candidates: candidateItems}); // Clients management page
     });
