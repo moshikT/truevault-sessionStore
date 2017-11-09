@@ -1,10 +1,15 @@
-var express = require('express');
-var Candidate = require('../models/candidate.server.model.js');
-var generateLink = require('../controllers/linkGenerator.server.controller');
-var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
-var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
-var uuidv1 = require('uuid/v1');
+// addCandidate controller
+// Allows adding a new candidate to a specific client
+// let express = require('express');   //Express
+// let fs = require('fs');             //Node.js file I/O
+// let path = require('path');          //Node.js file & directory
+let Candidate = require('../models/candidate.server.model.js');
+let generateLink = require('../controllers/linkGenerator.server.controller');
+let formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+let textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+let uuidv1 = require('uuid/v1');
 
+// object storing all candidate data entered on this view
 class userData {
     constructor(fullName, id, email, phoneNumber, company, gender, recruitmentSource, linkToCV) {
         this.fullName = fullName;
@@ -18,22 +23,30 @@ class userData {
     }
 }
 
+// Called on GET request to addCandidate
+// Initialize the language-dependent text and render the addCandidate page
 exports.getAddCandidatePage = function (req, res) {
-    textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (addCandidateText) {
-        res.render('addCandidate', {
-            title: '',
-            indexPageText : addCandidateText,
-            client: req.client
-        });
+    const isEnglish = (req.client.language === 'en');
+    const title = (isEnglish?'Add Candidate':'הוסף מועמד') + ' - ' + req.client.name;
+    const subTitle = (isEnglish?'Add candidate for':'הוסף מועמד עבור ') + ' - ' + req.client.name;
+    // Get the field names based on client language
+    fieldNames = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, isEnglish);
+    res.render('addCandidate', {
+        title: title,
+        subTitle: subTitle,
+        fieldNames : fieldNames,
+        client: req.client
     });
-}
+};
 
+// Called on POST request to addCandidate
+// Add a new candidate to the DB and render the displayLink page which shows the new candidate's data
 exports.addCandidate = function (req, res) {
-    var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
+    const newUser = new userData(req.body['user_fullName'], req.body['user_id'],
         req.body['user_email'], req.body['user_tel'], req.client.name, req.body['gender'],
         req.body['recruitmentSource'], req.body['linkToCV']);
 
-    // Removed search for candidate because we would like to create a new entry for the candidate in any case
+    // FIXME: Removed search for candidate because we would like to create a new entry for the candidate in any case
     // If this is returned to active state then the behavior MUST change because currently it appears to the admin
     //  as if he's creating a new candidate even if one is already found but behind the scenes just the existing candidate
     //  entry is used and this is BAD (Amit)
@@ -49,31 +62,40 @@ exports.addCandidate = function (req, res) {
                 client: req.client
             });
         }
-        else */ {
+        else  {*/
         console.log("%s.%s:%s -", __file, __ext, __line, "Creating candidate for keyword:", req.client.keyword);
-        var isInEnglish = (req.client.language == 'en');
+        const isInEnglish = (req.client.language === 'en');
+        // Start by generating a questions form for the candidate
+        // FIXME: generateForm, generateLink & (mongoose)save are all async calls that use callbacks, causing the following code
+        //   to be a bit messy. We have to convert them to promises in order the make the following more readable
         formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
-            var sid = uuidv1();
-            var session = {};
-            session.id = sid;
-            session.expired = false;
+            //initialize session data
+            const sid = uuidv1();
+            const session = {
+                id: sid,
+                expired: false
+            };
 
-            var recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/recruiterReport?sid=' + session.id;//+ req.originalUrl;
+            // construct a full URL for the recruiter report so that we'll be able to use it with a URL shortener
+            const recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/recruiterReport?sid=' + session.id;
             console.log("%s.%s:%s -", __file, __ext, __line, recruiterReportUrl);
+
+            // call URL shortener to create a short URL for the recruiter report
             generateLink(recruiterReportUrl, function(shortendLinkToReport) {
+                const report = {
+                    link: recruiterReportUrl,
+                    completed: false
+                };
 
-                var report = {};
-                report.link = recruiterReportUrl;
-                report.completed = false;
-
-                //var report = {};
-                //report.completed = false;
-
-                var url = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/?sid=' + session.id;//+ req.originalUrl;
-                console.log("%s.%s:%s -", __file, __ext, __line, "URL: ", url);
+                // construct a full URL for the form so that we'll be able to use it with a URL shortener
+                const formUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/?sid=' + session.id;
+                console.log("%s.%s:%s -", __file, __ext, __line, "formUrl: ", formUrl);
                 console.log("%s.%s:%s -", __file, __ext, __line, "Form length:", form.length);
-                generateLink(url, function(shortendLink) {
-                    var newCandidateEntry = new Candidate({
+
+                // call URL shortener to create a short URL for the form
+                generateLink(formUrl, function(shortendLink) {
+                    // Now create a new candidate object with all the data generated above
+                    const newCandidateEntry = new Candidate({
                         fullName: newUser.fullName,
                         id: newUser.id,
                         email: newUser.email,
@@ -91,25 +113,27 @@ exports.addCandidate = function (req, res) {
                         linkToCV: newUser.linkToCV
                     });
 
+                    // Save the new candidate in the DB
                     newCandidateEntry.save(function (err) {
                         if (err) {
+                            // FIXME: Do more than just log the error to the console
                             console.log("%s.%s:%s -", __file, __ext, __line, err);
                         }
                         console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
-                        // TODO: send SMS with varification code
+
+                        // TODO: Trigger the next step in the process, such as sending an SMS or notifying the ATS etc.
                         newUser.linkToForm = shortendLink;
-                            newUser.linkToReport = shortendLinkToReport;
-                            res.render('displayLink', {
-                                title: '',
-                                candidate: newUser,
-                                client: req.client
-                            });
+                        newUser.linkToReport = shortendLinkToReport;
+                        res.render('displayLink', {
+                            title: '',
+                            candidate: newUser,
+                            client: req.client
                         });
                     });
+                });
             });
         });
-    }
-    //res.redirect('/addClient');
-    //}); //This belongs to the 'findone' that was disabled above
+    //}
+    //}); //This belongs to the 'findOne' that was disabled above
 }
 
