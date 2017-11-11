@@ -1,9 +1,13 @@
 //******* linkGenerator *******
 // Handles generation of goo.gl short URLs
 //*****************************
-var GoogleUrl = require('google-url');  //goo.gl URL generation package
+var GoogleUrl = require('google-url');  //goo.gl URL generation package with callbacks
+var goorl = require('goorl'); // goo.gl URL generation package with promises
 
 googleUrl = new GoogleUrl( { key: 'AIzaSyAOKuZalTeNBoetXdEz_on81E5vcjxarVU' });
+const options = {
+    key: 'AIzaSyAOKuZalTeNBoetXdEz_on81E5vcjxarVU'
+};
 
 generateLink = function (link, callback) {
     // Call goo.gl to generate a short URL for us
@@ -18,4 +22,12 @@ generateLink = function (link, callback) {
     } );
 };
 
-module.exports = generateLink;
+generateLinkProm = function(longUrl) {
+    // Setup the URL in the options
+    options.url = longUrl;
+    console.log("%s.%s:%s -", __file, __ext, __line, options);
+
+    return goorl(options);
+}
+
+module.exports = generateLink, generateLinkProm;
