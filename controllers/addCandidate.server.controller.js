@@ -109,6 +109,7 @@ exports.addCandidate = function (req, res) {
                 const newCandidateEntry = new Candidate({
                     fullName: newUser.fullName,
                     id: newUser.id,
+                    cid: req.client._id,
                     email: newUser.email,
                     phoneNumber: newUser.phoneNumber,
                     company: newUser.company,
@@ -121,6 +122,7 @@ exports.addCandidate = function (req, res) {
                     report: report,
                     recruitmentSource: newUser.recruitmentSource,
                     dateCompleted: '',
+                    dateTimeCreated: new Date(),
                     linkToCV: newUser.linkToCV
                 });
 

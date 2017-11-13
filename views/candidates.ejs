@@ -36,7 +36,7 @@
 </style>
 <header>
     <div class="container col-md-12" style="text-align: center;">
-        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
+        <img class="logo" style="height: 100px;padding-top:20px;" src="/images/EH_logo.png" />
     </div>
 </header>
 <body>
@@ -44,10 +44,12 @@
 </ul>
 <table id="candidates" style="width:100%">
     <tr>
-        <th>Name</th>
-        <th>Completed</th>
         <th>Date</th>
+        <th>Name</th>
+        <th>Score</th>
+        <th>Date Completed</th>
         <th>Report</th>
+        <th>CV</th>
         <th>Experience</th>
     </tr>
     <% for (let i=0;i<candidates.length;i++) {
@@ -65,10 +67,15 @@
         }
     %>
     <tr>
+        <% const dateTimeCreated = candidates[i].dateTimeCreated; %>
+        <% const dateTimeCompleted = candidates[i].dateTimeCompleted; %>
+        <% report = candidates[i].report; %>
+        <td><%- (dateTimeCreated != undefined)?dateTimeCreated.toLocaleString():'' %></td>
         <td><%- candidates[i].fullName %></td>
-        <td><%- candidates[i].formCompleted %></td>
-        <td><%- candidates[i].dateCompleted %></td>
+        <td><%- (report != undefined)?report.finalScore:'Not Done' %></td>
+        <td><%- (dateTimeCompleted != undefined)?dateTimeCompleted.toLocaleString():'' %></td>
         <td><a href='./recruiterReport?sid=<%- candidates[i].session.id %>' target='_blank'>Report</a></td>
+        <td><a href='<%- candidates[i].linkToCV %>' target='_blank'>CV</a></td>
         <td><%- appExp %></td>
     </tr>
     <% } %>
