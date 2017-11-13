@@ -243,7 +243,7 @@ $("#form").validate({
         _LTracker.push({
             'text': 'Form submitted',
             'sid': sid,
-            'date': dateSubmitted.toString(),
+            'date': dateSubmitted,
             'cid': cid,
             'userType' : 'candidate',
             'fullname': fullName
