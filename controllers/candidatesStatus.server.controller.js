@@ -8,7 +8,7 @@ let Candidate = require('../models/candidate.server.model.js');    //import cand
 
 exports.candidatesStatus = function (req, res) {
     // Retrieve all candidates
-    Candidate.find({ 'cid': req.client._id }, 'fullName formCompleted dateTimeCompleted dateTimeCreated linkToCV form session report.finalScore', {sort: {'dateTimeCompleted': -1}}, function(err, candidateItems) {
+    Candidate.find({ 'cid': req.client._id }, 'fullName formCompleted dateTimeCompleted dateTimeCreated linkToCV form session report.finalScore', {sort: {'dateTimeCompleted': -1, 'fullName': 1}}, function(err, candidateItems) {
         if (err) {
             return;
         }
