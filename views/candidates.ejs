@@ -62,10 +62,14 @@
         <th data-field="report">Report</th>
         <th data-field="cv">CV</th>
         <th data-field="experience" data-sortable="true" data-sorter="htmlSorter">Experience</th>
+        <% if (advanced) { %>
+            <th data-field="duration" data-sortable="true" data-sorter="htmlSorter">Duration</th>
+        <% } %>
     </tr>
     </thead>
     <% for (let i = 0;i < candidates.length;i++) {
-        formjson = candidates[i].form; // Get the answers
+        const candidate = candidates[i];
+        formjson = candidate.form; // Get the answers
         let appExp = ''; // For holding the app experience response
         for (let j = 0; j < formjson.length; j++) {
             if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
@@ -79,7 +83,6 @@
         }
     %>
     <tr>
-        <% const candidate = candidates[i]; %>
         <% const dateTimeCreated = candidate.dateTimeCreated; %>
         <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17');%>
         <% report = candidate.report; %>
@@ -102,6 +105,9 @@
         </td>
         <td><a href='<%- candidate.linkToCV %>' target='_blank'>CV</a></td>
         <td><%- appExp %></td>
+        <% if (advanced) { %>
+            <td><%= candidate.formDurationInMinutes %></td>
+        <% } %>
     </tr>
     <% } %>
 </table>

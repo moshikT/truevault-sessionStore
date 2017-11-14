@@ -8,12 +8,12 @@ let Candidate = require('../models/candidate.server.model.js');    //import cand
 
 exports.candidatesStatus = function (req, res) {
     // Retrieve all candidates
-    Candidate.find({ 'cid': req.client._id }, 'fullName formCompleted dateTimeCompleted dateTimeCreated linkToCV form session report.finalScore report.completed linkToReport', {sort: {'dateTimeCompleted': -1, 'fullName': 1}}, function(err, candidateItems) {
+    Candidate.find({ 'cid': req.client._id }, 'fullName formCompleted formDurationInMinutes dateTimeCompleted dateTimeCreated linkToCV form session report.finalScore report.completed linkToReport', {sort: {'dateTimeCompleted': -1, 'fullName': 1}}, function(err, candidateItems) {
         if (err) {
             return;
         }
 
         // Render the candidates view in a callback because the retrieval from the DB is async
-        res.render('candidates', { title: 'Manage Clients', candidates: candidateItems}); // Clients management page
+        res.render('candidates', { title: 'Manage Clients', advanced: req.advanced, candidates: candidateItems}); // Clients management page
     });
 };

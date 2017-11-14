@@ -111,6 +111,13 @@ router.get('/test', function (req, res) {
 
 // Candidates status
 router.get('/clients/:cid/candidates', function (req, res) {
+    req.advanced = false;
+    return candidatesStatus_Ctrl.candidatesStatus(req, res);
+});
+
+// Candidates status
+router.get('/clients/:cid/candidatesAdv', function (req, res) {
+    req.advanced = true;
     return candidatesStatus_Ctrl.candidatesStatus(req, res);
 });
 
