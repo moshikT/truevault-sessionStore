@@ -91,7 +91,7 @@
         <td><%- (report != undefined)?report.finalScore:'Not Done' %></td>
         <td><%- (dateTimeCompleted != undefined)?dateTimeCompleted.toLocaleString():'' %></td>
         <td>
-            <% if ((report) && (report.completed)) {
+            <% if ((report) && (candidate.formCompleted)) {
                 if (candidate.linkToReport !== undefined) { %>
                     <a href='<%= candidate.linkToReport %>' target='_blank'>Report</a>
                 <% }
