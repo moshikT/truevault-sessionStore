@@ -8,22 +8,33 @@ var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller
 //['EQ', 'LEARNING', 'OUTCOME DRIVEN', 'EMOTIONAL STABILITY', 'ASSERTIVENESS',
 //'MOTIVATION TO MAKE MONEY', 'SOCIAL DESIRABILITY', 'ATTENTIVENESS TO DETAILS', 'WORK TENDENCY'];
 
-exports.calcRecruiterReport = function (req, res) {
+// calcRecruiterReport
+exports.calcRecruiterReport = function (req, res, callback) {
     // Lookup the candidate
     Candidate.findOne({'session.id': req.sid}, function (err, candidate) {
         if (err) {
             console.log("%s.%s:%s -", __file, __ext, __line, "couldn't load candidate", err);
         }
         if (candidate) { // Safety
-            if (candidate.formCompleted !== true) {
+            if (!candidate.formCompleted) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "Can't calculate for an incomplete form", err);
                 // If form wasn't completed don't try to calculate the report
+                if (callback) {
+                    callback(candidate);
+                }
+                return;
+            }
+            if (candidate.report.completed) {
+                // Report was already calculated before
+                if (callback) {
+                    callback(candidate);
+                }
                 return;
             }
 
             // Calculate factor averages
             getFactorsAvg(candidate, function (factorsData, finalScore) {
-
+                console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
                 var isMale = (candidate.gender == 'male'); // Gender adjustment
                 // Get text based on factor averages
                 getVerbalText(factorsData, isMale, req.client.keyword, function (strengths, weaknesses) {
@@ -32,6 +43,8 @@ exports.calcRecruiterReport = function (req, res) {
                     report.strengths = strengths;
                     report.weaknesses = weaknesses;
                     report.finalScore = finalScore;
+                    report.factorsData = factorsData;
+                    report.completed = true;
 
                     candidate.report = report;
 
@@ -44,6 +57,9 @@ exports.calcRecruiterReport = function (req, res) {
                             console.log("%s.%s:%s -", __file, __ext, __line, "Stored report data");
                         }
                     });
+                    if (callback) {
+                        callback(candidate);
+                    }
                 });
             });
         }
@@ -51,16 +67,9 @@ exports.calcRecruiterReport = function (req, res) {
 }
 
 exports.generateRecruiterReport = function (req, res) {
-    Candidate.findOne({'session.id': req.sid}, function (err, candidate) {
-        if (err) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "couldn't load candidate", err);
-        }
-        if (candidate) { // Safety
-            if (candidate.report === undefined) { // No report data
-                // TODO: Display something when there's no report to display
-                return;
-            }
-            textGenerator_Ctrl.initRecruiterReportText((req.client.language == 'en'), function (recruiterReportText) {
+    exports.calcRecruiterReport(req, res, function(candidate) {
+        if ((candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
+            textGenerator_Ctrl.initRecruiterReportText((req.client.language === 'en'), function (recruiterReportText) {
                 res.render('recruiterReport', {
                     title: '',
                     client: req.client,
@@ -179,8 +188,8 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                         (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
                     var isWeakness = ((factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '1') ||
                         (factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '0'));
-                    var verbalKey = isStrength ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
-                        : isWeakness ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
+                    var verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
+                        : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                             : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
 
                     var verbalData = {};

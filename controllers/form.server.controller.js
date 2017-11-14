@@ -82,7 +82,6 @@ exports.saveFormResults = function (req, res) {
                 '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
             var report = {};
             report.link = recruiterReportUrl;
-            report.completed = true;
 
             var dateCompleted = new Date();
 
