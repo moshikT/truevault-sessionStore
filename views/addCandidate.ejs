@@ -44,12 +44,13 @@
             <input id="linkToCV" class="inputs" name="linkToCV" type="text" placeholder='<%= fieldNames.linkToCVField %>' style="border-style: none none solid none;text-align: center;opacity: 0.7;">
         </div>
         <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
-            <input class="inputs" name="gender" type="radio"
-                   value="male" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px"><%= fieldNames.maleText %></span>
+            <!-- The label has to come before (to the left) of the radio button. Otherwise in RTL (Hebrew) the label gets attached to the wrong button -->
+            <label for="input-male" style="padding-right: 10px"><%= fieldNames.maleText %></label><input class="inputs" name="gender" type="radio" id="input-male"
+                   value="male" style="border-style: none none solid none;text-align: center;opacity: 0.7;">
 
 
-            <input class="inputs" name="gender" type="radio"
-                   value="female" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px"><%= fieldNames.femaleText %></span>
+            <label for="input-female" style="padding-right: 10px"><%= fieldNames.femaleText %></label><input class="inputs" name="gender" type="radio" id="input-female"
+                   value="female" style="border-style: none none solid none;text-align: center;opacity: 0.7;">
 
         </div>
     </div>
