@@ -55,15 +55,16 @@
        style="width:100%">
     <thead>
     <tr>
-        <th data-field="date" data-sortable="true" data-sorter="htmlSorter">Date</th>
-        <th data-field="name" data-sortable="true" data-sorter="htmlSorter">Name</th>
-        <th data-field="score" data-sortable="true" data-sorter="htmlSorter">Score</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sorter="htmlSorter">Date Completed</th>
+        <th data-field="date" data-sortable="true" data-sorter="textSorter">Date</th>
+        <th data-field="name" data-sortable="true" data-sorter="textSorter">Name</th>
+        <th data-field="score" data-sortable="true" data-sorter="textSorter">Score</th>
+        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter">Date Completed</th>
         <th data-field="report">Report</th>
         <th data-field="cv">CV</th>
-        <th data-field="experience" data-sortable="true" data-sorter="htmlSorter">Experience</th>
+        <th data-field="phone">Phone</th>
+        <th data-field="experience" data-sortable="true" data-sorter="textSorter">Experience</th>
         <% if (advanced) { %>
-            <th data-field="duration" data-sortable="true" data-sorter="htmlSorter">Duration</th>
+            <th data-field="duration" data-sortable="true" data-sorter="numSorter">Duration</th>
         <% } %>
     </tr>
     </thead>
@@ -104,6 +105,7 @@
             <% } %>
         </td>
         <td><a href='<%- candidate.linkToCV %>' target='_blank'>CV</a></td>
+        <td><%= candidate.phoneNumber %></td>
         <td><%- appExp %></td>
         <% if (advanced) { %>
             <td><%= candidate.formDurationInMinutes %></td>
@@ -118,9 +120,15 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
 <script>
-    function htmlSorter(a, b) {
-        /*var a = $(a).text();
-        var b = $(b).text();*/
+    function textSorter(a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    }
+
+    function numSorter(a, b) {
+        a = parseFloat(a);
+        b = parseFloat(b);
         if (a < b) return -1;
         if (a > b) return 1;
         return 0;
