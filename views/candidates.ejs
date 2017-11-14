@@ -6,8 +6,11 @@
 
     <title><%= title %></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <!-- Include Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+    <!-- Include Bootstrap Table -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 </head>
 <!-- Define styles for a nice candidates table -->
 <style>
@@ -22,9 +25,13 @@
         padding: 8px;
     }
 
-    #candidates tr:nth-child(even){background-color: #f2f2f2;}
+    #candidates tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-    #candidates tr:hover {background-color: #ddd;}
+    #candidates tr:hover {
+        background-color: #ddd;
+    }
 
     #candidates th {
         padding-top: 12px;
@@ -36,23 +43,28 @@
 </style>
 <header>
     <div class="container col-md-12" style="text-align: center;">
-        <img class="logo" style="height: 100px;padding-top:20px;" src="/images/EH_logo.png" />
+        <img class="logo" style="height: 100px;padding-top:20px;" src="/images/EH_logo.png"/>
     </div>
 </header>
 <body>
 <ul>
 </ul>
-<table id="candidates" style="width:100%">
+<table data-toggle="table" id="candidates"
+       data-sort-name="dateCompleted"
+       data-sort-order="desc"
+       style="width:100%">
+    <thead>
     <tr>
-        <th>Date</th>
-        <th>Name</th>
-        <th>Score</th>
-        <th>Date Completed</th>
-        <th>Report</th>
-        <th>CV</th>
-        <th>Experience</th>
+        <th data-field="date" data-sortable="true" data-sorter="htmlSorter">Date</th>
+        <th data-field="name" data-sortable="true" data-sorter="htmlSorter">Name</th>
+        <th data-field="score" data-sortable="true" data-sorter="htmlSorter">Score</th>
+        <th data-field="dateCompleted" data-sortable="true" data-sorter="htmlSorter">Date Completed</th>
+        <th data-field="report">Report</th>
+        <th data-field="cv">CV</th>
+        <th data-field="experience" data-sortable="true" data-sorter="htmlSorter">Experience</th>
     </tr>
-    <% for (let i=0;i<candidates.length;i++) {
+    </thead>
+    <% for (let i = 0;i < candidates.length;i++) {
         formjson = candidates[i].form; // Get the answers
         let appExp = ''; // For holding the app experience response
         for (let j = 0; j < formjson.length; j++) {
@@ -67,17 +79,32 @@
         }
     %>
     <tr>
-        <% const dateTimeCreated = candidates[i].dateTimeCreated; %>
-        <% const dateTimeCompleted = candidates[i].dateTimeCompleted; %>
-        <% report = candidates[i].report; %>
-        <td><%- (dateTimeCreated != undefined)?dateTimeCreated.toLocaleString():'' %></td>
-        <td><%- candidates[i].fullName %></td>
+        <% const candidate = candidates[i]; %>
+        <% const dateTimeCreated = candidate.dateTimeCreated; %>
+        <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17');%>
+        <% report = candidate.report; %>
+        <td><%- (dateTimeCreated != undefined) ? dateTimeCreated.toLocaleString() : '' %></td>
+        <td><%- candidate.fullName %></td>
         <td><%- (report != undefined)?report.finalScore:'Not Done' %></td>
         <td><%- (dateTimeCompleted != undefined)?dateTimeCompleted.toLocaleString():'' %></td>
-        <td><a href='./recruiterReport?sid=<%- candidates[i].session.id %>' target='_blank'>Report</a></td>
-        <td><a href='<%- candidates[i].linkToCV %>' target='_blank'>CV</a></td>
+        <td><a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'>Report</a></td>
+        <td><a href='<%- candidate.linkToCV %>' target='_blank'>CV</a></td>
         <td><%- appExp %></td>
     </tr>
     <% } %>
 </table>
 </body>
+
+<% include partials/footer %>
+<!-- Include Bootstrap Table -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<script>
+    function htmlSorter(a, b) {
+        /*var a = $(a).text();
+        var b = $(b).text();*/
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    }
+</script>
