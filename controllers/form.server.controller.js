@@ -118,15 +118,15 @@ exports.saveFormResults = function (req, res) {
 }
 
 exports.getIndex = function (req, res) {
-    textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
+    //textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
         console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client);
         res.render('index', {
             title: '',
-            indexPageText : indexText,
+            indexPageText : (req.client.language == 'en') ? 'ltr' : 'rtl',
             client: req.client,
             sid: req.sid
         });
-    });
+    //});
 }
 
 exports.getForm = function (req, res) {

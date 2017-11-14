@@ -196,7 +196,7 @@ var rules = {};
 
 for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
-    if(key != "isCompleted"){
+    if(key != "isCompleted" && key.indexOf('cultural') == '-1'){
         rules[key] = "required";
     }
 }
@@ -361,14 +361,33 @@ function getCid() {
 }
 
 // For further use - in order to style Coltural fit questions
+var culturalSet = {};
+culturalSet.movesCounter = 0;
 $(function() {
     $( "#sortable" ).sortable({
         stop: function () {
-            var nbElems = inputs.length;
-            $('input.currentposition').each(function(idx) {
-                $(this).val(nbElems - idx);
-                console.log($(this).val);
+            culturalSet.movesCounter += 1;
+            var culturalData = [];
+            var nbElems = $(this).find('input').length / 2;
+            //var nbElems = inputs.length;
+            var order = 0;
+            $('input.currentPosition').each(function(idx) {
+                order++;
+                var currentElementValue = nbElems - idx;
+                var element = {};
+                element.answer = currentElementValue;
+                element.id = $(this).attr('name');
+                $(this).val(currentElementValue);
+                //console.log(element);
+                culturalData.push(element);
             });
+            culturalSet.data = culturalData;
+            console.log("number of moves ", culturalSet.movesCounter);
+            console.log(culturalSet);
+            var qid = $(this).data('id');
+            var patchUrl = '/' + 'clients' +  '/api/' + sid ;//+ '/' + qid;
+            console.log("url ", patchUrl);
+            sendResult(patchUrl, culturalSet);
         }
     });
     $( "#sortable" ).disableSelection();
