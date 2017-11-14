@@ -118,6 +118,7 @@ exports.addCandidate = function (req, res) {
                     formCompleted: false,
                     session: session,
                     linkToForm: shortUrlToForm,
+                    linkToReport: newUser.linkToReport,
                     gender: newUser.gender,
                     report: report,
                     recruitmentSource: newUser.recruitmentSource,

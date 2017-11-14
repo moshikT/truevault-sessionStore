@@ -24,7 +24,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
                 }
                 return;
             }
-            if (candidate.report.completed) {
+            if ((candidate.report) && (candidate.report.completed)) {
                 // Report was already calculated before
                 if (callback) {
                     callback(candidate);
@@ -68,15 +68,22 @@ exports.calcRecruiterReport = function (req, res, callback) {
 
 exports.generateRecruiterReport = function (req, res) {
     exports.calcRecruiterReport(req, res, function(candidate) {
+        const langHeb = (req.client.language !== 'en');
         if ((candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
-            textGenerator_Ctrl.initRecruiterReportText((req.client.language === 'en'), function (recruiterReportText) {
+            textGenerator_Ctrl.initRecruiterReportText(!langHeb, function (recruiterReportText) {
                 res.render('recruiterReport', {
-                    title: '',
+                    title: (langHeb?'דוח מועמד - ':'Candidate Report - ') + candidate.fullName,
                     client: req.client,
                     sid: req.sid,
                     candidate: candidate,
                     text: recruiterReportText
                 });
+            });
+        }
+        else {
+            res.render('niceError', {
+                title: (langHeb?'דוח מועמד - ':'Candidate Report - ') + candidate.fullName,
+                errorText: langHeb?'המועמד טרם השלים את מילוי השאלון':'The candidate has not completed the questionnaire yet'
             });
         }
     });

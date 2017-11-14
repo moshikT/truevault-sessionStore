@@ -14,6 +14,7 @@ var candidateSchema = new Schema({
     formCompleted: Boolean,
     session: JSON,
     linkToForm: String,
+    linkToReport: String,
     report: JSON,
     gender: String,
     recruitmentSource: String,
