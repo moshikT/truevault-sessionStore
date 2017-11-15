@@ -125,7 +125,7 @@ function parseQuestions(qJSON, isInEnglish) {
 
 
     }
-    else if (qJSON['TYPE'] == 'F') {
+    /*else if (qJSON['TYPE'] == 'F') {
         parsedQuestion.type = 'F';
         var fitItemString = qJSON['FIT HEBREW'].toString();
         //if()
@@ -134,7 +134,7 @@ function parseQuestions(qJSON, isInEnglish) {
         //console.log("%s.%s:%s -", __file, __ext, __line, "coltural fit asnwers: ", itemsCollection);
         parsedQuestion.answerOptions = itemsCollection;
         parsedQuestion.dataTitle = itemsCollection;
-    }
+    }*/
     else if (qJSON['TYPE'] == 'C') {
         parsedQuestion.type = 'C';
         parsedQuestion.dataTitle = (answerOptions.length == 2) ? [7, 1] : answerOptions;
