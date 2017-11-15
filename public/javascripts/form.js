@@ -4,8 +4,8 @@ var qAnsweredArray = document.getElementsByClassName('active');
 var questionsAnsweredID = [];
 var sid = getParameterByName('sid');
 var cid = getCid();
-var lastQuestionAnswered = startDate;
 var startDate = new Date();
+var lastQuestionAnswered = startDate;
 
 for(var questionsAnsweredIndex = 0; questionsAnsweredIndex < numOfQuestionsAnswered; questionsAnsweredIndex++) {
     questionsAnsweredID.push(qAnsweredArray[questionsAnsweredIndex].getAttribute("data-toggle"));
@@ -243,7 +243,7 @@ $("#form").validate({
         _LTracker.push({
             'text': 'Form submitted',
             'sid': sid,
-            'date': dateSubmitted,
+            'date': dateSubmitted.toString(),
             'cid': cid,
             'userType' : 'candidate',
             'fullname': fullName
