@@ -388,7 +388,11 @@ $(function() {
             var patchUrl = '/' + 'clients' +  '/api/' + sid ;//+ '/' + qid;
             console.log("url ", patchUrl);
             sendResult(patchUrl, culturalSet);
-        }
+        },
+        zIndex: 9999,
+        helper: "clone",
+        axis: "y",
+        opacity: 0.5
     });
     $( "#sortable" ).disableSelection();
 });

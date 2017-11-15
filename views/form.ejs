@@ -1,7 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <% include partials/head %>
-<body onload="formDisplay()" class="content" dir=<%=textDirection%>>
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/javascripts/jquery.ui.touch-punch.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>-->
+<!--<script src="/javascripts/jqueySortableMobile.js"></script>-->
+<body onload="formDisplay()" class="content" dir=<%= textDirection %>>
 <script>
     var fullName = "<%- fullName %>";
 </script>
@@ -9,7 +14,7 @@
     <% include partials/logo %>
 
     <div id="progressBarDiv" class="container col-md-12" style="display: none;">
-        <h1> <%=  //title %> </h1>
+        <h1> <%= //title  %> </h1>
 
         <div class="container">
             <div class="progress" style="border-radius: 15px;">
@@ -21,18 +26,15 @@
         </div>
     </div>
 </header>
-    <div id="success" style="display: none;">
-        <% include partials/thankYouPartial %>
-    </div>
-    <div id="formContainer"  class="" style="display:none;scroll:hidden;overflow-x: auto;overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 370px;width:100%;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
-       <% include partials/formPartial %>
-    </div>
-    <% include partials/footer %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
-    <script src="/javascripts/messages_he.js"></script>
-<script src="/javascripts/jqueySortableMobile.js"></script>
-    <script src="/javascripts/form.js" ></script>
+<div id="success" style="display: none;">
+    <% include partials/thankYouPartial %>
+</div>
+<div id="formContainer" class=""
+     style="display:none;scroll:hidden;overflow-x: visible;overflow-y: scroll;-webkit-overflow-scrolling: touch;height: 370px;width:100%;border-bottom-left-radius: 15px;border-bottom-right-radius: 15px;">
+    <% include partials/formPartial %>
+</div>
+<% include partials/footer %>
+<script src="/javascripts/messages_he.js"></script>
+<script src="/javascripts/form.js"></script>
 </body>
 </html>
