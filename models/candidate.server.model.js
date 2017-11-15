@@ -4,6 +4,7 @@ var Schema = mongoose.Schema;
 var candidateSchema = new Schema({
     fullName: String,
     id : String,//{type: Number, required: true},
+    cid: String,
     email: String,
     phoneNumber : String,
     company: String,
@@ -13,12 +14,13 @@ var candidateSchema = new Schema({
     formCompleted: Boolean,
     session: JSON,
     linkToForm: String,
+    linkToReport: String,
     report: JSON,
-    //strengths: JSON,
-    //weaknesses: JSON,
     gender: String,
     recruitmentSource: String,
     dateCompleted: String,
+    dateTimeCreated: Date,
+    dateTimeCompleted: Date,
     linkToCV: String
 });
 

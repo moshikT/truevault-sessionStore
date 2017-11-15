@@ -6,8 +6,11 @@
 
     <title><%= title %></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <!-- Include Bootstrap -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+    <!-- Include Bootstrap Table -->
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
 </head>
 <!-- Define styles for a nice candidates table -->
 <style>
@@ -22,9 +25,13 @@
         padding: 8px;
     }
 
-    #candidates tr:nth-child(even){background-color: #f2f2f2;}
+    #candidates tr:nth-child(even) {
+        background-color: #f2f2f2;
+    }
 
-    #candidates tr:hover {background-color: #ddd;}
+    #candidates tr:hover {
+        background-color: #ddd;
+    }
 
     #candidates th {
         padding-top: 12px;
@@ -36,22 +43,34 @@
 </style>
 <header>
     <div class="container col-md-12" style="text-align: center;">
-        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
+        <img class="logo" style="height: 100px;padding-top:20px;" src="/images/EH_logo.png"/>
     </div>
 </header>
 <body>
 <ul>
 </ul>
-<table id="candidates" style="width:100%">
+<table data-toggle="table" id="candidates"
+       data-sort-name="dateCompleted"
+       data-sort-order="desc"
+       style="width:100%">
+    <thead>
     <tr>
-        <th>Name</th>
-        <th>Completed</th>
-        <th>Date</th>
-        <th>Report</th>
-        <th>Experience</th>
+        <th data-field="date" data-sortable="true" data-sorter="textSorter">Date</th>
+        <th data-field="name" data-sortable="true" data-sorter="textSorter">Name</th>
+        <th data-field="score" data-sortable="true" data-sorter="textSorter">Score</th>
+        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter">Date Completed</th>
+        <th data-field="report">Report</th>
+        <th data-field="cv">CV</th>
+        <th data-field="phone">Phone</th>
+        <th data-field="experience" data-sortable="true" data-sorter="textSorter">Experience</th>
+        <% if (advanced) { %>
+            <th data-field="duration" data-sortable="true" data-sorter="numSorter">Duration</th>
+        <% } %>
     </tr>
-    <% for (let i=0;i<candidates.length;i++) {
-        formjson = candidates[i].form; // Get the answers
+    </thead>
+    <% for (let i = 0;i < candidates.length;i++) {
+        const candidate = candidates[i];
+        formjson = candidate.form; // Get the answers
         let appExp = ''; // For holding the app experience response
         for (let j = 0; j < formjson.length; j++) {
             if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
@@ -65,12 +84,53 @@
         }
     %>
     <tr>
-        <td><%- candidates[i].fullName %></td>
-        <td><%- candidates[i].formCompleted %></td>
-        <td><%- candidates[i].dateCompleted %></td>
-        <td><a href=''./recruiterReport?sid=<%- candidates[i].session.id %>' target='_blank'>Report</a></td>
+        <% const dateTimeCreated = candidate.dateTimeCreated; %>
+        <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17');%>
+        <% report = candidate.report; %>
+        <td><%- (dateTimeCreated != undefined) ? dateTimeCreated.toLocaleString() : '' %></td>
+        <td><%- candidate.fullName %></td>
+        <td><%- (report != undefined)?report.finalScore:'Not Done' %></td>
+        <td><%- (dateTimeCompleted != undefined)?dateTimeCompleted.toLocaleString():'' %></td>
+        <td>
+            <% if ((report) && (candidate.formCompleted)) {
+                if (candidate.linkToReport !== undefined) { %>
+                    <a href='<%= candidate.linkToReport %>' target='_blank'>Report</a>
+                <% }
+                else { %>
+                    <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'>Report</a>
+                <% }
+            }
+            else { %>
+
+            <% } %>
+        </td>
+        <td><a href='<%- candidate.linkToCV %>' target='_blank'>CV</a></td>
+        <td><%= candidate.phoneNumber %></td>
         <td><%- appExp %></td>
+        <% if (advanced) { %>
+            <td><%= candidate.formDurationInMinutes %></td>
+        <% } %>
     </tr>
     <% } %>
 </table>
 </body>
+
+<% include partials/footer %>
+<!-- Include Bootstrap Table -->
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<script>
+    function textSorter(a, b) {
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    }
+
+    function numSorter(a, b) {
+        a = parseFloat(a);
+        b = parseFloat(b);
+        if (a < b) return -1;
+        if (a > b) return 1;
+        return 0;
+    }
+</script>

@@ -8,6 +8,7 @@ var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller
 var Candidate = require('../models/candidate.server.model.js');
 var Client = require('../models/addClient.server.model.js');
 var uuidv1 = require('uuid/v1');
+var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
 
 var isCandidate = true;
 
@@ -88,6 +89,7 @@ exports.saveFormResults = function (req, res) {
             candidate.formCompleted = true;
             candidate.session.expired = true;
             candidate.dateCompleted = convertDate(dateCompleted);
+            candidate.dateTimeCompleted = dateCompleted;
             //candidate.report.completed = true;
             candidate.report = report;
 
@@ -105,7 +107,9 @@ exports.saveFormResults = function (req, res) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "unable To save", err);
                 }
                 else {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "succeed update final answer");
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
+                    recruiterReport_Ctrl.calcRecruiterReport(req, res); // Calculate the report data
                 }
             });
 
@@ -118,15 +122,14 @@ exports.saveFormResults = function (req, res) {
 }
 
 exports.getIndex = function (req, res) {
-    //textGenerator_Ctrl.initIndexText(req.client.name, req.client.isDemo, (req.client.language == 'en'), function (indexText) {
-        console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client);
-        res.render('index', {
-            title: '',
-            indexPageText : (req.client.language == 'en') ? 'ltr' : 'rtl',
-            client: req.client,
-            sid: req.sid
-        });
-    //});
+    //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, (req.client.language === 'en'));
+    console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client.name);
+    res.render('index', {
+        title: '',
+        indexPageText : (req.client.language == 'en') ? 'ltr' : 'rtl',
+        client: req.client,
+        sid: req.sid
+    });
 }
 
 exports.getForm = function (req, res) {
