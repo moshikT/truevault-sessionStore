@@ -1,3 +1,4 @@
+"use strict";
 var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
@@ -27,9 +28,9 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
     };
 
     // make sure file is retrieved from the db
-    addFile_Ctrl.getFile('items key.csv')
-        .then(fileFound => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File status: ", fileFound);
+    addFile_Ctrl.getFile(['items key.csv'])
+        .then(fileName => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
             csv()
                 .fromFile('/tmp/items key.csv')
                 .on('json', (jsonObj) => {

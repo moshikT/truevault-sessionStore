@@ -1,8 +1,10 @@
+"use strict";
 var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
 var Candidate = require('../models/candidate.server.model.js');
 var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+const addFile_Ctrl = require('../controllers/addFile.server.controller');
 
 
 //['EQ', 'LEARNING', 'OUTCOME DRIVEN', 'EMOTIONAL STABILITY', 'ASSERTIVENESS',
@@ -38,6 +40,10 @@ exports.calcRecruiterReport = function (req, res, callback) {
                 var isMale = (candidate.gender == 'male'); // Gender adjustment
                 // Get text based on factor averages
                 getVerbalText(factorsData, isMale, req.client.keyword, function (strengths, weaknesses) {
+                    if (!strengths) { // verbal text wasn't retrieved
+                        callback(candidate, false);
+                        return;
+                    }
                     // Prepare report object for storage
                     var report = {}
                     report.strengths = strengths;
@@ -67,12 +73,15 @@ exports.calcRecruiterReport = function (req, res, callback) {
 }
 
 exports.generateRecruiterReport = function (req, res) {
-    exports.calcRecruiterReport(req, res, function(candidate) {
+    console.log("%s.%s:%s -", __file, __ext, __line);
+    exports.calcRecruiterReport(req, res, function (candidate, status = true) {
+        console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
         const langHeb = (req.client.language !== 'en');
-        if ((candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
+        if ((status) && (candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
+            console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
             textGenerator_Ctrl.initRecruiterReportText(!langHeb, function (recruiterReportText) {
                 res.render('recruiterReport', {
-                    title: (langHeb?'דוח מועמד - ':'Candidate Report - ') + candidate.fullName,
+                    title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
                     client: req.client,
                     sid: req.sid,
                     candidate: candidate,
@@ -82,8 +91,8 @@ exports.generateRecruiterReport = function (req, res) {
         }
         else {
             res.render('niceError', {
-                title: (langHeb?'דוח מועמד - ':'Candidate Report - ') + candidate.fullName,
-                errorText: langHeb?'המועמד טרם השלים את מילוי השאלון':'The candidate has not completed the questionnaire yet'
+                title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
+                errorText: langHeb ? 'המועמד טרם השלים את מילוי השאלון' : 'The candidate has not completed the questionnaire yet'
             });
         }
     });
@@ -170,72 +179,67 @@ function getFactorsAvg(candidate, callback) {
 function getVerbalText(factorsData, isMale, companyKeyword, callback) {
     var strengths = [];
     var weaknesses = [];
-    var fileName = 'report factors - verbal.csv';
+    const baseFileName = 'report factors - verbal';
 
-    /*addFile_Ctrl.getFile('items key.csv', function (fileFound) {
-        console.log("%s.%s:%s -", __file, __ext, __line, "File status: ", fileFound);
+    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
+        .then(fileName => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+            csv()
+                .fromFile(fileName)
+                .on('data', (data) => {
+                    //data is a buffer object
+                    //parseVerbalData(factorsData, isMale, data);
+                    const jsonStr = data.toString('utf8');
+                    var factorVerbal = JSON.parse(jsonStr);
 
-        if (!fileFound) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Missing file: ", 'items key.csv');
+                    factorsData.forEach(function (factor) {
+                        //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
+                        if (factor.name == factorVerbal['SHORT NAME']) {
+                            /* if reverse relation exists (0) thank put the factor in the opposite column. */
+                            var isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
+                                (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
+                            var isWeakness = ((factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '1') ||
+                                (factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '0'));
+                            var verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
+                                : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
+                                    : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
+
+                            var verbalData = {};
+                            verbalData.id = factorVerbal['SHORT NAME'];
+                            verbalData.title = factorVerbal['HE FACTOR'];
+                            verbalData.text = factorVerbal[verbalKey].split('\n');
+
+                            if (isStrength) {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);
+                                strengths.push(verbalData);
+                            }
+                            else if (isWeakness) {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "weaknes added ", factor);
+                                weaknesses.push(verbalData);
+                            }
+                        }
+                    })
+                })
+                .on('done', (error) => {
+                    if (!error) {
+                        console.log("%s.%s:%s -", __file, __ext, __line, "weaknesses: " + weaknesses);
+                        console.log("%s.%s:%s -", __file, __ext, __line, "strengths: " + strengths);
+                        callback(strengths, weaknesses);
+                    }
+                    else {
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Error reading csv: ", error);
+                        callback(null);
+                    }
+
+                })
+                .on('error', (err) => {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Error reading csv: ", error);
+                    callback(null);
+                })
+        })
+        .catch(error => { // report factors - verbal not found
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
             callback(null);
-            return;
-        }
-    }*/
-    if (companyKeyword != 'default' && companyKeyword != '') {
-        fileName = 'report factors - verbal' + '.' + companyKeyword + '.csv'
-    }
-
-    console.log("%s.%s:%s -", __file, __ext, __line, "file name: ", fileName);
-
-    csv()
-        .fromFile(fileName)
-        .on('data', (data) => {
-            //data is a buffer object
-            //parseVerbalData(factorsData, isMale, data);
-            const jsonStr = data.toString('utf8');
-            var factorVerbal = JSON.parse(jsonStr);
-
-            factorsData.forEach(function (factor) {
-                //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
-                if (factor.name == factorVerbal['SHORT NAME']) {
-                    /* if reverse relation exists (0) thank put the factor in the opposite column. */
-                    var isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
-                        (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
-                    var isWeakness = ((factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '1') ||
-                        (factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '0'));
-                    var verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
-                        : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
-                            : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
-
-                    var verbalData = {};
-                    verbalData.id = factorVerbal['SHORT NAME'];
-                    verbalData.title = factorVerbal['HE FACTOR'];
-                    verbalData.text = factorVerbal[verbalKey].split('\n');
-
-                    if (isStrength) {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);
-                        strengths.push(verbalData);
-                    }
-                    else if (isWeakness) {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "weaknes added ", factor);
-                        weaknesses.push(verbalData);
-                    }
-                }
-            })
-        })
-        .on('done', (error) => {
-            if (!error) {
-                console.log("%s.%s:%s -", __file, __ext, __line, "weaknesses: " + weaknesses);
-                console.log("%s.%s:%s -", __file, __ext, __line, "strengths: " + strengths);
-                callback(strengths, weaknesses);
-            }
-            else {
-                console.log("%s.%s:%s -", __file, __ext, __line, "error occur at done ", error);
-                getVerbalText(factorsData, isMale, 'default', callback);
-            }
-
-        })
-        .on('error', (err) => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file " + fileName + ", err: " + err + "! reading default instead");
-        })
+        });
 }
+
