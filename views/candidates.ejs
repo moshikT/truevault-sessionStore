@@ -67,6 +67,9 @@
         <% if (advanced) { %>
             <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
         <% } %>
+        <% if (advanced) { %>
+            <th data-field="formLink" data-sortable="false""><!--FIXME: Form -->שאלון</th>
+        <% } %>
     </tr>
     </thead>
     <% for (let i = 0;i < candidates.length;i++) {
@@ -110,6 +113,9 @@
         <td><%- appExp %></td>
         <% if (advanced) { %>
             <td><%= candidate.formDurationInMinutes %></td>
+        <% } %>
+        <% if (advanced) { %>
+            <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
         <% } %>
     </tr>
     <% } %>
