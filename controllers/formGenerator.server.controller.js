@@ -2,15 +2,16 @@ var express = require('express');
 var csv = require("csvtojson");
 var fs = require('fs');
 var Candidate = require('../models/candidate.server.model.js');
+const addFile_Ctrl = require('../controllers/addFile.server.controller');
 
 var question = {
-    type : null,
-    item : null,
-    answer : null,
-    dataTitle : null,
-    answerOptions : null,
-    scalaEdges : null,
-    next : null
+    type: null,
+    item: null,
+    answer: null,
+    dataTitle: null,
+    answerOptions: null,
+    scalaEdges: null,
+    next: null
 }
 
 exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
@@ -18,60 +19,71 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
     var companyForm = questionsKeyWord;//company.isDemo ? 'DEMO' : 'AYALON';
 
     var questionsArraysByType = {
-        p_typeJSON : [],
-        f_typeJSON : [],
-        c_typeJSON : [],
-        b_typeJSON : [],
-        a_typeJSON : []
+        p_typeJSON: [],
+        f_typeJSON: [],
+        c_typeJSON: [],
+        b_typeJSON: [],
+        a_typeJSON: []
     }
 
-    csv()
-        .fromFile('items key.csv')
-        .on('json',(jsonObj)=>{
-            // combine csv header row and csv line to a json object
-            // jsonObj.a ==> 1 or 4
-            // formJSON = jsonObj
-            //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
-        })
-        .on('data',(data)=>{
-            //data is a buffer object
-            const jsonStr= data.toString('utf8');
-            var questionsJSON = JSON.parse(jsonStr);
+    // make sure file is retrieved from the db
+    addFile_Ctrl.getFile('items key.csv', function (fileFound) {
+        console.log("%s.%s:%s -", __file, __ext, __line, "File status: ", fileFound);
 
-            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON);
-            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
-            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
+        if (!fileFound) {
+            console.log("%s.%s:%s -", __file, __ext, __line, "Missing file: ", 'items key.csv');
+            callback(null);
+            return;
+        }
 
-            if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
-                question = parseQuestions(questionsJSON, isInEnglish);
-                if (question.type == 'P') {
-                    questionsArraysByType.p_typeJSON.push(question);
-                } else if (question.type == 'F' && question.answerOptions.length > 2) {
-                    //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
-                    //questionsArraysByType.f_typeJSON.push(question);
-                } else if (question.type == 'C') {
-                    questionsArraysByType.c_typeJSON.push(question);
-                } else if (question.type == 'B') {
-                    questionsArraysByType.b_typeJSON.push(question);
-                } else if (question.type == 'A') {
-                    questionsArraysByType.a_typeJSON.push(question);
+        csv()
+            .fromFile('/tmp/items key.csv')
+            .on('json', (jsonObj) => {
+                // combine csv header row and csv line to a json object
+                // jsonObj.a ==> 1 or 4
+                // formJSON = jsonObj
+                //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
+            })
+            .on('data', (data) => {
+                //data is a buffer object
+                const jsonStr = data.toString('utf8');
+                var questionsJSON = JSON.parse(jsonStr);
+
+                //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON);
+                //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
+                //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
+
+                if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
+                    question = parseQuestions(questionsJSON, isInEnglish);
+                    if (question.type == 'P') {
+                        questionsArraysByType.p_typeJSON.push(question);
+                    } else if (question.type == 'F' && question.answerOptions.length > 2) {
+                        //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
+                        //questionsArraysByType.f_typeJSON.push(question);
+                    } else if (question.type == 'C') {
+                        questionsArraysByType.c_typeJSON.push(question);
+                    } else if (question.type == 'B') {
+                        questionsArraysByType.b_typeJSON.push(question);
+                    } else if (question.type == 'A') {
+                        questionsArraysByType.a_typeJSON.push(question);
+                    }
                 }
-            }
 
-            lines++;
-        })
-        .on('done',(error)=>{
+                lines++;
+            })
+            .on('done', (error) => {
 
-            shuffle(questionsArraysByType.p_typeJSON);
-            //shuffle(questionsArraysByType.f_typeJSON);
-            shuffle(questionsArraysByType.b_typeJSON);
+                shuffle(questionsArraysByType.p_typeJSON);
+                //shuffle(questionsArraysByType.f_typeJSON);
+                shuffle(questionsArraysByType.b_typeJSON);
 
-            var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
-                questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
+                const form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
+                    questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
 
-            callback(form);
-    })
-}
+                callback(form);
+            })
+    });
+};
 
 function parseQuestions(qJSON, isInEnglish) {
     var parsedQuestion = {};
@@ -95,10 +107,11 @@ function parseQuestions(qJSON, isInEnglish) {
                 //console.log("%s.%s:%s -", __file, __ext, __line, "Wrong structure for question type B: " + qJSON);
             }
         }
-        parsedQuestion.answer = parsedAnswers; /* TODO: check if possible to change to answer options for uniformity between questions types */
+        parsedQuestion.answer = parsedAnswers;
+        /* TODO: check if possible to change to answer options for uniformity between questions types */
         parsedQuestion.dataTitle = parsedAnswersWeight;
     }
-    else if(qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') {
+    else if (qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') {
         parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : 'A';
         var scalaOptionsNumber = 7;
         var scalaArray = [];
@@ -167,30 +180,30 @@ function reOrderFormJSON(pType, fType, cType, bType, aType) {
     var numOfPTypeQuestion = 20;
     var numOfFTypeQuestion = 0;//5;
 
-    while(pType.length > 0 || fType.length > 0 || cType.length > 0) {
+    while (pType.length > 0 || fType.length > 0 || cType.length > 0) {
         var elementsToPush = numOfPTypeQuestion;
-        while (elementsToPush > 0 && pType.length > 0){
+        while (elementsToPush > 0 && pType.length > 0) {
             var elementToPush = pType.pop();
             pushQuestion(elementToPush, orderedForm);
             elementsToPush--;
         }
-        if(cType.length > 0) {
+        if (cType.length > 0) {
             var elementToPush = cType.pop()
             pushQuestion(elementToPush, orderedForm);
         }
         var elementsToPush = numOfFTypeQuestion;
-        while (elementsToPush > 0 && fType.length > 0){
+        while (elementsToPush > 0 && fType.length > 0) {
             var elementToPush = fType.pop();
             pushQuestion(elementToPush, orderedForm);
             elementsToPush--;
         }
     }
-    while(bType.length > 0) {
+    while (bType.length > 0) {
         var elementToPush = bType.pop();
         pushQuestion(elementToPush, orderedForm);
     }
 
-    while(aType.length > 0) {
+    while (aType.length > 0) {
         var elementToPush = aType.pop();
         pushQuestion(elementToPush, orderedForm);
     }
@@ -198,7 +211,7 @@ function reOrderFormJSON(pType, fType, cType, bType, aType) {
 }
 
 function pushQuestion(nextQuestion, arrayTo) {
-   if (arrayTo.length > 0) {
+    if (arrayTo.length > 0) {
         var currentQuestion = arrayTo[arrayTo.length - 1];
         currentQuestion.next = nextQuestion.id;
     }

@@ -172,7 +172,15 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
     var weaknesses = [];
     var fileName = 'report factors - verbal.csv';
 
+    /*addFile_Ctrl.getFile('items key.csv', function (fileFound) {
+        console.log("%s.%s:%s -", __file, __ext, __line, "File status: ", fileFound);
 
+        if (!fileFound) {
+            console.log("%s.%s:%s -", __file, __ext, __line, "Missing file: ", 'items key.csv');
+            callback(null);
+            return;
+        }
+    }*/
     if (companyKeyword != 'default' && companyKeyword != '') {
         fileName = 'report factors - verbal' + '.' + companyKeyword + '.csv'
     }
