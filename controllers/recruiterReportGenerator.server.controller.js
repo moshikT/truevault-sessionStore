@@ -37,6 +37,11 @@ exports.calcRecruiterReport = function (req, res, callback) {
             // Calculate factor averages
             getFactorsAvg(candidate, function (factorsData, finalScore) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
+                if (!factorsData)
+                { // Couldn't read factors data file
+                    callback(candidate, false);
+                    return;
+                }
                 var isMale = (candidate.gender == 'male'); // Gender adjustment
                 // Get text based on factor averages
                 getVerbalText(factorsData, isMale, req.client.keyword, function (strengths, weaknesses) {
@@ -75,10 +80,10 @@ exports.calcRecruiterReport = function (req, res, callback) {
 exports.generateRecruiterReport = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line);
     exports.calcRecruiterReport(req, res, function (candidate, status = true) {
-        console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
+        // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
         const langHeb = (req.client.language !== 'en');
         if ((status) && (candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
-            console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
+            // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
             textGenerator_Ctrl.initRecruiterReportText(!langHeb, function (recruiterReportText) {
                 res.render('recruiterReport', {
                     title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
@@ -102,78 +107,87 @@ function getFactorsAvg(candidate, callback) {
     var factors = [];
     var testScore = 0;
 
-    csv({noheader: true})
-        .fromFile('report factors - factorsTranspose.csv')
-        .on('csv', (csvRow) => {
-            // csvRow is an array
-            var factorAvg = 0;
-            var numOfElementsInFactor = 0;
-            var factor = csvRow[0];
-            //var isRevereRelation = csvRow[1];
-            //console.log("%s.%s:%s -", __file, __ext, __line, "reverse realtion: ", isRevereRelation);
-            for (var factorElementIndex = 1; factorElementIndex < csvRow.length; factorElementIndex++) {
-                if (csvRow[factorElementIndex] == '') {
-                }
-                else {
-                    numOfElementsInFactor++;
-                    for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
-                        if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {
-                            if (candidate.form[qIndex].type == 'C') {
-                                var score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
+
+    addFile_Ctrl.getFile(['report factors - factorsTranspose.csv'])
+        .then(fileName => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+            csv({noheader: true})
+                .fromFile(fileName)
+                .on('csv', (csvRow) => {
+                    // csvRow is an array
+                    var factorAvg = 0;
+                    var numOfElementsInFactor = 0;
+                    var factor = csvRow[0];
+                    //var isRevereRelation = csvRow[1];
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "reverse realtion: ", isRevereRelation);
+                    for (var factorElementIndex = 1; factorElementIndex < csvRow.length; factorElementIndex++) {
+                        if (csvRow[factorElementIndex] == '') {
+                        }
+                        else {
+                            numOfElementsInFactor++;
+                            for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
+                                if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {
+                                    if (candidate.form[qIndex].type == 'C') {
+                                        var score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
+                                    }
+                                    else if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {
+                                        var score = Math.abs(Number(candidate.form[qIndex].finalAnswer) - 8);
+                                    }
+                                    else {
+                                        var score = Number(candidate.form[qIndex].finalAnswer);
+                                    }
+                                    factorAvg += score;
+                                    //console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);
+                                }
                             }
-                            else if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {
-                                var score = Math.abs(Number(candidate.form[qIndex].finalAnswer) - 8);
-                            }
-                            else {
-                                var score = Number(candidate.form[qIndex].finalAnswer);
-                            }
-                            factorAvg += score;
-                            console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);
                         }
                     }
-                }
-            }
-            var factorData = {};
-            factorData.name = factor;
-            factorData.avg = factorAvg / numOfElementsInFactor;
-            //factorData.isRevereRelation = isRevereRelation;
-            testScore += factorData.avg;
+                    var factorData = {};
+                    factorData.name = factor;
+                    factorData.avg = factorAvg / numOfElementsInFactor;
+                    //factorData.isRevereRelation = isRevereRelation;
+                    testScore += factorData.avg;
 
-            console.log("%s.%s:%s -", __file, __ext, __line, "factor: " + factor + " avg: " + factorData.avg);
-            factors.push(factorData);
-        })
-        .on('data', (data) => {
-            //data is a buffer object
-            //const jsonStr= data.toString('utf8');
-            //var factor = JSON.parse(jsonStr);
-        })
-        .on('done', (error) => {
-            var testScoreAvg = testScore / factors.length;
-            console.log("%s.%s:%s -", __file, __ext, __line, "test score ", testScore);
-            console.log("%s.%s:%s -", __file, __ext, __line, "num of factors ", factors.length);
-            console.log("%s.%s:%s -", __file, __ext, __line, "test avg ", testScoreAvg);
-            if (testScoreAvg < 1.5) {
-                var finalScore = Math.round(testScoreAvg);
-            }
-            else if (testScoreAvg >= 1.5 && testScoreAvg < 3) {
-                var finalScore = 2;
-            }
-            else if (testScoreAvg >= 3 && testScoreAvg < 5) {
-                var finalScore = 3;
-            }
-            else if (testScoreAvg >= 5 && testScoreAvg < 6.5) {
-                var finalScore = 4;
-            }
-            else {
-                var finalScore = 5;//;Math.round(testScoreAvg-2);
-            }
+                    // console.log("%s.%s:%s -", __file, __ext, __line, "factor: " + factor + " avg: " + factorData.avg);
+                    factors.push(factorData);
+                })
+                .on('data', (data) => {
+                    //data is a buffer object
+                    //const jsonStr= data.toString('utf8');
+                    //var factor = JSON.parse(jsonStr);
+                })
+                .on('done', (error) => {
+                    var testScoreAvg = testScore / factors.length;
+                    console.log("%s.%s:%s -", __file, __ext, __line, "test score ", testScore);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "num of factors ", factors.length);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "test avg ", testScoreAvg);
+                    if (testScoreAvg < 1.5) {
+                        var finalScore = Math.round(testScoreAvg);
+                    }
+                    else if (testScoreAvg >= 1.5 && testScoreAvg < 3) {
+                        var finalScore = 2;
+                    }
+                    else if (testScoreAvg >= 3 && testScoreAvg < 5) {
+                        var finalScore = 3;
+                    }
+                    else if (testScoreAvg >= 5 && testScoreAvg < 6.5) {
+                        var finalScore = 4;
+                    }
+                    else {
+                        var finalScore = 5;//;Math.round(testScoreAvg-2);
+                    }
 
-            console.log("%s.%s:%s -", __file, __ext, __line, "test avg conversion to 1-5 ", finalScore);
-            callback(factors, finalScore);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "test avg conversion to 1-5 ", finalScore);
+                    callback(factors, finalScore);
+                })
+                .on('error', (err) => {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'factorsTranspose.csv ", err)
+                })
         })
-        .on('error', (err) => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'factorsTranspose.csv ", err)
-        })
+        .catch(error => { // 'report factors - factorsTranspose.csv' not found
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
+            callback(null);
+        });
 }
 
 function getVerbalText(factorsData, isMale, companyKeyword, callback) {
@@ -185,7 +199,7 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
         .then(fileName => {
             console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
             csv()
-                .fromFile(fileName)
+                .fromFile('/tmp/' + fileName)
                 .on('data', (data) => {
                     //data is a buffer object
                     //parseVerbalData(factorsData, isMale, data);
@@ -232,7 +246,7 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                     }
 
                 })
-                .on('error', (err) => {
+                .on('error', (error) => {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Error reading csv: ", error);
                     callback(null);
                 })
