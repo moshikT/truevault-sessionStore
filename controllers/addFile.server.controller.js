@@ -4,15 +4,15 @@ const path = require('path')
 const DataFile = require('../models/file.server.model.js');
 
 exports.getAddFilePage = function (req, res) {
-    res.render('addFile', { title: 'Add File', stage: 0 });
+    res.render('addFile', {title: 'Add File', stage: 0});
 };
 
-renderError = function (req,res) {
-    res.render('addFile', { title: 'Add File', stage: -1 });
+renderError = function (req, res) {
+    res.render('addFile', {title: 'Add File', stage: -1});
 };
 
-renderSuccess = function (req,res) {
-    res.render('addFile', { title: 'Add File', stage: 1 });
+renderSuccess = function (req, res) {
+    res.render('addFile', {title: 'Add File', stage: 1});
 };
 
 exports.addFile = function (req, res) {
@@ -25,29 +25,29 @@ exports.addFile = function (req, res) {
         return renderError(req, res);
     }
 
-    const dataFileEntry = new DataFile ({
+    const dataFileEntry = new DataFile({
         fileData: fs.readFileSync(req.file.path),
         name: req.body.fileName
     });
 
-    DataFile.findOne({fileName: req.body.fileName}, function(err, dataFileFound) {
+    DataFile.findOne({fileName: req.body.fileName}, function (err, dataFileFound) {
         if (err) {
             console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err)
             return renderError(req, res);
         }
-        
+
         let dataFileEntry;
 
         if (dataFileFound) { // This file is already in collection so need to replace it
             dataFileEntry = dataFileFound;
         }
         else {
-            dataFileEntry = new DataFile ({
+            dataFileEntry = new DataFile({
                 fileName: req.body.fileName
             })
         }
         dataFileEntry.fileData = fs.readFileSync(req.file.path);
-        dataFileEntry.save(function(err) {
+        dataFileEntry.save(function (err) {
             if (err) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err)
                 return renderError(req, res);
@@ -66,31 +66,43 @@ exports.addFile = function (req, res) {
     });
 };
 
-exports.getFile = function(fileName, callback) {
-    if (fs.existsSync('/tmp/' + fileName)) { // file already exists
-        console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, using it: ", fileName);
-        callback(true);
-        return;
-    }
+function timeout(delay) {
+    return new Promise(function (resolve, reject) {
+        setTimeout(resolve, delay);
+    });
+}
 
-    console.log("%s.%s:%s -", __file, __ext, __line, "File doesn't exist, checking in db: ", fileName);
-    DataFile.findOne({fileName: fileName}, function(err, dataFileFound) {
-        if (err) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err)
-            callback(false);
-            return;
-        }
+exports.getFile = function (fileName, callback) {
+    return new Promise(
+        function (resolve, reject) {
+            if (fs.existsSync('/tmp/' + fileName)) { // file already exists
+                console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, using it: ", fileName);
+                resolve(true);
+                return;
+            }
 
-        if (dataFileFound) { // This file is in db - save it to disk
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found in db, saving to disk: ", fileName);
-            fs.writeFileSync('/tmp/' + fileName, dataFileFound.fileData);
-            callback(true);
-            return;
+            console.log("%s.%s:%s -", __file, __ext, __line, "File doesn't exist, checking in db: ", fileName);
+            DataFile.findOne({fileName: fileName}, function (err, dataFileFound) {
+                if (err) {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err)
+                    var reason = new Error("Error: ", err)
+                    reject(reason);
+                    return;
+                }
+
+                if (dataFileFound) { // This file is in db - save it to disk
+                    console.log("%s.%s:%s -", __file, __ext, __line, "File found in db, saving to disk: ", fileName);
+                    fs.writeFileSync('/tmp/' + fileName, dataFileFound.fileData);
+                    resolve(true);
+                    return;
+                }
+                else {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "File not found in db: ", fileName);
+                    var reason = new Error("File not found in db: ", fileName)
+                    reject(reason);
+                    return;
+                }
+            })
         }
-        else {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File not found in db: ", fileName);
-            callback(false);
-            return;
-        }
-    })
+    )
 };

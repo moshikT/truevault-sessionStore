@@ -24,66 +24,67 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
         c_typeJSON: [],
         b_typeJSON: [],
         a_typeJSON: []
-    }
+    };
 
     // make sure file is retrieved from the db
-    addFile_Ctrl.getFile('items key.csv', function (fileFound) {
-        console.log("%s.%s:%s -", __file, __ext, __line, "File status: ", fileFound);
+    addFile_Ctrl.getFile('items key.csv')
+        .then(fileFound => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File status: ", fileFound);
+            csv()
+                .fromFile('/tmp/items key.csv')
+                .on('json', (jsonObj) => {
+                    // combine csv header row and csv line to a json object
+                    // jsonObj.a ==> 1 or 4
+                    // formJSON = jsonObj
+                    //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
+                })
+                .on('data', (data) => {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "CSV data read");
+                    //data is a buffer object
+                    const jsonStr = data.toString('utf8');
+                    var questionsJSON = JSON.parse(jsonStr);
 
-        if (!fileFound) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Missing file: ", 'items key.csv');
-            callback(null);
-            return;
-        }
+                    //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
 
-        csv()
-            .fromFile('/tmp/items key.csv')
-            .on('json', (jsonObj) => {
-                // combine csv header row and csv line to a json object
-                // jsonObj.a ==> 1 or 4
-                // formJSON = jsonObj
-                //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
-            })
-            .on('data', (data) => {
-                //data is a buffer object
-                const jsonStr = data.toString('utf8');
-                var questionsJSON = JSON.parse(jsonStr);
-
-                //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON);
-                //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
-                //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
-
-                if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
-                    question = parseQuestions(questionsJSON, isInEnglish);
-                    if (question.type == 'P') {
-                        questionsArraysByType.p_typeJSON.push(question);
-                    } else if (question.type == 'F' && question.answerOptions.length > 2) {
-                        //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
-                        //questionsArraysByType.f_typeJSON.push(question);
-                    } else if (question.type == 'C') {
-                        questionsArraysByType.c_typeJSON.push(question);
-                    } else if (question.type == 'B') {
-                        questionsArraysByType.b_typeJSON.push(question);
-                    } else if (question.type == 'A') {
-                        questionsArraysByType.a_typeJSON.push(question);
+                    if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
+                        question = parseQuestions(questionsJSON, isInEnglish);
+                        if (question.type == 'P') {
+                            questionsArraysByType.p_typeJSON.push(question);
+                        } else if (question.type == 'F' && question.answerOptions.length > 2) {
+                            //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
+                            //questionsArraysByType.f_typeJSON.push(question);
+                        } else if (question.type == 'C') {
+                            questionsArraysByType.c_typeJSON.push(question);
+                        } else if (question.type == 'B') {
+                            questionsArraysByType.b_typeJSON.push(question);
+                        } else if (question.type == 'A') {
+                            questionsArraysByType.a_typeJSON.push(question);
+                        }
                     }
-                }
 
-                lines++;
-            })
-            .on('done', (error) => {
+                    lines++;
+                })
+                .on('done', (error) => {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "CSV done. Error: ", error);
 
-                shuffle(questionsArraysByType.p_typeJSON);
-                //shuffle(questionsArraysByType.f_typeJSON);
-                shuffle(questionsArraysByType.b_typeJSON);
+                    shuffle(questionsArraysByType.p_typeJSON);
+                    //shuffle(questionsArraysByType.f_typeJSON);
+                    shuffle(questionsArraysByType.b_typeJSON);
 
-                const form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
-                    questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
+                    const form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
+                        questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
 
-                callback(form);
-            })
-    });
-};
+                    callback(form);
+                });
+        })
+        .catch(error => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
+            callback(null);
+        });
+}
+
 
 function parseQuestions(qJSON, isInEnglish) {
     var parsedQuestion = {};
