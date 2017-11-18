@@ -14,7 +14,7 @@ and (min-device-width: 1200px)
     font-weight: 100;
     color: dimgray;
     letter-spacing: 1px;
-    text-align: right;
+    /*text-align: right;*/
     margin-top: 50px;
     padding: 25px;
     /*border-style: solid;
@@ -78,7 +78,7 @@ and (max-device-width: 667px) {
     font-weight: 100;
     color: dimgray;
     letter-spacing: 1px;
-    text-align: right;
+    /*text-align: right;*/
     margin-top: 50px;
     padding: 25px;
     /*border-style: solid;
@@ -147,7 +147,7 @@ and (max-device-width: 339px) {
     font-weight: 100;
     color: dimgray;
     letter-spacing: 1px;
-    text-align: right;
+    /*text-align: right;*/
     margin-top: 50px;
     padding: 25px;
     /*border-style: solid;
@@ -229,7 +229,7 @@ form {
   padding: 5px 25px 5px 5px;
   right: 20px;
   top: 90px;
-  text-align: right;
+  /*text-align: right;*/
   color: white;
   letter-spacing: 1px;
 }

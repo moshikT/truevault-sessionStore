@@ -3,10 +3,11 @@ var router = express.Router();
 var form_Ctrl = require('../controllers/form.server.controller');
 var mailParser_Ctrl = require('../controllers/mailParser.server.controller');
 var addClient_Ctrl = require('../controllers/addClient.server.controller');
+const addFile_Ctrl = require('../controllers/addFile.server.controller');
 var addCandidate_Ctrl = require('../controllers/addCandidate.server.controller');
 var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
-let mngClients_Ctrl = require('../controllers/clients.server.controller'); // Controller for clients management page
-let candidatesStatus_Ctrl = require('../controllers/candidatesStatus.server.controller'); // Controller for candidates status management page
+const mngClients_Ctrl = require('../controllers/clients.server.controller'); // Controller for clients management page
+const candidatesStatus_Ctrl = require('../controllers/candidatesStatus.server.controller'); // Controller for candidates status management page
 var multer = require('multer');
 var upload = multer({dest: '/tmp/uploads/'});
 var fs = require('fs');
@@ -15,18 +16,19 @@ var Client = require('../models/addClient.server.model.js');
 //router.use('/api', questionRouter);
 //mailParser_Ctrl.onMailArrived();
 
-/* Middleware in order to add company details (cid) to the form pages */
+// Middleware in order to add company details (cid) to the form pages
 router.use(function (req, res, next) {
-    var parts = req.path.split('/');
+    const parts = req.path.split('/');
     console.log("%s.%s:%s -", __file, __ext, __line, "Path: ", req.path);
     console.log("%s.%s:%s -", __file, __ext, __line, "Parts: ", parts);
-    if ((parts[1] != "clients") ||
-        (!parts[2])) {
+    if ((parts[1] !== "clients") || // The first part of the URL isn't clients? or
+        (!parts[2])) // The first part IS clients, but there's no second part
+    { // skip to next handler since we have nothing to do here
         next();
         return;
     }
     var cid = parts[2];
-    if (!cid) {
+    if (!cid) { // safety
         next();
         return;
     }
@@ -37,7 +39,6 @@ router.use(function (req, res, next) {
             next();
             return;
         }
-        ;
         if (client) {
             console.log("%s.%s:%s -", __file, __ext, __line, "client found: ", client.name);
             /* console.log("%s.%s:%s -", __file, __ext, __line, "client name: ", client.name);
@@ -88,8 +89,24 @@ router.get('/clients/:cid/thankYou', function (req, res) {
     return form_Ctrl.getThankYouPage(req, res);
 });
 
+// Get handler for addClient - renders the page
 router.get('/addClient', function (req, res) {
     return addClient_Ctrl.getAddClientPage(req, res);
+});
+
+// Post handler for addClient - uploads the logo file and processes the form
+router.post('/addClient', upload.single('logo'), function (req, res) {
+    return addClient_Ctrl.addClient(req, res);
+});
+
+// Get handler for addFile - renders the page
+router.get('/addFile', function (req, res) {
+    return addFile_Ctrl.getAddFilePage(req, res);
+});
+
+// Post handler for addFile - uploads the file and processes the form
+router.post('/addFile', upload.single('filedata'), function (req, res) {
+    return addFile_Ctrl.addFile(req, res);
 });
 
 router.get('/clients/:cid/addCandidate', function (req, res) {
@@ -98,11 +115,6 @@ router.get('/clients/:cid/addCandidate', function (req, res) {
 
 router.post('/clients/:cid/addCandidate', function (req, res) {
     return addCandidate_Ctrl.addCandidate(req, res);
-});
-
-/* submit file object with form */
-router.post('/addClient', upload.single('logo'), function (req, res) {
-    return addClient_Ctrl.addClient(req, res);
 });
 
 router.get('/test', function (req, res) {

@@ -36,17 +36,18 @@
     #candidates th {
         padding-top: 12px;
         padding-bottom: 12px;
-        text-align: left;
+        text-align: right/*FIXME:left*/;
         background-color: #4CAF50;
         color: white;
     }
+
 </style>
 <header>
     <div class="container col-md-12" style="text-align: center;">
         <img class="logo" style="height: 100px;padding-top:20px;" src="/images/EH_logo.png"/>
     </div>
 </header>
-<body>
+<body dir="rtl"><!-- FIXME: ltr -->
 <ul>
 </ul>
 <table data-toggle="table" id="candidates"
@@ -55,16 +56,19 @@
        style="width:100%">
     <thead>
     <tr>
-        <th data-field="date" data-sortable="true" data-sorter="textSorter">Date</th>
-        <th data-field="name" data-sortable="true" data-sorter="textSorter">Name</th>
-        <th data-field="score" data-sortable="true" data-sorter="textSorter">Score</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter">Date Completed</th>
-        <th data-field="report">Report</th>
-        <th data-field="cv">CV</th>
-        <th data-field="phone">Phone</th>
-        <th data-field="experience" data-sortable="true" data-sorter="textSorter">Experience</th>
+        <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right"><!--FIXME: Date Added-->תאריך הזנה</th>
+        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם</th>
+        <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
+        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך מילוי</th>
+        <th data-field="report"><!--FIXME: Report-->דוח</th>
+        <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
+        <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+        <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש</th>
         <% if (advanced) { %>
-            <th data-field="duration" data-sortable="true" data-sorter="numSorter">Duration</th>
+            <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
+        <% } %>
+        <% if (advanced) { %>
+            <th data-field="formLink" data-sortable="false""><!--FIXME: Form -->שאלון</th>
         <% } %>
     </tr>
     </thead>
@@ -94,21 +98,24 @@
         <td>
             <% if ((report) && (candidate.formCompleted)) {
                 if (candidate.linkToReport !== undefined) { %>
-                    <a href='<%= candidate.linkToReport %>' target='_blank'>Report</a>
+                    <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
                 <% }
                 else { %>
-                    <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'>Report</a>
+                    <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
                 <% }
             }
             else { %>
 
             <% } %>
         </td>
-        <td><a href='<%- candidate.linkToCV %>' target='_blank'>CV</a></td>
+        <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
         <td><%= candidate.phoneNumber %></td>
         <td><%- appExp %></td>
         <% if (advanced) { %>
             <td><%= candidate.formDurationInMinutes %></td>
+        <% } %>
+        <% if (advanced) { %>
+            <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
         <% } %>
     </tr>
     <% } %>
@@ -117,8 +124,10 @@
 
 <% include partials/footer %>
 <!-- Include Bootstrap Table -->
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>
+<!--<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/locale/bootstrap-table-zh-CN.min.js"></script>-->
+<script src="/javascripts/bootstrap-table.min.js"></script>
+<script src="/javascripts/bootstrap-table-locale-all.js"></script>
 <script>
     function textSorter(a, b) {
         if (a < b) return -1;

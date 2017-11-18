@@ -2,7 +2,7 @@
 <html>
 <% include partials/head %>
 
-<body class="content" dir=<%=indexPageText%>>
+<body class="content" dir=<%= indexPageText.direction %>>
 <header>
     <% include partials/logo %>
     <!--
@@ -14,7 +14,6 @@
 <div id="formContainer" class="container screen" style="scroll:hidden;overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 500px;width:100%;">
 <% include partials/indexPartial %>
 </div>
-
 <% include partials/footer %>
 <script>
 
