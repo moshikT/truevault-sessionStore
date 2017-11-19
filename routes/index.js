@@ -21,51 +21,65 @@ router.use(function (req, res, next) {
     const parts = req.path.split('/');
     console.log("%s.%s:%s -", __file, __ext, __line, "Path: ", req.path);
     console.log("%s.%s:%s -", __file, __ext, __line, "Parts: ", parts);
-    if ((parts[1] !== "clients") || // The first part of the URL isn't clients? or
-        (!parts[2])) // The first part IS clients, but there's no second part
-    { // skip to next handler since we have nothing to do here
-        next();
-        return;
-    }
-    var cid = parts[2];
-    if (!cid) { // safety
-        next();
-        return;
-    }
-    console.log("%s.%s:%s -", __file, __ext, __line, "cid: ", cid);
-    Client.findById(cid, function (err, client) {
-        if (err) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Client not found: ", cid);
-            next();
-            return;
-        }
-        if (client) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "client found: ", client.name);
-            /* console.log("%s.%s:%s -", __file, __ext, __line, "client name: ", client.name);
-             console.log("%s.%s:%s -", __file, __ext, __line, "client id: ", client._id);
-             console.log("%s.%s:%s -", __file, __ext, __line, "client logo style: ", client.logoStyle);
-             //console.log("%s.%s:%s -", __file, __ext, __line, "client intro text ", client.introText);
-             //console.log("%s.%s:%s -", __file, __ext, __line, "client form language", client.language);
-             //console.log("%s.%s:%s -", __file, __ext, __line, "client link to form", client.link);
-             console.log("%s.%s:%s -", __file, __ext, __line, "client logo img data:  ", client.logoImg.data);
-             console.log("%s.%s:%s -", __file, __ext, __line, "client logo image content type", client.logoImg.contentType);
-             //console.log("%s.%s:%s -", __file, __ext, __line, "cid", cid[1]);
-
-             //console.log("%s.%s:%s -", __file, __ext, __line, "url param", req);
-             /* Add the question found to the request and pass it to the next action - get or patch */
-            if (req.query.sid) {
-                req.sid = req.query.sid;
+    switch (parts[1]) {
+        case 'clients':
+            // It's either <domain>/clients - clients management page or
+            // <domain>/clients/<cid> - internal clients pages
+            if (!parts[2])
+            { // If there's no cid provided then it's just the main clients management page - nothing to do
+                next();
+                return;
             }
-            req.client = client;
-            next();
-        }
-        else {
-            res.status(404).send("No form type were found");
-            // TODO: in the future add default form template
-        }
+            cid = parts[2];
+            console.log("%s.%s:%s -", __file, __ext, __line, "cid: ", cid);
+            Client.findById(cid, function (err, client) { // Search for this cid in the clients collection
+                if (err) { // There was an error - doesn't mean the item wasn't found
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Error searching for cid: ", cid, ': ', err);
+                    res.render('niceError', { // Display an error message
+                        //FIXME - do something nicer here
+                        title: 'Empirical Hire',
+                        errorText: 'Unexpected error. Please try again'
+                    });
+                }
+                else if (client) { // cid was found
+                    console.log("%s.%s:%s -", __file, __ext, __line, "client found: ", client.name);
+                    req.client = client;
 
-    });
-})
+                    // Check if there's a session ID in the request (?sid=)
+                    if (req.query.sid) {
+                        req.sid = req.query.sid;
+                    }
+                    next(); // pass to the next handler
+                }
+                else { // cid wasn't found
+                    res.render('niceError', { // Display an error message
+                        //FIXME - do something nicer here
+                        title: 'Empirical Hire',
+                        // We don't display a specific error in case this is an attack fishing for valid cids
+                        errorText: 'Invalid request. Please try again'
+                    });
+                }
+            });
+            break;
+        case 'html': // html pages - display a static html file found in db or /tmp
+            addFile_Ctrl.getFile([parts[2] + '.html'])
+                .then(fileName => {
+                    res.sendFile('/tmp/' + fileName);
+                })
+                .catch(error => { // html file not found
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
+                    res.render('niceError', { // Display an error message
+                        //FIXME - do something nicer here
+                        title: 'Empirical Hire',
+                        // We don't display a specific error in case this is an attack fishing for valid cids
+                        errorText: 'Resource not found. Please try again'
+                    });
+                });
+            break;
+        default: // default action - just pass to the next handler
+            next();
+    }
+});
 
 /* GET home page. */
 router.get('/clients/:cid', function (req, res) {
@@ -153,4 +167,9 @@ router.get('/terms', function (req, res) {
 router.get('/privacy', function (req, res) {
     res.render('privacy');
 });
+
+router.get('/html/:textfile', function (req, res) {
+    res.render('/tmp/' + textfile);
+});
+
 module.exports = router;
