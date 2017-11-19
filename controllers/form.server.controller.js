@@ -82,7 +82,6 @@ exports.saveFormResults = function (req, res) {
                 '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
             var report = {};
             report.link = recruiterReportUrl;
-            report.completed = true;
 
             var dateCompleted = new Date();
 
@@ -109,7 +108,8 @@ exports.saveFormResults = function (req, res) {
                 else {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
-                    recruiterReport_Ctrl.calcRecruiterReport(req, res); // Calculate the report data
+                    // Calculate the report data
+                    recruiterReport_Ctrl.calcRecruiterReport(req, res); // we don't provide a callback because we don't have anything to do here if it didn't work. Will calc the report when needed instead.
                 }
             });
 
@@ -126,7 +126,7 @@ exports.getIndex = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client.name);
     res.render('index', {
         title: '',
-        indexPageText : (req.client.language == 'en') ? 'ltr' : 'rtl',
+        indexPageText : (req.client.language == 'en') ? {direction: 'ltr', align: 'left'} : {direction: 'rtl', align: 'right'} ,
         client: req.client,
         sid: req.sid
     });

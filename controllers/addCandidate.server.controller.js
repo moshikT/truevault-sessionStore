@@ -70,6 +70,15 @@ exports.addCandidate = function (req, res) {
     // FIXME: generateForm, generateLink & (mongoose)save are all async calls that use callbacks, causing the following code
     //   to be a bit messy. We have to convert them to promises in order the make the following more readable
     formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
+        if ((form === undefined) || (!form)) { // if form wasn't generated
+            res.render('niceError', {
+                title: 'Add Candidate' + newUser.fullName,
+                errorText: "Failed to generate form for: '" + newUser.fullName + "'"
+            });
+
+            return;
+        }
+
         //initialize session data
         const sid = uuidv1();
         const session = {

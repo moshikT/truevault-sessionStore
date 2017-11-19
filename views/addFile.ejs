@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+</head>
+<header>
+    <div class="container col-md-12" style="text-align: center;">
+        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png"/>
+    </div>
+</header>
+<body>
+<div id="formContainer" class="container" style="padding:50px;scroll:hidden;overflow: auto; height: 100%;width:70%;">
+    <% if (stage === 0) { %>
+    <div id="addNewFile" class="fade in">
+        <h4><%= title %></h4>
+        <form id="addFile" method="post" enctype="multipart/form-data" action="/addFile">
+            <div class="">
+                <div id="fileName" style="padding: 20px;">
+                    <input class="inputs" name="fileName" required type="text" placeholder='File Name'
+                           style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                </div>
+                <div id="fileUpload" style="padding: 20px;">
+                    <input class="inputs" name="filedata" required type="file" accept="*/*"
+                           style="border-style: none none solid none;text-align: center;opacity: 0.7;margin-right:auto;margin-left: auto;">
+                </div>
+            </div>
+            <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
+                <button href="/addFile" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add
+                    File
+                </button>
+            </div>
+        </form>
+    </div>
+    <% }
+    else { %>
+    <div id="displayMsg" class="fade in">
+        <h4>
+            <% if (stage === 1) { // Success %>
+                Succeesfully uploaded file!
+            <% }
+            else { // Failure %>
+                Failed uploading file!
+            <% } %>
+        </h4>
+    </div>
+    <% } %>
+</div>
+
+<% include partials/footer %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+<script>
+    $('.inputs').keydown(function (e) {
+        if (e.which === 13) {
+            var index = $('.inputs').index(this) + 1;
+            $('.inputs').eq(index).focus();
+        }
+    });
+
+    var container = $('#formContainer');
+
+    function scrollToNextElement(nextElement) {
+        var scrollTo = $('#' + nextElement);
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top +
+            container.scrollTop()
+        });
+    }
+
+    $("#addNewFile").validate({
+        ignore: "",
+        success: function (label, element) {
+            //element.find("input").css( "border", "solid green 1px" );
+            element.style.border = "solid green 1px";
+        },
+        //debug: true,
+        //rules: rules,
+        messages: {},
+        errorElement: "div",
+        wrapper: "div",  // a wrapper around the error message
+        errorPlacement: function (error, element) {
+            element.before(error);
+
+            //element.parent("div").find("a").css( "border", "solid red 1px" );
+            element.css("border", "solid red 1px");
+            offset = element.offset();
+            error.css('left', offset.left);
+            error.css('bottom', offset.top - element.outerHeight());
+        },
+        focusInvalid: false,
+        invalidHandler: function (form, validator) {
+            if (!validator.numberOfInvalids())
+                return;
+
+        },
+        submitHandler: function (form) {
+            $.ajax({
+                url: '/addClient',
+                type: 'post',
+                data: $('#addClient').serialize(),//+ fileData,
+                async: false,
+                success: function () {
+                    //console.log(form.user_id.value);
+                    _LTracker.push({
+                        'text': 'New Client added',
+                        'uid': form.user_id.value
+                    });
+                    mixpanel.track('New Client added', {'uid': form.user_id.value/* candidate/employee */});
+
+                    // TODO: scrollTo block user authentication display
+                }
+            });
+            form.submit();
+        }
+    });
+</script>
+
+</body>
+</html>
