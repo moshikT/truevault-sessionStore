@@ -27,7 +27,7 @@
              <%  }
         }
              if (formjson[i].type == 'S')  {  %>
-            <div id="sortable" >
+            <div id="sortable" class="set">
             <% for (var j=0;j <formjson[i]['items'].length; j++) { %>
                 <div id='radioBtn' class="bTypeGroup">
                     <a class="btn btn-primary btn-lg notActive bType"
@@ -36,7 +36,7 @@
                         <%= formjson[i]['items'][j] %></a>
                     <input class='originalPosition' type='hidden' name='<%= formjson[i]['itemsID'][j] %>[originalPosition]' value='<%= formjson[i]['itemsValues'][j] %>'>
                     <input class='currentPosition' type='hidden' name='<%= formjson[i]['itemsID'][j] %>' value='<%= formjson[i]['itemsValues'][j] %>'>
-                    </div>
+                </div>
                     <% } %>
                 <% }
         if (formjson[i].type == 'C')  { %>

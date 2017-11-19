@@ -1,3 +1,5 @@
+"use strict";
+
 var numOfQuestionsAnswered = document.getElementsByClassName('active').length;
 var qAnsweredArray = document.getElementsByClassName('active');
 
@@ -27,7 +29,8 @@ if(numOfQuestionsAnswered !== 0) {
     });
     mixpanel.track('Form reloaded', {'sid': sid, 'date': startDate.toString(), 'cid': cid});
 }
-var totalQuestions = document.getElementsByClassName('q').length;
+var numOfSetsQuestions = document.getElementsByClassName('set').length;
+var totalQuestions = document.getElementsByClassName('q').length - numOfSetsQuestions;
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);
 var highlightedQ, highlightedValue;
 
@@ -221,7 +224,7 @@ $("#form").validate({
     errorPlacement: function(error, element) {
         element.before(error);
         element.parent("div").find("a").css( "border", "solid red 1px" );
-        offset = element.offset();
+        var offset = element.offset();
         error.css('left', offset.left);
         error.css('bottom', offset.top - element.outerHeight());
     },

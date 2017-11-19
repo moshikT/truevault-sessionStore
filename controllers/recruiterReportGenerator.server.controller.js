@@ -189,7 +189,7 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
 
             factorsData.forEach(function (factor) {
                 //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
-                if (factor.name == factorVerbal['SHORT NAME']) {
+                if (factor.name == factorVerbal['SHORT NAME']) { // TODO: Change calculation for sub dimension
                     /* if reverse relation exists (0) thank put the factor in the opposite column. */
                     var isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
                         (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
@@ -222,6 +222,8 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                 callback(strengths, weaknesses);
             }
             else {
+                // TODO: Go through the results and concat between all subDimention under their factor
+
                 console.log("%s.%s:%s -", __file, __ext, __line, "error occur at done ", error);
                 getVerbalText(factorsData, isMale, 'default', callback);
             }

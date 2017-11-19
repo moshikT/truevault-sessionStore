@@ -1,7 +1,7 @@
 /*
 Restful API for questions submissions
  */
-
+"use strict";
 var express = require('express');
 var router = express.Router();
 var Candidate = require('../models/candidate.server.model.js');
