@@ -69,8 +69,17 @@
             <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
         <% } %>
         <% if (advanced) { %>
-            <th data-field="formLink" data-sortable="false""><!--FIXME: Form -->שאלון</th>
+            <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
         <% } %>
+        <th data-field="phoneInterviewDate">תאריך טלפון</th>
+        <th data-field="phoneInterviewResult">ראיון טלפוני</th>
+        <th data-field="interviewDate">תאריך ראיון</th>
+        <th data-field="interviewResult">ראיון</th>
+        <th data-field="reportRating">השוואה לדוח</th>
+        <th data-field="hired">גויס</th>
+        <th data-field="hireDate">תאריך גיוס</th>
+        <th data-field="startedWork">התחיל עבודה</th>
+        <th data-field="workDate">תאריך התחלה</th>
     </tr>
     </thead>
     <% for (let i = 0;i < candidates.length;i++) {
@@ -111,13 +120,22 @@
         </td>
         <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
         <td><%= candidate.phoneNumber %></td>
-        <td id="exp_<%= candidate.session.id %>"><%- appExp %></td>
+        <td><%- appExp %></td>
         <% if (advanced) { %>
             <td><%= candidate.formDurationInMinutes %></td>
         <% } %>
         <% if (advanced) { %>
             <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
         <% } %>
+        <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
+        <td id="phoneInterviewResult_<%= candidate.session.id %>"><%= candidate.phoneInterviewResult %></td>
+        <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
+        <td id="interviewResult_<%= candidate.session.id %>"><%= candidate.interviewResult %></td>
+        <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
+        <td id="hired<%= candidate.session.id %>"><%= candidate.hired %></td>
+        <td id="hireDate_<%= candidate.session.id %>"><%= candidate.hireDate %></td>
+        <td id="startedWork_<%= candidate.session.id %>"><%= candidate.startedWork %></td>
+        <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
     </tr>
     <% } %>
 </table>
@@ -131,12 +149,14 @@
 <script src="/javascripts/bootstrap-table-locale-all.min.js"></script>
 <script src="/javascripts/mindmup-editabletable.js"></script>
 <script>
+    // Sorting function for strings
     function textSorter(a, b) {
         if (a < b) return -1;
         if (a > b) return 1;
         return 0;
     }
 
+    // Sorting function for numbers
     function numSorter(a, b) {
         a = parseFloat(a);
         b = parseFloat(b);
@@ -145,25 +165,65 @@
         return 0;
     }
 
+    // Initialize the candidates table as a bootstrap-table
     const candidatesTable = $('#candidates');
     candidatesTable.bootstrapTable({
         locale: 'he-IL', //FIXME: en-US
-        pagination: true,
-        search: true,
-        onPostBody: function () {
-            $('#candidates').editableTableWidget({
-                editor: $('<textarea>'),
-                preventColumns: [1, 2, 3, 4, 5 ]
+        pagination: true, // Multiple pages
+        search: true, // Show search box (more like filtering...)
+        onPostBody: function () {  // Event triggere after table is added to the DOM
+            $('#candidates').editableTableWidget({ // Initialize the table as an editableTable
+                editor: $('<textarea>'),  // The editor will be a textarea
+                //FIXME: editableTableWidget supports only one type of editor for the entire table.
+                //       We would like to have different editors for different cells (e.g. calendar, dropdown)
+                //       To support this we either need to modify the implementation of editableTableWidget or
+                //       find another widget to replace it.
+                preventColumns: [1, 2, 3, 4, 5, 6, 7, 8<% if (advanced) { %>, 9, 10<% } %> ] // Columns which aren't editable
             });
         }
     });
 
+    // Method called when a cell value is changed
     candidatesTable.on('change', function(evt, newValue) {
-        alert('Change!');
-        // do something with the new cell value
-        if (1) {
-            return false; // reject change
+        const cellId = evt.target.id;
+        const cellIdParts = cellId.split('_');
+        if (!cellIdParts[1]) {
+            //something went wrong as the ID doesn't seem to have the right structure
+            return false; // Prevent the edit - at least the user will know something went wrong
         }
+        // Create a PATCH request to update the db
+        const sid = cellIdParts[1];
+        const property = cellIdParts[0];
+        let patchUrl = '/api/candidates/' + sid + '/' + property;
+        let patchData = {value: newValue};
+        // Send the result to the db
+        sendUpdate(patchUrl, patchData)
+            .then(result => {
+                // Code depending on result
+                console.log("Result ", result);
+            })
+            .catch(error => {
+                // An error occurred
+                console.log("Error: ", error);
+            });
+        return true; // Accept the edit although we don't actually know if it went through with the server
+        //FIXME: Perhaps we need to remember the previous value and revert to it if we are rejected by the server
     });
+
+    function sendUpdate(patchUrl, patchData) {
+        var request = {};
+        request.url = patchUrl;
+        request.data = patchData;
+        return new Promise(function(resolve, reject) {
+            $.ajax({
+                url : patchUrl,
+                data : JSON.stringify(patchData),
+                type : 'PATCH',
+                contentType : 'application/json',
+                success: resolve(request),
+                error: reject(request)
+            });
+        });
+    }
 
 </script>
