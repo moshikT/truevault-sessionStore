@@ -25,8 +25,9 @@ router.use(function (req, res, next) {
         case 'clients':
             // It's either <domain>/clients - clients management page or
             // <domain>/clients/<cid> - internal clients pages
-            if (!parts[2])
-            { // If there's no cid provided then it's just the main clients management page - nothing to do
+            if ((!parts[2]) || // There's no cid provided? or
+                (parts[2] === 'api')) // This is an api call?
+            { // Just move on to the next handler
                 next();
                 return;
             }
