@@ -112,7 +112,7 @@ function getFactorsAvg(candidate, callback) {
         .then(fileName => {
             console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
             csv({noheader: true})
-                .fromFile(fileName)
+                .fromFile('/tmp/' + fileName)
                 .on('csv', (csvRow) => {
                     // csvRow is an array
                     var factorAvg = 0;
@@ -182,6 +182,7 @@ function getFactorsAvg(candidate, callback) {
                 })
                 .on('error', (err) => {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'factorsTranspose.csv ", err)
+                    callback(null);
                 })
         })
         .catch(error => { // 'report factors - factorsTranspose.csv' not found
