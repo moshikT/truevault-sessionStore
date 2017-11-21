@@ -57,13 +57,14 @@
        style="width:100%">
     <thead>
     <tr>
-        <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right"><!--FIXME: Date Added-->תאריך הזנה</th>
-        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם</th>
-        <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך מילוי</th>
-        <th data-field="report"><!--FIXME: Report-->דוח</th>
-        <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
+        <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right"><!--FIXME: Date Added-->תאריך<br>קבלת קוח</th>
+        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
         <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+        <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
+        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך מילוי</th>
+        <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
+        <th data-field="report"><!--FIXME: Report-->דוח</th>
+        <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
         <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש</th>
         <% if (advanced) { %>
             <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
@@ -71,15 +72,14 @@
         <% if (advanced) { %>
             <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
         <% } %>
-        <th data-field="phoneInterviewDate">תאריך טלפון</th>
+        <th data-field="phoneInterviewDate">תאריך<br>ראיון טלפוני</th>
         <th data-field="phoneInterviewResult">ראיון טלפוני</th>
-        <th data-field="interviewDate">תאריך ראיון</th>
-        <th data-field="interviewResult">ראיון</th>
+        <th data-field="interviewDate">תאריך<br>ראיון פרונטלי</th>
+        <th data-field="interviewResult">ראיון פרונטלי</th>
         <th data-field="reportRating">השוואה לדוח</th>
-        <th data-field="hired">גויס</th>
-        <th data-field="hireDate">תאריך גיוס</th>
-        <th data-field="startedWork">התחיל עבודה</th>
-        <th data-field="workDate">תאריך התחלה</th>
+        <th data-field="hired">התקבל</th>
+        <th data-field="workDate">תאריך<br>תחילת עבודה</th>
+        <th data-field="startedWork">התחיל לעבוד</th>
     </tr>
     </thead>
     <% for (let i = 0;i < candidates.length;i++) {
@@ -103,8 +103,10 @@
         <% report = candidate.report; %>
         <td><%- (dateTimeCreated != undefined) ? dateTimeCreated.toLocaleString() : '' %></td>
         <td><%- candidate.fullName %></td>
-        <td><%- (report != undefined)?report.finalScore:'Not Done' %></td>
+        <td><%= candidate.phoneNumber %></td>
+        <td><%= candidate.id %></td>
         <td><%- (dateTimeCompleted != undefined)?dateTimeCompleted.toLocaleString():'' %></td>
+        <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
         <td>
             <% if ((report) && (candidate.formCompleted)) {
                 if (candidate.linkToReport !== undefined) { %>
@@ -118,8 +120,7 @@
 
             <% } %>
         </td>
-        <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
-        <td><%= candidate.phoneNumber %></td>
+        <td><%- (report != undefined)?report.finalScore:'Not Done' %></td>
         <td><%- appExp %></td>
         <% if (advanced) { %>
             <td><%= candidate.formDurationInMinutes %></td>
@@ -133,9 +134,8 @@
         <td id="interviewResult_<%= candidate.session.id %>"><%= candidate.interviewResult %></td>
         <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
         <td id="hired<%= candidate.session.id %>"><%= candidate.hired %></td>
-        <td id="hireDate_<%= candidate.session.id %>"><%= candidate.hireDate %></td>
-        <td id="startedWork_<%= candidate.session.id %>"><%= candidate.startedWork %></td>
         <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
+        <td id="startedWork_<%= candidate.session.id %>"><%= candidate.startedWork %></td>
     </tr>
     <% } %>
 </table>
@@ -178,7 +178,7 @@
                 //       We would like to have different editors for different cells (e.g. calendar, dropdown)
                 //       To support this we either need to modify the implementation of editableTableWidget or
                 //       find another widget to replace it.
-                preventColumns: [1, 2, 3, 4, 5, 6, 7, 8<% if (advanced) { %>, 9, 10<% } %> ] // Columns which aren't editable
+                preventColumns: [1, 2, 3, 4, 5, 6, 7, 8, 9<% if (advanced) { %>, 10, 11<% } %> ] // Columns which aren't editable
             });
         }
     });
@@ -198,11 +198,11 @@
         let patchData = {value: newValue};
         // Send the result to the db
         sendUpdate(patchUrl, patchData)
-            .then(result => {
+            .then(function(result) {
                 // Code depending on result
                 console.log("Result ", result);
             })
-            .catch(error => {
+            .catch(function(error) {
                 // An error occurred
                 console.log("Error: ", error);
             });
