@@ -135,13 +135,14 @@
         <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
         <% } %>
         <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
-        <td id="phoneInterviewResult_<%= candidate.session.id %>"><%= candidate.phoneInterviewResult %></td>
+        <td id="phoneInterviewResult_<%= candidate.session.id %>"
+            data-editor="2"><%= candidate.phoneInterviewResult %></td>
         <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
-        <td id="interviewResult_<%= candidate.session.id %>"><%= candidate.interviewResult %></td>
+        <td id="interviewResult_<%= candidate.session.id %>" data-editor="3"><%= candidate.interviewResult %></td>
         <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
-        <td id="hired_<%= candidate.session.id %>"><%= candidate.hired %></td>
+        <td id="hired_<%= candidate.session.id %>" data-editor="1"><%= candidate.hired %></td>
         <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
-        <td id="startedWork_<%= candidate.session.id %>"><%= candidate.startedWork %></td>
+        <td id="startedWork_<%= candidate.session.id %>" data-editor="1"><%= candidate.startedWork %></td>
     </tr>
     <% } %>
 </table>
@@ -179,15 +180,32 @@
         search: true, // Show search box (more like filtering...)
         onPostBody: function () {  // Event triggere after table is added to the DOM
             $('#candidates').editableTableWidget({ // Initialize the table as an editableTable
-                editor: $('<textarea>'),  // The editor will be a textarea
-                //FIXME: editableTableWidget supports only one type of editor for the entire table.
-                //       We would like to have different editors for different cells (e.g. calendar, dropdown)
-                //       To support this we either need to modify the implementation of editableTableWidget or
-                //       find another widget to replace it.
-                preventColumns: [1, 2, 3, 4, 5, 6, 7, 8, 9<% if (advanced) { %>, 10, 11<% } %> ] // Columns which aren't editable
-            });
-        }
-    });
+                editor:
+                    [
+                        $('<textarea>'),  // The default editor will be a textarea
+                        $('<select><option value="כן">כן</option><option value="לא">לא</option></select>'),  // 1 - select yes/no
+                        $('<select>' +   // 2 - select phone interview
+                            '<option value="עבר">עבר</option>' +
+                            '<option value="לא עבר">לא עבר</option>' +
+                            '<option value="לא רלוונטי">לא רלוונטי</option>' +
+                            '<option value="צריך לחשוב על זה">צריך לחשוב על זה</option>' +
+                            '<option value="לא ענה">לא ענה</option>' +
+                        '</select>'),
+                        $('<select>' +   // 3 - select face-to-face interview
+                            '<option value="עבר">עבר</option>' +
+                            '<option value="לא עבר">לא עבר</option>' +
+                            '<option value="לא הגיע">לא הגיע</option>' +
+                        '</select>')
+        ],
+            //FIXME: editableTableWidget supports only one type of editor for the entire table.
+            //       We would like to have different editors for different cells (e.g. calendar, dropdown)
+            //       To support this we either need to modify the implementation of editableTableWidget or
+            //       find another widget to replace it.
+            preventColumns: [1, 2, 3, 4, 5, 6, 7, 8, 9<% if (advanced) { %>, 10, 11<% } %> ] // Columns which aren't editable
+        });
+    }
+    })
+    ;
 
     // Method called when a cell value is changed
     candidatesTable.on('change', function (evt, newValue) {
@@ -218,10 +236,10 @@
             data: JSON.stringify(patchData),
             type: 'PATCH',
             contentType: 'application/json',
-            success: function(response) {
+            success: function (response) {
                 console.log('Update successfully sent to server')
             },
-            error: function(xhr, ajaxOptions, thrownError) {
+            error: function (xhr, ajaxOptions, thrownError) {
                 console.log('Error: ', thrownError)
             }
         });
