@@ -30,7 +30,8 @@
     "pdf2json": "^1.1.7",
     "promise": "^8.0.1",
     "uuid": "^3.1.0",
-    "xlsx": "^0.11.3"
+    "xlsx": "^0.11.3",
+    "xmlparser": "^0.1.0"
   },
   "devDependencies": {
     "grunt": "^1.0.1",

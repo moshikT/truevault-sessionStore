@@ -229,8 +229,8 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                             verbalData.title = factorVerbal['HE FACTOR'];
                             verbalData.text = factorVerbal[verbalKey].split('\n');
 
+                            let elementExists = false;
                             if (isStrength) {
-                                let elementExists = false;
                                 for (let strengthsIndex = 0; strengthsIndex < strengths.length; strengthsIndex++) {
                                     // if factor existed add subDimention to text
                                     if(strengths[strengthsIndex].id === verbalData.id) {
@@ -244,7 +244,6 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                                 console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);
                             }
                             else if (isWeakness) {
-                                let elementExists = false;
                                 for (let WeaknessIndex = 0; WeaknessIndex < weaknesses.length; WeaknessIndex++) {
                                     // if factor existed add subDimention to text
                                     if(weaknesses[WeaknessIndex].id === verbalData.id) {

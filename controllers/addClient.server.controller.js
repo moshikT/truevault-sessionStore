@@ -74,8 +74,23 @@ exports.addClient = function (req, res) {
         if (req.body.isDemo) {
             newClientEntry.isDemo = (req.body.isDemo == 'on');
         }
-        if (req.body.questionsKeyword) {
-            newClientEntry.keyword = req.body.questionsKeyword;
+        if (req.body.keyword) {
+            newClientEntry.keyword = req.body.keyword;
+        }
+        if (req.body.SMSText) {
+            newClientEntry.SMSText = req.body.SMSText;
+        }
+        if (req.body.emailTo) {
+            newClientEntry.emailTo = req.body.emailTo;
+        }
+        if (req.body.emailFrom) {
+            newClientEntry.emailFrom = req.body.emailFrom;
+        }
+        if (req.body.newCandidateEmailText) {
+            newClientEntry.newCandidateEmailText = req.body.newCandidateEmailText;
+        }
+        if (req.body.candidateReportEmailText) {
+            newClientEntry.candidateReportEmailText = req.body.candidateReportEmailText;
         }
         if (req.file) {
             newClientEntry.markModified('logoImg');
