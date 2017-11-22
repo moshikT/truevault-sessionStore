@@ -29,7 +29,7 @@
             @media print {
                 body, page {
                     margin: 0;
-                    box-shadow: 0;
+                    box-shadow: none;
                 }
             }
             page[size="A4"][layout="portrait"] {
@@ -173,8 +173,9 @@
                         <% if (candidate.report.weaknesses.length > 0) { %>
                         <% for (var weaknessesIndex = 0; weaknessesIndex < candidate.report.weaknesses.length; weaknessesIndex++) { %>
                         <div class="features__item-wrapper">
-                            <div class="features__item" style="justify-content: normal;">
+                            <div class="features__item"><!-- style="justify-content: normal;">-->
                                 <img src="/images/icons/<%= candidate.report.weaknesses[weaknessesIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon">
+                                <!--<h3 class="features__title features__title--brand features__item-title"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>-->
                                 <div class="features__item-copy">
                                     <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
                                     <ul class="features__item-list">
@@ -186,7 +187,7 @@
                                                 <p><b><%= text.inATeamField%></b></p>
                                         <%  } else { %>
                                         <li class="features__item-list__item">
-                                            <p><%- candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] %></p>
+                                            <p class="linepara"><%- candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] %></p>
                                         </li>
                                         <%  } %>
                                     <%  } %>
@@ -250,7 +251,7 @@
                                                     <p><b><%= text.inATeamField%></b></p>
                                                 <%  } else { %>
                                                     <li class="features__item-list__item">
-                                                    <p>    <%- candidate.report.strengths[strengthsIndex]['text'][txtIndex] %></p>
+                                                        <p class="linepara"><%- candidate.report.strengths[strengthsIndex]['text'][txtIndex] %></p>
                                                     </li>
                                                 <%  } %>
                                             <%  } %>
