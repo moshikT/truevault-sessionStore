@@ -159,7 +159,7 @@ button:focus {
 }
 
 .header__title {
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     color: #373737;
     font-size: 3rem;
     font-weight: 400;
@@ -207,7 +207,7 @@ button:focus {
     font-size: 1.333rem;
     color: #373737;
     direction: rtl;
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
 }
 
 @media screen and (min-width: 768px) {
@@ -499,7 +499,7 @@ button:focus {
 
 .graph__img-text {
     color: #373737;
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     font-size: 1.333rem;
 }
 
@@ -602,7 +602,7 @@ button:focus {
 }
 
 .graph__subtitle {
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     color: #373737;
     font-size: 1.5rem;
     font-weight: 700;
@@ -756,7 +756,7 @@ button:focus {
 
 .features__title {
     font-weight: 700;
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     font-size: 1.5rem;
     color: #373737;
     direction: rtl;
@@ -788,7 +788,7 @@ button:focus {
 }
 
 .features__text {
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     color: #373737;
     font-size: 1.333rem;
 }
@@ -933,7 +933,7 @@ button:focus {
 }
 
 .footer__text {
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     color: #373737;
     direction: rtl;
     font-size: 1rem;
