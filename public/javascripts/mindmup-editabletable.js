@@ -12,7 +12,7 @@ $.fn.editableTableWidget = function (options) {
             activeOptions = $.extend(buildDefaultOptions(), options),
             ARROW_LEFT = 37, ARROW_UP = 38, ARROW_RIGHT = 39, ARROW_DOWN = 40, ENTER = 13, ESC = 27, TAB = 9,
             element = $(this),
-            myEditor,
+            myEditor = activeOptions.editor[0], // Default value so we won't have an error before it's initialized
             editor = [],
             active,
             showEditor = function (select) {

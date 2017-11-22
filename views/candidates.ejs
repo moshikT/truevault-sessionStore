@@ -176,6 +176,8 @@
         locale: 'he-IL', //FIXME: en-US
         pagination: true, // Multiple pages
         search: true, // Show search box (more like filtering...)
+        paginationNextText: '<', //FIXME: Strangely enough this is for Hebrew (it's reversed)... for English I'm not sure
+        paginationPreText: '>', //FIXME: Strangely enough this is for Hebrew (it's reversed)... for English I'm not sure
         onPostBody: function () {  // Event triggere after table is added to the DOM
             $('#candidates').editableTableWidget({ // Initialize the table as an editableTable
                 editor:
