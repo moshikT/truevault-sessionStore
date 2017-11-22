@@ -25,8 +25,7 @@ router.use(function (req, res, next) {
         case 'clients':
             // It's either <domain>/clients - clients management page or
             // <domain>/clients/<cid> - internal clients pages
-            if ((!parts[2]) || // There's no cid provided? or
-                (parts[2] === 'api')) // This is an api call?
+            if (!parts[2])  // There's no cid provided?
             { // Just move on to the next handler
                 next();
                 return;
@@ -77,7 +76,10 @@ router.use(function (req, res, next) {
                     });
                 });
             break;
-        default: // default action - just pass to the next handler
+        case 'api': // This is an api call or
+            console.log("%s.%s:%s -", __file, __ext, __line, "API call");
+        default: // default action
+            // just pass to the next handler
             next();
     }
 });

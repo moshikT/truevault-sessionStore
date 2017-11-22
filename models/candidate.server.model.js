@@ -21,7 +21,16 @@ var candidateSchema = new Schema({
     dateCompleted: String,
     dateTimeCreated: Date,
     dateTimeCompleted: Date,
-    linkToCV: String
+    linkToCV: String,
+    phoneInterviewDate: String,
+    phoneInterviewResult: String,
+    interviewDate: String,
+    interviewResult: String,
+    reportRating: String,
+    hired: String,
+    hireDate: String,
+    startedWork: String,
+    workDate: String
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

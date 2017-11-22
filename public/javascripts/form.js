@@ -127,7 +127,7 @@ $('#radioBtn a').on('click', function(){
         container.animate({scrollTop: scrollTo.offset().top - container.offset().top + container.scrollTop()}, 500);
     }
 
-    var patchUrl = '/' + 'clients' +  '/api/' + sid + '/' + qid;
+    var patchUrl = '/api/questions/' + sid + '/' + qid;
     console.log(patchUrl);
 
 
