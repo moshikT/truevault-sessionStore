@@ -567,6 +567,13 @@ button:focus {
     justify-content: space-between;
 }
 
+/* Backgrounds don't work on print, so use a less-pretty orange frame for the grade scale */
+@media print {
+    .graph__img-mark__list {
+        border: 1rem double orange;
+    }
+}
+
 .graph__img-mark__column {
     padding: 0 0.5rem;
     width: 28%;
