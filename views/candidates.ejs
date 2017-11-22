@@ -181,8 +181,13 @@
                 editor:
                     [
                         $('<textarea>'),  // The default editor will be a textarea
-                        $('<select><option value="כן">כן</option><option value="לא">לא</option></select>'),  // 1 - select yes/no
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="כן">כן</option>' +
+                            '<option value="לא">לא</option>' +
+                            '</select>'),  // 1 - select yes/no
                         $('<select>' +   // 2 - select phone interview
+                            '<option></option>' +
                             '<option value="עבר">עבר</option>' +
                             '<option value="לא עבר">לא עבר</option>' +
                             '<option value="לא רלוונטי">לא רלוונטי</option>' +
@@ -190,6 +195,7 @@
                             '<option value="לא ענה">לא ענה</option>' +
                         '</select>'),
                         $('<select>' +   // 3 - select face-to-face interview
+                            '<option></option>' +
                             '<option value="עבר">עבר</option>' +
                             '<option value="לא עבר">לא עבר</option>' +
                             '<option value="לא הגיע">לא הגיע</option>' +
