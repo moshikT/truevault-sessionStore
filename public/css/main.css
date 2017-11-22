@@ -732,10 +732,11 @@ button:focus {
 
 @media all and (-ms-high-contrast: none), (-ms-high-contrast: active) { /* Hack for running on IE10/11 */
     .features__item-icon {
-        width: auto;
+        content: "hello world"
+        width: 2rem;
         height: auto;
-        margin-left: auto;
-        zoom: 50%;
+        margin-left: 0.5rem;
+        /*zoom: 50%;*/
     }
 }
 
