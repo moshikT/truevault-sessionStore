@@ -47,7 +47,7 @@ router.route('/:sid/:field')
                 }
                 else { // Successfully saved
                     console.log("%s.%s:%s -", __file, __ext, __line, "Entry saved!");
-                    res.json(entry);
+                    res.status(200).end();
                 }
             });
         }

@@ -109,10 +109,10 @@ function getFactorsAvg(candidate, callback) {
 
 
     addFile_Ctrl.getFile(['report factors - factorsTranspose.csv'])
-        .then(fileName => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+        .then(filePath => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv({noheader: true})
-                .fromFile('/tmp/' + fileName)
+                .fromFile(filePath)
                 .on('csv', (csvRow) => {
                     // csvRow is an array
                     var factorAvg = 0;
@@ -197,10 +197,10 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
     const baseFileName = 'report factors - verbal';
 
     addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
-        .then(fileName => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+        .then(filePath => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv()
-                .fromFile('/tmp/' + fileName)
+                .fromFile(filePath)
                 .on('data', (data) => {
                     //data is a buffer object
                     //parseVerbalData(factorsData, isMale, data);

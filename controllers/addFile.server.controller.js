@@ -3,6 +3,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const DataFile = require('../models/file.server.model.js');
+const tmpDir = '/tmp/';
 
 // Display the file uploading page
 exports.getAddFilePage = function (req, res) {
@@ -65,9 +66,9 @@ exports.addFile = function (req, res) {
                 // If the file already exists on /tmp - need to delete it so the new file will be used next time
                 console.log("%s.%s:%s -", __file, __ext, __line, "Saved file in DB. Checking if exists on disk: ", newFileName);
                 //FIXME: Need to tell other dynos that a new file was uploaded so that they will delete it from the /tmp too
-                if (fs.existsSync('/tmp/' + newFileName)) { // file already exists in /tmp
+                if (fs.existsSync(tmpDir + newFileName)) { // file already exists in /tmp
                     console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, removing: ", newFileName);
-                    fs.unlinkSync('/tmp/' + newFileName); // delete the file on disk
+                    fs.unlinkSync(tmpDir + newFileName); // delete the file on disk
                 }
 
                 return renderSuccess(req, res);
@@ -83,14 +84,15 @@ exports.addFile = function (req, res) {
 exports.getFile = function (fileNames) {
     return new Promise(
         function (resolve, reject) {
-            var fileName = fileNames[0];
-            if (!fileName) { // safety
+            let fileName = fileNames[0];
+            if (!fileNames[0]) { // safety
                 reject(new Error('Missing filenane'));
                 return;
             }
-            if (fs.existsSync('/tmp/' + fileName)) { // First file already exists in tmp
-                console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, using it: ", fileName);
-                resolve(fileName);
+            let filePath = tmpDir + fileName;
+            if (fs.existsSync(filePath)) { // First file already exists in tmp
+                console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, using it: ", filePath);
+                resolve(filePath);
                 return;
             }
 
@@ -105,8 +107,8 @@ exports.getFile = function (fileNames) {
 
                 if (dataFileFound) { // This file is in db - save it to disk
                     console.log("%s.%s:%s -", __file, __ext, __line, "File found in db, saving to disk: ", fileName);
-                    fs.writeFileSync('/tmp/' + fileName, dataFileFound.fileData);
-                    resolve(fileName);
+                    fs.writeFileSync(filePath, dataFileFound.fileData);
+                    resolve(filePath);
                     return;
                 }
                 else { // File wasn't found in db either. Check for the second file instead.
@@ -114,6 +116,7 @@ exports.getFile = function (fileNames) {
                     let reason = new Error("File not found in db: ", fileName);
 
                     fileName = fileNames[1];
+                    filePath = tmpDir + fileName;
                     if (!fileName) { // Was a second filename provided?
                         // No second filename provided. Just signal the failure
                         let reason = new Error("File not found in db: ", fileName);
@@ -121,9 +124,9 @@ exports.getFile = function (fileNames) {
                         return;
                     }
 
-                    if (fs.existsSync('/tmp/' + fileName)) { // file already exists in tmp
-                        console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, using it: ", fileName);
-                        resolve(fileName);
+                    if (fs.existsSync(filePath)) { // file already exists in tmp
+                        console.log("%s.%s:%s -", __file, __ext, __line, "File already exists, using it: ", filePath);
+                        resolve(filePath);
                         return;
                     }
 
@@ -138,9 +141,9 @@ exports.getFile = function (fileNames) {
                         }
 
                         if (dataFileFound) { // This file is in db - save it to disk
-                            console.log("%s.%s:%s -", __file, __ext, __line, "File found in db, saving to disk: ", fileName);
-                            fs.writeFileSync('/tmp/' + fileName, dataFileFound.fileData);
-                            resolve(fileName);
+                            console.log("%s.%s:%s -", __file, __ext, __line, "File found in db, saving to disk: ", filePath);
+                            fs.writeFileSync(filePath, dataFileFound.fileData);
+                            resolve(filePath);
                             return;
                         }
                         else { // File isn't in db either

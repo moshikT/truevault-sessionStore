@@ -70,9 +70,9 @@
         <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
         <th data-field="report"><!--FIXME: Report-->דוח</th>
         <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
-        <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש
         </th>
         <% if (advanced) { %>
+        <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש
         <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
         <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
         <th data-field="gooLink" data-sortable="false"><!--FIXME: goo.gl -->goo.gl</th>
@@ -126,8 +126,8 @@
             <% } %>
         </td>
         <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
-        <td><%- appExp %></td>
         <% if (advanced) { %>
+        <td><%- appExp %></td>
         <td><%= candidate.formDurationInMinutes %></td>
         <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
         <td><a href='<%= candidate.linkToForm + ".info"%>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
@@ -209,7 +209,7 @@
             //       We would like to have different editors for different cells (e.g. calendar, dropdown)
             //       To support this we either need to modify the implementation of editableTableWidget or
             //       find another widget to replace it.
-            preventColumns: [1, 2, 3, 4, 5, 6, 7, 8, 9<% if (advanced) { %>, 10, 11, 12<% } %> ] // Columns which aren't editable
+            preventColumns: [1, 2, 3, 4, 5, 6, 7, 8<% if (advanced) { %>,9 , 10, 11, 12<% } %> ] // Columns which aren't editable
         });
     }
     })
