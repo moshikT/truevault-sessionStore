@@ -1,6 +1,7 @@
 window.addEventListener("load", function() { window. scrollTo(0, 0); });
 var agreeChk = document.getElementById('agree');
-var nextBtn = document.getElementById('next_btn');
+const nextBtn = document.getElementById('next_btn');
+const nextBtnGray = document.getElementById('next_btn_gray');
 var sid = getParameterByName('sid');
 var cid = getCid();
 
@@ -12,9 +13,11 @@ document.addEventListener('DOMContentLoaded', function () {
 function displayNext(){
     if(agreeChk.checked){
         nextBtn.style.display = 'block';
+        nextBtnGray.style.display = 'none';
     }
     else{
         nextBtn.style.display = 'none';
+        nextBtnGray.style.display = 'block';
     }
 }
 

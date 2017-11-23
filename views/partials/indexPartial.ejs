@@ -1,27 +1,37 @@
-    <form id="formInfo" method="post" action=<%='/clients/' + client._id + '/?sid=' + sid %>>
+<form id="formInfo" method="post" action=<%= '/clients/' + client._id + '/?sid=' + sid %>>
 
-        <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
-            <div class="headline" style="z-index: 10;" text-align: <%= indexPageText.align %>><p><%- client.headlineText %></p> </div>
-            <div class="container introText" style="padding: 10px;margin-top: 0px; height: 100%; text-align: <%= indexPageText.align %>">
-                <%=/*indexPageText.instructionText*/%>
-                <div id="testInstructions" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
-                <p><%- (client.instructionText!==undefined)?client.instructionText.replace('$checkbox',
-                            "<input id='agree' name='agree' type='checkbox' value='' style='vertical-align: bottom;' >"):"Missing instruction text" %>
+    <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
+        <div class="headline" style="z-index: 10;" text-align: <%= indexPageText.align %>>
+            <p><%- client.headlineText %></p></div>
+        <div class="container introText"
+             style="padding: 10px;margin-top: 0px; height: 100%; text-align: <%= indexPageText.align %>">
+            <%= /*indexPageText.instructionText*/ %>
+            <div id="testInstructions"
+                 style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
+                <p><%- (client.instructionText !== undefined) ? client.instructionText.replace('$checkbox',
+                            "<input id='agree' name='agree' type='checkbox' value='' style='vertical-align: bottom;' >") : "Missing instruction text" %>
                 </p>
-                </div>
-                <div id="companyDescription" style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;display: none;">
-                    <p><%- client.companyDescription %></p>
-                </div>
-                <div id="next_btn" style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
-                    <a onclick="goNext()" >
+            </div>
+            <div id="companyDescription"
+                 style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;display: none;">
+                <p><%- client.companyDescription %></p>
+            </div>
+            <div id="next_btn"
+                 style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: block;">
+                <a onclick="goNext()">
                     <img style="zoom:30%" src="/images/next_btn.png">
-                    </a>
-                </div>
-                <div id="back_btn" style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
-                    <a onclick="goBack()" >
-                        <img style="zoom:30%" src="/images/back_btn.png">
-                    </a>
-                </div>
+                </a>
+            </div>
+            <div id="next_btn_gray"
+                 style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: block;">
+                <img style="zoom:30%" src="/images/next_btn_gray.png">
+            </div>
+            <div id="back_btn"
+                 style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
+                <a onclick="goBack()">
+                    <img style="zoom:30%" src="/images/back_btn.png">
+                </a>
             </div>
         </div>
-    </form>
+    </div>
+</form>
