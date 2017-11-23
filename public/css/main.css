@@ -346,7 +346,7 @@ button:focus {
     text-align: center;
     direction: rtl;
     color: #ffffff;
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     font-size: 2rem;
     font-weight: 700;
 }
@@ -453,7 +453,7 @@ button:focus {
 
 .graph__filters-text {
     direction: rtl;
-    font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;
+    /*font-family: "Noto Sans", "Helvetica", "Arial", sans-serif;*/
     color: #373737;
     font-size: 1.333rem;
 }
