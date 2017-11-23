@@ -1,3 +1,4 @@
+"use strict";
 // addCandidate controller
 // Allows adding a new candidate to a specific client
 // let express = require('express');   //Express
@@ -30,7 +31,7 @@ exports.getAddCandidatePage = function (req, res) {
     const title = (isEnglish ? 'Add Candidate' : 'הוסף מועמד') + ' - ' + req.client.name;
     const subTitle = (isEnglish ? 'Add candidate for' : 'הוסף מועמד עבור ') + ' - ' + req.client.name;
     // Get the field names based on client language
-    fieldNames = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, isEnglish);
+    let fieldNames = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, isEnglish);
     res.render('addCandidate', {
         title: title,
         subTitle: subTitle,

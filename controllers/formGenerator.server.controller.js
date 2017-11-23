@@ -245,7 +245,7 @@ function pushQuestion(nextQuestion, arrayTo) {
     /** Skip updating F type question next because its not appear at form UI */
    if (arrayTo.length > 0) {
         var currentQuestion = arrayTo[arrayTo.length - 1];
-        if(currentQuestion.type != 'F'){
+        if(nextQuestion.id.indexOf('cultural') == '-1'){
             currentQuestion.next = nextQuestion.id;
         }
     }
