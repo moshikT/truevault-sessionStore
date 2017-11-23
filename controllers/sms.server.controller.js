@@ -16,8 +16,9 @@ const http = require('http');
 //const fixieUrl = 'http://fixie:IHUAjNg5Pwm0SFb@velodrome.usefixie.com:80';//url.parse(process.env.FIXIE_URL);
 //const requestUrl = 'http://api.itnewsletter.co.il/webservices/webservicesms.asmx'
 
-exports.send = function (number, text)
+exports.send = function (number, text, callback)
 {
+    let isSent = true;
     let options = {
         host: 'velodrome.usefixie.com',//fixieUrl.hostname,
         port: 80,//fixieUrl.port,
@@ -96,7 +97,7 @@ xml:
                 xml.indexOf("</sendSmsToRecipientsResponse")-xml.indexOf("<sendSmsToRecipientsResponse"));
             let json = xml2json.parser(xml);
 
-            if(JSON.stringify(res.statusCode) === 200) {
+            if(res.statusCode === 200) {
                 if(json['sendSmsToRecipientsResponse']) {
                     if(json['sendSmsToRecipientsResponse']['sendSmsToRecipientsResult']) {
                         console.log("%s.%s:%s -", __file, __ext, __line, "successful sms sent to the user: result(expected to be '1')= "
@@ -107,16 +108,19 @@ xml:
                     console.log("%s.%s:%s -", __file, __ext, __line, "successful sms sent to the user. response xml: " + xml
                     + ' phone number: ' + number);
                 }
+                callback(isSent);
             }
             else {
                 console.log("%s.%s:%s -", __file, __ext, __line, "sms response status code is not 200: " + JSON.stringify(res.statusCode)
                     + ' phone number: ' + number);
+                callback(!isSent);
             }
         });
     });
 
     req.on('error', function(e) {
         console.log("%s.%s:%s -", __file, __ext, __line, "sms - problem with request: " + e.message + ' phone number: ' + number);
+        callback(!isSent);
     });
 
     //console.log('data :' + data);

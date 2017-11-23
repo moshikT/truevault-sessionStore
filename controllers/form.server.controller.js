@@ -109,6 +109,9 @@ exports.saveFormResults = function (req, res) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
                     // Calculate the report data
+
+                    // TODO: if newUser.notifyNewCandidate == true send email to recruiter
+
                     recruiterReport_Ctrl.calcRecruiterReport(req, res); // we don't provide a callback because we don't have anything to do here if it didn't work. Will calc the report when needed instead.
                 }
             });

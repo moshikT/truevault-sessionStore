@@ -8,11 +8,22 @@ let Candidate = require('../models/candidate.server.model.js');
 let generateLink = require('../controllers/linkGenerator.server.controller');
 let formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 let textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+let sms_Ctrl = require('../controllers/sms.server.controller');
 let uuidv1 = require('uuid/v1');
 
 // object storing all candidate data entered on this view
 class userData {
-    constructor(fullName, id, email, phoneNumber, company, gender, recruitmentSource, linkToCV) {
+    constructor(fullName,
+                id,
+                email,
+                phoneNumber,
+                company,
+                gender,
+                recruitmentSource,
+                linkToCV,
+                sendSMS,
+                notifyNewCandidate,
+                notifyNewCandidateReport) {
         this.fullName = fullName;
         this.id = id;
         this.email = email;
@@ -21,6 +32,9 @@ class userData {
         this.gender = gender;
         this.recruitmentSource = recruitmentSource;
         this.linkToCV = linkToCV;
+        this.sendSMS = sendSMS;
+        this.notifyNewCandidate = notifyNewCandidate;
+        this.notifyNewCandidateReport = notifyNewCandidateReport;
     }
 }
 
@@ -43,9 +57,28 @@ exports.getAddCandidatePage = function (req, res) {
 // Called on POST request to addCandidate
 // Add a new candidate to the DB and render the displayLink page which shows the new candidate's data
 exports.addCandidate = function (req, res) {
-    const newUser = new userData(req.body['user_fullName'], req.body['user_id'],
-        req.body['user_email'], req.body['user_tel'], req.client.name, req.body['gender'],
-        req.body['recruitmentSource'], req.body['linkToCV']);
+    // Set client checkboxes values - because unchecked checkbox not exists in the Post request.
+    let isSendSMS = (req.body['sendSMS']) ? true : false;
+    let isNotifyNewCandidate = req.body['notifyNewCandidate'] ? true : false;
+    ;
+    let isNotifyNewCandidateReport = req.body['notifyNewCandidateReport'] ? true : false;
+    ;
+
+    const newUser = new userData(
+        req.body['user_fullName'],
+        req.body['user_id'],
+        req.body['user_email'],
+        req.body['user_tel'],
+        req.client.name,
+        req.body['gender'],
+        req.body['recruitmentSource'],
+        req.body['linkToCV'],
+        isSendSMS,
+        isNotifyNewCandidate,
+        isNotifyNewCandidateReport
+    );
+
+    console.log("test if checked is equel to true = ", newUser);
 
     // FIXME: Removed search for candidate because we would like to create a new entry for the candidate in any case
     // If this is returned to active state then the behavior MUST change because currently it appears to the admin
@@ -134,25 +167,77 @@ exports.addCandidate = function (req, res) {
                     recruitmentSource: newUser.recruitmentSource,
                     dateCompleted: '',
                     dateTimeCreated: new Date(),
-                    linkToCV: newUser.linkToCV
+                    linkToCV: newUser.linkToCV,
+                    sendSMS: newUser.sendSMS,
+                    notifyNewCandidate: newUser.notifyNewCandidate,
+                    notifyNewCandidateReport: newUser.notifyNewCandidateReport
                 });
 
                 // Save the new candidate in the DB
                 newCandidateEntry.save(function (err) {
-                    if (err) {
-                        // FIXME: Do more than just log the error to the console
-                        console.log("%s.%s:%s -", __file, __ext, __line, err);
+                        if (err) {
+                            // FIXME: Do more than just log the error to the console
+                            console.log("%s.%s:%s -", __file, __ext, __line, err);
+                        }
+                        //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
+
+                        // TODO: Trigger the next step in the process, such as sending an SMS or notifying the ATS etc.
+                        // TODO: if form.length > 25 Form generated successfully - Send SMS to the candidate.
+                        let isFormValid = (form.length > 25);
+                        let statusMsg = "";
+                        if (isFormValid) {
+                            if (newUser.sendSMS) {
+                                if (req.client.SMSText === '' || !req.client.SMSText) {
+                                    statusMsg = "empty SMS didn't sent - please insert text and try again!";
+                                    res.render('niceError', {
+                                        title: 'Add Candidate' + newUser.fullName,
+                                        errorText: statusMsg
+                                    });
+                                    return;
+                                }
+                                else {
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "text massage sent to the user: ", req.client.SMSText);
+                                    sms_Ctrl.send(newUser.phoneNumber, req.client.SMSText, function (isSent) {
+                                        if (isSent) {
+                                            statusMsg = 'SMS message successfully sent to the candidate!';
+                                        }
+                                        else {
+                                            statusMsg = 'An error occurred while sending SMS to the candidate!';
+                                        }
+
+                                        console.log("status msg: ", statusMsg);
+                                        res.render('displayLink', {
+                                            title: '',
+                                            candidate: newUser,
+                                            client: req.client,
+                                            statusMsg: statusMsg
+                                        });
+                                        return;
+                                    });
+                                }
+                            }
+                            else {
+                                res.render('displayLink', {
+                                    title: '',
+                                    candidate: newUser,
+                                    client: req.client,
+                                    statusMsg: statusMsg
+                                });
+                                return;
+                            }
+                        }
+                        else {
+                            statusMsg = 'An error occurred while generating the form'; // nice error
+                            res.render('niceError', {
+                                title: 'Add Candidate' + newUser.fullName,
+                                errorText: statusMsg
+                            });
+                            return;
+                        }
+
+                        // TODO: if newUser.notifyNewCandidate == true send email to recruiter
                     }
-                    //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
-
-                    // TODO: Trigger the next step in the process, such as sending an SMS or notifying the ATS etc.
-
-                    res.render('displayLink', {
-                        title: '',
-                        candidate: newUser,
-                        client: req.client
-                    });
-                });
+                );
             })
             .catch(error => console.log("%s.%s:%s -", __file, __ext, __line, error));
     });

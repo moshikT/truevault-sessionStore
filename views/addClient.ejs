@@ -43,6 +43,7 @@
                                style="border-style: none none solid none;text-align: center;
                                     opacity: 0.7;margin-right:auto;margin-left: auto;">
                     </div>
+
                     <div id="clientLogoStyle" style="padding: 20px;">
                         <input onclick="scrollToNextElement('logoStyle')" id="LogoStyle" class="inputs"
                                name="logoStyle" type="text" value='<%= (client.logoStyle) ? client.logoStyle : ''%>' placeholder='Client Logo Style'
@@ -90,11 +91,23 @@
                                     placeholder='Email From' style="border-style: none none solid none;text-align: center;
                                         opacity: 0.7">
                     </div>
+                    <div id="clientNewCandidateEmailSubject" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('newCandidateEmailSubject')" id="newCandidateEmailSubject" class="inputs"
+                               name="newCandidateEmailSubject" type="text" value='<%= (client.newCandidateEmailSubject) ?
+                                client.newCandidateEmailSubject : ''%>' placeholder='New Candidate Email Subject'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                    </div>
                     <div id="clientNewCandidateEmailText" style="padding: 20px;">
                         <textarea onclick="scrollToNextElement('newCandidateEmailText')" id="newCandidateEmailText"
                                   class="inputs" name="newCandidateEmailText" placeholder='New Candidate Email Text'
                                     cols="40" rows="5" style="opacity: 0.7"><%= (client.newCandidateEmailText) ?
                                         client.newCandidateEmailText : ''%></textarea>
+                    </div>
+                    <div id="clientCandidateReportEmailSubject" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('candidateReportEmailSubject')" id="candidateReportEmailSubject" class="inputs"
+                               name="candidateReportEmailSubject" type="text" value='<%= (client.candidateReportEmailSubject) ?
+                                client.candidateReportEmailSubject : ''%>' placeholder='Candidate Report Email Subject'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
                     </div>
                     <div id="clientCandidateReportEmailText" style="padding: 20px;">
                         <textarea onclick="scrollToNextElement('candidateReportEmailText')" id="candidateReportEmailText"
