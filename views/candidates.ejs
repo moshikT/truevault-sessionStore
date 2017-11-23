@@ -39,7 +39,12 @@
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: right /*FIXME:left*/;
-        background-color: #4CAF50;
+        <% if (advanced) { %>
+            background-color: palevioletred;
+        <% }
+        else { %>
+            background-color: cornflowerblue;
+        <% } %>
         color: white;
     }
 
