@@ -3,6 +3,13 @@
     /* minimal-ui is active */
 }
 
+/* target phones */
+@media screen and (max-device-width: 1200px) {
+    input[type=checkbox] {
+        zoom: 150%;
+    }
+}
+
 /* desktop, laptop and above  */
 @media screen
 and (min-device-width: 1200px)
