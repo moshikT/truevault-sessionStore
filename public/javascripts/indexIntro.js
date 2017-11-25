@@ -11,14 +11,18 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function displayNext(){
+    // Change the display of the 'Next' button based on the state of the consent checkbox
     if(agreeChk.checked){
+        // The checkbox is marked
         nextBtn.style.display = 'block';
         nextBtnGray.style.display = 'none';
     }
-    else{
+    else{ // The checkbox isn't marked
         nextBtn.style.display = 'none';
         nextBtnGray.style.display = 'block';
     }
+    // Whenever updating, also remove the red highlight from the checkbox
+    $(agreeDiv).removeClass('squaredTwoRed');
 }
 
 // Display next button only after terms confirmation checkbox is checked.
@@ -44,6 +48,12 @@ function goNext() {
         mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
         document.getElementById("formInfo").submit();
     }
+}
+
+// Make the checkbox red
+function redCheckbox()
+{
+    $(agreeDiv).addClass('squaredTwoRed');
 }
 
 function goBack() {
