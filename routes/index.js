@@ -63,8 +63,8 @@ router.use(function (req, res, next) {
             break;
         case 'html': // html pages - display a static html file found in db or /tmp
             addFile_Ctrl.getFile([parts[2] + '.html'])
-                .then(fileName => {
-                    res.sendFile('/tmp/' + fileName);
+                .then(filePath => {
+                    res.sendFile(filePath);
                 })
                 .catch(error => { // html file not found
                     console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
@@ -172,7 +172,8 @@ router.get('/privacy', function (req, res) {
 });
 
 router.get('/html/:textfile', function (req, res) {
-    res.render('/tmp/' + textfile);
+    console.log("%s.%s:%s -", __file, __ext, __line, textfile);
+    res.render(textfile);
 });
 
 module.exports = router;
