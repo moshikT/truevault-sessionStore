@@ -13,6 +13,12 @@
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <!-- Include Bootstrap Table -->
     <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/bootstrap-table/1.11.1/bootstrap-table.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="/javascripts/bootstrap-table.min.js"></script>
+    <script src="/javascripts/FileSaver.js"></script>
+    <script lang="javascript" src="/javascripts/xlsx.full.min.js"></script>
+    <script src="/javascripts/tableexport.js"></script>
 </head>
 <!-- Define styles for a nice candidates table -->
 <style>
@@ -39,13 +45,10 @@
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: right /*FIXME:left*/;
-        <% if (advanced) { %>
-            background-color: palevioletred;
-        <% }
-        else { %>
-            background-color: cornflowerblue;
-        <% } %>
-        color: white;
+    <% if (advanced) { %> background-color: palevioletred;
+    <% }
+    else { %> background-color: cornflowerblue;
+    <% } %> color: white;
     }
 
 </style>
@@ -64,13 +67,12 @@
     <thead>
     <tr>
         <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right">
-            <!--FIXME: Date Added-->תאריך<br>קבלת קוח
+            <!--FIXME: Date Added-->תאריך <br>קבלת קוח
         </th>
         <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
         <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
         <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך
-            מילוי
+        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך מילוי
         </th>
         <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
         <th data-field="report"><!--FIXME: Report-->דוח</th>
@@ -82,16 +84,17 @@
         <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
         <th data-field="gooLink" data-sortable="false"><!--FIXME: goo.gl -->goo.gl</th>
         <% } %>
-        <th data-field="phoneInterviewDate">תאריך<br>ראיון טלפוני</th>
+        <th data-field="phoneInterviewDate">תאריך <br>ראיון טלפוני</th>
         <th data-field="phoneInterviewResult">ראיון טלפוני</th>
-        <th data-field="interviewDate">תאריך<br>ראיון פרונטלי</th>
+        <th data-field="interviewDate">תאריך <br>ראיון פרונטלי</th>
         <th data-field="interviewResult">ראיון פרונטלי</th>
         <th data-field="reportRating">השוואה לדוח</th>
         <th data-field="hired">התקבל</th>
-        <th data-field="workDate">תאריך<br>תחילת עבודה</th>
+        <th data-field="workDate">תאריך <br>תחילת עבודה</th>
         <th data-field="startedWork">התחיל לעבוד</th>
     </tr>
     </thead>
+    <tbody>
     <% for (let i = 0;i < candidates.length;i++) {
         const candidate = candidates[i];
         formjson = candidate.form; // Get the answers
@@ -135,7 +138,7 @@
         <td><%- appExp %></td>
         <td><%= candidate.formDurationInMinutes %></td>
         <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
-        <td><a href='<%= candidate.linkToForm + ".info"%>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
+        <td><a href='<%= candidate.linkToForm + ".info" %>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
         <% } %>
         <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
         <td id="phoneInterviewResult_<%= candidate.session.id %>"
@@ -148,6 +151,7 @@
         <td id="startedWork_<%= candidate.session.id %>" data-editor="1"><%= candidate.startedWork %></td>
     </tr>
     <% } %>
+    </tbody>
 </table>
 </body>
 
@@ -175,6 +179,14 @@
         return 0;
     }
 
+    // Add 'export to xlsx' button to table
+    // Uses the tableexport.js lib
+    // We do this before initing the bootstrap table because otherwise the export will only include the currently
+    // viewed rows and not the entire table
+    $("#candidates").tableExport({
+        formats: ['xlsx'],  // Support only xlsx format
+        bootstrap: true     // Use bootstrap for styling a nice flat button
+    });
     // Initialize the candidates table as a bootstrap-table
     const candidatesTable = $('#candidates');
     candidatesTable.bootstrapTable({
@@ -200,7 +212,7 @@
                             '<option value="לא רלוונטי">לא רלוונטי</option>' +
                             '<option value="צריך לחשוב על זה">צריך לחשוב על זה</option>' +
                             '<option value="לא ענה">לא ענה</option>' +
-                        '</select>'),
+                            '</select>'),
                         $('<select>' +   // 3 - select face-to-face interview
                             '<option></option>' +
                             '<option value="עבר">עבר</option>' +
@@ -208,17 +220,17 @@
                             '<option value="לא הגיע">לא הגיע</option>' +
                             '<option value="מעוניין לחשוב">מעוניין לחשוב</option>' +
                             '<option value="הסיר מועמדות">הסיר מועמדות</option>' +
-                        '</select>')
-        ],
-            //FIXME: editableTableWidget supports only one type of editor for the entire table.
-            //       We would like to have different editors for different cells (e.g. calendar, dropdown)
-            //       To support this we either need to modify the implementation of editableTableWidget or
-            //       find another widget to replace it.
-            preventColumns: [1, 2, 3, 4, 5, 6, 7, 8<% if (advanced) { %>,9 , 10, 11, 12<% } %> ] // Columns which aren't editable
-        });
-    }
-    })
-    ;
+                            '</select>')
+                    ],
+                //FIXME: editableTableWidget supports only one type of editor for the entire table.
+                //       We would like to have different editors for different cells (e.g. calendar, dropdown)
+                //       To support this we either need to modify the implementation of editableTableWidget or
+                //       find another widget to replace it.
+                preventColumns: [1, 2, 3, 4, 5, 6, 7, 8<% if (advanced) { %>, 9, 10, 11, 12<% } %> ] // Columns which aren't editable
+            });
+        }
+    });
+
 
     // Method called when a cell value is changed
     candidatesTable.on('change', function (evt, newValue) {
