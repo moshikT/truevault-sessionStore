@@ -109,10 +109,10 @@ function getFactorsAvg(candidate, callback) {
 
 
     addFile_Ctrl.getFile([/*'report factors - factorsTranspose.csv'*/'report.items.csv'])
-        .then(fileName => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+        .then(filePath => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv({noheader: true})
-                .fromFile('/tmp/' + fileName)
+                .fromFile(filePath)
                 .on('csv', (csvRow) => {
                     // csvRow is an array
                     var factorAvg = 0;
@@ -184,6 +184,7 @@ function getFactorsAvg(candidate, callback) {
                 })
                 .on('error', (err) => {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err)
+                    callback(null);
                 })
         })
         .catch(error => { // 'report factors - factorsTranspose.csv' not found
@@ -195,13 +196,13 @@ function getFactorsAvg(candidate, callback) {
 function getVerbalText(factorsData, isMale, companyKeyword, callback) {
     var strengths = [];
     var weaknesses = [];
-    const baseFileName = 'report factors - verbal';
+    const baseFileName = 'report.verbal';
 
-    addFile_Ctrl.getFile(['report.verbal.ayalon','report.verbal.ayalon.csv'/*baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'*/])
-        .then(fileName => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'/*baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'*/])
+        .then(filePath => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv()
-                .fromFile('/tmp/' + fileName)
+                .fromFile(filePath)
                 .on('data', (data) => {
                     //data is a buffer object
                     //parseVerbalData(factorsData, isMale, data);

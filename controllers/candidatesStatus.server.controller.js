@@ -14,6 +14,6 @@ exports.candidatesStatus = function (req, res) {
         }
 
         // Render the candidates view in a callback because the retrieval from the DB is async
-        res.render('candidates', { title: 'Manage Clients', advanced: req.advanced, candidates: candidateItems}); // Clients management page
+        res.render('candidates', { title: 'Manage Candidates', advanced: req.advanced, candidates: candidateItems}); // Clients management page
     });
 };

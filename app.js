@@ -23,6 +23,7 @@ console.log("%s.%s:%s -", __file, __ext, __line, "Connecting to MongoDB - DB URL
 //mongodb://emphireDB:nD9yncX1bf@ds115035.mlab.com:15035/empiricalhire
 var index = require('./routes/index');
 var questionRouter = require('./routes/questionRouter');
+let candidateRouter = require('./routes/candidateRouter');
 
 /*LOCAL*/
 mongoose.Promise = global.Promise;
@@ -54,7 +55,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/clients/api', questionRouter);
+app.use('/api/questions', questionRouter);
+app.use('/api/candidates', candidateRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

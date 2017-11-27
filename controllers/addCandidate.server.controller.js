@@ -245,7 +245,13 @@ exports.addCandidate = function (req, res) {
                     }
                 );
             })
-            .catch(error => console.log("%s.%s:%s -", __file, __ext, __line, error));
+            .catch(error => {
+                console.log("%s.%s:%s -", __file, __ext, __line, error)
+                res.render('niceError', {
+                    title: 'Add Candidate' + newUser.fullName,
+                    errorText: "Failed to generate short URLs for: '" + newUser.fullName + "'"
+                });
+            });
     });
     //}
     //}); //This belongs to the 'findOne' that was disabled above

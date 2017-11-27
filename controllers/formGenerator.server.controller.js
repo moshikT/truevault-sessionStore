@@ -15,9 +15,10 @@ var question = {
     next: null
 }
 
-exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
+exports.generateForm = function (isInEnglish, companyKeyword, callback) {
     var lines = 0;
-    var companyForm = questionsKeyWord;//company.isDemo ? 'DEMO' : 'AYALON';
+    var companyForm = companyKeyword;
+    const baseFileName = 'items key';
 
     var questionsArraysByType = {
         p_typeJSON : [],
@@ -29,11 +30,11 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
     }
 
     // make sure file is retrieved from the db
-    addFile_Ctrl.getFile(['items key.csv'])
-        .then(fileName => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", fileName);
+    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
+        .then(filePath => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv()
-                .fromFile('/tmp/items key.csv')
+                .fromFile(filePath)
                 .on('json', (jsonObj) => {
                     // combine csv header row and csv line to a json object
                     // jsonObj.a ==> 1 or 4
