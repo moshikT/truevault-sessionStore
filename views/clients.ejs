@@ -46,6 +46,7 @@
         <tr>
             <th>Name</th>
             <th>Candidates</th>
+            <th>Answers</th>
             <th>Add Candidate</th>
             <th>Intro</th>
             <th>Thank You</th>
@@ -54,6 +55,7 @@
         <tr>
             <td><%- clients[i].name %></td>
             <td><a href="/clients/<%= clients[i]._id %>/candidatesAdv">Status</a></td>
+            <td><a href="/clients/<%= clients[i]._id %>/answers">Answers</a></td>
             <td><a href="/clients/<%= clients[i]._id %>/addCandidate">Add Candidate</a></td>
             <td><a href="/clients/<%= clients[i]._id %>/">View Intro</a></td>
             <td><a href="/clients/<%= clients[i]._id %>/thankYou">View Thankyou</a></td>

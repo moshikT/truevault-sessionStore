@@ -45,10 +45,13 @@
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: right /*FIXME:left*/;
-    <% if (advanced) { %> background-color: palevioletred;
+    <% if (advanced) { %>
+        background-color: palevioletred;
     <% }
-    else { %> background-color: cornflowerblue;
-    <% } %> color: white;
+    else { %>
+        background-color: cornflowerblue;
+    <% } %>
+        color: white;
     }
 
 </style>
@@ -60,38 +63,88 @@
 <body dir="rtl"><!-- FIXME: ltr -->
 <ul>
 </ul>
+<%
+let answersOrder = {}, maxAnswer = 0, orderedAnswers = []; // Hold the correct answers order for all the iterations of the loop
+if (answers) {
+    // If we're in answers mode, we need to loop through all the candidates' answers first in order
+    // to prepare the column headings with all the question IDs
+    console.log("71: Answers mode");
+
+    for (let i = 0; i < candidates.length; i++) { // Loop through candidates
+        console.log("74: Answers mode: ", i);
+        const candidate = candidates[i];
+        formjson = candidate.form; // Get the answers
+        let appExp = ''; // For holding the app experience response
+        if (candidate.formCompleted) { // Did this candidate complete the form?
+            // Run through all the answers and sort them into the correct order
+            for (let j = 0; j < formjson.length; j++) {
+                if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
+                    const id = formjson[j].id;
+                    let index;
+                    if (answersOrder[id] !== undefined) {
+                        // This answer was encountered before and therefore already has a numerical order
+                        index = answersOrder[id];
+                    }
+                    else {
+                        // This answer is encountered for the first time so we need to assign it a numerical order
+                        index = maxAnswer;
+                        answersOrder[id] = index;
+                        maxAnswer++;
+                    }
+                    orderedAnswers[index] = id;
+                }
+            }
+        }
+    }
+}
+%>
 <table id="candidates"
        data-sort-name="dateCompleted"
        data-sort-order="desc"
        style="width:100%">
     <thead>
     <tr>
-        <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right">
-            <!--FIXME: Date Added-->תאריך <br>קבלת קוח
-        </th>
-        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
-        <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
-        <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך מילוי
-        </th>
-        <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
-        <th data-field="report"><!--FIXME: Report-->דוח</th>
-        <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
-        </th>
-        <% if (advanced) { %>
-        <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש
-        <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
-        <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
-        <th data-field="gooLink" data-sortable="false"><!--FIXME: goo.gl -->goo.gl</th>
+        <% if (answers) { %>
+            <% console.log("108: Answers mode"); %>
+            <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
+            <% for (let j = 0;j < maxAnswer; j++) { %>
+                <th data-field="<%= orderedAnswers[j] %>" data-sortable="true"
+                    data-sorter="textSorter"><%= orderedAnswers[j] %></th>
+                <th data-field="<%= orderedAnswers[j] %>_time" data-sortable="true"
+                    data-sorter="textSorter"><%= orderedAnswers[j] %>_time
+                </th>
+            <% } %>
+            <% console.log("117: Answers mode"); %>
         <% } %>
-        <th data-field="phoneInterviewDate">תאריך <br>ראיון טלפוני</th>
-        <th data-field="phoneInterviewResult">ראיון טלפוני</th>
-        <th data-field="interviewDate">תאריך <br>ראיון פרונטלי</th>
-        <th data-field="interviewResult">ראיון פרונטלי</th>
-        <th data-field="reportRating">השוואה לדוח</th>
-        <th data-field="hired">התקבל</th>
-        <th data-field="workDate">תאריך <br>תחילת עבודה</th>
-        <th data-field="startedWork">התחיל לעבוד</th>
+        <% if (!answers) { %>
+            <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right">
+                <!--FIXME: Date Added-->תאריך <br>קבלת קוח
+            </th>
+            <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
+            <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+            <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
+            <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך
+                מילוי
+            </th>
+            <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
+            <th data-field="report"><!--FIXME: Report-->דוח</th>
+            <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
+            </th>
+            <% if (advanced) { %>
+                <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש
+                <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
+                <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
+                <th data-field="gooLink" data-sortable="false"><!--FIXME: goo.gl -->goo.gl</th>
+            <% } %>
+            <th data-field="phoneInterviewDate">תאריך <br>ראיון טלפוני</th>
+            <th data-field="phoneInterviewResult">ראיון טלפוני</th>
+            <th data-field="interviewDate">תאריך <br>ראיון פרונטלי</th>
+            <th data-field="interviewResult">ראיון פרונטלי</th>
+            <th data-field="reportRating">השוואה לדוח</th>
+            <th data-field="hired">התקבל</th>
+            <th data-field="workDate">תאריך <br>תחילת עבודה</th>
+            <th data-field="startedWork">התחיל לעבוד</th>
+        <% } %>
     </tr>
     </thead>
     <tbody>
@@ -110,46 +163,105 @@
             }
         }
     %>
-    <tr>
-        <% const dateTimeCreated = candidate.dateTimeCreated; %>
-        <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
-        <% report = candidate.report; %>
-        <td><%- (dateTimeCreated != undefined) ? dateTimeCreated.toLocaleString() : '' %></td>
-        <td><%- candidate.fullName %></td>
-        <td><%= candidate.phoneNumber %></td>
-        <td><%= candidate.id %></td>
-        <td><%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toLocaleString() : '' %></td>
-        <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
-        <td>
-            <% if ((report) && (candidate.formCompleted)) {
-            if (candidate.linkToReport !== undefined) { %>
-            <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
-            <% }
-            else { %>
-            <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
-            <% }
+    <%
+        for (let i = 0; i < candidates.length; i++) { // Loop through candidates
+            const candidate = candidates[i];
+            formjson = candidate.form; // Get the answers
+            let appExp = ''; // For holding the app experience response
+            if (advanced) {
+                // Run through all the answers and find the answer for the app experience
+                for (let j = 0; j < formjson.length; j++) {
+                    if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
+                        if (formjson[j].type === 'A') { //is this an app exp type question?
+                            if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                                appExp = formjson[j].finalAnswer; //save the final answer
+                            }
+                            break;
+                        }
+                    }
+                }
             }
-            else { %>
+            if ((answers) && (candidate.formCompleted)) {
+                console.log("185: Answers mode");
+                // Clear the orderedAnswers so we don't mix them up with previous answers
+                orderedAnswers = [];
+                // Run through all the answers and sort them into the correct order
+                for (let j = 0; j < formjson.length; j++) {
+                    if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
+                        const id = formjson[j].id;
+                        const index = answersOrder[id];
+                        let answer = -1, timeToAnswer = -1;
+                        if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                            answer = formjson[j].finalAnswer;
+                        }
+                        if (formjson[j].hasOwnProperty('timeAnsweredInSeconds')) { // safety
+                            timeToAnswer = formjson[j].timeAnsweredInSeconds;
+                        }
 
+                        orderedAnswers[index] = {
+                            answer: answer,
+                            timeToAnswer: timeToAnswer
+                        };
+                    }
+                }
+            }
+        }
+    %>
+        <% if ((answers) && (candidate.formCompleted)) { %>
+    <tr>
+            <% console.log("212: Answers mode"); %>
+            <td><%- candidate.fullName %></td>
+            <% for (let j = 0;j < maxAnswer; j++) {
+                if (!orderedAnswers[j]) {
+                    orderedAnswers[j] = {
+                        answer: -1,
+                        timeToAnswer: -1
+                    };
+                }%>
+                <td><%= orderedAnswers[j].answer %></td>
+                <td><%= orderedAnswers[j].timeToAnswer %></td>
             <% } %>
-        </td>
-        <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
-        <% if (advanced) { %>
-        <td><%- appExp %></td>
-        <td><%= candidate.formDurationInMinutes %></td>
-        <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
-        <td><a href='<%= candidate.linkToForm + ".info" %>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
-        <% } %>
-        <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
-        <td id="phoneInterviewResult_<%= candidate.session.id %>"
-            data-editor="2"><%= candidate.phoneInterviewResult %></td>
-        <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
-        <td id="interviewResult_<%= candidate.session.id %>" data-editor="3"><%= candidate.interviewResult %></td>
-        <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
-        <td id="hired_<%= candidate.session.id %>" data-editor="1"><%= candidate.hired %></td>
-        <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
-        <td id="startedWork_<%= candidate.session.id %>" data-editor="1"><%= candidate.startedWork %></td>
     </tr>
+        <% } %>
+        <% if (!answers) { %>
+    <tr>
+            <% const dateTimeCreated = candidate.dateTimeCreated; %>
+            <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
+            <% report = candidate.report; %>
+            <td><%- (dateTimeCreated != undefined) ? dateTimeCreated.toLocaleString() : '' %></td>
+            <td><%- candidate.fullName %></td>
+            <td><%= candidate.phoneNumber %></td>
+            <td><%= candidate.id %></td>
+            <td><%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toLocaleString() : '' %></td>
+            <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
+            <td>
+                <% if ((report) && (candidate.formCompleted)) { %>
+                    <% if (candidate.linkToReport !== undefined) { %>
+                        <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                    <% }
+                    else { %>
+                        <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                    <% } %>
+                <% } %>
+            </td>
+            <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
+            <% if (advanced) { %>
+                <td><%- appExp %></td>
+                <td><%= candidate.formDurationInMinutes %></td>
+                <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
+                <td><a href='<%= candidate.linkToForm + ".info" %>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
+            <% } %>
+            <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
+            <td id="phoneInterviewResult_<%= candidate.session.id %>"
+                data-editor="2"><%= candidate.phoneInterviewResult %></td>
+            <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
+            <td id="interviewResult_<%= candidate.session.id %>" data-editor="3"><%= candidate.interviewResult %></td>
+            <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
+            <td id="hired_<%= candidate.session.id %>" data-editor="1"><%= candidate.hired %></td>
+            <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
+            <td id="startedWork_<%= candidate.session.id %>" data-editor="1"><%= candidate.startedWork %></td>
+    </tr>
+        <% } %>
     <% } %>
     </tbody>
 </table>
