@@ -107,13 +107,18 @@ if (answers) {
         <% if (answers) { %>
             <% console.log("108: Answers mode"); %>
             <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
-            <% for (let j = 0;j < maxAnswer; j++) { %>
+            <%
+            // Add all the columns for <qid>
+            for (let j = 0;j < maxAnswer; j++) { %>
                 <th data-field="<%= orderedAnswers[j] %>" data-sortable="true"
                     data-sorter="textSorter"><%= orderedAnswers[j] %></th>
+            <% }
+            // Add all the columns for <qid>_time
+            for (let j = 0;j < maxAnswer; j++) { %>
                 <th data-field="<%= orderedAnswers[j] %>_time" data-sortable="true"
                     data-sorter="textSorter"><%= orderedAnswers[j] %>_time
-                </th>
-            <% } %>
+            </th>
+        <% } %>
             <% console.log("117: Answers mode"); %>
         <% }
         else { %>
@@ -191,7 +196,7 @@ if (answers) {
                     if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
                         const id = formjson[j].id;
                         const index = answersOrder[id];
-                        let answer = -1, timeToAnswer = -1;
+                        let answer = '', timeToAnswer = '';
                         if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
                             answer = formjson[j].finalAnswer;
                         }
@@ -212,14 +217,20 @@ if (answers) {
     <tr>
             <% console.log("212: Answers mode"); %>
             <td><%- candidate.fullName %></td>
-            <% for (let j = 0;j < maxAnswer; j++) {
+            <%
+            // Run through all the columns and add the answers first
+            for (let j = 0;j < maxAnswer; j++) {
                 if (!orderedAnswers[j]) {
                     orderedAnswers[j] = {
-                        answer: -1,
-                        timeToAnswer: -1
+                        answer: '',
+                        timeToAnswer: ''
                     };
                 }%>
                 <td><%= orderedAnswers[j].answer %></td>
+            <% } %>
+            <%
+            // Run through all the columns and add the times
+            for (let j = 0;j < maxAnswer; j++) { %>
                 <td><%= orderedAnswers[j].timeToAnswer %></td>
             <% } %>
     </tr>
