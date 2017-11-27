@@ -21,12 +21,13 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
     const baseFileName = 'items key';
 
     var questionsArraysByType = {
-        p_typeJSON: [],
-        f_typeJSON: [],
-        c_typeJSON: [],
-        b_typeJSON: [],
-        a_typeJSON: []
-    };
+        p_typeJSON : [],
+        f_typeJSON : [],
+        c_typeJSON : [],
+        b_typeJSON : [],
+        a_typeJSON : [],
+        s_typeJSON : []
+    }
 
     // make sure file is retrieved from the db
     addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
@@ -50,21 +51,24 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
                     //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
                     //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
 
-                    if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
-                        question = parseQuestions(questionsJSON, isInEnglish);
-                        if (question.type == 'P') {
-                            questionsArraysByType.p_typeJSON.push(question);
-                        } else if (question.type == 'F' && question.answerOptions.length > 2) {
-                            //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
-                            //questionsArraysByType.f_typeJSON.push(question);
-                        } else if (question.type == 'C') {
-                            questionsArraysByType.c_typeJSON.push(question);
-                        } else if (question.type == 'B') {
-                            questionsArraysByType.b_typeJSON.push(question);
-                        } else if (question.type == 'A') {
-                            questionsArraysByType.a_typeJSON.push(question);
-                        }
-                    }
+            if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
+                question = parseQuestions(questionsJSON, isInEnglish);
+                if (question.type == 'P') {
+                    questionsArraysByType.p_typeJSON.push(question);
+                } else if (question.type == 'F' /*&& question.answerOptions.length > 2*/) {
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
+                   // questionsArraysByType.f_typeJSON.push(question);
+                } else if (question.type == 'C') {
+                    questionsArraysByType.c_typeJSON.push(question);
+                } else if (question.type == 'B') {
+                    questionsArraysByType.b_typeJSON.push(question);
+                } else if (question.type == 'A') {
+                    questionsArraysByType.a_typeJSON.push(question);
+                }
+                else if (question.type == 'S') {
+                   // questionsArraysByType.s_typeJSON.push(question);
+                }
+            }
 
                     lines++;
                 })
@@ -75,8 +79,9 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
                     //shuffle(questionsArraysByType.f_typeJSON);
                     shuffle(questionsArraysByType.b_typeJSON);
 
-                    const form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
-                        questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON);
+            var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
+                questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON,
+                    questionsArraysByType.s_typeJSON);
 
                     callback(form);
                 });
@@ -87,15 +92,14 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
         });
 }
 
-
 function parseQuestions(qJSON, isInEnglish) {
     var parsedQuestion = {};
     parsedQuestion.id = qJSON['Q_ID'];
+    parsedQuestion.type = qJSON['TYPE'];
     parsedQuestion.item = isInEnglish ? qJSON['ITEM ENGLISH'] : qJSON['ITEM HEBREW'];
     var answerOptions = isInEnglish ? qJSON['ANS_OPT_ENGLISH'].split(",") : qJSON['ANS_OPT_HEBREW'].split(",");
 
-    if (qJSON['TYPE'] == 'B') {
-        parsedQuestion.type = 'B';
+    if (parsedQuestion.type == 'B') {
         var parsedAnswers = [];
         var parsedAnswersWeight = [];
         var answersOptionsArray = isInEnglish ? qJSON['ANSWER ENGLISH'].split(";") : qJSON['ANSWER HEBREW'].split(";");
@@ -110,12 +114,10 @@ function parseQuestions(qJSON, isInEnglish) {
                 //console.log("%s.%s:%s -", __file, __ext, __line, "Wrong structure for question type B: " + qJSON);
             }
         }
-        parsedQuestion.answer = parsedAnswers;
-        /* TODO: check if possible to change to answer options for uniformity between questions types */
+        parsedQuestion.answer = parsedAnswers; /* TODO: check if possible to change to answer options for uniformity between questions types */
         parsedQuestion.dataTitle = parsedAnswersWeight;
     }
-    else if (qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') {
-        parsedQuestion.type = (qJSON['TYPE'] == 'P') ? 'P' : 'A';
+    else if(parsedQuestion.type == 'P' || parsedQuestion.type == 'A') {
         var scalaOptionsNumber = 7;
         var scalaArray = [];
         for (var index = 1; index <= scalaOptionsNumber; index++) {
@@ -141,8 +143,8 @@ function parseQuestions(qJSON, isInEnglish) {
 
 
     }
-    /*else if (qJSON['TYPE'] == 'F') {
-        parsedQuestion.type = 'F';
+    else if (parsedQuestion.type == 'F') {
+        /**
         var fitItemString = qJSON['FIT HEBREW'].toString();
         //if()
         var itemsCollection = fitItemString.split(/\,\s?(?![^\(]*\))/);
@@ -150,9 +152,13 @@ function parseQuestions(qJSON, isInEnglish) {
         //console.log("%s.%s:%s -", __file, __ext, __line, "coltural fit asnwers: ", itemsCollection);
         parsedQuestion.answerOptions = itemsCollection;
         parsedQuestion.dataTitle = itemsCollection;
-    }*/
-    else if (qJSON['TYPE'] == 'C') {
-        parsedQuestion.type = 'C';
+         */
+    }
+    else if (parsedQuestion.type == 'S') {
+        var itemsID = qJSON['GROUP IDS'].split(";");
+        parsedQuestion.itemsID = itemsID; // [id_1,id_2,...,id_5]
+    }
+    else if (parsedQuestion.type == 'C') {
         parsedQuestion.dataTitle = (answerOptions.length == 2) ? [7, 1] : answerOptions;
         parsedQuestion.answerOptions = answerOptions;
         parsedQuestion.optAnswer = isInEnglish ? qJSON['ANSWER ENGLISH'] : qJSON['ANSWER HEBREW'];
@@ -178,12 +184,12 @@ function swap(array, element1Index, element2Index) {
     array[element2Index] = temp;
 }
 
-function reOrderFormJSON(pType, fType, cType, bType, aType) {
+function reOrderFormJSON(pType, fType, cType, bType, aType, sType) {
     var orderedForm = [];
     var numOfPTypeQuestion = 20;
     var numOfFTypeQuestion = 0;//5;
 
-    while (pType.length > 0 || fType.length > 0 || cType.length > 0) {
+    while(pType.length > 0 ||/* fType.length > 0 || */cType.length > 0) {
         var elementsToPush = numOfPTypeQuestion;
         while (elementsToPush > 0 && pType.length > 0) {
             var elementToPush = pType.pop();
@@ -194,11 +200,36 @@ function reOrderFormJSON(pType, fType, cType, bType, aType) {
             var elementToPush = cType.pop()
             pushQuestion(elementToPush, orderedForm);
         }
-        var elementsToPush = numOfFTypeQuestion;
-        while (elementsToPush > 0 && fType.length > 0) {
-            var elementToPush = fType.pop();
-            pushQuestion(elementToPush, orderedForm);
-            elementsToPush--;
+        //var elementsToPush = 1;//numOfFTypeQuestion;
+        if (sType.length > 0) {
+            let set = sType.pop();
+            let items = [];
+            let itemsValues = [];
+            for(let itemsIDIndex = 0; itemsIDIndex < set.itemsID.length; itemsIDIndex++) {
+                for(let fIndex = 0; fIndex < fType.length; fIndex++) {
+                    //console.log("fArray id ", fType[fIndex].id);
+                    //console.log("set.items id ", set.itemsID[itemsIDIndex]);
+                    if(set.itemsID[itemsIDIndex].trim() == fType[fIndex].id.trim()) {
+                        //var fElement = fType.pop();
+                        //console.log("inserted F question!!!!!!    ", fType[fIndex]);
+                        items.push(fType[fIndex].item);
+                        console.log("%s.%s:%s -", __file, __ext, __line, "F item pushed to set: ", fType[fIndex].item);
+                        let itemValue = Math.abs(set.itemsID.length - itemsIDIndex);
+                        itemsValues.push(itemValue);
+                        console.log("%s.%s:%s -", __file, __ext, __line, "F item value pushed to set: ", itemValue);
+                        pushQuestion(fType[fIndex], orderedForm);
+                        break;
+                    }
+                }
+                //console.log("%s.%s:%s -", __file, __ext, __line, "missing item in set: " + set.id + " id: ", set.itemsID[itemsIDIndex]);
+            }
+
+            set.items = items;
+            set.itemsValues = itemsValues;
+
+            if(items.length > 0) {
+                pushQuestion(set, orderedForm);
+            }
         }
     }
     while (bType.length > 0) {
@@ -214,9 +245,12 @@ function reOrderFormJSON(pType, fType, cType, bType, aType) {
 }
 
 function pushQuestion(nextQuestion, arrayTo) {
-    if (arrayTo.length > 0) {
+    /** Skip updating F type question next because its not appear at form UI */
+   if (arrayTo.length > 0) {
         var currentQuestion = arrayTo[arrayTo.length - 1];
-        currentQuestion.next = nextQuestion.id;
+       // if(nextQuestion.id.indexOf('cultural') == '-1' && nextQuestion.id.indexOf('set') != '-1'){
+            currentQuestion.next = nextQuestion.id;
+        //}
     }
     arrayTo.push(nextQuestion);
 }

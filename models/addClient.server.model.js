@@ -15,7 +15,15 @@ var clientSchema = new Schema({
     isDemo : Boolean,
     /* userType: String //candidate, employee */
     link : String,
-    keyword: String
+    keyword: String,
+    SMSText: String,
+    emailTo: String,
+    emailFrom: String,
+    newCandidateEmailText: String,
+    newCandidateEmailSubject: String,
+    candidateReportEmailText: String,
+    candidateReportEmailSubject: String,
+    emailFromPswd: String
 });
 
 module.exports = mongoose.model('Client', clientSchema);

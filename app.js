@@ -1,5 +1,6 @@
-var express = require('express');
+"use strict";
 require('magic-globals'); //__file, __ext & __line come from here
+var express = require('express');
 //var multer  = require('multer');
 //var upload = multer({ dest: 'uploads/' });
 var path = require('path');

@@ -1,3 +1,5 @@
+"use strict";
+
 var numOfQuestionsAnswered = document.getElementsByClassName('active').length;
 var qAnsweredArray = document.getElementsByClassName('active');
 
@@ -27,7 +29,10 @@ if(numOfQuestionsAnswered !== 0) {
     });
     mixpanel.track('Form reloaded', {'sid': sid, 'date': startDate.toString(), 'cid': cid});
 }
-var totalQuestions = document.getElementsByClassName('q').length;
+var numOfSetsQuestions = document.getElementsByClassName('set').length;
+var totalQuestions = document.getElementsByClassName('q').length - numOfSetsQuestions;
+console.log("number of q questions: ", totalQuestions);
+console.log("number of set questions: ", numOfSetsQuestions);
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);
 var highlightedQ, highlightedValue;
 
@@ -196,7 +201,7 @@ var rules = {};
 
 for (var index = 0; index < keys.length; index++) {
     var key = keys[index].name;
-    if(key != "isCompleted"){
+    if(key != "isCompleted" && key.indexOf('cultural') == '-1'){
         rules[key] = "required";
     }
 }
@@ -221,7 +226,7 @@ $("#form").validate({
     errorPlacement: function(error, element) {
         element.before(error);
         element.parent("div").find("a").css( "border", "solid red 1px" );
-        offset = element.offset();
+        var offset = element.offset();
         error.css('left', offset.left);
         error.css('bottom', offset.top - element.outerHeight());
     },
@@ -243,7 +248,7 @@ $("#form").validate({
         _LTracker.push({
             'text': 'Form submitted',
             'sid': sid,
-            'date': dateSubmitted,
+            'date': dateSubmitted.toString(),
             'cid': cid,
             'userType' : 'candidate',
             'fullname': fullName
@@ -361,15 +366,41 @@ function getCid() {
 }
 
 // For further use - in order to style Coltural fit questions
+var setArray = document.getElementsByClassName('set');
+// TODO: Initiate sortable function for each set element
+
 $(function() {
+    var culturalSet = {};
+    culturalSet.movesCounter = 0;
     $( "#sortable" ).sortable({
         stop: function () {
-            var nbElems = inputs.length;
-            $('input.currentposition').each(function(idx) {
-                $(this).val(nbElems - idx);
-                console.log($(this).val);
+            culturalSet.movesCounter += 1;
+            var culturalData = [];
+            var nbElems = $(this).find('input').length / 2;
+            //var nbElems = inputs.length;
+            var order = 0;
+            $('input.currentPosition').each(function(idx) {
+                order++;
+                var currentElementValue = nbElems - idx;
+                var element = {};
+                element.answer = currentElementValue;
+                element.id = $(this).attr('name');
+                $(this).val(currentElementValue);
+                //console.log(element);
+                culturalData.push(element);
             });
-        }
+            culturalSet.data = culturalData;
+            console.log("number of moves ", culturalSet.movesCounter);
+            console.log(culturalSet);
+            var qid = $(this).data('id');
+            var patchUrl = '/' + 'clients' +  '/api/' + sid ;//+ '/' + qid;
+            console.log("url ", patchUrl);
+            sendResult(patchUrl, culturalSet);
+        },
+        zIndex: 9999,
+        helper: "clone",
+        axis: "y",
+        opacity: 0.5
     });
     $( "#sortable" ).disableSelection();
 });
