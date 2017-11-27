@@ -8,6 +8,18 @@ let generateLink = require('../controllers/linkGenerator.server.controller');
 let formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
 let textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
 let uuidv1 = require('uuid/v1');
+let Mixpanel = require('mixpanel');
+// initialize mixpanel client configured to communicate over https
+const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
+    protocol: 'https'
+});
+/*
+// Track event in mixpanel
+mixpanel.track('Event Name', {
+    distinct_id: session.id,
+    cid: req.client._id
+});
+*/
 
 // object storing all candidate data entered on this view
 class userData {
@@ -146,6 +158,16 @@ exports.addCandidate = function (req, res) {
 
                     // TODO: Trigger the next step in the process, such as sending an SMS or notifying the ATS etc.
 
+                    // Track candidate creation in mixpanel
+                    mixpanel.track('Create Candidate', {
+                        distinct_id: session.id,
+                        cid: req.client._id,
+                        name: newUser.fullName,
+                        company: newUser.company,
+                        form_len: form.length,
+                        link_to_form: shortUrlToForm,
+                        link_to_report: newUser.linkToReport
+                    });
                     res.render('displayLink', {
                         title: '',
                         candidate: newUser,
