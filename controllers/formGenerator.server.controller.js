@@ -26,6 +26,7 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
         c_typeJSON : [],
         b_typeJSON : [],
         a_typeJSON : [],
+        l_typeJSON : [],
         s_typeJSON : []
     }
 
@@ -64,6 +65,8 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
                     questionsArraysByType.b_typeJSON.push(question);
                 } else if (question.type == 'A') {
                     questionsArraysByType.a_typeJSON.push(question);
+                } else if (question.type == 'L') {
+                    questionsArraysByType.l_typeJSON.push(question);
                 }
                 else if (question.type == 'S') {
                    // questionsArraysByType.s_typeJSON.push(question);
@@ -81,7 +84,7 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
 
             var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
                 questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON,
-                    questionsArraysByType.s_typeJSON);
+                    questionsArraysByType.s_typeJSON, questionsArraysByType.l_typeJSON);
 
                     callback(form);
                 });
@@ -158,7 +161,7 @@ function parseQuestions(qJSON, isInEnglish) {
         var itemsID = qJSON['GROUP IDS'].split(";");
         parsedQuestion.itemsID = itemsID; // [id_1,id_2,...,id_5]
     }
-    else if (parsedQuestion.type == 'C') {
+    else if (parsedQuestion.type == 'C' || parsedQuestion.type == 'L') {
         parsedQuestion.dataTitle = (answerOptions.length == 2) ? [7, 1] : answerOptions;
         parsedQuestion.answerOptions = answerOptions;
         parsedQuestion.optAnswer = isInEnglish ? qJSON['ANSWER ENGLISH'] : qJSON['ANSWER HEBREW'];
@@ -184,7 +187,7 @@ function swap(array, element1Index, element2Index) {
     array[element2Index] = temp;
 }
 
-function reOrderFormJSON(pType, fType, cType, bType, aType, sType) {
+function reOrderFormJSON(pType, fType, cType, bType, aType, sType, lType) {
     var orderedForm = [];
     var numOfPTypeQuestion = 20;
     var numOfFTypeQuestion = 0;//5;
@@ -232,6 +235,11 @@ function reOrderFormJSON(pType, fType, cType, bType, aType, sType) {
             }
         }
     }
+    while (lType.length > 0) {
+        var elementToPush = lType.pop();
+        pushQuestion(elementToPush, orderedForm);
+    }
+
     while (bType.length > 0) {
         var elementToPush = bType.pop();
         pushQuestion(elementToPush, orderedForm);
