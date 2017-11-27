@@ -31,6 +31,8 @@ if(numOfQuestionsAnswered !== 0) {
 }
 var numOfSetsQuestions = document.getElementsByClassName('set').length;
 var totalQuestions = document.getElementsByClassName('q').length - numOfSetsQuestions;
+console.log("number of q questions: ", totalQuestions);
+console.log("number of set questions: ", numOfSetsQuestions);
 updateProgressbar(numOfQuestionsAnswered, totalQuestions);
 var highlightedQ, highlightedValue;
 
@@ -364,9 +366,12 @@ function getCid() {
 }
 
 // For further use - in order to style Coltural fit questions
-var culturalSet = {};
-culturalSet.movesCounter = 0;
+var setArray = document.getElementsByClassName('set');
+// TODO: Initiate sortable function for each set element
+
 $(function() {
+    var culturalSet = {};
+    culturalSet.movesCounter = 0;
     $( "#sortable" ).sortable({
         stop: function () {
             culturalSet.movesCounter += 1;

@@ -1,35 +1,17 @@
-var express = require('express');
-var fs = require('fs');
-var path = require('path')
-var Client = require('../models/addClient.server.model.js');
+const express = require('express');
+const fs = require('fs');
+const path = require('path');
+const Client = require('../models/addClient.server.model.js');
 //var Candidate = require('../models/candidate.server.model.js');
-var generateLink = require('../controllers/linkGenerator.server.controller');
+const generateLink = require('../controllers/linkGenerator.server.controller');
 
-/*
-class userData {
-    constructor(fullName, id, email, phoneNumber, company) {
-        this.fullName = fullName;
-        this.id = id;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.company = company;
-    }
-}
-*/
 exports.getAddClientPage = function (req, res) {
     res.render('addClient', {title: 'Add New Client', client: ''});
-}
+};
 
 exports.addClient = function (req, res) {
-    var logoImg = {};
-    if (req.file) {
-        logoImg.fileName = req.file.originalname;
-        logoImg.data = fs.readFileSync(req.file.path);
-        logoImg.contentType = 'image/png';
-    }
-
     //console.log("%s.%s:%s -", __file, __ext, __line, "Request body: ", req.body);
-    var companyName = req.body.name;
+    let companyName = req.body.name;
 
     // Search for this client in the db
     Client.findOne({name: companyName.trim()}, function (err, client) { // callback
@@ -51,9 +33,18 @@ exports.addClient = function (req, res) {
                 name: companyName.trim()
             });
         }
+        if (req.body.isDemo) {
+            newClientEntry.isDemo = (req.body.isDemo === 'on');
+            delete req.body.isDemo;
+        }
+
+        /** Go through all the elements in the request and set client's entry */
+        for (let element in req.body) {
+            newClientEntry[element] = req.body[element];
+        }
 
         // Save all the fields that were entered in the form
-        if (req.body.logoStyle) {
+        /*if (req.body.logoStyle) {
             newClientEntry.logoStyle = req.body.logoStyle;
         }
         if (req.body.title) {
@@ -71,9 +62,9 @@ exports.addClient = function (req, res) {
         if (req.body.language) {
             newClientEntry.language = req.body.language;
         }
-        if (req.body.isDemo) {
-            newClientEntry.isDemo = (req.body.isDemo == 'on');
-        }
+                if (req.body.isDemo) {
+                    newClientEntry.isDemo = (req.body.isDemo == 'on');
+                }
         if (req.body.keyword) {
             newClientEntry.keyword = req.body.keyword;
         }
@@ -92,7 +83,15 @@ exports.addClient = function (req, res) {
         if (req.body.candidateReportEmailText) {
             newClientEntry.candidateReportEmailText = req.body.candidateReportEmailText;
         }
+        if (req.body.emailFromPswd) {
+            newClientEntry.emailFromPswd = req.body.emailFromPswd;
+        }*/
         if (req.file) {
+            var logoImg = {};
+            logoImg.fileName = req.file.originalname;
+            logoImg.data = fs.readFileSync(req.file.path);
+            logoImg.contentType = 'image/png';
+
             newClientEntry.markModified('logoImg');
             newClientEntry.logoImg = logoImg;
             console.log("%s.%s:%s -", __file, __ext, __line, "file exists!!", client.logoImg);

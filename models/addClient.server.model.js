@@ -20,7 +20,10 @@ var clientSchema = new Schema({
     emailTo: String,
     emailFrom: String,
     newCandidateEmailText: String,
-    candidateReportEmailText: String
+    newCandidateEmailSubject: String,
+    candidateReportEmailText: String,
+    candidateReportEmailSubject: String,
+    emailFromPswd: String
 });
 
 module.exports = mongoose.model('Client', clientSchema);

@@ -4,12 +4,13 @@
 // let express = require('express');   //Express
 // let fs = require('fs');             //Node.js file I/O
 // let path = require('path');          //Node.js file & directory
-let Candidate = require('../models/candidate.server.model.js');
-let generateLink = require('../controllers/linkGenerator.server.controller');
-let formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
-let textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
-let sms_Ctrl = require('../controllers/sms.server.controller');
-let uuidv1 = require('uuid/v1');
+const Candidate = require('../models/candidate.server.model.js');
+const generateLink = require('../controllers/linkGenerator.server.controller');
+const formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+const textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+const sms_Ctrl = require('../controllers/sms.server.controller');
+const email_Ctrl = require('../controllers/email.server.controller');
+const uuidv1 = require('uuid/v1');
 
 // object storing all candidate data entered on this view
 class userData {
@@ -58,11 +59,9 @@ exports.getAddCandidatePage = function (req, res) {
 // Add a new candidate to the DB and render the displayLink page which shows the new candidate's data
 exports.addCandidate = function (req, res) {
     // Set client checkboxes values - because unchecked checkbox not exists in the Post request.
-    let isSendSMS = (req.body['sendSMS']) ? true : false;
-    let isNotifyNewCandidate = req.body['notifyNewCandidate'] ? true : false;
-    ;
-    let isNotifyNewCandidateReport = req.body['notifyNewCandidateReport'] ? true : false;
-    ;
+    let isSendSMS = (req.body['sendSMS'] === 'on');// ? true : false;
+    let isNotifyNewCandidate = (req.body['notifyNewCandidate'] === 'on');// ? true : false;
+    let isNotifyNewCandidateReport = (req.body['notifyNewCandidateReport'] === 'on');// ? true : false;
 
     const newUser = new userData(
         req.body['user_fullName'],
@@ -181,7 +180,6 @@ exports.addCandidate = function (req, res) {
                         }
                         //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
 
-                        // TODO: Trigger the next step in the process, such as sending an SMS or notifying the ATS etc.
                         // TODO: if form.length > 25 Form generated successfully - Send SMS to the candidate.
                         let isFormValid = (form.length > 25);
                         let statusMsg = "";
@@ -196,8 +194,11 @@ exports.addCandidate = function (req, res) {
                                     return;
                                 }
                                 else {
-                                    console.log("%s.%s:%s -", __file, __ext, __line, "text massage sent to the user: ", req.client.SMSText);
-                                    sms_Ctrl.send(newUser.phoneNumber, req.client.SMSText, function (isSent) {
+                                    /** Replace placeholders with user value */
+                                    let smsTxt = req.client.SMSText.replace('$candidateName', newUser.fullName)
+                                        .replace('$formLink', newUser.linkToForm);
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "text massage sent to the user: ", smsTxt);
+                                    sms_Ctrl.send(newUser.phoneNumber, smsTxt, function (isSent) {
                                         if (isSent) {
                                             statusMsg = 'SMS message successfully sent to the candidate!';
                                         }
@@ -235,7 +236,12 @@ exports.addCandidate = function (req, res) {
                             return;
                         }
 
-                        // TODO: if newUser.notifyNewCandidate == true send email to recruiter
+                        // Send new candidate email to notify the recruiter
+                        if(newUser.notifyNewCandidate) {
+                            let emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName)
+                            email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
+                                req.client.newCandidateEmailSubject, emailTxt);
+                        }
                     }
                 );
             })

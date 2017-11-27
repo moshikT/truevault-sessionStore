@@ -91,6 +91,12 @@
                                     placeholder='Email From' style="border-style: none none solid none;text-align: center;
                                         opacity: 0.7">
                     </div>
+                    <div id="clientEmailFromPswd" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('emailFromPswd')" id="emailFromPswd" class="inputs" name="emailFromPswd"
+                               type="text" value='<%= (client.emailFromPswd) ? client.emailFromPswd : ''%>'
+                               placeholder='Email From password' style="border-style: none none solid none;text-align: center;
+                                        opacity: 0.7">
+                    </div>
                     <div id="clientNewCandidateEmailSubject" style="padding: 20px;">
                         <input onclick="scrollToNextElement('newCandidateEmailSubject')" id="newCandidateEmailSubject" class="inputs"
                                name="newCandidateEmailSubject" type="text" value='<%= (client.newCandidateEmailSubject) ?
@@ -129,7 +135,7 @@
 
                     </div>
                     <div>
-                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="questionsKeyword"
+                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="keyword"
                                type="text" value='<%= (client.keyword) ? client.keyword : ''%>'
                                     placeholder='Questions Keyword' style="border-style: none none solid none;
                                         text-align: center;opacity: 0.7">

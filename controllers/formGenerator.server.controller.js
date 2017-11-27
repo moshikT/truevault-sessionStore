@@ -41,7 +41,7 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
                     //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
                 })
                 .on('data', (data) => {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "CSV data read");
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "CSV data read");
                     //data is a buffer object
                     const jsonStr = data.toString('utf8');
                     var questionsJSON = JSON.parse(jsonStr);
@@ -55,8 +55,8 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
                 if (question.type == 'P') {
                     questionsArraysByType.p_typeJSON.push(question);
                 } else if (question.type == 'F' /*&& question.answerOptions.length > 2*/) {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
-                    questionsArraysByType.f_typeJSON.push(question);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);
+                   // questionsArraysByType.f_typeJSON.push(question);
                 } else if (question.type == 'C') {
                     questionsArraysByType.c_typeJSON.push(question);
                 } else if (question.type == 'B') {
@@ -65,7 +65,7 @@ exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
                     questionsArraysByType.a_typeJSON.push(question);
                 }
                 else if (question.type == 'S') {
-                    questionsArraysByType.s_typeJSON.push(question);
+                   // questionsArraysByType.s_typeJSON.push(question);
                 }
             }
 
@@ -201,23 +201,26 @@ function reOrderFormJSON(pType, fType, cType, bType, aType, sType) {
         }
         //var elementsToPush = 1;//numOfFTypeQuestion;
         if (sType.length > 0) {
-            var set = sType.pop();
-            var items = [];
-            var itemsValues = [];
-            for(var itemsIDIndex = 0; itemsIDIndex < set.itemsID.length; itemsIDIndex++) {
-                for(var fIndex = 0; fIndex < fType.length; fIndex++) {
+            let set = sType.pop();
+            let items = [];
+            let itemsValues = [];
+            for(let itemsIDIndex = 0; itemsIDIndex < set.itemsID.length; itemsIDIndex++) {
+                for(let fIndex = 0; fIndex < fType.length; fIndex++) {
                     //console.log("fArray id ", fType[fIndex].id);
                     //console.log("set.items id ", set.itemsID[itemsIDIndex]);
                     if(set.itemsID[itemsIDIndex].trim() == fType[fIndex].id.trim()) {
                         //var fElement = fType.pop();
-                        console.log("inserted F question!!!!!!    ", fType[fIndex]);
+                        //console.log("inserted F question!!!!!!    ", fType[fIndex]);
                         items.push(fType[fIndex].item);
-                        itemsValues.push(Math.abs(set.itemsID.length - itemsIDIndex));
+                        console.log("%s.%s:%s -", __file, __ext, __line, "F item pushed to set: ", fType[fIndex].item);
+                        let itemValue = Math.abs(set.itemsID.length - itemsIDIndex);
+                        itemsValues.push(itemValue);
+                        console.log("%s.%s:%s -", __file, __ext, __line, "F item value pushed to set: ", itemValue);
                         pushQuestion(fType[fIndex], orderedForm);
                         break;
                     }
                 }
-                console.log("%s.%s:%s -", __file, __ext, __line, "missing item in set: " + set.id + " id: ", set.itemsID[itemsIDIndex]);
+                //console.log("%s.%s:%s -", __file, __ext, __line, "missing item in set: " + set.id + " id: ", set.itemsID[itemsIDIndex]);
             }
 
             set.items = items;
@@ -244,9 +247,9 @@ function pushQuestion(nextQuestion, arrayTo) {
     /** Skip updating F type question next because its not appear at form UI */
    if (arrayTo.length > 0) {
         var currentQuestion = arrayTo[arrayTo.length - 1];
-        if(nextQuestion.id.indexOf('cultural') == '-1'){
+       // if(nextQuestion.id.indexOf('cultural') == '-1' && nextQuestion.id.indexOf('set') != '-1'){
             currentQuestion.next = nextQuestion.id;
-        }
+        //}
     }
     arrayTo.push(nextQuestion);
 }

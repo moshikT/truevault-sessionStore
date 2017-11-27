@@ -1,14 +1,15 @@
-var express = require('express');
-var dateTime = require('node-datetime');
-var json2csv = require('json2csv');
-var fs = require('fs');
-var csv = require("csvtojson");
-var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
-var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
-var Candidate = require('../models/candidate.server.model.js');
-var Client = require('../models/addClient.server.model.js');
-var uuidv1 = require('uuid/v1');
-var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
+const express = require('express');
+const dateTime = require('node-datetime');
+const json2csv = require('json2csv');
+const fs = require('fs');
+const csv = require("csvtojson");
+const formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+const textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+const Candidate = require('../models/candidate.server.model.js');
+const Client = require('../models/addClient.server.model.js');
+const uuidv1 = require('uuid/v1');
+const recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
+const email_Ctrl = require('../controllers/email.server.controller');
 
 var isCandidate = true;
 
@@ -109,10 +110,15 @@ exports.saveFormResults = function (req, res) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
                     // Calculate the report data
-
-                    // TODO: if newUser.notifyNewCandidate == true send email to recruiter
-
                     recruiterReport_Ctrl.calcRecruiterReport(req, res); // we don't provide a callback because we don't have anything to do here if it didn't work. Will calc the report when needed instead.
+
+                    //  if newUser.notifyNewCandidate == true send email to recruiter
+                    if(candidate.notifyNewCandidateReport) {
+                        let emailTxt = req.client.candidateReportEmailText.replace('$candidateName', candidate.fullName)
+                            .replace('$reportLink', candidate.linkToReport);
+                        email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
+                            req.client.candidateReportEmailSubject, emailTxt);
+                    }
                 }
             });
 
