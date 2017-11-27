@@ -110,6 +110,7 @@ router.use('/:sid/:qid', function (req, res, next) {
     //console.log("%s.%s:%s -", __file, __ext, __line, "api params: ", req.params);
     Candidate.findOne({'session.id': req.params.sid}, function (err, candidate) {
         if (err) {
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error retrieving session: ", err);
             res.status(500).send(err);
             return;
         };
@@ -144,9 +145,11 @@ router.route('/:sid/:qid')
                 for (var p in req.body) {
                     req.candidate.form[index][p] = req.body[p];
                 }
-                req.candidate.formDurationInMinutes = (req.candidate.formDurationInMinutes + req.candidate.form[index].timeAnsweredInSeconds / 60).toFixed(2);
+                console.log("%s.%s:%s -", __file, __ext, __line, "formDurationInMinutes: ", req.candidate.formDurationInMinutes, "; timeAnsweredInSeconds", req.candidate.form[index].timeAnsweredInSeconds);
+                req.candidate.formDurationInMinutes = (req.candidate.formDurationInMinutes + req.candidate.form[index].timeLastAnswered / 60).toFixed(2);
                 req.candidate.save(function(err, entry){
                     if(err) {
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Error saving answer: ", err);
                         res.status(500).send(err);
                     }
                     else {

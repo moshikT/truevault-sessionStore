@@ -99,15 +99,17 @@ $('#radioBtn a').on('click', function(){
     $('a[data-toggle="'+qid+'"]').not('[data-value="'+dataValue+'"]').removeClass('active').addClass('notActive');
     $('a[data-toggle="'+qid+'"][data-value="'+dataValue+'"]').removeClass('notActive').addClass('active');
 
+    // Calculate the time spent answering this question
+    var timeAnswered = Math.abs((new Date() - lastQuestionAnswered)/1000).toFixed(0);
+    console.log("Time answered: ", timeAnswered);
     if(questionsAnsweredID.indexOf(qid) == '-1') {
+        // First time selecting the answer for this question
         questionsAnsweredID.push(qid);
         numOfQuestionsAnswered++;
 
-        var timeAnswered = Math.abs((new Date() - lastQuestionAnswered)/1000).toFixed(0);
-        console.log(timeAnswered);
-
         patchData.finalAnswer = answer.toString();
-        patchData.timeAnsweredInSeconds = timeAnswered;
+        patchData.timeAnsweredInSeconds = timeAnswered; // Stores the first answer time for a question
+        patchData.timeLastAnswered = timeAnswered; // Stores the latest answer time for a question - for calculating total
 
         /* start timer for next question */
         lastQuestionAnswered = new Date();
@@ -118,6 +120,7 @@ $('#radioBtn a').on('click', function(){
         /* Already answered the question */
         patchData.finalAnswer = answer.toString();
         patchData.AnswerSwitched = true;
+        patchData.timeLastAnswered = timeAnswered; // Stores the latest answer time for a question - for calculating total
     }
 
     // Are we at the point after clicking the submit button and going through unanswered items?

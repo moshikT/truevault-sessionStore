@@ -30,8 +30,7 @@ var candidateSchema = new Schema({
     hired: String,
     hireDate: String,
     startedWork: String,
-    workDate: String
-    linkToCV: String,
+    workDate: String,
     sendSMS: Boolean,
     notifyNewCandidate: Boolean,
     notifyNewCandidateReport: Boolean
