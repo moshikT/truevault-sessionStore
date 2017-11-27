@@ -189,7 +189,7 @@ function swap(array, element1Index, element2Index) {
 
 function reOrderFormJSON(pType, fType, cType, bType, aType, sType, lType) {
     var orderedForm = [];
-    var numOfPTypeQuestion = 20;
+    var numOfPTypeQuestion = pType.length/cType.length;//20; // Relatively show after equal number of p types questions - c type question
     var numOfFTypeQuestion = 0;//5;
 
     while(pType.length > 0 ||/* fType.length > 0 || */cType.length > 0) {
