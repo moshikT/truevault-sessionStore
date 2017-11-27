@@ -53,6 +53,23 @@
                    value="female" style="border-style: none none solid none;text-align: center;opacity: 0.7;">
 
         </div>
+        <div id="checkboxes" style="text-align: right;width:60%;">
+            <div id="inputSendSMS">
+                <label style="font-weight: 300;" for="sendSMS"><%= fieldNames.sendSMS %>
+                <input id='sendSMS' name='sendSMS' type='checkbox' style='vertical-align: top;display: inline;' >
+                </label>
+            </div>
+            <div id="inputNotifyNewCandidate">
+                <label style="font-weight: 300;" for="notifyNewCandidate"><%= fieldNames.notifyNewCandidate %>
+                <input id='notifyNewCandidate' name='notifyNewCandidate' type='checkbox' style='vertical-align: top;' >
+                </label>
+            </div>
+            <div id="inputNotifyNewCandidateReport">
+                <label style="font-weight: 300;" for="notifyNewCandidateReport"><%= fieldNames.notifyNewCandidateReport %>
+                <input id='notifyNewCandidateReport' name='notifyNewCandidateReport' type='checkbox' style='vertical-align: top;' >
+                </label>
+            </div>
+        </div>
     </div>
             <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
                 <button href="/addCandidate" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add Candidate</button>

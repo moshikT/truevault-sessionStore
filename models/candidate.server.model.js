@@ -21,7 +21,10 @@ var candidateSchema = new Schema({
     dateCompleted: String,
     dateTimeCreated: Date,
     dateTimeCompleted: Date,
-    linkToCV: String
+    linkToCV: String,
+    sendSMS: Boolean,
+    notifyNewCandidate: Boolean,
+    notifyNewCandidateReport: Boolean
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);
