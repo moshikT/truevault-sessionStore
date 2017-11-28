@@ -80,7 +80,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
 exports.generateRecruiterReport = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line);
     exports.calcRecruiterReport(req, res, function (candidate, status = true) {
-        // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
+        console.log("%s.%s:%s -", __file, __ext, __line, "Candidate report for '", candidate.fullName, "' - Completed: ", candidate.report.completed);
         const langHeb = (req.client.language !== 'en');
         if ((status) && (candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
             // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
