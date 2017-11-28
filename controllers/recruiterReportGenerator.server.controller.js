@@ -28,10 +28,14 @@ exports.calcRecruiterReport = function (req, res, callback) {
             }
             if ((candidate.report) && (candidate.report.completed)) {
                 // Report was already calculated before
-                if (callback) {
-                    callback(candidate);
+                console.log("%s.%s:%s -", __file, __ext, __line, req.query);
+                if (req.query.force !== '1') { // Not instructed to force recalc of report
+                    console.log("%s.%s:%s -", __file, __ext, __line, req.query.force);
+                    if (callback) {
+                        callback(candidate);
+                    }
+                    return;
                 }
-                return;
             }
 
             // Calculate factor averages
