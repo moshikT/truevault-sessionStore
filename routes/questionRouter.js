@@ -87,11 +87,11 @@ router.route('/:sid/:qid')
                 const timeToAnswer = req.candidate.form[index].timeAnsweredInSeconds;
                 const answer = req.candidate.form[index].finalAnswer;
                 req.candidate.save(function(err, entry){
-                    console.log("%s.%s:%s -", __file, __ext, __line, req.client._id, "; ", entry.finalAnswer, "; ", entry?entry.timeAnsweredInSeconds:0, "; ", entry);
                     if(err) {
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Question answered error: ", err);
                         mixpanel.track('Question Answered Error', {
-                            distinct_id: entry.session.id,
-                            cid: entry.cid,
+                            distinct_id: req.params.sid,
+                            cid: req.candidate.cid,
                             qid: req.params.qid,
                             final_answer: answer,
                             time_to_answer: timeToAnswer,
@@ -102,7 +102,7 @@ router.route('/:sid/:qid')
                     else {
                         mixpanel.track('Question Answered', {
                             distinct_id: entry.session.id,
-                            cid: entry.cid,
+                            cid: req.candidate.cid,
                             qid: req.params.qid,
                             final_answer: answer,
                             time_to_answer: timeToAnswer,

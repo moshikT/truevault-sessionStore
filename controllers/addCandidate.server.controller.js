@@ -153,6 +153,22 @@ exports.addCandidate = function (req, res) {
                     if (err) {
                         // FIXME: Do more than just log the error to the console
                         console.log("%s.%s:%s -", __file, __ext, __line, err);
+                        // Track candidate creation in mixpanel
+                        mixpanel.track('Create Candidate', {
+                            distinct_id: session?session.id:0,
+                            cid: req.params.cid,
+                            name: newUser?newUser.fullName:'N/A',
+                            company: newUser?newUser.company:'N/A',
+                            form_len: form?form.length:0,
+                            link_to_form: shortUrlToForm,
+                            link_to_report: newUser?newUser.linkToReport:'',
+                            error: err
+                        });
+                        res.render('niceError', {
+                            title: 'Add Candidate' + newUser.fullName,
+                            errorText: "Failed to save new candidate: '" + newUser.fullName + "'"
+                        });
+                        return;
                     }
                     //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
 
@@ -160,13 +176,13 @@ exports.addCandidate = function (req, res) {
 
                     // Track candidate creation in mixpanel
                     mixpanel.track('Create Candidate', {
-                        distinct_id: session.id,
-                        cid: req.client._id,
-                        name: newUser.fullName,
-                        company: newUser.company,
-                        form_len: form.length,
+                        distinct_id: session?session.id:0,
+                        cid: req.params.cid,
+                        name: newUser?newUser.fullName:'N/A',
+                        company: newUser?newUser.company:'N/A',
+                        form_len: form?form.length:0,
                         link_to_form: shortUrlToForm,
-                        link_to_report: newUser.linkToReport
+                        link_to_report: newUser?newUser.linkToReport:''
                     });
                     res.render('displayLink', {
                         title: '',
