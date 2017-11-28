@@ -10,6 +10,18 @@ const Client = require('../models/addClient.server.model.js');
 const uuidv1 = require('uuid/v1');
 const recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
 const email_Ctrl = require('../controllers/email.server.controller');
+const Mixpanel = require('mixpanel');
+// initialize mixpanel client configured to communicate over https
+const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
+    protocol: 'https'
+});
+/*
+// Track event in mixpanel
+mixpanel.track('Event Name', {
+    distinct_id: session.id,
+    cid: req.client._id
+});
+*/
 
 var isCandidate = true;
 
@@ -103,10 +115,20 @@ exports.saveFormResults = function (req, res) {
                 }
             }
             candidate.save(function(err, entry){
+                console.log("%s.%s:%s -", __file, __ext, __line, "req: ", req);
                 if(err) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "unable To save", err);
+                    mixpanel.track('Form Submit Failed', {
+                        distinct_id: req.query?req.query.sid:0,
+                        cid: req.params?req.params.cid:0,
+                        error: err
+                    });
                 }
                 else {
+                    mixpanel.track('Form Submit', {
+                        distinct_id: req.query?req.query.sid:0,
+                        cid: req.params?req.params.cid:0,
+                    });
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
                     // Calculate the report data
@@ -133,6 +155,10 @@ exports.saveFormResults = function (req, res) {
 exports.getIndex = function (req, res) {
     //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, (req.client.language === 'en'));
     console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client.name);
+    mixpanel.track('Index Entered', {
+        distinct_id: req?req.sid:0,
+        cid: req.params?req.params.cid:0
+    });
     res.render('index', {
         title: '',
         indexPageText : (req.client.language == 'en') ? {direction: 'ltr', align: 'left'} : {direction: 'rtl', align: 'right'} ,
@@ -151,9 +177,17 @@ exports.getForm = function (req, res) {
             if (err) throw err;
             if (candidate) {
                 if(candidate.session.expired) {
+                    mixpanel.track('Form Expired', {
+                        distinct_id: req.query.sid,
+                        cid: req.params?req.params.cid:0
+                    });
                     res.redirect('/clients/' + req.client._id + '/thankYou');
                 }
                 else {
+                    mixpanel.track('Form Entered', {
+                        distinct_id: req.query.sid,
+                        cid: req.params?req.params.cid:0
+                    });
                     var isInEnglish = (req.client.language == 'en');
                     textGenerator_Ctrl.initFormPageText(isInEnglish, function (formText) {
                         res.render('form', {

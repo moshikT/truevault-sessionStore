@@ -11,6 +11,18 @@ const textGenerator_Ctrl = require('../controllers/textGenerator.server.controll
 const sms_Ctrl = require('../controllers/sms.server.controller');
 const email_Ctrl = require('../controllers/email.server.controller');
 const uuidv1 = require('uuid/v1');
+let Mixpanel = require('mixpanel');
+// initialize mixpanel client configured to communicate over https
+const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
+    protocol: 'https'
+});
+/*
+// Track event in mixpanel
+mixpanel.track('Event Name', {
+    distinct_id: session.id,
+    cid: req.client._id
+});
+*/
 
 // object storing all candidate data entered on this view
 class userData {
@@ -213,10 +225,21 @@ exports.addCandidate = function (req, res) {
                 newCandidateEntry.save(function (err) {
                         if (err) {
                             console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err);
-                            const statusMsg = 'Error saving form!';
+                            console.log("%s.%s:%s -", __file, __ext, __line, err);
+                            // Track candidate creation in mixpanel
+                            mixpanel.track('Create Candidate', {
+                                distinct_id: session?session.id:0,
+                                cid: req.params.cid,
+                                name: newUser?newUser.fullName:'N/A',
+                                company: newUser?newUser.company:'N/A',
+                                form_len: form?form.length:0,
+                                link_to_form: shortUrlToForm,
+                                link_to_report: newUser?newUser.linkToReport:'',
+                                error: err
+                            });
                             res.render('niceError', {
                                 title: 'Add Candidate' + newUser.fullName,
-                                errorText: statusMsg
+                                errorText: "Failed to save new candidate: '" + newUser.fullName + "'"
                             });
                             return;
                         }
@@ -272,6 +295,22 @@ exports.addCandidate = function (req, res) {
                         }
                     }
                 );
+                    // Track candidate creation in mixpanel
+                    mixpanel.track('Create Candidate', {
+                        distinct_id: session?session.id:0,
+                        cid: req.params.cid,
+                        name: newUser?newUser.fullName:'N/A',
+                        company: newUser?newUser.company:'N/A',
+                        form_len: form?form.length:0,
+                        link_to_form: shortUrlToForm,
+                        link_to_report: newUser?newUser.linkToReport:''
+                    });
+                    res.render('displayLink', {
+                        title: '',
+                        candidate: newUser,
+                        client: req.client
+                    });
+                });
             })
             .catch(error => {
                 console.log("%s.%s:%s -", __file, __ext, __line, error)

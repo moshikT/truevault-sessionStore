@@ -6,6 +6,18 @@ var express = require('express');
 var router = express.Router();
 var Candidate = require('../models/candidate.server.model.js');
 var Client = require('../models/addClient.server.model.js');
+let Mixpanel = require('mixpanel');
+// initialize mixpanel client configured to communicate over https
+const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
+    protocol: 'https'
+});
+/*
+// Track event in mixpanel
+mixpanel.track('Event Name', {
+    distinct_id: session.id,
+    cid: req.client._id
+});
+*/
 
 
 /* get form by user */
@@ -147,12 +159,29 @@ router.route('/:sid/:qid')
                 }
                 console.log("%s.%s:%s -", __file, __ext, __line, "formDurationInMinutes: ", req.candidate.formDurationInMinutes, "; timeAnsweredInSeconds", req.candidate.form[index].timeAnsweredInSeconds);
                 req.candidate.formDurationInMinutes = (req.candidate.formDurationInMinutes + req.candidate.form[index].timeLastAnswered / 60).toFixed(2);
+                const timeToAnswer = req.candidate.form[index].timeAnsweredInSeconds;
+                const answer = req.candidate.form[index].finalAnswer;
                 req.candidate.save(function(err, entry){
                     if(err) {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "Error saving answer: ", err);
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Question answered error: ", err);
+                        mixpanel.track('Question Answered Error', {
+                            distinct_id: req.params.sid,
+                            cid: req.candidate.cid,
+                            qid: req.params.qid,
+                            final_answer: answer,
+                            time_to_answer: timeToAnswer,
+                            error: err
+                        });
                         res.status(500).send(err);
                     }
                     else {
+                        mixpanel.track('Question Answered', {
+                            distinct_id: entry.session.id,
+                            cid: req.candidate.cid,
+                            qid: req.params.qid,
+                            final_answer: answer,
+                            time_to_answer: timeToAnswer,
+                        });
                         console.log("%s.%s:%s -", __file, __ext, __line, "entry saved!");
                         res.json(entry);
                     }

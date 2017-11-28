@@ -37,15 +37,6 @@ function goNext() {
     }
     else {
         //console.log("redirect to form");
-        var startFormDate = new Date();
-        _LTracker.push({
-            'text': 'User Start Form',
-            'sid': sid,
-            'userType': 'candidate',
-            'date': startFormDate.toString(),
-            'cid': cid
-        });
-        mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
         document.getElementById("formInfo").submit();
     }
 }
@@ -140,15 +131,6 @@ $("#formInfo").validate({
                  // TODO: scrollTo block user authentication display
             // }
          //});*/
-        var startFormDate = new Date();
-        _LTracker.push({
-            'text': 'User Start Form',
-            'sid': sid,
-            'userType': 'candidate',
-            'date': startFormDate.toString(),
-            'cid': cid
-        });
-        mixpanel.track('User Start Form', {'sid': sid, 'userType': 'candidate', 'date': startFormDate.toString(), 'cid': cid });
         form.submit();
     }
 });
