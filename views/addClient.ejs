@@ -75,10 +75,15 @@
                                   name="thankYouText" placeholder='Thank You Text' cols="40" rows="2"
                                     style="opacity: 0.7;"><%= (client.thankYouText) ? client.thankYouText : ''%></textarea>
                     </div>
-                    <div id="clientSMSText" style="padding: 20px;">
-                        <textarea onclick="scrollToNextElement('SMSText')" id="SMSText" class="inputs"
-                                  name="SMSText" placeholder='SMS Text' cols="40" rows="4"
-                                    style="opacity: 0.7"><%= (client.SMSText) ? client.SMSText : ''%></textarea>
+                    <div id="clientSMSTextA" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('SMSTextA')" id="SMSTextA" class="inputs"
+                                  name="SMSTextA" placeholder='SMS Text A' cols="40" rows="4"
+                                    style="opacity: 0.7"><%= (client.SMSTextA) ? client.SMSTextA : ''%></textarea>
+                    </div>
+                    <div id="clientSMSTextB" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('SMSTextB')" id="SMSTextB" class="inputs"
+                                  name="SMSTextB" placeholder='SMS Text B' cols="40" rows="4"
+                                  style="opacity: 0.7"><%= (client.SMSTextB) ? client.SMSTextB : ''%></textarea>
                     </div>
                     <div id="clientEmailTo" style="padding: 20px;">
                         <input onclick="scrollToNextElement('emailTo')" id="emailTo" class="inputs" name="emailTo"

@@ -16,7 +16,8 @@ var clientSchema = new Schema({
     /* userType: String //candidate, employee */
     link : String,
     keyword: String,
-    SMSText: String,
+    SMSTextA: String,
+    SMSTextB: String,
     emailTo: String,
     emailFrom: String,
     newCandidateEmailText: String,

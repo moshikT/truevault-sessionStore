@@ -172,63 +172,91 @@ exports.addCandidate = function (req, res) {
                     notifyNewCandidateReport: newUser.notifyNewCandidateReport
                 });
 
+                // Check if we need to send an SMS to candidate and prepare it if necessary
+                let smsText;
+                if (newUser.sendSMS) {
+                    if (((!req.client.SMSTextA) || (req.client.SMSTextA === '')) &&
+                        ((!req.client.SMSTextB) || (req.client.SMSTextB === ''))) {
+                        const statusMsg = "SMS texts are empty. Please configure client '" + newUser.company + "' with correct text or clear checkbox.";
+                        res.render('niceError', {
+                            title: 'Add Candidate' + newUser.fullName,
+                            errorText: statusMsg
+                        });
+                        return;
+                    }
+                    else {
+                        // Randomly choose between the two possible SMS texts
+                        if (Math.random() >= 0.5) {
+                            smsText = req.client.SMSTextA;
+                            if ((!smsText) || (smsText === '')) {
+                                // It's completely acceptable to provide only B version
+                                smsText = req.client.SMSTextB;
+                            }
+                        }
+                        else {
+                            smsText = req.client.SMSTextB;
+                            if ((!smsText) || (smsText === '')) {
+                                // It's completely acceptable to provide only A version
+                                smsText = req.client.SMSTextA;
+                            }
+                        }
+                        // Save the SMS actually selected for the candidate, for future reference
+                        newUser.smsUsed = smsText;
+                        // Replace placeholders with candidate values
+                        smsText = smsText
+                            .replace('$candidateName', newUser.fullName)
+                            .replace('$formLink', newUser.linkToForm);
+                    }
+                }
+
                 // Save the new candidate in the DB
                 newCandidateEntry.save(function (err) {
                         if (err) {
-                            // FIXME: Do more than just log the error to the console
-                            console.log("%s.%s:%s -", __file, __ext, __line, err);
+                            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err);
+                            const statusMsg = 'Error saving form!';
+                            res.render('niceError', {
+                                title: 'Add Candidate' + newUser.fullName,
+                                errorText: statusMsg
+                            });
+                            return;
                         }
                         //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
 
-                        // TODO: if form.length > 25 Form generated successfully - Send SMS to the candidate.
-                        let isFormValid = (form.length > 25);
-                        let statusMsg = "";
-                        if (isFormValid) {
-                            if (newUser.sendSMS) {
-                                if (req.client.SMSText === '' || !req.client.SMSText) {
-                                    statusMsg = "empty SMS didn't sent - please insert text and try again!";
-                                    res.render('niceError', {
+                        // If more than 5 questions and sms selected, Send SMS to the candidate.
+                        if (form.length > 5) { // Form has more than 5 questions
+                            if (smsText) { // There is a text message to send
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Sending SMS to candidate: ", smsText);
+                                sms_Ctrl.send(newUser.phoneNumber, smsText, function (isSent) {
+                                    let statusMsg;
+                                    if (isSent) {
+                                        statusMsg = 'Candidate created and SMS message successfully sent: ' + newUser.fullName;
+                                    }
+                                    else {
+                                        statusMsg = 'Candidate created but an error occurred while sending SMS: ' + newUser.fullName;
+                                    }
+
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
+                                    res.render('displayLink', {
                                         title: 'Add Candidate' + newUser.fullName,
-                                        errorText: statusMsg
+                                        candidate: newUser,
+                                        client: req.client,
+                                        statusMsg: statusMsg
                                     });
                                     return;
-                                }
-                                else {
-                                    /** Replace placeholders with user value */
-                                    let smsTxt = req.client.SMSText.replace('$candidateName', newUser.fullName)
-                                        .replace('$formLink', newUser.linkToForm);
-                                    console.log("%s.%s:%s -", __file, __ext, __line, "text massage sent to the user: ", smsTxt);
-                                    sms_Ctrl.send(newUser.phoneNumber, smsTxt, function (isSent) {
-                                        if (isSent) {
-                                            statusMsg = 'SMS message successfully sent to the candidate!';
-                                        }
-                                        else {
-                                            statusMsg = 'An error occurred while sending SMS to the candidate!';
-                                        }
-
-                                        console.log("status msg: ", statusMsg);
-                                        res.render('displayLink', {
-                                            title: '',
-                                            candidate: newUser,
-                                            client: req.client,
-                                            statusMsg: statusMsg
-                                        });
-                                        return;
-                                    });
-                                }
+                                });
                             }
                             else {
                                 res.render('displayLink', {
-                                    title: '',
+                                    title: 'Add Candidate' + newUser.fullName,
                                     candidate: newUser,
                                     client: req.client,
-                                    statusMsg: statusMsg
+                                    statusMsg: 'Candidate created successfully:' + newUser.fullName
                                 });
                                 return;
                             }
                         }
                         else {
-                            statusMsg = 'An error occurred while generating the form'; // nice error
+                            const statusMsg = 'Too few questions in form. Possible error: ';
                             res.render('niceError', {
                                 title: 'Add Candidate' + newUser.fullName,
                                 errorText: statusMsg
@@ -237,7 +265,7 @@ exports.addCandidate = function (req, res) {
                         }
 
                         // Send new candidate email to notify the recruiter
-                        if(newUser.notifyNewCandidate) {
+                        if (newUser.notifyNewCandidate) {
                             let emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName)
                             email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
                                 req.client.newCandidateEmailSubject, emailTxt);

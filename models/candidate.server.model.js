@@ -33,7 +33,8 @@ var candidateSchema = new Schema({
     workDate: String,
     sendSMS: Boolean,
     notifyNewCandidate: Boolean,
-    notifyNewCandidateReport: Boolean
+    notifyNewCandidateReport: Boolean,
+    smsUsed: String
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

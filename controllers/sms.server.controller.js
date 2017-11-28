@@ -13,17 +13,23 @@ const un="sagygal@gmail.com";
 const pw="aenIC9";
 const accid="2619";
 const http = require('http');
+const url = require('url');
 //const fixieUrl = 'http://fixie:IHUAjNg5Pwm0SFb@velodrome.usefixie.com:80';//url.parse(process.env.FIXIE_URL);
 //const requestUrl = 'http://api.itnewsletter.co.il/webservices/webservicesms.asmx'
+const proxyUrl = process.env.FIXIE_URL;
+const originatingNumber = '054-465343';
 
 exports.send = function (number, text, callback)
 {
     let isSent = true;
+    const proxyParts = url.parse(proxyUrl);
+
     let options = {
-        host: 'velodrome.usefixie.com',//fixieUrl.hostname,
-        port: 80,//fixieUrl.port,
+        protocol: proxyParts.protocol || 'http',
+        host: proxyParts.hostname || proxyParts.host,
+        port: proxyParts.port,
         path: 'http://api.itnewsletter.co.il/webservices/webservicesms.asmx',//requestUrl.href,
-        method: 'POST'//,
+        method: 'POST',
     };
 
     //this.sendSms = function(number, text)
@@ -34,22 +40,22 @@ exports.send = function (number, text, callback)
 
     /* Set data using the global SMS api xml template */
     let data =
-        '<?xml version="1.0" encoding="utf-8"?>'+
-        '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">'+
-        '<soap12:Body>'+
-        '<sendSmsToRecipients xmlns="apiItnewsletter">'+
-        '<un>'+un+'</un>'+
-        '<pw>'+pw+'</pw>'+
-        '<accid>'+accid+'</accid>'+
-        '<sysPW>'+'itnewslettrSMS'+'</sysPW>'+
-        '<t>'+date+'</t>'+
-        '<txtUserCellular>0521234567</txtUserCellular>'+
-        '<destination>'+number+'</destination>'+
-        '<txtSMSmessage>'+text+'</txtSMSmessage>'+
-        '<dteToDeliver></dteToDeliver>'+
-        '<txtAddInf>jsnodetest</txtAddInf>'+
-        '</sendSmsToRecipients>'+
-        '</soap12:Body>'+
+        '<?xml version="1.0" encoding="utf-8"?>' +
+        '<soap12:Envelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://www.w3.org/2003/05/soap-envelope">' +
+        '<soap12:Body>' +
+        '<sendSmsToRecipients xmlns="apiItnewsletter">' +
+        '<un>' + un + '</un>' +
+        '<pw>' + pw + '</pw>' +
+        '<accid>' + accid + '</accid>' +
+        '<sysPW>' + 'itnewslettrSMS' + '</sysPW>' +
+        '<t>' + date + '</t>' +
+        '<txtUserCellular>' + originatingNumber + '</txtUserCellular>' +
+        '<destination>' + number + '</destination>' +
+        '<txtSMSmessage>' + text + '</txtSMSmessage>' +
+        '<dteToDeliver></dteToDeliver>' +
+        '<txtAddInf>jsnodetest</txtAddInf>' +
+        '</sendSmsToRecipients>' +
+        '</soap12:Body>' +
         '</soap12:Envelope>';
 
     options.headers = {
@@ -57,7 +63,7 @@ exports.send = function (number, text, callback)
             'Content-Length' : Buffer.byteLength(data) ,
             'SOAPAction': 'apiItnewsletter/sendSmsToRecipients',
             Host: 'api.itnewsletter.co.il',//requestUrl.host,
-            'Proxy-Authorization': `Basic ${new Buffer('fixie:IHUAjNg5Pwm0SFb'/*fixieUrl.auth*/).toString('base64')}`
+            'Proxy-Authorization': `Basic ${new Buffer(proxyParts.auth || '').toString('base64')}`
         };
 
     //console.log('data :' + data);
