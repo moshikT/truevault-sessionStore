@@ -37,8 +37,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
             // Calculate factor averages
             getFactorsAvg(candidate, function (factorsData, finalScore) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
-                if (!factorsData)
-                { // Couldn't read factors data file
+                if (!factorsData) { // Couldn't read factors data file
                     callback(candidate, false);
                     return;
                 }
@@ -218,7 +217,7 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                                 (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
                             /** Treat average scores as weakness in the report */
                             var isWeakness = ((factor.avg < 4.5 && factorVerbal['isReverseRelation'] == '1') ||
-                                (factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '0'));
+                                (factor.avg > 3.5 && factorVerbal['isReverseRelation'] == '0'));
                             var verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                                 : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                                     : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
@@ -234,12 +233,14 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                             if (isStrength) {
                                 for (let strengthsIndex = 0; strengthsIndex < strengths.length; strengthsIndex++) {
                                     // if factor existed add subDimention to text
-                                    if(strengths[strengthsIndex].id === verbalData.id) {
+                                    if (strengths[strengthsIndex].id === verbalData.id) {
                                         elementExists = true;
-                                        strengths[strengthsIndex].text.concat(verbalData.text);
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Prev text: ", strengths[strengthsIndex].text);
+                                        strengths[strengthsIndex].text = strengths[strengthsIndex].text.concat(verbalData.text);
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "New text: ", strengths[strengthsIndex].text);
                                     }
                                 }
-                                !elementExists ? strengths.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
+                                (!elementExists) ? strengths.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
                                     'Factor exists in strengths - text was added to ' + verbalData.id
                                     + ' text: ', verbalData.text);
                                 console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);
@@ -247,12 +248,12 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                             else if (isWeakness) {
                                 for (let WeaknessIndex = 0; WeaknessIndex < weaknesses.length; WeaknessIndex++) {
                                     // if factor existed add subDimention to text
-                                    if(weaknesses[WeaknessIndex].id === verbalData.id) {
+                                    if (weaknesses[WeaknessIndex].id === verbalData.id) {
                                         elementExists = true;
-                                        weaknesses[WeaknessIndex].text.concat(verbalData.text);
+                                        weaknesses[WeaknessIndex].text = weaknesses[WeaknessIndex].text.concat(verbalData.text);
                                     }
                                 }
-                                !elementExists ? weaknesses.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
+                                (!elementExists) ? weaknesses.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
                                     'Factor exists in weaknesses - text was added to ' + verbalData.id
                                     + ' text: ', verbalData.text);
 
