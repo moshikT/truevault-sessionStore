@@ -112,7 +112,7 @@ exports.addCandidate = function (req, res) {
     const isInEnglish = (req.client.language === 'en');
     // Start by generating a questions form for the candidate
     // FIXME: generateForm, generateLink & (mongoose)save are all async calls that use callbacks, causing the following code
-    //   to be a bit messy. We have to convert them to promises in order the make the following more readable
+    //   to be a bit messy. We have to convert them to promises in order to make the following more readable
     formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
         if ((form === undefined) || (!form)) { // if form wasn't generated
             res.render('niceError', {
@@ -228,13 +228,13 @@ exports.addCandidate = function (req, res) {
                             console.log("%s.%s:%s -", __file, __ext, __line, err);
                             // Track candidate creation in mixpanel
                             mixpanel.track('Create Candidate', {
-                                distinct_id: session?session.id:0,
+                                distinct_id: session ? session.id : 0,
                                 cid: req.params.cid,
-                                name: newUser?newUser.fullName:'N/A',
-                                company: newUser?newUser.company:'N/A',
-                                form_len: form?form.length:0,
+                                name: newUser ? newUser.fullName : 'N/A',
+                                company: newUser ? newUser.company : 'N/A',
+                                form_len: form ? form.length : 0,
                                 link_to_form: shortUrlToForm,
-                                link_to_report: newUser?newUser.linkToReport:'',
+                                link_to_report: newUser ? newUser.linkToReport : '',
                                 error: err
                             });
                             res.render('niceError', {
@@ -289,27 +289,26 @@ exports.addCandidate = function (req, res) {
 
                         // Send new candidate email to notify the recruiter
                         if (newUser.notifyNewCandidate) {
-                            let emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName)
+                            let emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName);
                             email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
                                 req.client.newCandidateEmailSubject, emailTxt);
                         }
                     }
                 );
-                    // Track candidate creation in mixpanel
-                    mixpanel.track('Create Candidate', {
-                        distinct_id: session?session.id:0,
-                        cid: req.params.cid,
-                        name: newUser?newUser.fullName:'N/A',
-                        company: newUser?newUser.company:'N/A',
-                        form_len: form?form.length:0,
-                        link_to_form: shortUrlToForm,
-                        link_to_report: newUser?newUser.linkToReport:''
-                    });
-                    res.render('displayLink', {
-                        title: '',
-                        candidate: newUser,
-                        client: req.client
-                    });
+                // Track candidate creation in mixpanel
+                mixpanel.track('Create Candidate', {
+                    distinct_id: session ? session.id : 0,
+                    cid: req.params.cid,
+                    name: newUser ? newUser.fullName : 'N/A',
+                    company: newUser ? newUser.company : 'N/A',
+                    form_len: form ? form.length : 0,
+                    link_to_form: shortUrlToForm,
+                    link_to_report: newUser ? newUser.linkToReport : ''
+                });
+                res.render('displayLink', {
+                    title: '',
+                    candidate: newUser,
+                    client: req.client
                 });
             })
             .catch(error => {
@@ -319,8 +318,11 @@ exports.addCandidate = function (req, res) {
                     errorText: "Failed to generate short URLs for: '" + newUser.fullName + "'"
                 });
             });
+//}
+//}); //This belongs to the 'findOne' that was disabled above
     });
-    //}
-    //}); //This belongs to the 'findOne' that was disabled above
-}
+};
+
+
+
 
