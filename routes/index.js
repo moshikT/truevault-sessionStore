@@ -140,13 +140,19 @@ router.get('/test', function (req, res) {
 
 // Candidates status
 router.get('/clients/:cid/candidates', function (req, res) {
-    req.advanced = false;
+    req.tableMode = 'regular';
     return candidatesStatus_Ctrl.candidatesStatus(req, res);
 });
 
-// Candidates status
+// Candidates status - advanced
 router.get('/clients/:cid/candidatesAdv', function (req, res) {
-    req.advanced = true;
+    req.tableMode = 'advanced';
+    return candidatesStatus_Ctrl.candidatesStatus(req, res);
+});
+
+// Candidates form answers
+router.get('/clients/:cid/answers', function (req, res) {
+    req.tableMode = 'answers';
     return candidatesStatus_Ctrl.candidatesStatus(req, res);
 });
 
