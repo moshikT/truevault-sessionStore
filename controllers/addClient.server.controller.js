@@ -38,9 +38,10 @@ exports.addClient = function (req, res) {
             delete req.body.isDemo;
         }
 
-        /** Go through all the elements in the request and set client's entry */
+        // Go through all the elements in the request and set client's entry
         for (let element in req.body) {
-            newClientEntry[element] = req.body[element];
+            console.log("%s.%s:%s -", __file, __ext, __line, "Saving property: ", element, " = ", req.body[element]);
+                newClientEntry[element] = req.body[element];
         }
 
         // Save all the fields that were entered in the form
