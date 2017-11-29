@@ -293,9 +293,10 @@ exports.addCandidate = function (req, res) {
                         // Send new candidate email to notify the recruiter
                         if (newUser.notifyNewCandidate) {
                             console.log("%s.%s:%s -", __file, __ext, __line, "Notifying on new candidate: ", newUser.fullName);
-                            let emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName);
+                            const emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName);
+                            const emailSubject = req.client.newCandidateEmailSubject.replace('$candidateName', newUser.fullName);
                             email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
-                                req.client.newCandidateEmailSubject, emailTxt);
+                                emailSubject, emailTxt);
                         }
                     }
                 );

@@ -136,10 +136,11 @@ exports.saveFormResults = function (req, res) {
 
                     //  if newUser.notifyNewCandidate == true send email to recruiter
                     if(candidate.notifyNewCandidateReport) {
-                        let emailTxt = req.client.candidateReportEmailText.replace('$candidateName', candidate.fullName)
+                        const emailTxt = req.client.candidateReportEmailText.replace('$candidateName', candidate.fullName)
                             .replace('$reportLink', candidate.linkToReport);
+                        const emailSubject = req.client.candidateReportEmailSubject.replace('$candidateName', candidate.fullName);
                         email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
-                            req.client.candidateReportEmailSubject, emailTxt);
+                            emailSubject, emailTxt);
                     }
                 }
             });
