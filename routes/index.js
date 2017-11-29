@@ -169,6 +169,10 @@ router.post('/loadClient', function (req, res) {
     return addClient_Ctrl.loadClient(req, res);
 });
 
+router.get('/clients/:cid/loadClient', function (req, res) {
+    return addClient_Ctrl.loadClient(req, res);
+});
+
 router.get('/terms', function (req, res) {
     res.render('terms');
 });

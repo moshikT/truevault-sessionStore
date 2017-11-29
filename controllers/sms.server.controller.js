@@ -16,12 +16,17 @@ const http = require('http');
 const url = require('url');
 //const fixieUrl = 'http://fixie:IHUAjNg5Pwm0SFb@velodrome.usefixie.com:80';//url.parse(process.env.FIXIE_URL);
 //const requestUrl = 'http://api.itnewsletter.co.il/webservices/webservicesms.asmx'
-const proxyUrl = process.env.FIXIE_URL;
-const originatingNumber = '054-465343';
+const proxyUrl = process.env.PROXY_URL;
+//const originatingNumber = '054-465343';
 
-exports.send = function (number, text, callback)
+exports.send = function (number, text, originatingNumber, callback)
 {
     let isSent = true;
+    if (!process.env.PROXY_URL) {
+        console.log("%s.%s:%s -", __file, __ext, __line, "Proxy URL is not defined.");
+        callback(!isSent);
+        return;
+    }
     const proxyParts = url.parse(proxyUrl);
 
     let options = {

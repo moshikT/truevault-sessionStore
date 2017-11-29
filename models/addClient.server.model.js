@@ -24,7 +24,8 @@ var clientSchema = new Schema({
     newCandidateEmailSubject: String,
     candidateReportEmailText: String,
     candidateReportEmailSubject: String,
-    emailFromPswd: String
+    emailFromPswd: String,
+    smsOrigNum: String
 });
 
 module.exports = mongoose.model('Client', clientSchema);

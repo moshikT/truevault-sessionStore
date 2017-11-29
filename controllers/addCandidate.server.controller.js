@@ -190,6 +190,7 @@ exports.addCandidate = function (req, res) {
                     if (((!req.client.SMSTextA) || (req.client.SMSTextA === '')) &&
                         ((!req.client.SMSTextB) || (req.client.SMSTextB === ''))) {
                         const statusMsg = "SMS texts are empty. Please configure client '" + newUser.company + "' with correct text or clear checkbox.";
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
                         res.render('niceError', {
                             title: 'Add Candidate' + newUser.fullName,
                             errorText: statusMsg
@@ -249,7 +250,7 @@ exports.addCandidate = function (req, res) {
                         if (form.length > 5) { // Form has more than 5 questions
                             if (smsText) { // There is a text message to send
                                 console.log("%s.%s:%s -", __file, __ext, __line, "Sending SMS to candidate: ", smsText);
-                                sms_Ctrl.send(newUser.phoneNumber, smsText, function (isSent) {
+                                sms_Ctrl.send(newUser.phoneNumber, smsText, req.client.smsOrigNum, function (isSent) {
                                     let statusMsg;
                                     if (isSent) {
                                         statusMsg = 'Candidate created and SMS message successfully sent: ' + newUser.fullName;
@@ -269,6 +270,7 @@ exports.addCandidate = function (req, res) {
                                 });
                             }
                             else {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Candidate created successfully: ", newUser.fullName);
                                 res.render('displayLink', {
                                     title: 'Add Candidate' + newUser.fullName,
                                     candidate: newUser,
@@ -280,6 +282,7 @@ exports.addCandidate = function (req, res) {
                         }
                         else {
                             const statusMsg = 'Too few questions in form. Possible error: ';
+                            console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
                             res.render('niceError', {
                                 title: 'Add Candidate' + newUser.fullName,
                                 errorText: statusMsg
@@ -289,27 +292,13 @@ exports.addCandidate = function (req, res) {
 
                         // Send new candidate email to notify the recruiter
                         if (newUser.notifyNewCandidate) {
+                            console.log("%s.%s:%s -", __file, __ext, __line, "Notifying on new candidate: ", newUser.fullName);
                             let emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName);
                             email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
                                 req.client.newCandidateEmailSubject, emailTxt);
                         }
                     }
                 );
-                // Track candidate creation in mixpanel
-                mixpanel.track('Create Candidate', {
-                    distinct_id: session ? session.id : 0,
-                    cid: req.params.cid,
-                    name: newUser ? newUser.fullName : 'N/A',
-                    company: newUser ? newUser.company : 'N/A',
-                    form_len: form ? form.length : 0,
-                    link_to_form: shortUrlToForm,
-                    link_to_report: newUser ? newUser.linkToReport : ''
-                });
-                res.render('displayLink', {
-                    title: '',
-                    candidate: newUser,
-                    client: req.client
-                });
             })
             .catch(error => {
                 console.log("%s.%s:%s -", __file, __ext, __line, error)

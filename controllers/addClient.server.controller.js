@@ -118,18 +118,20 @@ exports.addClient = function (req, res) {
 
 
 exports.loadClient = function (req, res) {
-    var clientName = req.body.clientName;
-    //var filterbyClientName = "\"" + clientName + "\""
+    if (req.client) { // Page was called with a cid in URL
+        res.render('addClient', {title: 'Update Client', client: req.client});
+    }
+    else { // Page was called with a POST of the client name
+        const clientName = req.body.clientName ? req.body.clientName : '';
 
-    //var query = Client.find({$text: {$search: filterbyClientName}});
-    var query = Client.findOne({name: clientName.trim()});
-    query.exec(function (err, client) {
-        // console.log("%s.%s:%s -", __file, __ext, __line, "filter results: ", client);
-        if (client) {
-            res.render('addClient', {title: 'Update Client', client: client});
-        }
-        else {
-            res.status(404).send("A client with that name could not be found");
-        }
-    });
+        const query = Client.findOne({name: clientName.trim()});
+        query.exec(function (err, client) {
+            if (client) {
+                res.render('addClient', {title: 'Update Client', client: client});
+            }
+            else {
+                res.status(404).send("A client with that name could not be found");
+            }
+        });
+    }
 }
