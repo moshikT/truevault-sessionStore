@@ -238,6 +238,7 @@ exports.addCandidate = function (req, res) {
                                 form_len: form ? form.length : 0,
                                 link_to_form: shortUrlToForm,
                                 link_to_report: newUser ? newUser.linkToReport : '',
+                                sms_used: newUser ? newUser.smsUsed : '',
                                 error: err
                             });
                             res.render('niceError', {
