@@ -20,7 +20,7 @@ const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
 // Track event in mixpanel
 mixpanel.track('Event Name', {
     distinct_id: session.id,
-    cid: req.client._id
+    cid: req.customer._id
 });
 */
 
@@ -54,16 +54,16 @@ class userData {
 // Called on GET request to addCandidate
 // Initialize the language-dependent text and render the addCandidate page
 exports.getAddCandidatePage = function (req, res) {
-    const isEnglish = (req.client.language === 'en');
-    const title = (isEnglish ? 'Add Candidate' : 'הוסף מועמד') + ' - ' + req.client.name;
-    const subTitle = (isEnglish ? 'Add candidate for' : 'הוסף מועמד עבור ') + ' - ' + req.client.name;
+    const isEnglish = (req.customer.language === 'en');
+    const title = (isEnglish ? 'Add Candidate' : 'הוסף מועמד') + ' - ' + req.customer.name;
+    const subTitle = (isEnglish ? 'Add candidate for' : 'הוסף מועמד עבור ') + ' - ' + req.customer.name;
     // Get the field names based on client language
-    let fieldNames = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, isEnglish);
+    let fieldNames = textGenerator_Ctrl.initCandidateFieldNames(req.customer.name, req.customer.isDemo, isEnglish);
     res.render('addCandidate', {
         title: title,
         subTitle: subTitle,
         fieldNames: fieldNames,
-        client: req.client
+        client: req.customer
     });
 };
 
@@ -80,7 +80,7 @@ exports.addCandidate = function (req, res) {
         req.body['user_id'],
         req.body['user_email'],
         req.body['user_tel'],
-        req.client.name,
+        req.customer.name,
         req.body['gender'],
         req.body['recruitmentSource'],
         req.body['linkToCV'],
@@ -104,16 +104,16 @@ exports.addCandidate = function (req, res) {
                 title: '',
                 candidate : candidate,
                 //url: candidate.linkToForm,
-                client: req.client
+                client: req.customer
             });
         }
         else  {*/
-    console.log("%s.%s:%s -", __file, __ext, __line, "Creating candidate for keyword:", req.client.keyword);
-    const isInEnglish = (req.client.language === 'en');
+    console.log("%s.%s:%s -", __file, __ext, __line, "Creating candidate for keyword:", req.customer.keyword);
+    const isInEnglish = (req.customer.language === 'en');
     // Start by generating a questions form for the candidate
     // FIXME: generateForm, generateLink & (mongoose)save are all async calls that use callbacks, causing the following code
     //   to be a bit messy. We have to convert them to promises in order to make the following more readable
-    formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) {
+    formGenerator_Ctrl.generateForm(isInEnglish, req.customer.keyword, function (form) {
         if ((form === undefined) || (!form)) { // if form wasn't generated
             res.render('niceError', {
                 title: 'Add Candidate' + newUser.fullName,
@@ -131,7 +131,7 @@ exports.addCandidate = function (req, res) {
         };
 
         // construct a full URL for the recruiter report so that we'll be able to use it with a URL shortener
-        const recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/recruiterReport?sid=' + session.id;
+        const recruiterReportUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.customer._id + '/recruiterReport?sid=' + session.id;
         // Prepare the report JSON to store in the DB
         const report = {
             link: recruiterReportUrl,
@@ -148,7 +148,7 @@ exports.addCandidate = function (req, res) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "shortUrlToReport: ", shortUrlToReport);
 
                 // construct a full URL for the form so that we'll be able to use it with a URL shortener
-                const formUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.client._id + '/?sid=' + session.id;
+                const formUrl = req.protocol + '://' + req.get('host') + '/clients/' + req.customer._id + '/?sid=' + session.id;
                 console.log("%s.%s:%s -", __file, __ext, __line, "formUrl: ", formUrl);
                 console.log("%s.%s:%s -", __file, __ext, __line, "Form length:", form.length);
 
@@ -163,7 +163,7 @@ exports.addCandidate = function (req, res) {
                 const newCandidateEntry = new Candidate({
                     fullName: newUser.fullName,
                     id: newUser.id,
-                    cid: req.client._id,
+                    cid: req.customer._id,
                     email: newUser.email,
                     phoneNumber: newUser.phoneNumber,
                     company: newUser.company,
@@ -187,8 +187,8 @@ exports.addCandidate = function (req, res) {
                 // Check if we need to send an SMS to candidate and prepare it if necessary
                 let smsText;
                 if (newUser.sendSMS) {
-                    if (((!req.client.SMSTextA) || (req.client.SMSTextA === '')) &&
-                        ((!req.client.SMSTextB) || (req.client.SMSTextB === ''))) {
+                    if (((!req.customer.SMSTextA) || (req.customer.SMSTextA === '')) &&
+                        ((!req.customer.SMSTextB) || (req.customer.SMSTextB === ''))) {
                         const statusMsg = "SMS texts are empty. Please configure client '" + newUser.company + "' with correct text or clear checkbox.";
                         console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
                         res.render('niceError', {
@@ -200,17 +200,17 @@ exports.addCandidate = function (req, res) {
                     else {
                         // Randomly choose between the two possible SMS texts
                         if (Math.random() >= 0.5) {
-                            smsText = req.client.SMSTextA;
+                            smsText = req.customer.SMSTextA;
                             if ((!smsText) || (smsText === '')) {
                                 // It's completely acceptable to provide only B version
-                                smsText = req.client.SMSTextB;
+                                smsText = req.customer.SMSTextB;
                             }
                         }
                         else {
-                            smsText = req.client.SMSTextB;
+                            smsText = req.customer.SMSTextB;
                             if ((!smsText) || (smsText === '')) {
                                 // It's completely acceptable to provide only A version
-                                smsText = req.client.SMSTextA;
+                                smsText = req.customer.SMSTextA;
                             }
                         }
                         // Save the SMS actually selected for the candidate, for future reference
@@ -222,8 +222,8 @@ exports.addCandidate = function (req, res) {
                     }
                 }
 
-                console.log("req.client: ", req.client)
-                const originatingNumber = req.client.smsOrigNum;
+                console.log("req.customer: ", req.customer)
+                const originatingNumber = req.customer.smsOrigNum;
                 // Save the new candidate in the DB
                 newCandidateEntry.save(function (err) {
                         if (err) {
@@ -265,7 +265,7 @@ exports.addCandidate = function (req, res) {
                                     res.render('displayLink', {
                                         title: 'Add Candidate' + newUser.fullName,
                                         candidate: newUser,
-                                        client: req.client,
+                                        client: req.customer,
                                         statusMsg: statusMsg
                                     });
                                     return;
@@ -276,7 +276,7 @@ exports.addCandidate = function (req, res) {
                                 res.render('displayLink', {
                                     title: 'Add Candidate' + newUser.fullName,
                                     candidate: newUser,
-                                    client: req.client,
+                                    client: req.customer,
                                     statusMsg: 'Candidate created successfully:' + newUser.fullName
                                 });
                                 return;
@@ -295,9 +295,9 @@ exports.addCandidate = function (req, res) {
                         // Send new candidate email to notify the recruiter
                         if (newUser.notifyNewCandidate) {
                             console.log("%s.%s:%s -", __file, __ext, __line, "Notifying on new candidate: ", newUser.fullName);
-                            const emailTxt = req.client.newCandidateEmailText.replace('$candidateName', newUser.fullName);
-                            const emailSubject = req.client.newCandidateEmailSubject.replace('$candidateName', newUser.fullName);
-                            email_Ctrl.send(req.client.emailFrom, req.client.emailFromPswd, req.client.emailTo,
+                            const emailTxt = req.customer.newCandidateEmailText.replace('$candidateName', newUser.fullName);
+                            const emailSubject = req.customer.newCandidateEmailSubject.replace('$candidateName', newUser.fullName);
+                            email_Ctrl.send(req.customer.emailFrom, req.customer.emailFromPswd, req.customer.emailTo,
                                 emailSubject, emailTxt);
                         }
                     }

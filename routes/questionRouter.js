@@ -15,7 +15,7 @@ const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
 // Track event in mixpanel
 mixpanel.track('Event Name', {
     distinct_id: session.id,
-    cid: req.client._id
+    cid: req.customer._id
 });
 */
 

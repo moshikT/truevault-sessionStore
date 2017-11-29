@@ -43,7 +43,7 @@ router.use(function (req, res, next) {
                 }
                 else if (client) { // cid was found
                     console.log("%s.%s:%s -", __file, __ext, __line, "client found: ", client.name);
-                    req.client = client;
+                    req.customer = client;
 
                     // Check if there's a session ID in the request (?sid=)
                     if (req.query.sid) {

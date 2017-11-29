@@ -46,13 +46,13 @@ describe('generateForm call back test unit', function() {
 describe('addCandidate test unit: ', function () {
     // TODO: Create mock of new user data (using stub). before each test unit
     /*const newUser = new userData(req.body['user_fullName'], req.body['user_id'],
-        req.body['user_email'], req.body['user_tel'], req.client.name, req.body['gender'],
+        req.body['user_email'], req.body['user_tel'], req.customer.name, req.body['gender'],
         req.body['recruitmentSource'], req.body['linkToCV']);*/
     // TODO: Remember that validation of the parameters should be at the client - reassure that
 
     describe('Form generation test unit: ', function () {
         // TODO: Test form generation by creating a mock params of client
-        // formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword, function (form) { }
+        // formGenerator_Ctrl.generateForm(isInEnglish, req.customer.keyword, function (form) { }
 
         // TODO: test that the return value is an array of JSON elements -
         // TODO: (cont.) In deep test for the form generation will be at the form generator test class
@@ -65,7 +65,7 @@ describe('addCandidate test unit: ', function () {
          * const newCandidateEntry = new Candidate({
                     fullName: newUser.fullName,
                     id: newUser.id,
-                    cid: req.client._id,
+                    cid: req.customer._id,
                     email: newUser.email,
                     phoneNumber: newUser.phoneNumber,
                     company: newUser.company,

@@ -47,7 +47,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
                 }
                 var isMale = (candidate.gender == 'male'); // Gender adjustment
                 // Get text based on factor averages
-                getVerbalText(factorsData, isMale, req.client.keyword, function (strengths, weaknesses) {
+                getVerbalText(factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
                     if (!strengths) { // verbal text wasn't retrieved
                         callback(candidate, false);
                         return;
@@ -84,13 +84,13 @@ exports.generateRecruiterReport = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line);
     exports.calcRecruiterReport(req, res, function (candidate, status = true) {
         console.log("%s.%s:%s -", __file, __ext, __line, "Candidate report for '", candidate.fullName, "' - Completed: ", candidate.report.completed);
-        const langHeb = (req.client.language !== 'en');
+        const langHeb = (req.customer.language !== 'en');
         if ((status) && (candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
             // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
             textGenerator_Ctrl.initRecruiterReportText(!langHeb, function (recruiterReportText) {
                 res.render('recruiterReport', {
                     title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
-                    client: req.client,
+                    client: req.customer,
                     sid: req.sid,
                     candidate: candidate,
                     text: recruiterReportText

@@ -118,8 +118,8 @@ exports.addClient = function (req, res) {
 
 
 exports.loadClient = function (req, res) {
-    if (req.client) { // Page was called with a cid in URL
-        res.render('addClient', {title: 'Update Client', client: req.client});
+    if (req.customer) { // Page was called with a cid in URL
+        res.render('addClient', {title: 'Update Client', client: req.customer});
     }
     else { // Page was called with a POST of the client name
         const clientName = req.body.clientName ? req.body.clientName : '';
