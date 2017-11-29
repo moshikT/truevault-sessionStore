@@ -39,7 +39,7 @@
                 </div>
                     <% } %>
                 <% }
-        if (formjson[i].type == 'C')  { %>
+        if ((formjson[i].type == 'C') || (formjson[i].type == 'L'))  { %>
             <div id="radioBtn" class="a bTypeGroup">
             <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { /*console.log(formjson[i].finalAnswer)*/%>
                 <a class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
