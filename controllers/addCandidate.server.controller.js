@@ -222,6 +222,8 @@ exports.addCandidate = function (req, res) {
                     }
                 }
 
+                console.log("req.client: ", req.client)
+                const originatingNumber = req.client.smsOrigNum;
                 // Save the new candidate in the DB
                 newCandidateEntry.save(function (err) {
                         if (err) {
@@ -250,7 +252,7 @@ exports.addCandidate = function (req, res) {
                         if (form.length > 5) { // Form has more than 5 questions
                             if (smsText) { // There is a text message to send
                                 console.log("%s.%s:%s -", __file, __ext, __line, "Sending SMS to candidate: ", smsText);
-                                sms_Ctrl.send(newUser.phoneNumber, smsText, req.client.smsOrigNum, function (isSent) {
+                                sms_Ctrl.send(newUser.phoneNumber, smsText, originatingNumber, function (isSent) {
                                     let statusMsg;
                                     if (isSent) {
                                         statusMsg = 'Candidate created and SMS message successfully sent: ' + newUser.fullName;
