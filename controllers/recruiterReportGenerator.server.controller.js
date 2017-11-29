@@ -130,8 +130,10 @@ function getFactorsAvg(candidate, callback) {
                         }
                         else {
                             numOfElementsInFactor++;
+                            let found = false;
                             for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
                                 if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {
+                                    found = true;
                                     if (candidate.form[qIndex].type == 'C') {
                                         var score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
                                     }
@@ -144,6 +146,9 @@ function getFactorsAvg(candidate, callback) {
                                     factorAvg += score;
                                     //console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);
                                 }
+                            }
+                            if (!found) {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Question id not found: ", csvRow[factorElementIndex]);
                             }
                         }
                     }
@@ -216,19 +221,21 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                         //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
                         if (factor.subDimention == /*factorVerbal['SHORT NAME']*/factorVerbal['SUB_DIMENSION']) {
                             factor.name = factorVerbal['SHORT NAME'];
-                            /* if reverse relation exists (0) thank put the factor in the opposite column. */
-                            var isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
+                            // if reverse relation exists (0) than put the factor in the opposite column.
+                            const isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
                                 (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
-                            /** Treat average scores as weakness in the report */
-                            var isWeakness = ((factor.avg < 4.5 && factorVerbal['isReverseRelation'] == '1') ||
-                                (factor.avg > 3.5 && factorVerbal['isReverseRelation'] == '0'));
-                            var verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
+                            // Use env variable for setting whether to include average scores in the verbal report or not
+                            const includeAvg = (process.env.INCLUDE_AVG === 'yes') ? true : false; // Default is don't include
+                            // If included, treat average scores as weaknesses in the report
+                            const isWeakness = ((factor.avg < (includeAvg ? 4.5 : 3.5) && factorVerbal['isReverseRelation'] == '1') ||
+                                (factor.avg > (includeAvg ? 3.5 : 4.5) && factorVerbal['isReverseRelation'] == '0'));
+                            const verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                                 : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                                     : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
 
                             /** Go through the weaknesses and strengths array and if id already exists
                              *  concat text else create new verbalData object */
-                            var verbalData = {};
+                            let verbalData = {};
                             verbalData.id = factorVerbal['SHORT NAME'];
                             verbalData.title = factorVerbal['HE FACTOR'];
                             verbalData.text = factorVerbal[verbalKey].split('\n');
