@@ -257,9 +257,31 @@ exports.addCandidate = function (req, res) {
                                     let statusMsg;
                                     if (isSent) {
                                         statusMsg = 'Candidate created and SMS message successfully sent: ' + newUser.fullName;
+                                        // Track candidate creation in mixpanel
+                                        mixpanel.track('Create Candidate', {
+                                            distinct_id: session ? session.id : 0,
+                                            cid: req.params.cid,
+                                            name: newUser ? newUser.fullName : 'N/A',
+                                            company: newUser ? newUser.company : 'N/A',
+                                            form_len: form ? form.length : 0,
+                                            link_to_form: shortUrlToForm,
+                                            link_to_report: newUser ? newUser.linkToReport : '',
+                                            sms_used: newUser ? newUser.smsUsed : '',
+                                        });
                                     }
                                     else {
                                         statusMsg = 'Candidate created but an error occurred while sending SMS: ' + newUser.fullName;
+                                        // Track candidate creation in mixpanel
+                                        mixpanel.track('Create Candidate', {
+                                            distinct_id: session ? session.id : 0,
+                                            cid: req.params.cid,
+                                            name: newUser ? newUser.fullName : 'N/A',
+                                            company: newUser ? newUser.company : 'N/A',
+                                            form_len: form ? form.length : 0,
+                                            link_to_form: shortUrlToForm,
+                                            link_to_report: newUser ? newUser.linkToReport : '',
+                                            error: 'SMS not sent'
+                                        });
                                     }
 
                                     console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
@@ -274,6 +296,16 @@ exports.addCandidate = function (req, res) {
                             }
                             else {
                                 console.log("%s.%s:%s -", __file, __ext, __line, "Candidate created successfully: ", newUser.fullName);
+                                // Track candidate creation in mixpanel
+                                mixpanel.track('Create Candidate', {
+                                    distinct_id: session ? session.id : 0,
+                                    cid: req.params.cid,
+                                    name: newUser ? newUser.fullName : 'N/A',
+                                    company: newUser ? newUser.company : 'N/A',
+                                    form_len: form ? form.length : 0,
+                                    link_to_form: shortUrlToForm,
+                                    link_to_report: newUser ? newUser.linkToReport : '',
+                                });
                                 res.render('displayLink', {
                                     title: 'Add Candidate' + newUser.fullName,
                                     candidate: newUser,
@@ -286,6 +318,17 @@ exports.addCandidate = function (req, res) {
                         else {
                             const statusMsg = 'Too few questions in form. Possible error: ';
                             console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
+                            // Track candidate creation in mixpanel
+                            mixpanel.track('Create Candidate', {
+                                distinct_id: session ? session.id : 0,
+                                cid: req.params.cid,
+                                name: newUser ? newUser.fullName : 'N/A',
+                                company: newUser ? newUser.company : 'N/A',
+                                form_len: form ? form.length : 0,
+                                link_to_form: shortUrlToForm,
+                                link_to_report: newUser ? newUser.linkToReport : '',
+                                error: 'Too few questions in form'
+                            });
                             res.render('niceError', {
                                 title: 'Add Candidate' + newUser.fullName,
                                 errorText: statusMsg
