@@ -161,7 +161,7 @@ exports.getIndex = function (req, res) {
     mixpanel.track('Index Entered', {
         distinct_id: req?req.sid:0,
         server_name: process.env.SERVER_NAME,
-        user_agent: req.headers['user-agent'],
+        user_agent: req.headers,//['user-agent'],
         cid: req.params?req.params.cid:0
     });
     res.render('index', {
