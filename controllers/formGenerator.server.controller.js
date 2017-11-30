@@ -80,7 +80,8 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
 
                     shuffle(questionsArraysByType.p_typeJSON);
                     //shuffle(questionsArraysByType.f_typeJSON);
-                    shuffle(questionsArraysByType.b_typeJSON);
+                    //shuffle(questionsArraysByType.b_typeJSON);
+                    shuffle(questionsArraysByType.c_typeJSON);
 
             var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
                 questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON,
