@@ -120,6 +120,7 @@ exports.saveFormResults = function (req, res) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "unable To save", err);
                     mixpanel.track('Form Submit Failed', {
                         distinct_id: req.query?req.query.sid:0,
+                        server_name: process.env.SERVER_NAME,
                         cid: req.params?req.params.cid:0,
                         error: err
                     });
@@ -127,6 +128,7 @@ exports.saveFormResults = function (req, res) {
                 else {
                     mixpanel.track('Form Submit', {
                         distinct_id: req.query?req.query.sid:0,
+                        server_name: process.env.SERVER_NAME,
                         cid: req.params?req.params.cid:0,
                     });
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
@@ -158,6 +160,7 @@ exports.getIndex = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.customer.name);
     mixpanel.track('Index Entered', {
         distinct_id: req?req.sid:0,
+        server_name: process.env.SERVER_NAME,
         cid: req.params?req.params.cid:0
     });
     res.render('index', {
@@ -180,6 +183,7 @@ exports.getForm = function (req, res) {
                 if(candidate.session.expired) {
                     mixpanel.track('Form Expired', {
                         distinct_id: req.query.sid,
+                        server_name: process.env.SERVER_NAME,
                         cid: req.params?req.params.cid:0
                     });
                     res.redirect('/clients/' + req.customer._id + '/thankYou');
@@ -187,6 +191,7 @@ exports.getForm = function (req, res) {
                 else {
                     mixpanel.track('Form Entered', {
                         distinct_id: req.query.sid,
+                        server_name: process.env.SERVER_NAME,
                         cid: req.params?req.params.cid:0
                     });
                     var isInEnglish = (req.customer.language == 'en');

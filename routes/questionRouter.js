@@ -166,6 +166,7 @@ router.route('/:sid/:qid')
                         console.log("%s.%s:%s -", __file, __ext, __line, "Question answered error: ", err);
                         mixpanel.track('Question Answered Error', {
                             distinct_id: req.params.sid,
+                            server_name: process.env.SERVER_NAME,
                             cid: req.candidate.cid,
                             qid: req.params.qid,
                             final_answer: answer,
@@ -177,6 +178,7 @@ router.route('/:sid/:qid')
                     else {
                         mixpanel.track('Question Answered', {
                             distinct_id: entry.session.id,
+                            server_name: process.env.SERVER_NAME,
                             cid: req.candidate.cid,
                             qid: req.params.qid,
                             final_answer: answer,

@@ -232,6 +232,7 @@ exports.addCandidate = function (req, res) {
                             // Track candidate creation in mixpanel
                             mixpanel.track('Create Candidate', {
                                 distinct_id: session ? session.id : 0,
+                                server_name: process.env.SERVER_NAME,
                                 cid: req.params.cid,
                                 name: newUser ? newUser.fullName : 'N/A',
                                 company: newUser ? newUser.company : 'N/A',
@@ -260,6 +261,7 @@ exports.addCandidate = function (req, res) {
                                         // Track candidate creation in mixpanel
                                         mixpanel.track('Create Candidate', {
                                             distinct_id: session ? session.id : 0,
+                                            server_name: process.env.SERVER_NAME,
                                             cid: req.params.cid,
                                             name: newUser ? newUser.fullName : 'N/A',
                                             company: newUser ? newUser.company : 'N/A',
@@ -274,6 +276,7 @@ exports.addCandidate = function (req, res) {
                                         // Track candidate creation in mixpanel
                                         mixpanel.track('Create Candidate', {
                                             distinct_id: session ? session.id : 0,
+                                            server_name: process.env.SERVER_NAME,
                                             cid: req.params.cid,
                                             name: newUser ? newUser.fullName : 'N/A',
                                             company: newUser ? newUser.company : 'N/A',
@@ -299,6 +302,7 @@ exports.addCandidate = function (req, res) {
                                 // Track candidate creation in mixpanel
                                 mixpanel.track('Create Candidate', {
                                     distinct_id: session ? session.id : 0,
+                                    server_name: process.env.SERVER_NAME,
                                     cid: req.params.cid,
                                     name: newUser ? newUser.fullName : 'N/A',
                                     company: newUser ? newUser.company : 'N/A',
@@ -321,6 +325,7 @@ exports.addCandidate = function (req, res) {
                             // Track candidate creation in mixpanel
                             mixpanel.track('Create Candidate', {
                                 distinct_id: session ? session.id : 0,
+                                server_name: process.env.SERVER_NAME,
                                 cid: req.params.cid,
                                 name: newUser ? newUser.fullName : 'N/A',
                                 company: newUser ? newUser.company : 'N/A',
