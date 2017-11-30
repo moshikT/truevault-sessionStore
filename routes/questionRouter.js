@@ -167,6 +167,8 @@ router.route('/:sid/:qid')
                         mixpanel.track('Question Answered Error', {
                             distinct_id: req.params.sid,
                             server_name: process.env.SERVER_NAME,
+                            user_agent: req.headers['user-agent'],
+                            from: req.headers['from'],
                             cid: req.candidate.cid,
                             qid: req.params.qid,
                             final_answer: answer,
@@ -179,6 +181,8 @@ router.route('/:sid/:qid')
                         mixpanel.track('Question Answered', {
                             distinct_id: entry.session.id,
                             server_name: process.env.SERVER_NAME,
+                            user_agent: req.headers['user-agent'],
+                            from: req.headers['from'],
                             cid: req.candidate.cid,
                             qid: req.params.qid,
                             final_answer: answer,

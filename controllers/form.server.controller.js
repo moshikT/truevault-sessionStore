@@ -121,6 +121,8 @@ exports.saveFormResults = function (req, res) {
                     mixpanel.track('Form Submit Failed', {
                         distinct_id: req.query?req.query.sid:0,
                         server_name: process.env.SERVER_NAME,
+                        user_agent: req.headers['user-agent'],
+                        from: req.headers['from'],
                         cid: req.params?req.params.cid:0,
                         error: err
                     });
@@ -129,6 +131,8 @@ exports.saveFormResults = function (req, res) {
                     mixpanel.track('Form Submit', {
                         distinct_id: req.query?req.query.sid:0,
                         server_name: process.env.SERVER_NAME,
+                        user_agent: req.headers['user-agent'],
+                        from: req.headers['from'],
                         cid: req.params?req.params.cid:0,
                     });
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
@@ -161,7 +165,8 @@ exports.getIndex = function (req, res) {
     mixpanel.track('Index Entered', {
         distinct_id: req?req.sid:0,
         server_name: process.env.SERVER_NAME,
-        user_agent: req.headers,//['user-agent'],
+        user_agent: req.headers['user-agent'],
+        from: req.headers['from'],
         cid: req.params?req.params.cid:0
     });
     res.render('index', {
@@ -185,6 +190,8 @@ exports.getForm = function (req, res) {
                     mixpanel.track('Form Expired', {
                         distinct_id: req.query.sid,
                         server_name: process.env.SERVER_NAME,
+                        user_agent: req.headers['user-agent'],
+                        from: req.headers['from'],
                         cid: req.params?req.params.cid:0
                     });
                     res.redirect('/clients/' + req.customer._id + '/thankYou');
@@ -193,6 +200,8 @@ exports.getForm = function (req, res) {
                     mixpanel.track('Form Entered', {
                         distinct_id: req.query.sid,
                         server_name: process.env.SERVER_NAME,
+                        user_agent: req.headers['user-agent'],
+                        from: req.headers['from'],
                         cid: req.params?req.params.cid:0
                     });
                     var isInEnglish = (req.customer.language == 'en');
