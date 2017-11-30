@@ -1,15 +1,16 @@
-var express = require('express');
-var dateTime = require('node-datetime');
-var json2csv = require('json2csv');
-var fs = require('fs');
-var csv = require("csvtojson");
-var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
-var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
-var Candidate = require('../models/candidate.server.model.js');
-var Client = require('../models/addClient.server.model.js');
-var uuidv1 = require('uuid/v1');
-var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
-let Mixpanel = require('mixpanel');
+const express = require('express');
+const dateTime = require('node-datetime');
+const json2csv = require('json2csv');
+const fs = require('fs');
+const csv = require("csvtojson");
+const formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+const textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+const Candidate = require('../models/candidate.server.model.js');
+const Client = require('../models/addClient.server.model.js');
+const uuidv1 = require('uuid/v1');
+const recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
+const email_Ctrl = require('../controllers/email.server.controller');
+const Mixpanel = require('mixpanel');
 // initialize mixpanel client configured to communicate over https
 const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
     protocol: 'https'
@@ -18,7 +19,7 @@ const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
 // Track event in mixpanel
 mixpanel.track('Event Name', {
     distinct_id: session.id,
-    cid: req.client._id
+    cid: req.customer._id
 });
 */
 
@@ -38,17 +39,17 @@ class userData {
 // get users data (currently setted via addCandidate) and generate form f user is new
 exports.getInfo = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
-        req.body['user_email'], req.body['user_tel'], req.client.name);
+        req.body['user_email'], req.body['user_tel'], req.customer.name);
 
     /* If user exists and session not expired load form - else generate new form */
     Candidate.findOne({'session.id' : req.sid}, function(err, candidate) {
         if (err) throw err; /* load default params */
         if(candidate) {
-            res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);
+            res.redirect('/clients/' + req.customer._id + '/form/?sid=' + candidate.session.id);
         }
         else {
-            var isInEnglish = (req.client.language == 'en');
-            formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword , function (form) {
+            var isInEnglish = (req.customer.language == 'en');
+            formGenerator_Ctrl.generateForm(isInEnglish, req.customer.keyword , function (form) {
                 var sid = uuidv1();
                 var session = {};
                 session.id = sid;
@@ -70,7 +71,7 @@ exports.getInfo = function (req, res) {
                         console.log("%s.%s:%s -", __file, __ext, __line, err);
                     }
                     // TODO: send SMS with varification code
-                    res.redirect('/clients/' + req.client._id + '/form/?sid=' + sid);
+                    res.redirect('/clients/' + req.customer._id + '/form/?sid=' + sid);
                 });
             });
         }
@@ -91,7 +92,7 @@ exports.saveFormResults = function (req, res) {
             candidate.markModified('session');
 
             var recruiterReportUrl = req.protocol + '://' + req.get('host') +
-                '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
+                '/clients/' + req.customer._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
             var report = {};
             report.link = recruiterReportUrl;
 
@@ -132,6 +133,15 @@ exports.saveFormResults = function (req, res) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
                     // Calculate the report data
                     recruiterReport_Ctrl.calcRecruiterReport(req, res); // we don't provide a callback because we don't have anything to do here if it didn't work. Will calc the report when needed instead.
+
+                    //  if newUser.notifyNewCandidate == true send email to recruiter
+                    if(candidate.notifyNewCandidateReport) {
+                        const emailTxt = req.customer.candidateReportEmailText.replace('$candidateName', candidate.fullName)
+                            .replace('$reportLink', candidate.linkToReport);
+                        const emailSubject = req.customer.candidateReportEmailSubject.replace('$candidateName', candidate.fullName);
+                        email_Ctrl.send(req.customer.emailFrom, req.customer.emailFromPswd, req.customer.emailTo,
+                            emailSubject, emailTxt);
+                    }
                 }
             });
 
@@ -139,21 +149,21 @@ exports.saveFormResults = function (req, res) {
         else {
             console.log("%s.%s:%s -", __file, __ext, __line, "Unable to save all form data");
         }
-        res.redirect('/clients/' + req.client._id + '/thankYou');
+        res.redirect('/clients/' + req.customer._id + '/thankYou');
     });
 }
 
 exports.getIndex = function (req, res) {
-    //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, (req.client.language === 'en'));
-    console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client.name);
+    //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.customer.name, req.customer.isDemo, (req.customer.language === 'en'));
+    console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.customer.name);
     mixpanel.track('Index Entered', {
         distinct_id: req?req.sid:0,
         cid: req.params?req.params.cid:0
     });
     res.render('index', {
         title: '',
-        indexPageText : (req.client.language == 'en') ? {direction: 'ltr', align: 'left'} : {direction: 'rtl', align: 'right'} ,
-        client: req.client,
+        indexPageText : (req.customer.language == 'en') ? {direction: 'ltr', align: 'left'} : {direction: 'rtl', align: 'right'} ,
+        client: req.customer,
         sid: req.sid
     });
 }
@@ -161,7 +171,7 @@ exports.getIndex = function (req, res) {
 exports.getForm = function (req, res) {
     if(!req.query.sid) {
         /* no session id; redirect to home page in order to get user data */
-        res.redirect('/clients/' + req.client._id + '/');
+        res.redirect('/clients/' + req.customer._id + '/');
     }
     else {
         Candidate.findOne({'session.id': req.query.sid}, function (err, candidate) {
@@ -172,14 +182,14 @@ exports.getForm = function (req, res) {
                         distinct_id: req.query.sid,
                         cid: req.params?req.params.cid:0
                     });
-                    res.redirect('/clients/' + req.client._id + '/thankYou');
+                    res.redirect('/clients/' + req.customer._id + '/thankYou');
                 }
                 else {
                     mixpanel.track('Form Entered', {
                         distinct_id: req.query.sid,
                         cid: req.params?req.params.cid:0
                     });
-                    var isInEnglish = (req.client.language == 'en');
+                    var isInEnglish = (req.customer.language == 'en');
                     textGenerator_Ctrl.initFormPageText(isInEnglish, function (formText) {
                         res.render('form', {
                             title: '' ,
@@ -189,7 +199,7 @@ exports.getForm = function (req, res) {
                             //terms : formText.terms,
                             submitText : formText.submitText,
                             sid: candidate.session.id,
-                            client: req.client,
+                            client: req.customer,
                             fullName: candidate.fullName
                         });
                     })
@@ -205,9 +215,9 @@ exports.getForm = function (req, res) {
 
 exports.getThankYouPage = function (req, res) {
     res.render('thankYou', { title: 'Empiricalhire',
-        isInEnglish: (req.client.language == 'en'),
-        textDirection: (req.client.language == 'en') ? 'ltr' : 'rtl',
-        client: req.client
+        isInEnglish: (req.customer.language == 'en'),
+        textDirection: (req.customer.language == 'en') ? 'ltr' : 'rtl',
+        client: req.customer
     });
 }
 

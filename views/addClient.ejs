@@ -6,12 +6,13 @@
 
     <title><%= title %></title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 </head>
 <header>
     <div class="container col-md-12" style="text-align: center;">
-        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png" />
+        <img class="logo" style="height: 100px;padding-top:20px;" src="../images/EH_logo.png"/>
     </div>
 </header>
 <body>
@@ -26,63 +27,151 @@
             <h4><%= title %></h4>
             <form id="addClient" method="post" enctype="multipart/form-data" action="/addClient">
                 <div class="">
-                <div id="clientName" style="padding: 20px;">
-                    <input class="inputs" name="name" type="text" value='<%= (client.name) ? client.name : ''%>'
-                           placeholder='Client Name' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-                </div>
+                    <div id="clientName" style="padding: 20px;">
+                        <input class="inputs" name="name" type="text" value='<%= (client.name) ? client.name : '' %>'
+                               placeholder='Client Name' style="border-style: none none solid none;text-align: center;
+                                    opacity: 0.7">
+                    </div>
                     <% if(client.logoImg) { %>
-                        <span style="color: #3276b1;">Current logo: </span><%= client.logoImg.fileName %>
+                    <span style="color: #3276b1;">Current logo: </span><%= client.logoImg.fileName %>
                     <br>
                     <br>
                     <p style="font-size: 12px; color: #878787;">&bull; Choose file to replace: </p>
                     <% } %>
-                <div id="clientLogo" style="padding: 20px;">
-                    <input class="inputs" name="logo" type="file" accept="image/png"
-                           style="border-style: none none solid none;text-align: center;opacity: 0.7;margin-right:auto;margin-left: auto;">
-                </div>
-                <div id="clientLogoStyle" style="padding: 20px;">
-                    <input onclick="scrollToNextElement('logoStyle')" id="LogoStyle" class="inputs" name="logoStyle" type="text"
-                           value='<%= (client.logoStyle) ? client.logoStyle : ''%>' placeholder='Client Logo Style' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-                </div>
-                <div id="clientTitle" style="padding: 20px;">
-                    <input onclick="scrollToNextElement('title')" id="title" class="inputs" name="title" type="text"
-                           value='<%= (client.title) ? client.title : ''%>' placeholder='Title' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-                </div>
-                <div id="clientHeadlineText" style="padding: 20px;">
-                <textarea onclick="scrollToNextElement('headlineText')" id="headlineText" class="inputs" name="headlineText"
-                           placeholder='Headline Text' cols="40" rows="2" style="opacity: 0.7"><%= (client.headlineText) ? client.headlineText : ''%></textarea>
-                    <!-- <input onclick="scrollToNextElement('clientLanguage')" class="inputs" name="introText" type="text"
-                            placeholder='Introduction Text' style="border-style: none none solid none;opacity: 0.7">-->
-                            </div>
-                            <div id="clientInstructionText" style="padding: 20px;">
-                    <textarea onclick="scrollToNextElement('instructionText')" id="instructionText" class="inputs" name="instructionText"
-                              placeholder='Instructions Text' cols="40" rows="5" style="opacity: 0.7"><%= (client.instructionText) ? client.instructionText : ''%></textarea>
-                               </div>
-                             <div id="clientCompanyDescription" style="padding: 20px;">
-                     <textarea onclick="scrollToNextElement('companyDescription')" id="companyDescription" class="inputs" name="companyDescription"
-                                placeholder='Company Description' cols="40" rows="5" style="opacity: 0.7"><%= (client.companyDescription) ? client.companyDescription : ''%></textarea>
-                                    </div>
-                                  <div id="clientThankYouText" style="padding: 20px;">
-                          <textarea onclick="scrollToNextElement('thankYouText')" id="thankYouText" class="inputs" name="thankYouText"
-                                    placeholder='Thank You Text' cols="40" rows="2" style="opacity: 0.7"><%= (client.thankYouText) ? client.thankYouText : ''%></textarea>
-                                    </div>
-                                  <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
-                                      <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
-                                             <%= (client.language == 'en') ? 'checked' : ''%> value="en" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">English</span>
+                    <div id="clientLogo" style="padding: 20px;">
+                        <input class="inputs" name="logo" type="file" accept="image/png"
+                               style="border-style: none none solid none;text-align: center;
+                                    opacity: 0.7;margin-right:auto;margin-left: auto;">
+                    </div>
+
+                    <div id="clientLogoStyle" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('logoStyle')" id="LogoStyle" class="inputs"
+                               name="logoStyle" type="text" value='<%= (client.logoStyle) ? client.logoStyle : '' %>'
+                               placeholder='Client Logo Style'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                    </div>
+                    <div id="clientTitle" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('title')" id="title" class="inputs"
+                               name="title" type="text" value='<%= (client.title) ? client.title : '' %>'
+                               placeholder='Title'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                    </div>
+                    <div id="clientHeadlineText" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('headlineText')" id="headlineText"
+                                  class="inputs" name="headlineText" placeholder='Headline Text' cols="40" rows="2"
+                                  style="opacity: 0.7;"><%= (client.headlineText) ? client.headlineText : '' %></textarea>
+                    </div>
+                    <div id="clientInstructionText" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('instructionText')" id="instructionText"
+                                  class="inputs" name="instructionText" placeholder='Instructions Text' cols="40"
+                                  rows="5"
+                                  style="opacity: 0.7;"><%= (client.instructionText) ? client.instructionText : '' %></textarea>
+                    </div>
+                    <div id="clientCompanyDescription" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('companyDescription')" id="companyDescription"
+                                  class="inputs" name="companyDescription" placeholder='Company Description'
+                                  cols="40" rows="5" style="opacity: 0.7;"><%= (client.companyDescription) ?
+                                    client.companyDescription : '' %></textarea>
+                    </div>
+                    <div id="clientThankYouText" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('thankYouText')" id="thankYouText" class="inputs"
+                                  name="thankYouText" placeholder='Thank You Text' cols="40" rows="2"
+                                  style="opacity: 0.7;"><%= (client.thankYouText) ? client.thankYouText : '' %></textarea>
+                    </div>
+                    <div id="clientSMSOrigNum" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('clientSMSOrigNum')" id="clientSMSOrigNum" class="inputs"
+                               name="smsOrigNum" type="text"
+                               value='<%= (client.smsOrigNum) ? client.smsOrigNum : '' %>'
+                               placeholder='SMS Originating Number'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                        </input>
+                    </div>
+                    <div id="clientSMSTextA" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('SMSTextA')" id="SMSTextA" class="inputs"
+                                  name="SMSTextA" placeholder='Version A SMS to $candidateName with a link to the form $formLink'
+                                  cols="40" rows="4"
+                                  style="opacity: 0.7"><%= (client.SMSTextA) ? client.SMSTextA : '' %></textarea>
+                    </div>
+                    <div id="clientSMSTextB" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('SMSTextB')" id="SMSTextB" class="inputs"
+                                  name="SMSTextB" placeholder='Version A SMS to $candidateName with a link to the form $formLink' cols="40" rows="4"
+                                  style="opacity: 0.7"><%= (client.SMSTextB) ? client.SMSTextB : '' %></textarea>
+                    </div>
+                    <div id="clientEmailTo" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('emailTo')" id="emailTo" class="inputs" name="emailTo"
+                               type="email" value='<%= (client.emailTo) ? client.emailTo : '' %>' placeholder='Recruiter Email Address'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                    </div>
+                    <div id="clientEmailFrom" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('emailFrom')" id="emailFrom" class="inputs" name="emailFrom"
+                               type="email" value='<%= (client.emailFrom) ? client.emailFrom : '' %>'
+                               placeholder='Originating Email Address' style="border-style: none none solid none;text-align: center;
+                                        opacity: 0.7">
+                    </div>
+                    <div id="clientEmailFromPswd" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('emailFromPswd')" id="emailFromPswd" class="inputs"
+                               name="emailFromPswd"
+                               type="text" value='<%= (client.emailFromPswd) ? client.emailFromPswd : '' %>'
+                               placeholder='Originating Email Password' style="border-style: none none solid none;text-align: center;
+                                        opacity: 0.7">
+                    </div>
+                    <div id="clientNewCandidateEmailSubject" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('newCandidateEmailSubject')" id="newCandidateEmailSubject"
+                               class="inputs"
+                               name="newCandidateEmailSubject" type="text"
+                               value='<%= (client.newCandidateEmailSubject) ?
+                                       client.newCandidateEmailSubject : '' %>'
+                               placeholder='New Candidate Email - Subject'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                    </div>
+                    <div id="clientNewCandidateEmailText" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('newCandidateEmailText')" id="newCandidateEmailText"
+                                  class="inputs" name="newCandidateEmailText" placeholder='New Candidate Email Text including $candidateName'
+                                  cols="40" rows="5" style="opacity: 0.7"><%= (client.newCandidateEmailText) ?
+                                    client.newCandidateEmailText : '' %></textarea>
+                    </div>
+                    <div id="clientCandidateReportEmailSubject" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('candidateReportEmailSubject')"
+                               id="candidateReportEmailSubject" class="inputs"
+                               name="candidateReportEmailSubject" type="text"
+                               value='<%= (client.candidateReportEmailSubject) ?
+                                       client.candidateReportEmailSubject : '' %>'
+                               placeholder='Candidate Report Email Subject'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                    </div>
+                    <div id="clientCandidateReportEmailText" style="padding: 20px;">
+                        <textarea onclick="scrollToNextElement('candidateReportEmailText')"
+                                  id="candidateReportEmailText"
+                                  class="inputs" name="candidateReportEmailText"
+                                  placeholder='Candidate Report Email Text including $candidateName and a link to report $reportLink'
+                                  cols="40" rows="4" style="opacity: 0.7"><%= (client.candidateReportEmailText) ?
+                                    client.candidateReportEmailText : '' %></textarea>
+                    </div>
+                    <div id="clientLanguage" class="btn-group" style="padding: 20px;display:inline-block;">
+                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="language"
+                               type="radio"<%= (client.language == 'en') ? 'checked' : '' %> value="en"
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+                        <span style="padding-right: 10px">English</span>
 
 
-                                      <input onclick="scrollToNextElement('btn_submit')"  class="inputs" name="language" type="radio"
-                                             <%= (client.language == 'he') ? 'checked' : ''%> value="he" style="border-style: none none solid none;text-align: center;opacity: 0.7;"> <span style="padding-right: 10px">Hebrew</span>
+                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="language"
+                               type="radio"<%= (client.language == 'he') ? 'checked' : '' %> value="he"
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7;">
+                        <span style="padding-right: 10px">Hebrew</span>
 
-                                  </div>
-                                  <div>
-                                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="questionsKeyword" type="text"
-                                               value='<%= (client.keyword) ? client.keyword : ''%>' placeholder='Questions Keyword' style="border-style: none none solid none;text-align: center;opacity: 0.7">
-                                        </div>
-                                        </div>
+                    </div>
+                    <div>
+                        <input onclick="scrollToNextElement('btn_submit')" class="inputs" name="keyword"
+                               type="text" value='<%= (client.keyword) ? client.keyword : '' %>'
+                               placeholder='Questions Keyword' style="border-style: none none solid none;
+                                        text-align: center;opacity: 0.7">
+                    </div>
+                </div>
                 <div class="col-md-12 container" style="padding-top: 50px; padding-bottom: 50px;">
-                                        <button href="/addClient" id="submit" name="submit_btn" style="width: 200px;" class="btn btn-primary">Add Client</button>
-                                    </div>
+                    <button href="/addClient" id="submit" name="submit_btn" style="width: 200px;"
+                            class="btn btn-primary">Add Client
+                    </button>
+                </div>
             </form>
         </div>
         <div id="updateClient" class="tab-pane fade">
@@ -106,7 +195,7 @@
 
 <% include partials/footer %>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+<script src="https://cdnjs.cloudflare.com_ajax_libs_jquery-scrollTo_2.1.2_jquery.scrollTo.js"></script>
 <script>
     $('.inputs').keydown(function (e) {
         if (e.which === 13) {
@@ -118,46 +207,46 @@
     var container = $('#formContainer');
 
     function scrollToNextElement(nextElement) {
-        var scrollTo = $('#' + nextElement);
-        container.animate({scrollTop: scrollTo.offset().top - container.offset().top +
-        container.scrollTop()});
+        let scrollTo = $('#' + nextElement);
+        container.animate({
+            scrollTop: scrollTo.offset().top - container.offset().top +
+            container.scrollTop()
+        });
     }
 
     $("#addClient").validate({
         ignore: "",
-        success: function(label,element) {
+        success: function (label, element) {
             //element.find("input").css( "border", "solid green 1px" );
-            element.style.border= "solid green 1px" ;
+            element.style.border = "solid green 1px";
         },
         //debug: true,
         //rules: rules,
-        messages: {
-
-        },
+        messages: {},
         errorElement: "div",
         wrapper: "div",  // a wrapper around the error message
-        errorPlacement: function(error, element) {
+        errorPlacement: function (error, element) {
             element.before(error);
 
             //element.parent("div").find("a").css( "border", "solid red 1px" );
-            element.css( "border", "solid red 1px" );
-            offset = element.offset();
+            element.css("border", "solid red 1px");
+            var offset = element.offset();
             error.css('left', offset.left);
             error.css('bottom', offset.top - element.outerHeight());
         },
         focusInvalid: false,
-        invalidHandler: function(form, validator) {
+        invalidHandler: function (form, validator) {
             if (!validator.numberOfInvalids())
                 return;
 
-            },
+        },
         submitHandler: function (form) {
             $.ajax({
-                url:'/addClient',
-                type:'post',
-                data:$('#addClient').serialize() ,//+ fileData,
+                url: '/addClient',
+                type: 'post',
+                data: $('#addClient').serialize(),//+ fileData,
                 async: false,
-                success:function(){
+                success: function () {
                     //console.log(form.user_id.value);
                     /*_LTracker.push({
                         'text': 'New Client added',

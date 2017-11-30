@@ -28,23 +28,26 @@ exports.calcRecruiterReport = function (req, res, callback) {
             }
             if ((candidate.report) && (candidate.report.completed)) {
                 // Report was already calculated before
-                if (callback) {
-                    callback(candidate);
+                console.log("%s.%s:%s -", __file, __ext, __line, req.query);
+                if (req.query.force !== '1') { // Not instructed to force recalc of report
+                    console.log("%s.%s:%s -", __file, __ext, __line, req.query.force);
+                    if (callback) {
+                        callback(candidate);
+                    }
+                    return;
                 }
-                return;
             }
 
             // Calculate factor averages
             getFactorsAvg(candidate, function (factorsData, finalScore) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
-                if (!factorsData)
-                { // Couldn't read factors data file
+                if (!factorsData) { // Couldn't read factors data file
                     callback(candidate, false);
                     return;
                 }
                 var isMale = (candidate.gender == 'male'); // Gender adjustment
                 // Get text based on factor averages
-                getVerbalText(factorsData, isMale, req.client.keyword, function (strengths, weaknesses) {
+                getVerbalText(factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
                     if (!strengths) { // verbal text wasn't retrieved
                         callback(candidate, false);
                         return;
@@ -80,14 +83,14 @@ exports.calcRecruiterReport = function (req, res, callback) {
 exports.generateRecruiterReport = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line);
     exports.calcRecruiterReport(req, res, function (candidate, status = true) {
-        // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
-        const langHeb = (req.client.language !== 'en');
+        console.log("%s.%s:%s -", __file, __ext, __line, "Candidate report for '", candidate.fullName, "' - Completed: ", candidate.report.completed);
+        const langHeb = (req.customer.language !== 'en');
         if ((status) && (candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
             // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
             textGenerator_Ctrl.initRecruiterReportText(!langHeb, function (recruiterReportText) {
                 res.render('recruiterReport', {
                     title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
-                    client: req.client,
+                    client: req.customer,
                     sid: req.sid,
                     candidate: candidate,
                     text: recruiterReportText
@@ -108,7 +111,7 @@ function getFactorsAvg(candidate, callback) {
     var testScore = 0;
 
 
-    addFile_Ctrl.getFile(['report factors - factorsTranspose.csv'])
+    addFile_Ctrl.getFile(['report.items.csv'])
         .then(filePath => {
             console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv({noheader: true})
@@ -119,14 +122,18 @@ function getFactorsAvg(candidate, callback) {
                     var numOfElementsInFactor = 0;
                     var factor = csvRow[0];
                     //var isRevereRelation = csvRow[1];
-                    //console.log("%s.%s:%s -", __file, __ext, __line, "reverse realtion: ", isRevereRelation);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "csvRow : ", csvRow);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "factor : ", factor);
+
                     for (var factorElementIndex = 1; factorElementIndex < csvRow.length; factorElementIndex++) {
                         if (csvRow[factorElementIndex] == '') {
                         }
                         else {
                             numOfElementsInFactor++;
+                            let found = false;
                             for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
                                 if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {
+                                    found = true;
                                     if (candidate.form[qIndex].type == 'C') {
                                         var score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
                                     }
@@ -140,15 +147,18 @@ function getFactorsAvg(candidate, callback) {
                                     //console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);
                                 }
                             }
+                            if (!found) {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Question id not found: ", csvRow[factorElementIndex]);
+                            }
                         }
                     }
                     var factorData = {};
-                    factorData.name = factor;
+                    factorData.subDimention = factor;
                     factorData.avg = factorAvg / numOfElementsInFactor;
                     //factorData.isRevereRelation = isRevereRelation;
                     testScore += factorData.avg;
 
-                    // console.log("%s.%s:%s -", __file, __ext, __line, "factor: " + factor + " avg: " + factorData.avg);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "factor: " + factor + " avg: " + factorData.avg);
                     factors.push(factorData);
                 })
                 .on('data', (data) => {
@@ -181,7 +191,7 @@ function getFactorsAvg(candidate, callback) {
                     callback(factors, finalScore);
                 })
                 .on('error', (err) => {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'factorsTranspose.csv ", err)
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err)
                     callback(null);
                 })
         })
@@ -194,7 +204,7 @@ function getFactorsAvg(candidate, callback) {
 function getVerbalText(factorsData, isMale, companyKeyword, callback) {
     var strengths = [];
     var weaknesses = [];
-    const baseFileName = 'report factors - verbal';
+    const baseFileName = 'report.verbal';
 
     addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
         .then(filePath => {
@@ -209,28 +219,56 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
 
                     factorsData.forEach(function (factor) {
                         //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
-                        if (factor.name == factorVerbal['SHORT NAME']) {
-                            /* if reverse relation exists (0) thank put the factor in the opposite column. */
-                            var isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
+                        if (factor.subDimention == /*factorVerbal['SHORT NAME']*/factorVerbal['SUB_DIMENSION']) {
+                            factor.name = factorVerbal['SHORT NAME'];
+                            // if reverse relation exists (0) than put the factor in the opposite column.
+                            const isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
                                 (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
-                            var isWeakness = ((factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '1') ||
-                                (factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '0'));
-                            var verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
+                            // Use env variable for setting whether to include average scores in the verbal report or not
+                            const includeAvg = (process.env.INCLUDE_AVG === 'yes') ? true : false; // Default is don't include
+                            // If included, treat average scores as weaknesses in the report
+                            const isWeakness = ((factor.avg < (includeAvg ? 4.5 : 3.5) && factorVerbal['isReverseRelation'] == '1') ||
+                                (factor.avg > (includeAvg ? 3.5 : 4.5) && factorVerbal['isReverseRelation'] == '0'));
+                            const verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
                                 : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
                                     : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
 
-                            var verbalData = {};
+                            /** Go through the weaknesses and strengths array and if id already exists
+                             *  concat text else create new verbalData object */
+                            let verbalData = {};
                             verbalData.id = factorVerbal['SHORT NAME'];
                             verbalData.title = factorVerbal['HE FACTOR'];
                             verbalData.text = factorVerbal[verbalKey].split('\n');
 
+                            let elementExists = false;
                             if (isStrength) {
+                                for (let strengthsIndex = 0; strengthsIndex < strengths.length; strengthsIndex++) {
+                                    // if factor existed add subDimention to text
+                                    if (strengths[strengthsIndex].id === verbalData.id) {
+                                        elementExists = true;
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Prev text: ", strengths[strengthsIndex].text);
+                                        strengths[strengthsIndex].text = strengths[strengthsIndex].text.concat(verbalData.text);
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "New text: ", strengths[strengthsIndex].text);
+                                    }
+                                }
+                                (!elementExists) ? strengths.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
+                                    'Factor exists in strengths - text was added to ' + verbalData.id
+                                    + ' text: ', verbalData.text);
                                 console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);
-                                strengths.push(verbalData);
                             }
                             else if (isWeakness) {
-                                console.log("%s.%s:%s -", __file, __ext, __line, "weaknes added ", factor);
-                                weaknesses.push(verbalData);
+                                for (let WeaknessIndex = 0; WeaknessIndex < weaknesses.length; WeaknessIndex++) {
+                                    // if factor existed add subDimention to text
+                                    if (weaknesses[WeaknessIndex].id === verbalData.id) {
+                                        elementExists = true;
+                                        weaknesses[WeaknessIndex].text = weaknesses[WeaknessIndex].text.concat(verbalData.text);
+                                    }
+                                }
+                                (!elementExists) ? weaknesses.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
+                                    'Factor exists in weaknesses - text was added to ' + verbalData.id
+                                    + ' text: ', verbalData.text);
+
+                                console.log("%s.%s:%s -", __file, __ext, __line, "weakness added ", factor);
                             }
                         }
                     })

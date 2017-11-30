@@ -11,7 +11,10 @@ exports.initCandidateFieldNames = function (companyName, isDemo, isInEnglish) {
         linkToCVField : isInEnglish ? "Link to CV" : "קישור לקו״ח",
         textDirection : isInEnglish ? "ltr" : "rtl",
         maleText: isInEnglish ? "Male" : "זכר",
-        femaleText: isInEnglish ? "Female" : "נקבה"
+        femaleText: isInEnglish ? "Female" : "נקבה",
+        sendSMS: isInEnglish ? "Send SMS" : "שלח הודעת טקסט",
+        notifyNewCandidate: isInEnglish ? "New Candidate Notification" : "עדכון מועמד חדש",
+        notifyNewCandidateReport: isInEnglish ? "New Candidate Report Notification" : "עדכון דו״ח מועמד חדש"
         //personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
         //submitBtn : isInEnglish ? "Start Questionnaire" : "להתחלת השאלון",
         //next : isInEnglish ? "next" : "הבא",
