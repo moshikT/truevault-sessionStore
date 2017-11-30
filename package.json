@@ -42,8 +42,5 @@
     "grunt-contrib-watch": "^1.0.0",
     "gulp-nodemon": "^2.2.1",
     "nodemon": "^1.11.0"
-  },
-  "engines": {
-    "node": "8.1.4"
   }
 }
