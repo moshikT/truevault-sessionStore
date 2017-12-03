@@ -1,11 +1,10 @@
 <form id="formInfo" method="post" action=<%= '/clients/' + client._id + '/?sid=' + sid %>>
 
     <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
-        <div class="headline" style="z-index: 10;" text-align: <%= indexPageText.align %>>
+        <div class="headline" style="z-index: 10; text-align: <%= pageText.align %>">
             <p><%- client.headlineText %></p></div>
         <div class="container introText"
-             style="padding: 10px;margin-top: 0px; height: 100%; text-align: <%= indexPageText.align %>">
-            <%= /*indexPageText.instructionText*/ %>
+             style="padding: 10px;margin-top: 0px; height: 100%; text-align: <%= pageText.align %>">
             <div id="testInstructions"
                  style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
                 <p><%- (client.instructionText !== undefined) ? client.instructionText.replace('$checkbox',
@@ -19,22 +18,19 @@
             <div id="next_btn"
                  style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: block;">
                 <a class="imgBtn" onclick="goNext()">
-                    <!--<img style="zoom:30%" src="/images/next_btn.png">-->
-                    Next
+                    <%= pageText.next %>
                 </a>
             </div>
             <div id="next_btn_gray"
                  style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: block;">
                 <a class="imgBtnGray" onclick="redCheckbox()">
-                    <!--<img style="zoom:30%" src="/images/next_btn_gray.png">-->
-                    Next
+                    <%= pageText.next %>
                 </a>
             </div>
             <div id="back_btn"
                  style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
                 <a class="imgBtn" onclick="goBack()">
-                    <!--<img style="zoom:30%" src="/images/back_btn.png">-->
-                    Back
+                    <%= pageText.back %>
                 </a>
             </div>
         </div>

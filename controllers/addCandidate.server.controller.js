@@ -54,16 +54,16 @@ class userData {
 // Called on GET request to addCandidate
 // Initialize the language-dependent text and render the addCandidate page
 exports.getAddCandidatePage = function (req, res) {
-    const isEnglish = (req.customer.language === 'en');
-    const title = (isEnglish ? 'Add Candidate' : 'הוסף מועמד') + ' - ' + req.customer.name;
-    const subTitle = (isEnglish ? 'Add candidate for' : 'הוסף מועמד עבור ') + ' - ' + req.customer.name;
     // Get the field names based on client language
-    let fieldNames = textGenerator_Ctrl.initCandidateFieldNames(req.customer.name, req.customer.isDemo, isEnglish);
-    res.render('addCandidate', {
-        title: title,
-        subTitle: subTitle,
-        fieldNames: fieldNames,
-        client: req.customer
+    textGenerator_Ctrl.initCandidateFieldNames(lang, function (pageText) {
+        const title = pageText.title + ' - ' + req.customer.name;
+        const subTitle = pageText.subTitle + ' - ' + req.customer.name;
+        res.render('addCandidate', {
+            title: title,
+            subTitle: subTitle,
+            fieldNames: pageText,
+            customer: req.customer
+        });
     });
 };
 

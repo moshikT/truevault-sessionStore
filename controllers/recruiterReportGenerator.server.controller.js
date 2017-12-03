@@ -84,16 +84,17 @@ exports.generateRecruiterReport = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line);
     exports.calcRecruiterReport(req, res, function (candidate, status = true) {
         console.log("%s.%s:%s -", __file, __ext, __line, "Candidate report for '", candidate.fullName, "' - Completed: ", candidate.report.completed);
-        const langHeb = (req.customer.language !== 'en');
         if ((status) && (candidate) && (candidate.report) && (candidate.report.completed)) { // Safety
             // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
-            textGenerator_Ctrl.initRecruiterReportText(!langHeb, function (recruiterReportText) {
+            textGenerator_Ctrl.initRecruiterReportText(req.lang, function (pageText) {
                 res.render('recruiterReport', {
                     title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
+                    textDirection: pageText.textDir,
+                    textAlign: pageText.textAlign,
                     client: req.customer,
                     sid: req.sid,
                     candidate: candidate,
-                    text: recruiterReportText
+                    text: pageText
                 });
             });
         }

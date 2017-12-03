@@ -67,25 +67,25 @@
     <section class="container-fluid banner" style="margin-top: 0rem;" >
         <div class="container">
             <div class="row">
-                    <% if(text.direction == 'rtl')  { %>
+                    <% if(textDirection == 'rtl')  { %>
                 <div class="col-xs-12 banner__content">
                     <div class='banner__main'>
                         <h2 class="banner__title"><%= candidate.fullName %></h2>
                     </div>
                     <div class='banner__info'>
                         <h3 class="banner__phone"><%= text.idField %><%= candidate.id %></h3>
-                        <p class="banner__text" style='direction:<%= text.direction %>' >
+                        <p class="banner__text" style='direction:<%= textDirection %>' >
                             <b><%= text.dateFormCompletedField %></b> <%= candidate.dateCompleted %> <%= text.beforeXdaysField %></p>
                     </div>
                     <% }
                     else { %>
-                    <div class="col-xs-12 banner__content" style="direction: ltr;">
-                        <div class='' style="width: auto;border-bottom: 0;padding-right: 4rem;direction:ltr;border-right: 0.375rem;border-right: 0.375rem solid #ffffff; ">
+                    <div class="col-xs-12 banner__content" style="direction: <%= textDirection %>;">
+                        <div class='' style="width: auto;border-bottom: 0;padding-right: 4rem;direction: <%= textDirection %>;border-right: 0.375rem;border-right: 0.375rem solid #ffffff; ">
                             <h2 class="banner__title"><%= candidate.fullName %></h2>
                         </div>
-                        <div class='banner__info' style="direction:ltr;">
+                        <div class='banner__info' style="direction: <%= textDirection %>;">
                             <h3 class="banner__phone">&nbsp;<%= text.idField %><%= candidate.id %></h3>
-                            <p class="banner__text" style='direction:<%= text.direction %>' >
+                            <p class="banner__text" style='direction:<%= textDirection %>' >
                                 <b><%= text.dateFormCompletedField %></b> <%= candidate.dateCompleted %> <%= text.beforeXdaysField %></p>
                         </div>
                     <% }
@@ -99,11 +99,11 @@
         <div class="row">
             <div class="col-xs-12">
                 <div class="graph__filters" style="margin-bottom: 3rem;">
-                    <h4 class="graph__filters-text" style='direction:<%= text.direction %>'>
+                    <h4 class="graph__filters-text" style='direction:<%= textDirection %>'>
                        <b>&nbsp; <%= text.positionDescriptionField %> </b>&nbsp;| <b> <%= text.phoneField %></b> <%= candidate.phoneNumber %> |
                         <b><%= text.recruiterSourceField %> </b> <%= candidate.recruitmentSource %> <span class="hide-in-print">|</span>  <b><a class="hide-in-print" target="_blank" href='<%= candidate.linkToCV %>'><%= text.CVField %></a></b>  </h4>
                 </div>
-                <h4 class="graph__subtitle" style='direction:<%= text.direction %>'><%= text.formResultField %></h4>
+                <h4 class="graph__subtitle" style='direction: <%= textDirection %>'><%= text.formResultField %></h4>
                 <div class="graph__img">
                     <div class="graph__img-row">
                         <div class="graph__img-column">
@@ -165,7 +165,7 @@
                 <div class="features__column">
                     <div class="features__header">
                         <h3 class="features__title features__title--underline"><%= text.issuesToTestField %></h3>
-                        <h4 class="features__subtitle" style='direction:<%= text.direction %>'>
+                        <h4 class="features__subtitle" style='direction: <%= textDirection %>'>
                             <%- text.expectedBehaviorField %>
                         </h4>
                     </div>
@@ -231,7 +231,7 @@
                 <div class="features__column">
                     <div class="features__header" style="margin-bottom: 0%;">
                         <h3 class="features__title features__title--underline"><%= text.strengthsField %></h3>
-                        <h4 class="features__subtitle" style='direction:<%= text.direction %>'>
+                        <h4 class="features__subtitle" style='direction: <%= textDirection %>'>
                             <%- text.expectedBehaviorField %>
                         </h4>
                     </div>

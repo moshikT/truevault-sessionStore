@@ -25,7 +25,8 @@ mixpanel.track('Event Name', {
 
 var isCandidate = true;
 
-var newLine= "\r\n";
+var newLine = "\r\n";
+
 class userData {
     constructor(fullName, id, email, phoneNumber, company) {
         this.fullName = fullName;
@@ -36,57 +37,36 @@ class userData {
     }
 }
 
-// get users data (currently setted via addCandidate) and generate form f user is new
+// This is where we go to after user submits the intro pages "form", meaning clicks 'next'
 exports.getInfo = function (req, res) {
     var newUser = new userData(req.body['user_fullName'], req.body['user_id'],
         req.body['user_email'], req.body['user_tel'], req.customer.name);
 
-    /* If user exists and session not expired load form - else generate new form */
-    Candidate.findOne({'session.id' : req.sid}, function(err, candidate) {
-        if (err) throw err; /* load default params */
-        if(candidate) {
+    // Find the candidate entry
+    Candidate.findOne({'session.id': req.sid}, function (err, candidate) {
+        if (err) { // There was an error - doesn't mean anything but we can't show the form without a candidate
+            res.redirect('/clients/' + req.customer._id + '/thankYou'); // FIXME: This should be an error page
+        }
+        if (candidate) { // Candidate was found - redirect him to the form
             res.redirect('/clients/' + req.customer._id + '/form/?sid=' + candidate.session.id);
         }
-        else {
-            var isInEnglish = (req.customer.language == 'en');
-            formGenerator_Ctrl.generateForm(isInEnglish, req.customer.keyword , function (form) {
-                var sid = uuidv1();
-                var session = {};
-                session.id = sid;
-                session.expired = false;
-
-                var entry = new Candidate({
-                    fullName: newUser.fullName,
-                    id: newUser.id,
-                    email: newUser.email,
-                    phoneNumber: newUser.phoneNumber,
-                    company : newUser.company,
-                    formDurationInMinutes: 0,
-                    form : form,
-                    formCompleted: false,
-                    session: session
-                });
-                entry.save(function (err) {
-                    if(err) {
-                        console.log("%s.%s:%s -", __file, __ext, __line, err);
-                    }
-                    // TODO: send SMS with varification code
-                    res.redirect('/clients/' + req.customer._id + '/form/?sid=' + sid);
-                });
-            });
+        else { // Candidate was not found - possibly malicious or old sid that has been deleted or just an error in url
+            res.redirect('/clients/' + req.customer._id + '/thankYou'); // FIXME: This should be an error page
         }
     });
-}
+};
 
+// This is where we go to after the user submits the questionnaire form
 exports.saveFormResults = function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line, "form details", req.body);
     var formData = req.body;
     delete formData['agree'];
     delete formData['submit_btn'];
     delete  formData['isCompleted'];
-    Candidate.findOne({'session.id' : req.query.sid}, function(err, candidate) {
-        if (err) throw err; /* load default params */
-        if(candidate) {
+    Candidate.findOne({'session.id': req.query.sid}, function (err, candidate) {
+        if (err) throw err;
+        /* load default params */
+        if (candidate) {
             candidate.markModified('form');
             candidate.markModified('formCompleted');
             candidate.markModified('session');
@@ -107,33 +87,33 @@ exports.saveFormResults = function (req, res) {
 
             // Iterate through the candidates form and update all failed patch request -
             // unAnswered question with the users' final answer.
-            for(var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
-                /* If final answer does not exist update from form */
-                if(!candidate.form[qIndex].finalAnswer) {
+            for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
+                // If final answer does not exist update from form
+                if (!candidate.form[qIndex].finalAnswer) {
                     candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];
                     console.log("%s.%s:%s -", __file, __ext, __line, "updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);
                 }
             }
-            candidate.save(function(err, entry){
+            candidate.save(function (err, entry) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "req: ", req);
-                if(err) {
+                if (err) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "unable To save", err);
                     mixpanel.track('Form Submit Failed', {
-                        distinct_id: req.query?req.query.sid:0,
+                        distinct_id: req.query ? req.query.sid : 0,
                         server_name: process.env.SERVER_NAME,
                         user_agent: req.headers['user-agent'],
                         from: req.headers['from'],
-                        cid: req.params?req.params.cid:0,
+                        cid: req.params ? req.params.cid : 0,
                         error: err
                     });
                 }
                 else {
                     mixpanel.track('Form Submit', {
-                        distinct_id: req.query?req.query.sid:0,
+                        distinct_id: req.query ? req.query.sid : 0,
                         server_name: process.env.SERVER_NAME,
                         user_agent: req.headers['user-agent'],
                         from: req.headers['from'],
-                        cid: req.params?req.params.cid:0,
+                        cid: req.params ? req.params.cid : 0,
                     });
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
@@ -141,7 +121,7 @@ exports.saveFormResults = function (req, res) {
                     recruiterReport_Ctrl.calcRecruiterReport(req, res); // we don't provide a callback because we don't have anything to do here if it didn't work. Will calc the report when needed instead.
 
                     //  if newUser.notifyNewCandidate == true send email to recruiter
-                    if(candidate.notifyNewCandidateReport) {
+                    if (candidate.notifyNewCandidateReport) {
                         const emailTxt = req.customer.candidateReportEmailText.replace('$candidateName', candidate.fullName)
                             .replace('$reportLink', candidate.linkToReport);
                         const emailSubject = req.customer.candidateReportEmailSubject.replace('$candidateName', candidate.fullName);
@@ -157,28 +137,32 @@ exports.saveFormResults = function (req, res) {
         }
         res.redirect('/clients/' + req.customer._id + '/thankYou');
     });
-}
+};
 
+// This displays the intro pages
 exports.getIndex = function (req, res) {
     //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.customer.name, req.customer.isDemo, (req.customer.language === 'en'));
     console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.customer.name);
     mixpanel.track('Index Entered', {
-        distinct_id: req?req.sid:0,
+        distinct_id: req ? req.sid : 0,
         server_name: process.env.SERVER_NAME,
         user_agent: req.headers['user-agent'],
         from: req.headers['from'],
-        cid: req.params?req.params.cid:0
+        cid: req.params ? req.params.cid : 0
     });
-    res.render('index', {
-        title: '',
-        indexPageText : (req.customer.language == 'en') ? {direction: 'ltr', align: 'left'} : {direction: 'rtl', align: 'right'} ,
-        client: req.customer,
-        sid: req.sid
+    textGenerator_Ctrl.initIndexPageText(req.lang, function (pageText) {
+        res.render('index', {
+            title: '',
+            pageText: pageText,
+            client: req.customer,
+            sid: req.sid
+        });
     });
-}
+};
 
+// This displays the questionnaire form itself
 exports.getForm = function (req, res) {
-    if(!req.query.sid) {
+    if (!req.query.sid) {
         /* no session id; redirect to home page in order to get user data */
         res.redirect('/clients/' + req.customer._id + '/');
     }
@@ -186,13 +170,13 @@ exports.getForm = function (req, res) {
         Candidate.findOne({'session.id': req.query.sid}, function (err, candidate) {
             if (err) throw err;
             if (candidate) {
-                if(candidate.session.expired) {
+                if (candidate.session.expired) {
                     mixpanel.track('Form Expired', {
                         distinct_id: req.query.sid,
                         server_name: process.env.SERVER_NAME,
                         user_agent: req.headers['user-agent'],
                         from: req.headers['from'],
-                        cid: req.params?req.params.cid:0
+                        cid: req.params ? req.params.cid : 0
                     });
                     res.redirect('/clients/' + req.customer._id + '/thankYou');
                 }
@@ -202,22 +186,20 @@ exports.getForm = function (req, res) {
                         server_name: process.env.SERVER_NAME,
                         user_agent: req.headers['user-agent'],
                         from: req.headers['from'],
-                        cid: req.params?req.params.cid:0
+                        cid: req.params ? req.params.cid : 0
                     });
-                    var isInEnglish = (req.customer.language == 'en');
-                    textGenerator_Ctrl.initFormPageText(isInEnglish, function (formText) {
+                    textGenerator_Ctrl.initFormPageText(req.lang, function (pageText) {
                         res.render('form', {
-                            title: '' ,
+                            title: '',
                             formjson: candidate.form,
-                            isInEnglish: isInEnglish,
-                            textDirection: isInEnglish ? 'ltr' : 'rtl',
-                            //terms : formText.terms,
-                            submitText : formText.submitText,
+                            textDirection: pageText.textDir,
+                            textAlign: pageText.textAlign,
+                            submitText: pageText.submitText,
                             sid: candidate.session.id,
                             client: req.customer,
                             fullName: candidate.fullName
                         });
-                    })
+                    });
                     // TODO: update and delete unnecessary fields render.
                 }
             }
@@ -226,24 +208,28 @@ exports.getForm = function (req, res) {
             }
         });
     }
-}
+};
 
+// Display the thank you page, either after the form is submitted or upon re-entry (when it was submitted before)
 exports.getThankYouPage = function (req, res) {
-    res.render('thankYou', { title: 'Empiricalhire',
-        isInEnglish: (req.customer.language == 'en'),
-        textDirection: (req.customer.language == 'en') ? 'ltr' : 'rtl',
-        client: req.customer
+    textGenerator_Ctrl.initThankYouText(req.lang, function (pageText) {
+        res.render('thankYou', {
+            title: 'Empirical Hire',
+            textDirection: pageText.textDir,
+            textAlign: pageText.textAlign,
+            customer: req.customer
+        });
     });
-}
+};
 
 // Set Date Time object to the format of dd/mm/yyyy
 function convertDate(date) {
     var yyyy = date.getFullYear().toString();
-    var mm = (date.getMonth()+1).toString();
-    var dd  = date.getDate().toString();
+    var mm = (date.getMonth() + 1).toString();
+    var dd = date.getDate().toString();
 
     var mmChars = mm.split('');
     var ddChars = dd.split('');
 
-    return (ddChars[1]?dd:"0"+ddChars[0])  + '/' + (mmChars[1]?mm:"0"+mmChars[0]) + '/' + yyyy;
+    return (ddChars[1] ? dd : "0" + ddChars[0]) + '/' + (mmChars[1] ? mm : "0" + mmChars[0]) + '/' + yyyy;
 }
