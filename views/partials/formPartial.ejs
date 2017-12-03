@@ -1,4 +1,4 @@
-<form id="form" method="post" action=<%='/clients/' + client._id + '/form?sid=' + sid %>>
+<form id="form" method="post" action=<%='/clients/' + customer._id + '/form?sid=' + sid %>>
     <% for (var i=0;i<formjson.length; i++) {
     if (formjson[i].type != 'F') { %>
     <div data-title=<%- (typeof formjson[i].next !== 'undefined') ?

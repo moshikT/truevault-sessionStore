@@ -104,10 +104,10 @@ exports.initThankYouText = function (lang, callback) {
 };
 
 exports.initRecruiterReportText = function (lang, callback) {
-    let recruiterReportText;
+    let pageText;
     switch (lang) {
         case 'he':
-            recruiterReportText = {
+            pageText = {
                 title: 'דוח מועמד - ',
                 textAlign: 'right',
                 textDir: 'rtl',
@@ -133,7 +133,7 @@ exports.initRecruiterReportText = function (lang, callback) {
             break;
         case 'en':
         default:
-            recruiterReportText = {
+            pageText = {
                 title: 'Candidate Report - ',
                 textAlign: 'left',
                 textDir: 'ltr',

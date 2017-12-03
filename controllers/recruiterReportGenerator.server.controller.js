@@ -88,7 +88,7 @@ exports.generateRecruiterReport = function (req, res) {
             // console.log("%s.%s:%s -", __file, __ext, __line, "candidate: ", candidate);
             textGenerator_Ctrl.initRecruiterReportText(req.lang, function (pageText) {
                 res.render('recruiterReport', {
-                    title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
+                    title: pageText.title + candidate.fullName,
                     textDirection: pageText.textDir,
                     textAlign: pageText.textAlign,
                     client: req.customer,
@@ -99,9 +99,9 @@ exports.generateRecruiterReport = function (req, res) {
             });
         }
         else {
-            res.render('niceError', {
-                title: (langHeb ? 'דוח מועמד - ' : 'Candidate Report - ') + candidate.fullName,
-                errorText: langHeb ? 'המועמד טרם השלים את מילוי השאלון' : 'The candidate has not completed the questionnaire yet'
+            res.render('niceError', { // FIXME: These texts should also be provided externally
+                title: (req.lang === 'he') ? 'דוח מועמד - ' : 'Candidate Report - ' + candidate.fullName,
+                errorText: (req.lang === 'he') ? 'המועמד טרם השלים את מילוי השאלון' : 'The candidate has not completed the questionnaire yet'
             });
         }
     });

@@ -45,12 +45,14 @@ exports.getInfo = function (req, res) {
     // Find the candidate entry
     Candidate.findOne({'session.id': req.sid}, function (err, candidate) {
         if (err) { // There was an error - doesn't mean anything but we can't show the form without a candidate
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error searching for candidate: ", req.sid);
             res.redirect('/clients/' + req.customer._id + '/thankYou'); // FIXME: This should be an error page
         }
         if (candidate) { // Candidate was found - redirect him to the form
             res.redirect('/clients/' + req.customer._id + '/form/?sid=' + candidate.session.id);
         }
         else { // Candidate was not found - possibly malicious or old sid that has been deleted or just an error in url
+            console.log("%s.%s:%s -", __file, __ext, __line, "Candidate wasn't found: ", req.sid);
             res.redirect('/clients/' + req.customer._id + '/thankYou'); // FIXME: This should be an error page
         }
     });
@@ -154,7 +156,7 @@ exports.getIndex = function (req, res) {
         res.render('index', {
             title: '',
             pageText: pageText,
-            client: req.customer,
+            customer: req.customer,
             sid: req.sid
         });
     });
@@ -196,7 +198,7 @@ exports.getForm = function (req, res) {
                             textAlign: pageText.textAlign,
                             submitText: pageText.submitText,
                             sid: candidate.session.id,
-                            client: req.customer,
+                            customer: req.customer,
                             fullName: candidate.fullName
                         });
                     });
