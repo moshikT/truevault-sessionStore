@@ -55,7 +55,7 @@ class userData {
 // Initialize the language-dependent text and render the addCandidate page
 exports.getAddCandidatePage = function (req, res) {
     // Get the field names based on client language
-    textGenerator_Ctrl.initCandidateFieldNames(lang, function (pageText) {
+    textGenerator_Ctrl.initCandidateFieldNames(req.lang, function (pageText) {
         const title = pageText.title + ' - ' + req.customer.name;
         const subTitle = pageText.subTitle + ' - ' + req.customer.name;
         res.render('addCandidate', {
