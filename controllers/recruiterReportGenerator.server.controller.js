@@ -39,7 +39,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
             }
 
             // Calculate factor averages
-            getFactorsAvg(candidate, function (factorsData, finalScore) {
+            getFactorsAvg(candidate, req.customer.keyword, function (factorsData, finalScore) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
                 if (!factorsData) { // Couldn't read factors data file
                     callback(candidate, false);
@@ -47,7 +47,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
                 }
                 var isMale = (candidate.gender == 'male'); // Gender adjustment
                 // Get text based on factor averages
-                getVerbalText(factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
+                getVerbalText(req.lang, factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
                     if (!strengths) { // verbal text wasn't retrieved
                         callback(candidate, false);
                         return;
@@ -107,12 +107,12 @@ exports.generateRecruiterReport = function (req, res) {
     });
 };
 
-function getFactorsAvg(candidate, callback) {
+function getFactorsAvg(candidate, companyKeyword, callback) {
     var factors = [];
     var testScore = 0;
+    const baseFileName = 'report.items';
 
-
-    addFile_Ctrl.getFile(['report.items.csv'])
+    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
         .then(filePath => {
             console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv({noheader: true})
@@ -202,7 +202,7 @@ function getFactorsAvg(candidate, callback) {
         });
 }
 
-function getVerbalText(factorsData, isMale, companyKeyword, callback) {
+function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
     var strengths = [];
     var weaknesses = [];
     const baseFileName = 'report.verbal';
@@ -230,15 +230,18 @@ function getVerbalText(factorsData, isMale, companyKeyword, callback) {
                             // If included, treat average scores as weaknesses in the report
                             const isWeakness = ((factor.avg < (includeAvg ? 4.5 : 3.5) && factorVerbal['isReverseRelation'] == '1') ||
                                 (factor.avg > (includeAvg ? 3.5 : 4.5) && factorVerbal['isReverseRelation'] == '0'));
-                            const verbalKey = (factor.avg >= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'
-                                : (factor.avg <= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
-                                    : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
+                            const langPrefix = lang.toUpperCase();
+                            const genderSuffix = (textGenerator_Ctrl.isLangGenderless(lang))?'':((isMale)?' MALE':' FEMALE');
+                            const verbalKey = (factor.avg >= 4.5) ? (isMale) ? (langPrefix + ' HIGH' + genderSuffix) : (langPrefix + ' HIGH' + genderSuffix)
+                                : (factor.avg <= 3.5) ? (isMale) ? (langPrefix + ' LOW' + genderSuffix) : (langPrefix + ' LOW' + genderSuffix)
+                                    : (isMale) ? (langPrefix + ' AVG' + genderSuffix) : (langPrefix + ' AVG' + genderSuffix);
 
                             /** Go through the weaknesses and strengths array and if id already exists
                              *  concat text else create new verbalData object */
                             let verbalData = {};
                             verbalData.id = factorVerbal['SHORT NAME'];
-                            verbalData.title = factorVerbal['HE FACTOR'];
+                            verbalData.title = factorVerbal[langPrefix + ' FACTOR'];
+                            console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey);
                             verbalData.text = factorVerbal[verbalKey].split('\n');
 
                             let elementExists = false;

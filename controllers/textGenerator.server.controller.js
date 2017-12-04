@@ -160,3 +160,15 @@ exports.initRecruiterReportText = function (lang, callback) {
     }
     callback(pageText);
 };
+
+exports.isLangGenderless = function (lang) {
+    switch (lang) {
+        // List of gendered languages
+        case 'he':
+            return false;
+        // List of genderless languages
+        case 'en':
+        default:
+            return true;
+    }
+}

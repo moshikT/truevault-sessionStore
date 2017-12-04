@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html >
-
+<% const floatDir = ((textDirection === 'rtl')?'left':'right'); %>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -173,8 +173,8 @@
                         <% if (candidate.report.weaknesses.length > 0) { %>
                         <% for (var weaknessesIndex = 0; weaknessesIndex < candidate.report.weaknesses.length; weaknessesIndex++) { %>
                         <div class="features__item-wrapper">
-                            <div class="features__item" style="justify-content: flex-start;">
-                                <div class="features__item-icon"><img src="/images/icons/<%= candidate.report.weaknesses[weaknessesIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon"></div>
+                            <div class="features__item" style="justify-content: flex-start; direction: <%= textDirection %>;">
+                                <div class="features__item-icon" style="margin-<%= floatDir %>: 1rem;"><img src="/images/icons/<%= candidate.report.weaknesses[weaknessesIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon"></div>
                                 <!--<h3 class="features__title features__title--brand features__item-title"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>-->
                                 <div class="features__item-copy">
                                     <h3 class="features__title features__title--brand features__item-title features__title-not-ie"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
@@ -239,8 +239,8 @@
                         <% if (candidate.report.strengths.length > 0) { %>
                         <% for (var strengthsIndex = 0; strengthsIndex < candidate.report.strengths.length; strengthsIndex++) { %>
                             <div class="features__item-wrapper">
-                                <div class="features__item" style="justify-content: flex-start;">
-                                <div class="features__item-icon"><img src="/images/icons/<%= candidate.report.strengths[strengthsIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon"></div>
+                                <div class="features__item" style="justify-content: flex-start; direction: <%= textDirection %>;">
+                                <div class="features__item-icon" style="margin-<%= floatDir %>: 1rem;"><img src="/images/icons/<%= candidate.report.strengths[strengthsIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon"></div>
                                     <div class="features__item-copy">
                                         <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.strengths[strengthsIndex].title%></h3>
                                         <ul class="features__item-list">
