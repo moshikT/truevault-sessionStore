@@ -1,5 +1,5 @@
 <form id="formInfo" method="post" action=<%= '/clients/' + customer._id + '/?sid=' + sid %>>
-
+    <% const floatDir = ((pageText.textDir === 'rtl')?'left':'right'); %>
     <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
         <div class="headline" style="z-index: 10; text-align: <%= pageText.align %>">
             <p><%- customer.headlineText %></p></div>
@@ -8,7 +8,8 @@
             <div id="testInstructions"
                  style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
                 <p><%- (customer.instructionText !== undefined) ? customer.instructionText.replace('$checkbox',
-                            "<div id='agreeDiv' class='squaredTwo' style='margin: 0; margin-left: 20px;'><input id='agree' class='' name='agree' type='checkbox' value='' style='vertical-align: bottom; margin: 3px;' ><label for='agree'></label></div>") : "Missing instruction text" %>
+                            "<div id='agreeDiv' class='squaredTwo' style='margin: 5px; margin-top: -5px;" + ((pageText.direction==='rtl')?'margin-left':'margin-right') +
+                            ": 20px;'><input id='agree' class='' name='agree' type='checkbox' value='' style='vertical-align: bottom; margin: 3px;' ><label for='agree'></label></div>") : "Missing instruction text" %>
                 </p>
             </div>
             <div id="companyDescription"
@@ -16,19 +17,19 @@
                 <p><%- customer.companyDescription %></p>
             </div>
             <div id="next_btn"
-                 style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: block;">
+                 style="padding-bottom: 20px;padding-<%= floatDir %>: 20px;float: <%= floatDir %>;margin-top: -20px;display: block;">
                 <a class="imgBtn" onclick="goNext()">
                     <%= pageText.next %>
                 </a>
             </div>
             <div id="next_btn_gray"
-                 style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: block;">
+                 style="padding-bottom: 20px;padding-<%= floatDir %>: 20px;float: <%= floatDir %>;margin-top: -20px;display: block;">
                 <a class="imgBtnGray" onclick="redCheckbox()">
                     <%= pageText.next %>
                 </a>
             </div>
             <div id="back_btn"
-                 style="padding-bottom: 20px;padding-left: 20px;float: left;margin-top: -20px;display: none;">
+                 style="padding-bottom: 20px;padding-<%= floatDir %>: 20px;float: <%= floatDir %>;margin-top: -20px;display: none;">
                 <a class="imgBtn" onclick="goBack()">
                     <%= pageText.back %>
                 </a>
