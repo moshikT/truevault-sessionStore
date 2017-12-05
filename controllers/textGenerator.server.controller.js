@@ -1,7 +1,7 @@
 // Init language-dependent field names for candidate entry
 exports.initCandidateFieldNames = function (lang, callback) {
 
-    let addCandidateText;
+    let addCandidateText = {lang: lang};
     switch (lang) {
         case 'he':
             addCandidateText = {
@@ -50,7 +50,7 @@ exports.initCandidateFieldNames = function (lang, callback) {
 };
 
 exports.initIndexPageText = function (lang, callback) {
-    var pageText = {};
+    var pageText = {lang: lang};
     switch (lang) {
         case 'he':
             pageText.textAlign = 'right';
@@ -70,7 +70,7 @@ exports.initIndexPageText = function (lang, callback) {
 };
 
 exports.initFormPageText = function (lang, callback) {
-    var pageText = {};
+    var pageText = {lang: lang};
     switch (lang) {
         case 'he':
             pageText.submitText = "להגשת המבחן לחץ כאן";
@@ -88,7 +88,7 @@ exports.initFormPageText = function (lang, callback) {
 };
 
 exports.initThankYouText = function (lang, callback) {
-    var pageText = {};
+    var pageText = {lang: lang};
     switch (lang) {
         case 'he':
             pageText.textAlign = 'right';
@@ -104,7 +104,7 @@ exports.initThankYouText = function (lang, callback) {
 };
 
 exports.initRecruiterReportText = function (lang, callback) {
-    let pageText;
+    let pageText = {lang: lang};
     switch (lang) {
         case 'he':
             pageText = {

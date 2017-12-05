@@ -194,6 +194,7 @@ exports.getForm = function (req, res) {
                         res.render('form', {
                             title: '',
                             formjson: candidate.form,
+                            lang: pageText.lang,
                             textDirection: pageText.textDir,
                             textAlign: pageText.textAlign,
                             submitText: pageText.submitText,

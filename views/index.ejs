@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-<% "uses strict"%>
+<% "uses strict" %>
 <% include partials/head %>
 
 <body class="content" dir=<%= pageText.textDir %>>
@@ -8,12 +8,13 @@
     <% include partials/logo %>
     <!--
     <div class="container col-md-12">
-        <h1> <%=  title %> </h1>
+        <h1> <%= title %> </h1>
     </div>
     -->
 </header>
-<div id="formContainer" class="container screen" style="scroll:hidden;overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 500px;width:100%;">
-<% include partials/indexPartial %>
+<div id="formContainer" class="container screen"
+     style="scroll:hidden;overflow-x: auto; overflow-y: scroll; -webkit-overflow-scrolling: touch; height: 500px;width:100%;">
+    <% include partials/indexPartial %>
 </div>
 <% include partials/footer %>
 <script>
@@ -22,7 +23,9 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-scrollTo/2.1.2/jquery.scrollTo.min.js"></script>
+<% if (pageText.lang == 'he') { %>
 <script src="/javascripts/messages_he.js"></script>
-<script src="/javascripts/indexIntro.js" ></script>
-  </body>
+<% } %>
+<script src="/javascripts/indexIntro.js"></script>
+</body>
 </html>
