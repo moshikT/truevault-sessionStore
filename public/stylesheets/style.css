@@ -463,3 +463,26 @@ a {
   filter: alpha(opacity=100);
   opacity: 1;
 }
+
+a.imgBtn {
+  background: white url(/images/nextprev_btn.png) repeat-x;
+  padding: 5px 10px 5px 10px;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;}
+
+a.imgBtnGray {
+  background: white url(/images/nextprev_btn_gray.png) repeat-x;
+  padding: 5px 10px 5px 10px;
+  color: #ffffff;
+  font-weight: bold;
+  text-decoration: none;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;}
+

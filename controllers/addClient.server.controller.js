@@ -6,7 +6,7 @@ const Client = require('../models/addClient.server.model.js');
 const generateLink = require('../controllers/linkGenerator.server.controller');
 
 exports.getAddClientPage = function (req, res) {
-    res.render('addClient', {title: 'Add New Client', client: ''});
+    res.render('addClient', {title: 'Add New Client', customer: ''});
 };
 
 exports.addClient = function (req, res) {
@@ -120,7 +120,7 @@ exports.addClient = function (req, res) {
 
 exports.loadClient = function (req, res) {
     if (req.customer) { // Page was called with a cid in URL
-        res.render('addClient', {title: 'Update Client', client: req.customer});
+        res.render('addClient', {title: 'Update Client', customer: req.customer});
     }
     else { // Page was called with a POST of the client name
         const clientName = req.body.clientName ? req.body.clientName : '';
@@ -128,7 +128,7 @@ exports.loadClient = function (req, res) {
         const query = Client.findOne({name: clientName.trim()});
         query.exec(function (err, client) {
             if (client) {
-                res.render('addClient', {title: 'Update Client', client: client});
+                res.render('addClient', {title: 'Update Client', customer: client});
             }
             else {
                 res.status(404).send("A client with that name could not be found");

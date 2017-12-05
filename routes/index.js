@@ -26,8 +26,12 @@ router.use(function (req, res, next) {
             // It's either <domain>/clients - clients management page or
             // <domain>/clients/<cid> - internal clients pages
             if (!parts[2])  // There's no cid provided?
-            { // Just move on to the next handler
-                next();
+            {
+                // Check if there's a language override in the request (?lang=)
+                if (req.query.lang) {
+                    req.lang = req.query.lang;
+                }
+                next(); // Just move on to the next handler
                 return;
             }
             cid = parts[2];
@@ -44,10 +48,15 @@ router.use(function (req, res, next) {
                 else if (client) { // cid was found
                     console.log("%s.%s:%s -", __file, __ext, __line, "client found: ", client.name);
                     req.customer = client;
+                    req.lang = client.language; // By default use the client language as the interface language
 
                     // Check if there's a session ID in the request (?sid=)
                     if (req.query.sid) {
                         req.sid = req.query.sid;
+                    }
+                    // Check if there's a language override in the request (?lang=)
+                    if (req.query.lang) {
+                        req.lang = req.query.lang;
                     }
                     next(); // pass to the next handler
                 }

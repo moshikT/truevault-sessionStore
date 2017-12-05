@@ -1,60 +1,174 @@
 // Init language-dependent field names for candidate entry
-exports.initCandidateFieldNames = function (companyName, isDemo, isInEnglish) {
-    var addCandidateText = {
-        //company : '',
-        //personalInfoText = "Please fill your personal details";
-        nameField : isInEnglish ? "Full Name" : "שם מלא",
-        phoneField : isInEnglish ? "Phone Number" : "מספר טלפון",
-        idField : isInEnglish ? "ID" : "ת.ז.",
-        emailField : isInEnglish ? "Email" : "דואר אלקטרוני",
-        recruitmentSourcelField : isInEnglish ? "Recruitment Source" : "מקור גיוס",
-        linkToCVField : isInEnglish ? "Link to CV" : "קישור לקו״ח",
-        textDirection : isInEnglish ? "ltr" : "rtl",
-        maleText: isInEnglish ? "Male" : "זכר",
-        femaleText: isInEnglish ? "Female" : "נקבה",
-        sendSMS: isInEnglish ? "Send SMS" : "שלח הודעת טקסט",
-        notifyNewCandidate: isInEnglish ? "New Candidate Notification" : "עדכון מועמד חדש",
-        notifyNewCandidateReport: isInEnglish ? "New Candidate Report Notification" : "עדכון דו״ח מועמד חדש"
-        //personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
-        //submitBtn : isInEnglish ? "Start Questionnaire" : "להתחלת השאלון",
-        //next : isInEnglish ? "next" : "הבא",
+exports.initCandidateFieldNames = function (lang, callback) {
+
+    let addCandidateText = {lang: lang};
+    switch (lang) {
+        case 'he':
+            addCandidateText = {
+                textAlign: 'right',
+                textDir: 'rtl',
+                title: 'הוסף מועמד',
+                subTitle: 'הוסף מועמד עבור ',
+                nameField: "שם מלא",
+                phoneField: "מספר טלפון",
+                idField: "ת.ז.",
+                emailField: "דואר אלקטרוני",
+                recruitmentSourcelField: "מקור גיוס",
+                linkToCVField: "קישור לקו״ח",
+                maleText: "זכר",
+                femaleText: "נקבה",
+                sendSMS: "שלח הודעת טקסט",
+                notifyNewCandidate: "עדכון מועמד חדש",
+                notifyNewCandidateReport: "עדכון דו״ח מועמד חדש"
+            };
+            callback(addCandidateText);
+            break;
+        case 'en':
+        default:
+            addCandidateText = {
+                textAlign: 'left',
+                textDir: 'ltr',
+                title: 'Add Candidate',
+                subTitle: 'Add candidate for',
+                nameField: "Full Name",
+                phoneField: "Phone Number",
+                idField: "ID",
+                emailField: "Email",
+                recruitmentSourcelField: "Recruitment Source",
+                linkToCVField: "Link to CV",
+                textDirection: "ltr",
+                maleText: "Male",
+                femaleText: "Female",
+                sendSMS: "Send SMS",
+                notifyNewCandidate: "New Candidate Notification",
+                notifyNewCandidateReport: "New Candidate Report Notification"
+            };
+            callback(addCandidateText);
+            break;
     }
-    return addCandidateText;
+
 };
 
-exports.initFormPageText = function(isInEnglish, callback) {
-    var pageText = {};
-    pageText.submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";
-    /*pageText.terms = {
-        title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
-        prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
-        postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
-    }*/
+exports.initIndexPageText = function (lang, callback) {
+    var pageText = {lang: lang};
+    switch (lang) {
+        case 'he':
+            pageText.textAlign = 'right';
+            pageText.textDir = 'rtl';
+            pageText.next = 'הבא';
+            pageText.back = 'חזור';
+            break;
+        case 'en':
+        default:
+            pageText.textAlign = 'left';
+            pageText.textDir = 'ltr';
+            pageText.next = 'Next';
+            pageText.back = 'Back';
+            break;
+    }
     callback(pageText);
-}
+};
 
-exports.initRecruiterReportText = function (isInEnglish, callback) {
-    var recruiterReportText = {
-        idField : isInEnglish ? "ID: " : "ת.ז: ",
-        dateFormCompletedField : isInEnglish ? "Test Date: " : "מילוי השאלון: ",
-        beforeXdaysField : isInEnglish ? "(X days ago)" : "  (לפני X ימים)",
-        phoneField : isInEnglish ? "Phone: " : "טלפון: ",
-        positionDescriptionField : isInEnglish ? "Sales Representative" : "נציג/ת שירות ומכירות",
-        recruiterSourceField : isInEnglish ? "Recruiting Sources: " : "מקור גיוס: ",
-        CVField : isInEnglish ? "CV" : "קורות חיים",
-        formResultField : isInEnglish ? "Test results (before calibration):" : "ציון מבחן (לפני כיול):",
-        lowField : isInEnglish ? "Low" : "תחתונים",
-        avgField: isInEnglish ? "Average" : "מרכזיים",
-        highField : isInEnglish ? "Top" : "עליונים",
-        dontRecommendField : isInEnglish ? "Do not hire" : "מומלץ לא להעסיק",
-        furtherStepsField : isInEnglish ? "Requires further assessment" : "מומלץ להמשיך בתהליך המיון ולברר התאמה",
-        RecommendField : isInEnglish ? "Hire" : "מומלץ להעסיק",
-        issuesToTestField : isInEnglish ? "Points for Inquiry" : "נקודות לבירור",
-        expectedBehaviorField : isInEnglish ? 'The candidate is <b>likely</b> to display the following<br> behaviors or tendencies: ' :
-            'המועמד\n' + '<b>סביר</b> להציג את ההתנהגויות\n' + '<br>או הנטיות הבאות:',
-        inATeamField : isInEnglish ? "In a team-" : "בצוות ובארגון-\n",
-        strengthsField : isInEnglish ? "Main Strengths" : "נקודות עוצמה",
-        direction: isInEnglish ? "ltr" : "rtl"
-    };
-    callback(recruiterReportText);
+exports.initFormPageText = function (lang, callback) {
+    var pageText = {lang: lang};
+    switch (lang) {
+        case 'he':
+            pageText.submitText = "להגשת המבחן לחץ כאן";
+            pageText.textAlign = 'right';
+            pageText.textDir = 'rtl';
+            break;
+        case 'en':
+        default:
+            pageText.submitText = "Submit";
+            pageText.textAlign = 'left';
+            pageText.textDir = 'ltr';
+            break;
+    }
+    callback(pageText);
+};
+
+exports.initThankYouText = function (lang, callback) {
+    var pageText = {lang: lang};
+    switch (lang) {
+        case 'he':
+            pageText.textAlign = 'right';
+            pageText.textDir = 'rtl';
+            break;
+        case 'en':
+        default:
+            pageText.textAlign = 'left';
+            pageText.textDir = 'ltr';
+            break;
+    }
+    callback(pageText);
+};
+
+exports.initRecruiterReportText = function (lang, callback) {
+    let pageText = {lang: lang};
+    switch (lang) {
+        case 'he':
+            pageText = {
+                title: 'דוח מועמד - ',
+                textAlign: 'right',
+                textDir: 'rtl',
+                idField: "ת.ז: ",
+                dateFormCompletedField: "מילוי השאלון: ",
+                beforeXdaysField: "  (לפני X ימים)",
+                phoneField: "טלפון: ",
+                positionDescriptionField: "נציג/ת שירות ומכירות",
+                recruiterSourceField: "מקור גיוס: ",
+                CVField: "קורות חיים",
+                formResultField: "ציון מבחן (לפני כיול):",
+                lowField: "תחתונים",
+                avgField: "מרכזיים",
+                highField: "עליונים",
+                dontRecommendField: "מומלץ לא להעסיק",
+                furtherStepsField: "מומלץ להמשיך בתהליך המיון ולברר התאמה",
+                RecommendField: "מומלץ להעסיק",
+                issuesToTestField: "נקודות לבירור",
+                expectedBehaviorField: 'המועמד\n' + '<b>סביר</b> להציג את ההתנהגויות\n' + '<br>או הנטיות הבאות:',
+                inATeamField: "בצוות ובארגון-\n",
+                strengthsField: "נקודות עוצמה"
+            };
+            break;
+        case 'en':
+        default:
+            pageText = {
+                title: 'Candidate Report - ',
+                textAlign: 'left',
+                textDir: 'ltr',
+                idField: "ID: ",
+                dateFormCompletedField: "Test Date: ",
+                beforeXdaysField: "(X days ago)",
+                phoneField: "Phone: ",
+                positionDescriptionField: "Sales Representative",
+                recruiterSourceField: "Recruiting Sources: ",
+                CVField: "CV",
+                formResultField: "Test results (before calibration):",
+                lowField: "Low",
+                avgField: "Average",
+                highField: "Top",
+                dontRecommendField: "Do not hire",
+                furtherStepsField: "Requires further assessment",
+                RecommendField: "Hire",
+                issuesToTestField: "Points for Inquiry",
+                expectedBehaviorField: 'The candidate is <b>likely</b> to display the following<br> behaviors or tendencies: ',
+                inATeamField: "In a team-",
+                strengthsField: "Main Strengths"
+            };
+            break;
+    }
+    callback(pageText);
+};
+
+exports.isLangGenderless = function (lang) {
+    switch (lang) {
+        // List of gendered languages
+        case 'he':
+            return false;
+        // List of genderless languages
+        case 'en':
+        default:
+            return true;
+    }
 }

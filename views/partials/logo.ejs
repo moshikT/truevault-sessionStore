@@ -1,11 +1,11 @@
 <div class="container col-md-12" style="text-align: right;padding: 5px;">
     <%
         // Is there logo image data?
-        if ((client !== undefined) && (client.logoImg !== undefined) && (client.logoImg.data !== undefined)) {
+        if ((customer !== undefined) && (customer.logoImg !== undefined) && (customer.logoImg.data !== undefined)) {
             // Yes - embed the logo in the page
     %>
-    <img class="logo" style='<%- 'height:100px;padding-top:0px;zoom:60%;' + client.logoStyle %>'
-         src='data:<%= client.logoImg.contentType %>;base64,<%= client.logoImg.data.toString('base64') %>' />
+    <img class="logo" style='<%- 'height:100px;padding-top:0px;zoom:60%;' + customer.logoStyle %>'
+         src='data:<%= customer.logoImg.contentType %>;base64,<%= customer.logoImg.data.toString('base64') %>' />
     <%  }
         else {
             // No - insert some empty lines instead to make sure everything is arranged correctly

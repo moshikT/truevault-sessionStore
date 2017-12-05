@@ -836,7 +836,7 @@ button:focus {
 .features__item-icon {
     width: 4rem;
     height: auto;
-    margin-left: 1rem;
+    /*margin-left: 1rem;*/
 }
 
 @media print {

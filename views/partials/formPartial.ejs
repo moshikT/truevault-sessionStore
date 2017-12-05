@@ -1,4 +1,4 @@
-<form id="form" method="post" action=<%='/clients/' + client._id + '/form?sid=' + sid %>>
+<form id="form" method="post" action=<%='/clients/' + customer._id + '/form?sid=' + sid %>>
     <% for (var i=0;i<formjson.length; i++) {
     if (formjson[i].type != 'F') { %>
     <div data-title=<%- (typeof formjson[i].next !== 'undefined') ?
@@ -21,7 +21,7 @@
             <% for (var j=0;j <formjson[i]['answer'].length; j++) { /*console.log(formjson[i].finalAnswer)*/ %>
             <a class='<%- (formjson[i]['answer'][j] == formjson[i].finalAnswer) ?
                     'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
-                   style="<% if (isInEnglish) { %>text-align: left;<% } %>"
+                   style="text-align: <%= textAlign %>;"
                                data-value="<%-formjson[i]['answer'][j].replace(/\s+/g && /"/g, '')%>" data-toggle=<%= formjson[i].id %>
                                 data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answer'][j] %></a><br>
              <%  }
@@ -31,7 +31,7 @@
             <% for (var j=0;j <formjson[i]['items'].length; j++) { %>
                 <div id='radioBtn' class="bTypeGroup">
                     <a class="btn btn-primary btn-lg notActive bType"
-                       style="<% if (isInEnglish) { %>text-align: left;<% } %>"
+                       style="text-align: <%= textAlign %>;"
                     >
                         <%= formjson[i]['items'][j] %></a>
                     <input class='originalPosition' type='hidden' name='<%= formjson[i]['itemsID'][j] %>[originalPosition]' value='<%= formjson[i]['itemsValues'][j] %>'>
@@ -44,7 +44,7 @@
             <% for (var j=0;j <formjson[i]['answerOptions'].length; j++) { /*console.log(formjson[i].finalAnswer)*/%>
                 <a class='<%- (formjson[i]['answerOptions'][j].replace(/\s+/g, '') == formjson[i].finalAnswer) ?
                         'btn btn-primary btn-lg active bType' : 'btn btn-primary btn-lg notActive bType' %>'
-               style="<% if (isInEnglish) { %>text-align: left;<% } %>"
+                   style="text-align: <%= textAlign %>;"
                data-value='<%-formjson[i]['answerOptions'][j].replace(/\s+/g, '')%>' data-toggle='<%= formjson[i].id %>'
                data-title=<%=formjson[i]['dataTitle'][j]%> ><%- formjson[i]['answerOptions'][j] %></a><br>
             <%  }
