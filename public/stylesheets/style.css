@@ -473,7 +473,10 @@ a.imgBtn {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;}
+  background-size: cover;
+  float: left;
+  zoom: 1.5;
+}
 
 a.imgBtnGray {
   background: white url(/images/nextprev_btn_gray.png) repeat-x;
@@ -484,5 +487,8 @@ a.imgBtnGray {
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;}
+  background-size: cover;
+  float: left;
+  zoom: 1.5;
+}
 
