@@ -1,10 +1,10 @@
 <form id="formInfo" method="post" action=<%= '/clients/' + customer._id + '/?sid=' + sid %>>
     <% const floatDir = ((pageText.textDir === 'rtl')?'left':'right'); %>
     <div id="intro1" style="height: 100%;;scroll:hidden;overflow: auto;">
-        <div class="headline" style="z-index: 10; text-align: <%= pageText.align %>">
+        <div class="headline" style="z-index: 10; text-align: <%= pageText.textAlign %>">
             <p><%- customer.headlineText %></p></div>
         <div class="container introText"
-             style="padding: 10px;margin-top: 0px; height: 100%; text-align: <%= pageText.align %>">
+             style="padding: 10px;margin-top: 0px; height: 100%; text-align: <%= pageText.textAlign %>">
             <div id="testInstructions"
                  style="margin-top: 60px;padding-right: 10px;padding-left: 10px;min-height:370px;">
                 <p><%- (customer.instructionText !== undefined) ? customer.instructionText.replace('$checkbox',
