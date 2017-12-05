@@ -5,7 +5,7 @@ var fs = require('fs');
 var Candidate = require('../models/candidate.server.model.js');
 var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
 const addFile_Ctrl = require('../controllers/addFile.server.controller');
-
+const trueVault_Ctrl = require('../controllers/truevault.server.controller');
 
 //['EQ', 'LEARNING', 'OUTCOME DRIVEN', 'EMOTIONAL STABILITY', 'ASSERTIVENESS',
 //'MOTIVATION TO MAKE MONEY', 'SOCIAL DESIRABILITY', 'ATTENTIVENESS TO DETAILS', 'WORK TENDENCY'];
@@ -85,9 +85,22 @@ exports.calcRecruiterReport = function (req, res, callback) {
                                 }
                             });
                         }
-                        if (callback) {
-                            callback(candidate);
-                        }
+                        trueVault_Ctrl.findOne(candidate.personalDataId) // Return one document that equal to the documentId.
+                            .then(candidatePersonalData => {
+                                console.log("candidatesPersonalData", candidatePersonalData);
+                                candidate.personalData = candidatePersonalData;
+
+                                if (callback) {
+                                    callback(candidate);
+                                }
+                            })
+                            .catch(err => {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "error while fetching candidates personal data: ", err);
+                                // try render page anyway
+                                if (callback) {
+                                    callback(candidate);
+                                }
+                            })
                     });
                 });
 

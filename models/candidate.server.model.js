@@ -35,6 +35,7 @@ var candidateSchema = new Schema({
     sendSMS: Boolean,
     notifyNewCandidate: Boolean,
     notifyNewCandidateReport: Boolean,
+    personalDataId: String,
     smsUsed: String,
     department: String,
     team: String,

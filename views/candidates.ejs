@@ -167,6 +167,21 @@
 <ul>
 </ul>
 <%
+<td><%= (candidate.personalData) ? candidate.personalData.fullName : candidate.fullName %></td>
+<td><%= (candidate.personalData) ? candidate.personalData.phoneNumber : candidate.phoneNumber %></td>
+<td><%= (candidate.personalData) ? candidate.personalData.id : candidate.id %></td>
+if (candidate.personalData) {
+    if (candidate.personalData.fullName) {
+        candidate.fullName = candidate.personalData.fullName;
+    }
+    if (candidate.personalData.phoneNumber) {
+        candidate.phoneNumber = candidate.personalData.phoneNumber;
+    }
+    if (candidate.personalData.id) {
+        candidate.id = candidate.personalData.id;
+    }
+}
+
 let answersOrder = {}, maxAnswer = 0, orderedAnswers = []; // Hold the correct answers order for all the iterations of the loop
 if (answers) {
     // If we're in answers mode, we need to loop through all the candidates' answers first in order

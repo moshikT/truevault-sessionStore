@@ -1,6 +1,19 @@
 <!DOCTYPE html>
 <html >
 <% const floatDir = ((textDirection === 'rtl')?'left':'right'); %>
+<%
+if (candidate.personalData) {
+    if (candidate.personalData.fullName) {
+        candidate.fullName = candidate.personalData.fullName;
+    }
+    if (candidate.personalData.phoneNumber) {
+        candidate.phoneNumber = candidate.personalData.phoneNumber;
+    }
+    if (candidate.personalData.id) {
+        candidate.id = candidate.personalData.id;
+    }
+}
+%>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -70,7 +83,7 @@
                     <% if(textDirection == 'rtl')  { %>
                 <div class="col-xs-12 banner__content">
                     <div class='banner__main'>
-                        <h2 class="banner__title"><%= candidate.fullName %></h2>
+                        <h2 class="banner__title"><%= (candidate.personalData) ? candidate.personalData.fullName : candidate.fullName %></h2>
                     </div>
                     <div class='banner__info'>
                         <h3 class="banner__phone"><%= text.idField %><%= candidate.id %></h3>

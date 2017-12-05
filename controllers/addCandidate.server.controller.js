@@ -10,6 +10,7 @@ const formGenerator_Ctrl = require('../controllers/formGenerator.server.controll
 const textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
 const sms_Ctrl = require('../controllers/sms.server.controller');
 const email_Ctrl = require('../controllers/email.server.controller');
+const trueVault_Ctrl = require('../controllers/truevault.server.controller');
 const uuidv1 = require('uuid/v1');
 let Mixpanel = require('mixpanel');
 // initialize mixpanel client configured to communicate over https
@@ -160,220 +161,235 @@ exports.addCandidate = function (req, res) {
                 newUser.linkToForm = shortUrlToForm;
                 console.log("%s.%s:%s -", __file, __ext, __line, "shortUrlToForm: ", shortUrlToForm);
                 // Now create a new candidate object with all the data generated above
-                const newCandidateEntry = new Candidate({
+
+                // set candidate personal data object and save if in the vault
+                let candidatePersonalData = {
                     fullName: newUser.fullName,
                     id: newUser.id,
-                    cid: req.customer._id,
                     email: newUser.email,
-                    phoneNumber: newUser.phoneNumber,
-                    company: newUser.company,
-                    formDurationInMinutes: 0,
-                    form: form,
-                    formCompleted: false,
-                    session: session,
-                    linkToForm: shortUrlToForm,
-                    linkToReport: newUser.linkToReport,
-                    gender: newUser.gender,
-                    report: report,
-                    recruitmentSource: newUser.recruitmentSource,
-                    dateCompleted: '',
-                    dateTimeCreated: new Date(),
-                    linkToCV: newUser.linkToCV,
-                    sendSMS: newUser.sendSMS,
-                    notifyNewCandidate: newUser.notifyNewCandidate,
-                    notifyNewCandidateReport: newUser.notifyNewCandidateReport
-                });
+                    phoneNumber: newUser.phoneNumber
+                };
 
-                // Check if we need to send an SMS to candidate and prepare it if necessary
-                let smsText;
-                if (newUser.sendSMS) {
-                    if (((!req.customer.SMSTextA) || (req.customer.SMSTextA === '')) &&
-                        ((!req.customer.SMSTextB) || (req.customer.SMSTextB === ''))) {
-                        const statusMsg = "SMS texts are empty. Please configure client '" + newUser.company + "' with correct text or clear checkbox.";
-                        console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
-                        res.render('niceError', {
-                            title: 'Add Candidate' + newUser.fullName,
-                            errorText: statusMsg
+                trueVault_Ctrl.saveCandidate(candidatePersonalData)
+                    .then(documentId => {
+                        let newCandidateEntry = new Candidate({
+                            //fullName: newUser.fullName, personal data
+                            //id: newUser.id, personal data
+                            cid: req.customer._id,
+                            //email: newUser.email, personal data
+                            //phoneNumber: newUser.phoneNumber, personal data
+                            company: newUser.company,
+                            formDurationInMinutes: 0,
+                            form: form,
+                            formCompleted: false,
+                            session: session,
+                            linkToForm: shortUrlToForm,
+                            linkToReport: newUser.linkToReport,
+                            gender: newUser.gender,
+                            report: report,
+                            recruitmentSource: newUser.recruitmentSource,
+                            dateCompleted: '',
+                            dateTimeCreated: new Date(),
+                            linkToCV: newUser.linkToCV,
+                            sendSMS: newUser.sendSMS,
+                            notifyNewCandidate: newUser.notifyNewCandidate,
+                            notifyNewCandidateReport: newUser.notifyNewCandidateReport,
+                            // New param - ID for personal data document at the vault
+                            personalDataId: documentId
                         });
-                        return;
-                    }
-                    else {
-                        // Randomly choose between the two possible SMS texts
-                        if (Math.random() >= 0.5) {
-                            smsText = req.customer.SMSTextA;
-                            if ((!smsText) || (smsText === '')) {
-                                // It's completely acceptable to provide only B version
-                                smsText = req.customer.SMSTextB;
-                            }
-                        }
-                        else {
-                            smsText = req.customer.SMSTextB;
-                            if ((!smsText) || (smsText === '')) {
-                                // It's completely acceptable to provide only A version
-                                smsText = req.customer.SMSTextA;
-                            }
-                        }
-                        // Save the SMS actually selected for the candidate, for future reference
-                        newUser.smsUsed = smsText;
-                        // Replace placeholders with candidate values
-                        smsText = smsText
-                            .replace('$candidateName', newUser.fullName)
-                            .replace('$formLink', newUser.linkToForm);
-                    }
-                }
 
-                console.log("req.customer: ", req.customer)
-                const originatingNumber = req.customer.smsOrigNum;
-                // Save the new candidate in the DB
-                newCandidateEntry.save(function (err) {
-                        if (err) {
-                            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err);
-                            console.log("%s.%s:%s -", __file, __ext, __line, err);
-                            // Track candidate creation in mixpanel
-                            mixpanel.track('Create Candidate', {
-                                distinct_id: session ? session.id : 0,
-                                server_name: process.env.SERVER_NAME,
-                                user_agent: req.headers['user-agent'],
-                                from: req.headers['from'],
-                                cid: req.params.cid,
-                                name: newUser ? newUser.fullName : 'N/A',
-                                company: newUser ? newUser.company : 'N/A',
-                                form_len: form ? form.length : 0,
-                                link_to_form: shortUrlToForm,
-                                link_to_report: newUser ? newUser.linkToReport : '',
-                                sms_used: newUser ? newUser.smsUsed : '',
-                                error: err
-                            });
-                            res.render('niceError', {
-                                title: 'Add Candidate' + newUser.fullName,
-                                errorText: "Failed to save new candidate: '" + newUser.fullName + "'"
-                            });
-                            return;
-                        }
-                        //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
+                        console.log("newCandidateEntry: ", newCandidateEntry);
 
-                        // If more than 5 questions and sms selected, Send SMS to the candidate.
-                        if (form.length > 5) { // Form has more than 5 questions
-                            if (smsText) { // There is a text message to send
-                                console.log("%s.%s:%s -", __file, __ext, __line, "Sending SMS to candidate: ", smsText);
-                                sms_Ctrl.send(newUser.phoneNumber, smsText, originatingNumber, function (isSent) {
-                                    let statusMsg;
-                                    if (isSent) {
-                                        statusMsg = 'Candidate created and SMS message successfully sent: ' + newUser.fullName;
-                                        // Track candidate creation in mixpanel
-                                        mixpanel.track('Create Candidate', {
-                                            distinct_id: session ? session.id : 0,
-                                            server_name: process.env.SERVER_NAME,
-                                            user_agent: req.headers['user-agent'],
-                                            from: req.headers['from'],
-                                            cid: req.params.cid,
-                                            name: newUser ? newUser.fullName : 'N/A',
-                                            company: newUser ? newUser.company : 'N/A',
-                                            form_len: form ? form.length : 0,
-                                            link_to_form: shortUrlToForm,
-                                            link_to_report: newUser ? newUser.linkToReport : '',
-                                            sms_used: newUser ? newUser.smsUsed : '',
-                                        });
-                                    }
-                                    else {
-                                        statusMsg = 'Candidate created but an error occurred while sending SMS: ' + newUser.fullName;
-                                        // Track candidate creation in mixpanel
-                                        mixpanel.track('Create Candidate', {
-                                            distinct_id: session ? session.id : 0,
-                                            server_name: process.env.SERVER_NAME,
-                                            user_agent: req.headers['user-agent'],
-                                            from: req.headers['from'],
-                                            cid: req.params.cid,
-                                            name: newUser ? newUser.fullName : 'N/A',
-                                            company: newUser ? newUser.company : 'N/A',
-                                            form_len: form ? form.length : 0,
-                                            link_to_form: shortUrlToForm,
-                                            link_to_report: newUser ? newUser.linkToReport : '',
-                                            error: 'SMS not sent'
-                                        });
-                                    }
-
-                                    console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
-                                    res.render('displayLink', {
-                                        title: 'Add Candidate' + newUser.fullName,
-                                        candidate: newUser,
-                                        client: req.customer,
-                                        statusMsg: statusMsg
-                                    });
-                                    return;
-                                });
-                            }
-                            else {
-                                console.log("%s.%s:%s -", __file, __ext, __line, "Candidate created successfully: ", newUser.fullName);
-                                // Track candidate creation in mixpanel
-                                mixpanel.track('Create Candidate', {
-                                    distinct_id: session ? session.id : 0,
-                                    server_name: process.env.SERVER_NAME,
-                                    user_agent: req.headers['user-agent'],
-                                    from: req.headers['from'],
-                                    cid: req.params.cid,
-                                    name: newUser ? newUser.fullName : 'N/A',
-                                    company: newUser ? newUser.company : 'N/A',
-                                    form_len: form ? form.length : 0,
-                                    link_to_form: shortUrlToForm,
-                                    link_to_report: newUser ? newUser.linkToReport : '',
-                                });
-                                res.render('displayLink', {
+                        // Check if we need to send an SMS to candidate and prepare it if necessary
+                        let smsText;
+                        if (newUser.sendSMS) {
+                            if (((!req.customer.SMSTextA) || (req.customer.SMSTextA === '')) &&
+                                ((!req.customer.SMSTextB) || (req.customer.SMSTextB === ''))) {
+                                const statusMsg = "SMS texts are empty. Please configure client '" + newUser.company + "' with correct text or clear checkbox.";
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
+                                res.render('niceError', {
                                     title: 'Add Candidate' + newUser.fullName,
-                                    candidate: newUser,
-                                    client: req.customer,
-                                    statusMsg: 'Candidate created successfully:' + newUser.fullName
+                                    errorText: statusMsg
                                 });
                                 return;
                             }
-                        }
-                        else {
-                            const statusMsg = 'Too few questions in form. Possible error: ';
-                            console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
-                            // Track candidate creation in mixpanel
-                            mixpanel.track('Create Candidate', {
-                                distinct_id: session ? session.id : 0,
-                                server_name: process.env.SERVER_NAME,
-                                user_agent: req.headers['user-agent'],
-                                from: req.headers['from'],
-                                cid: req.params.cid,
-                                name: newUser ? newUser.fullName : 'N/A',
-                                company: newUser ? newUser.company : 'N/A',
-                                form_len: form ? form.length : 0,
-                                link_to_form: shortUrlToForm,
-                                link_to_report: newUser ? newUser.linkToReport : '',
-                                error: 'Too few questions in form'
-                            });
-                            res.render('niceError', {
-                                title: 'Add Candidate' + newUser.fullName,
-                                errorText: statusMsg
-                            });
-                            return;
+                            else {
+                                // Randomly choose between the two possible SMS texts
+                                if (Math.random() >= 0.5) {
+                                    smsText = req.customer.SMSTextA;
+                                    if ((!smsText) || (smsText === '')) {
+                                        // It's completely acceptable to provide only B version
+                                        smsText = req.customer.SMSTextB;
+                                    }
+                                }
+                                else {
+                                    smsText = req.customer.SMSTextB;
+                                    if ((!smsText) || (smsText === '')) {
+                                        // It's completely acceptable to provide only A version
+                                        smsText = req.customer.SMSTextA;
+                                    }
+                                }
+                                // Save the SMS actually selected for the candidate, for future reference
+                                newUser.smsUsed = smsText;
+                                // Replace placeholders with candidate values
+                                smsText = smsText
+                                    .replace('$candidateName', newUser.fullName)
+                                    .replace('$formLink', newUser.linkToForm);
+                            }
                         }
 
-                        // Send new candidate email to notify the recruiter
-                        if (newUser.notifyNewCandidate) {
-                            console.log("%s.%s:%s -", __file, __ext, __line, "Notifying on new candidate: ", newUser.fullName);
-                            const emailTxt = req.customer.newCandidateEmailText.replace('$candidateName', newUser.fullName);
-                            const emailSubject = req.customer.newCandidateEmailSubject.replace('$candidateName', newUser.fullName);
-                            email_Ctrl.send(req.customer.emailFrom, req.customer.emailFromPswd, req.customer.emailTo,
-                                emailSubject, emailTxt);
-                        }
-                    }
-                );
-            })
-            .catch(error => {
-                console.log("%s.%s:%s -", __file, __ext, __line, error)
-                res.render('niceError', {
-                    title: 'Add Candidate' + newUser.fullName,
-                    errorText: "Failed to generate short URLs for: '" + newUser.fullName + "'"
-                });
-            });
+                        console.log("req.customer: ", req.customer)
+                        const originatingNumber = req.customer.smsOrigNum;
+                        // Save the new candidate in the DB
+                        newCandidateEntry.save(function (err) {
+                                if (err) {
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", err);
+                                    console.log("%s.%s:%s -", __file, __ext, __line, err);
+                                    // Track candidate creation in mixpanel
+                                    mixpanel.track('Create Candidate', {
+                                        distinct_id: session ? session.id : 0,
+                                        server_name: process.env.SERVER_NAME,
+                                        user_agent: req.headers['user-agent'],
+                                        from: req.headers['from'],
+                                        cid: req.params.cid,
+                                        name: newUser ? newUser.fullName : 'N/A',
+                                        company: newUser ? newUser.company : 'N/A',
+                                        form_len: form ? form.length : 0,
+                                        link_to_form: shortUrlToForm,
+                                        link_to_report: newUser ? newUser.linkToReport : '',
+                                        sms_used: newUser ? newUser.smsUsed : '',
+                                        error: err
+                                    });
+                                    res.render('niceError', {
+                                        title: 'Add Candidate' + newUser.fullName,
+                                        errorText: "Failed to save new candidate: '" + newUser.fullName + "'"
+                                    });
+                                    return;
+                                }
+                                //console.log("%s.%s:%s -", __file, __ext, __line, newCandidateEntry);
+
+                                // If more than 5 questions and sms selected, Send SMS to the candidate.
+                                if (form.length > 5) { // Form has more than 5 questions
+                                    if (smsText) { // There is a text message to send
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Sending SMS to candidate: ", smsText);
+                                        sms_Ctrl.send(newUser.phoneNumber, smsText, originatingNumber, function (isSent) {
+                                            let statusMsg;
+                                            if (isSent) {
+                                                statusMsg = 'Candidate created and SMS message successfully sent: ' + newUser.fullName;
+                                                // Track candidate creation in mixpanel
+                                                mixpanel.track('Create Candidate', {
+                                                    distinct_id: session ? session.id : 0,
+                                                    server_name: process.env.SERVER_NAME,
+                                                    user_agent: req.headers['user-agent'],
+                                                    from: req.headers['from'],
+                                                    cid: req.params.cid,
+                                                    name: newUser ? newUser.fullName : 'N/A',
+                                                    company: newUser ? newUser.company : 'N/A',
+                                                    form_len: form ? form.length : 0,
+                                                    link_to_form: shortUrlToForm,
+                                                    link_to_report: newUser ? newUser.linkToReport : '',
+                                                    sms_used: newUser ? newUser.smsUsed : '',
+                                                });
+                                            }
+                                            else {
+                                                statusMsg = 'Candidate created but an error occurred while sending SMS: ' + newUser.fullName;
+                                                // Track candidate creation in mixpanel
+                                                mixpanel.track('Create Candidate', {
+                                                    distinct_id: session ? session.id : 0,
+                                                    server_name: process.env.SERVER_NAME,
+                                                    user_agent: req.headers['user-agent'],
+                                                    from: req.headers['from'],
+                                                    cid: req.params.cid,
+                                                    name: newUser ? newUser.fullName : 'N/A',
+                                                    company: newUser ? newUser.company : 'N/A',
+                                                    form_len: form ? form.length : 0,
+                                                    link_to_form: shortUrlToForm,
+                                                    link_to_report: newUser ? newUser.linkToReport : '',
+                                                    error: 'SMS not sent'
+                                                });
+                                            }
+
+                                            console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
+                                            res.render('displayLink', {
+                                                title: 'Add Candidate' + newUser.fullName,
+                                                candidate: newUser,
+                                                client: req.customer,
+                                                statusMsg: statusMsg
+                                            });
+                                            return;
+                                        });
+                                    }
+                                    else {
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Candidate created successfully: ", newUser.fullName);
+                                        // Track candidate creation in mixpanel
+                                        mixpanel.track('Create Candidate', {
+                                            distinct_id: session ? session.id : 0,
+                                            server_name: process.env.SERVER_NAME,
+                                            user_agent: req.headers['user-agent'],
+                                            from: req.headers['from'],
+                                            cid: req.params.cid,
+                                            name: newUser ? newUser.fullName : 'N/A',
+                                            company: newUser ? newUser.company : 'N/A',
+                                            form_len: form ? form.length : 0,
+                                            link_to_form: shortUrlToForm,
+                                            link_to_report: newUser ? newUser.linkToReport : '',
+                                        });
+                                        res.render('displayLink', {
+                                            title: 'Add Candidate' + newUser.fullName,
+                                            candidate: newUser,
+                                            client: req.customer,
+                                            statusMsg: 'Candidate created successfully:' + newUser.fullName
+                                        });
+                                        return;
+                                    }
+                                }
+                                else {
+                                    const statusMsg = 'Too few questions in form. Possible error: ';
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "Status msg: ", statusMsg);
+                                    // Track candidate creation in mixpanel
+                                    mixpanel.track('Create Candidate', {
+                                        distinct_id: session ? session.id : 0,
+                                        server_name: process.env.SERVER_NAME,
+                                        user_agent: req.headers['user-agent'],
+                                        from: req.headers['from'],
+                                        cid: req.params.cid,
+                                        name: newUser ? newUser.fullName : 'N/A',
+                                        company: newUser ? newUser.company : 'N/A',
+                                        form_len: form ? form.length : 0,
+                                        link_to_form: shortUrlToForm,
+                                        link_to_report: newUser ? newUser.linkToReport : '',
+                                        error: 'Too few questions in form'
+                                    });
+                                    res.render('niceError', {
+                                        title: 'Add Candidate' + newUser.fullName,
+                                        errorText: statusMsg
+                                    });
+                                    return;
+                                }
+
+                                // Send new candidate email to notify the recruiter
+                                if (newUser.notifyNewCandidate) {
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "Notifying on new candidate: ", newUser.fullName);
+                                    const emailTxt = req.customer.newCandidateEmailText.replace('$candidateName', newUser.fullName);
+                                    const emailSubject = req.customer.newCandidateEmailSubject.replace('$candidateName', newUser.fullName);
+                                    email_Ctrl.send(req.customer.emailFrom, req.customer.emailFromPswd, req.customer.emailTo,
+                                        emailSubject, emailTxt);
+                                }
+                            }
+                        );
+                    })
+                    .catch(error => {
+                        console.log("%s.%s:%s -", __file, __ext, __line, error);
+                        res.render('niceError', {
+                            title: 'Add Candidate' + newUser.fullName,
+                            errorText: "Failed to generate short URLs for: '" + newUser.fullName + "'"
+                        });
+                    })
 //}
 //}); //This belongs to the 'findOne' that was disabled above
+            });
     });
 };
-
 
 
 

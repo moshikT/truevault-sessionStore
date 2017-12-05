@@ -7,7 +7,8 @@ const textGenerator_Ctrl = require('../controllers/textGenerator.server.controll
 
 const ejsLint = require('ejs-lint');
 
-let Candidate = require('../models/candidate.server.model.js');    //import candidate schema
+const Candidate = require('../models/candidate.server.model.js');    //import candidate schema
+const trueVault_Ctrl = require('../controllers/truevault.server.controller');
 
 exports.candidatesStatus = function (req, res) {
     // Retrieve all candidates
@@ -22,22 +23,59 @@ exports.candidatesStatus = function (req, res) {
             return;
         }
 
-        // Render the candidates view in a callback because the retrieval from the DB is async
-        const options = {
-            title: 'Manage Candidates',
-            advanced: (req.tableMode === 'advanced'),
-            answers: (req.tableMode === 'answers'),
-            customer: req.customer,
-            textDirection: textGenerator_Ctrl.getLangDir(req.customer.language),
-            textAlign: textGenerator_Ctrl.getLangAlign(req.customer.language),
-            candidates: candidateItems
-        };
-/*        const lintErr = ejsLint('candidates', options); // Lint check the template
-        if (lintErr) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "candidates.ejs error: ", lintErr);
-            return;
-        }*/
-        res.render('candidates', options); // Clients management page
+        // extract all candidates personal data ids.
+        let candidatesPersonalDataIds = [];
+        for (let candidatesIndex = 0; candidatesIndex < candidateItems.length; candidatesIndex++) {
+            if(candidateItems[candidatesIndex].personalDataId) {
+                candidatesPersonalDataIds.push(candidateItems[candidatesIndex].personalDataId);
+            }
+        }
+
+        console.log("candidatesPersonalDataIds", candidatesPersonalDataIds);
+        // find all candidates personal data by their personal data ids
+        let candidatesWithPersonalData = [];
+        trueVault_Ctrl.findAll(candidatesPersonalDataIds) // return an array of json obj with id & data
+            .then(candidatesPersonalData => {
+                console.log("candidatesPersonalData", candidatesPersonalData);
+                // bind candidates to their personal data
+                for(let pdIndex = 0; pdIndex < candidatesPersonalData.length; pdIndex++) {
+                    for (let cIndex = 0; cIndex < candidateItems.length; cIndex++) {
+                        //console.log("candidatesPersonalData[pdIndex]['id'] ", candidatesPersonalData[pdIndex].id);
+                        //console.log("candidateItems[cIndex]['id'] ", candidateItems[cIndex]);
+                        if(candidatesPersonalData[pdIndex]['id'] == candidateItems[cIndex]['personalDataId']) {
+                            candidateItems[cIndex].personalData = candidatesPersonalData[pdIndex]['data'];
+                            console.log("candidate with personalData ", candidateItems[cIndex]);
+                            break;
+                        }
+                    }
+                }
+
+                // Render the candidates view in a callback because the retrieval from the DB is async
+                const options = {
+                    title: 'Manage Candidates',
+                    advanced: (req.tableMode === 'advanced'),
+                    answers: (req.tableMode === 'answers'),
+                    customer: req.customer,
+                    textDirection: textGenerator_Ctrl.getLangDir(req.customer.language),
+                    textAlign: textGenerator_Ctrl.getLangAlign(req.customer.language),
+                    candidates: candidateItems
+                };
+                res.render('candidates', options); // Clients management page
+            })
+            .catch(err => {
+                console.log("%s.%s:%s -", __file, __ext, __line, "error while fetching candidates personal data: ", err);
+                // try render page anyway
+                const options = {
+                    title: 'Manage Candidates',
+                    advanced: (req.tableMode === 'advanced'),
+                    answers: (req.tableMode === 'answers'),
+                    customer: req.customer,
+                    textDirection: textGenerator_Ctrl.getLangDir(req.customer.language),
+                    textAlign: textGenerator_Ctrl.getLangAlign(req.customer.language),
+                    candidates: candidateItems
+                };
+                res.render('candidates', { title: 'Manage Candidates', advanced: req.advanced, candidates: candidateItems}); // Clients management page
+            })
     });
 };
 

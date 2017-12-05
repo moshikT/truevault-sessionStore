@@ -31,6 +31,6 @@ generateLinkProm = function(longUrl) {
     console.log("%s.%s:%s -", __file, __ext, __line, options);
 
     return goorl(options);
-}
+};
 
 module.exports = generateLink, generateLinkProm;
