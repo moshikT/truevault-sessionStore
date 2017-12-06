@@ -218,6 +218,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                     const jsonStr = data.toString('utf8');
                     var factorVerbal = JSON.parse(jsonStr);
 
+                    console.log("%s.%s:%s -", __file, __ext, __line, "factorVerbal: ", factorVerbal);
                     factorsData.forEach(function (factor) {
                         //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
                         if (factor.subDimention == /*factorVerbal['SHORT NAME']*/factorVerbal['SUB_DIMENSION']) {
@@ -241,7 +242,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                             let verbalData = {};
                             verbalData.id = factorVerbal['SHORT NAME'];
                             verbalData.title = factorVerbal[langPrefix + ' FACTOR'];
-                            console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey);
+                            console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; factorVerbal[verbalKey] - ", factorVerbal[verbalKey]);
                             verbalData.text = factorVerbal[verbalKey].split('\n');
 
                             let elementExists = false;
