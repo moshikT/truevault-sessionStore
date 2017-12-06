@@ -48,7 +48,7 @@ exports.addFile = function (req, res) {
 
         if (dataFileFound) { // This file is already in collection so need to replace it
             dataFileEntry = dataFileFound;
-            dataFileEntry.markModified('fileName')
+            dataFileEntry.markModified('fileData'); // We're going to update the file so we need to mark it for mongoose
         }
         else { // The file is not in the collection so need to create a new entry
             dataFileEntry = new DataFile({
