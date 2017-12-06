@@ -165,9 +165,9 @@ exports.isLangGenderless = function (lang) {
     switch (lang) {
         // List of gendered languages
         case 'he':
+        case 'en':
             return false;
         // List of genderless languages
-        case 'en':
         default:
             return true;
     }
