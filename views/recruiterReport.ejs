@@ -177,9 +177,9 @@
                                 <div class="features__item-icon" style="margin-<%= floatDir %>: 1rem;"><img src="/images/icons/<%= candidate.report.weaknesses[weaknessesIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon"></div>
                                 <!--<h3 class="features__title features__title--brand features__item-title"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>-->
                                 <div class="features__item-copy">
-                                    <h3 class="features__title features__title--brand features__item-title features__title-not-ie"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
+                                    <h3 class="features__title features__title--brand features__item-title features__title-not-ie" style='direction:<%= textDirection %>'><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
                                     <ul class="features__item-list">
-                                        <h3 class="features__title features__title--brand features__item-title features__title-ie"><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
+                                        <h3 class="features__title features__title--brand features__item-title features__title-ie" style='direction:<%= textDirection %>'><%=candidate.report.weaknesses[weaknessesIndex].title%></h3>
                                         <% for (var wtxtIndex = 0; wtxtIndex < candidate.report.weaknesses[weaknessesIndex]['text'].length; wtxtIndex++) {
                                             if (candidate.report.weaknesses[weaknessesIndex]['text'][wtxtIndex] == '') { %>
                                                 <br>
@@ -242,7 +242,7 @@
                                 <div class="features__item" style="justify-content: flex-start; direction: <%= textDirection %>;">
                                 <div class="features__item-icon" style="margin-<%= floatDir %>: 1rem;"><img src="/images/icons/<%= candidate.report.strengths[strengthsIndex].id.replace(/\s+/g, '_') %>.png" alt="Icon" class="features__item-icon"></div>
                                     <div class="features__item-copy">
-                                        <h3 class="features__title features__title--brand features__item-title"><%=candidate.report.strengths[strengthsIndex].title%></h3>
+                                        <h3 class="features__title features__title--brand features__item-title" style='direction:<%= textDirection %>'><%=candidate.report.strengths[strengthsIndex].title%></h3>
                                         <ul class="features__item-list">
                                             <% for (var txtIndex = 0; txtIndex < candidate.report.strengths[strengthsIndex]['text'].length; txtIndex++) {
                                                 if (candidate.report.strengths[strengthsIndex]['text'][txtIndex] == '') { %>
