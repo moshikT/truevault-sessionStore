@@ -184,19 +184,24 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                         if (csvRow[factorElementIndex] == '') {
                         }
                         else {
-                            numOfElementsInFactor++;
                             let found = false;
                             for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
                                 if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {
                                     found = true;
+                                    numOfElementsInFactor++;
+
+                                    let score;
                                     if (candidate.form[qIndex].type == 'C') {
-                                        var score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
+                                        score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", csvRow[factorElementIndex], "; score: ", score);
                                     }
                                     else if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {
-                                        var score = Math.abs(Number(candidate.form[qIndex].finalAnswer) - 8);
+                                        score = 8 - Number(candidate.form[qIndex].finalAnswer);
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", csvRow[factorElementIndex], "; score: ", score);
                                     }
                                     else {
-                                        var score = Number(candidate.form[qIndex].finalAnswer);
+                                        score = Number(candidate.form[qIndex].finalAnswer);
+                                        console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", csvRow[factorElementIndex], "; score: ", score);
                                     }
                                     factorAvg += score;
                                     //console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);
