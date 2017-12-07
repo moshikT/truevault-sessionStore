@@ -38,6 +38,7 @@ db.once('open', function() {
 });
 
 var app = express();
+app.disable('x-powered-by')
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

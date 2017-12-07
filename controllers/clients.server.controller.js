@@ -9,7 +9,7 @@ let clients;
 
 exports.mngClients = function (req, res) {
     // Retrieve all clients
-    Client.find('name _id', function(err, clientItems) {
+    Client.find('name _id', '', {exhaust: true, batchSize: 1000000}, function(err, clientItems) {
         // Render the clients view in a callback because the retrieval from the DB is async
         if (clientItems !== undefined) { // Safety
             res.render('clients', {title: 'Manage Clients', clients: clientItems}); // Clients management page

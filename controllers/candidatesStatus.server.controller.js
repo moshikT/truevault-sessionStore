@@ -10,7 +10,9 @@ let Candidate = require('../models/candidate.server.model.js');    //import cand
 
 exports.candidatesStatus = function (req, res) {
     // Retrieve all candidates
-    Candidate.find({ 'cid': req.customer._id }, '', { }, function(err, candidateItems) {
+    // batchSize = 1000000 - allows up to 1000000 documents in each batch in order to make the response much faster
+    // exahust = true - doesn't wait for the client to process the results before proceeding to next batch
+    Candidate.find({ 'cid': req.customer._id }, '', {exhaust: true, batchSize: 1000000}, function(err, candidateItems) {
         if (err) {
             return;
         }
