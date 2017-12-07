@@ -16,6 +16,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
     Candidate.findOne({'session.id': req.sid}, function (err, candidate) {
         if (err) {
             console.log("%s.%s:%s -", __file, __ext, __line, "couldn't load candidate", err);
+            callback(null);
         }
         if (candidate) { // Safety
             if (!candidate.formCompleted) {
@@ -38,43 +39,56 @@ exports.calcRecruiterReport = function (req, res, callback) {
                 }
             }
 
-            // Calculate factor averages
-            getFactorsAvg(candidate, req.customer.keyword, function (factorsData, finalScore) {
-                console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
-                if (!factorsData) { // Couldn't read factors data file
-                    callback(candidate, false);
-                    return;
-                }
-                var isMale = (candidate.gender == 'male'); // Gender adjustment
-                // Get text based on factor averages
-                getVerbalText(req.lang, factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
-                    if (!strengths) { // verbal text wasn't retrieved
-                        callback(candidate, false);
-                        return;
-                    }
-                    // Prepare report object for storage
-                    var report = {}
-                    report.strengths = strengths;
-                    report.weaknesses = weaknesses;
-                    report.finalScore = finalScore;
-                    report.factorsData = factorsData;
-                    report.completed = true;
-
-                    candidate.report = report;
-
-                    // Store report data in DB
-                    candidate.save(function (err, entry) {
-                        if (err) {
-                            console.log("%s.%s:%s -", __file, __ext, __line, "unable To save report data", err);
-                        }
-                        else {
-                            console.log("%s.%s:%s -", __file, __ext, __line, "Stored report data");
-                        }
-                    });
+            // Initialize the factors scale conversion data
+            getFactorsScaleConversion(req.customer.keyword, function (scaleConversion) {
+                if (scaleConversion == null) { // There was an error reading the file
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Error reading scale conversion");
+                    // If form wasn't completed don't try to calculate the report
                     if (callback) {
                         callback(candidate);
                     }
+                    return;
+                }
+
+                // Calculate factor averages
+                getFactorsAvg(candidate, req.customer.keyword, scaleConversion, function (factorsData, finalScore) {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
+                    if (!factorsData) { // Couldn't read factors data file
+                        callback(candidate, false);
+                        return;
+                    }
+                    var isMale = (candidate.gender == 'male'); // Gender adjustment
+                    // Get text based on factor averages
+                    getVerbalText(req.lang, factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
+                        if (!strengths) { // verbal text wasn't retrieved
+                            callback(candidate, false);
+                            return;
+                        }
+                        // Prepare report object for storage
+                        var report = {}
+                        report.strengths = strengths;
+                        report.weaknesses = weaknesses;
+                        report.finalScore = finalScore;
+                        report.factorsData = factorsData;
+                        report.completed = true;
+
+                        candidate.report = report;
+
+                        // Store report data in DB
+                        candidate.save(function (err, entry) {
+                            if (err) {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "unable To save report data", err);
+                            }
+                            else {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Stored report data");
+                            }
+                        });
+                        if (callback) {
+                            callback(candidate);
+                        }
+                    });
                 });
+
             });
         }
     });
@@ -107,9 +121,49 @@ exports.generateRecruiterReport = function (req, res) {
     });
 };
 
-function getFactorsAvg(candidate, companyKeyword, callback) {
+function getFactorsScaleConversion(companyKeyword, callback) {
+    let scaleConversion = {};
+    const baseFileName = 'report.scale.conversion';
+
+    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
+        .then(filePath => {
+            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
+            csv({noheader: true})
+                .fromFile(filePath)
+                .on('csv', (csvRow) => {
+                    // factor id, weight, range 1-3
+                    if (csvRow[2] != '') {
+                        scaleConversion[csvRow[0]] = {weight: csvRow[1], ranges: [csvRow[2], csvRow[3], csvRow[4]]};
+                    }
+                    else {
+                        scaleConversion[csvRow[0]] = {weight: csvRow[1], ranges: [2.5, 4, 5.5]};
+                    }
+                    console.log("%s.%s:%s -", __file, __ext, __line, "scaleConversion[", csvRow[0], "] = ", scaleConversion[csvRow[0]]);
+                })
+                .on('done', (error) => {
+                    if (!error) {
+                        callback(scaleConversion);
+                    }
+                    else {
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Error reading csv: ", error);
+                        callback(null);
+                    }
+                })
+                .on('error', (err) => {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file ", baseFileName, "; error: ", err);
+                    callback(null);
+                })
+        })
+        .catch(error => { // file not found
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
+            callback(null);
+        });
+}
+
+function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
     var factors = [];
     var testScore = 0;
+    var testWeight = 0;
     const baseFileName = 'report.items';
 
     addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
@@ -154,12 +208,29 @@ function getFactorsAvg(candidate, companyKeyword, callback) {
                         }
                     }
                     var factorData = {};
-                    factorData.subDimention = factor;
-                    factorData.avg = factorAvg / numOfElementsInFactor;
-                    //factorData.isRevereRelation = isRevereRelation;
-                    testScore += factorData.avg;
-
-                    console.log("%s.%s:%s -", __file, __ext, __line, "factor: " + factor + " avg: " + factorData.avg);
+                    factorData.subDimension = factor;
+                    let factorScaleConversion = scaleConversion[factor];
+                    if (!factorScaleConversion) {
+                        factorScaleConversion = {weight: 0, ranges: [2.5, 4, 5.5]};
+                    }
+                    // Calculate the factor average on a scale of 1-7
+                    factorAvg = factorAvg / numOfElementsInFactor;
+                    // Convert to a scale of 1-4
+                    factorData.avg =
+                        (factorAvg <= factorScaleConversion.ranges[0])?1:
+                            ((factorAvg <= factorScaleConversion.ranges[1])?2:
+                                ((factorAvg <= factorScaleConversion.ranges[2])?3:
+                                    4
+                                )
+                            );
+                    let factorAvgAfterDirection = factorData.avg; // At this point the average isn't reversed
+                    if (factorScaleConversion.weight < 0)
+                    { // If it's a negative weight, we need to include the factor average reversed (1-4 --> 4-1)
+                        factorAvgAfterDirection = 5 - factorAvgAfterDirection;
+                    }
+                    testScore += (factorData.avg * Math.abs(factorScaleConversion.weight));
+                    testWeight += Math.abs(factorScaleConversion.weight);
+                    // Note that we keep the factor average not reversed for the verbal
                     factors.push(factorData);
                 })
                 .on('data', (data) => {
@@ -168,31 +239,20 @@ function getFactorsAvg(candidate, companyKeyword, callback) {
                     //var factor = JSON.parse(jsonStr);
                 })
                 .on('done', (error) => {
-                    var testScoreAvg = testScore / factors.length;
+                    var testScoreAvg = testScore / testWeight;
                     console.log("%s.%s:%s -", __file, __ext, __line, "test score ", testScore);
-                    console.log("%s.%s:%s -", __file, __ext, __line, "num of factors ", factors.length);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "total weight ", testWeight);
                     console.log("%s.%s:%s -", __file, __ext, __line, "test avg ", testScoreAvg);
-                    if (testScoreAvg < 1.5) {
-                        var finalScore = Math.round(testScoreAvg);
-                    }
-                    else if (testScoreAvg >= 1.5 && testScoreAvg < 3) {
-                        var finalScore = 2;
-                    }
-                    else if (testScoreAvg >= 3 && testScoreAvg < 5) {
-                        var finalScore = 3;
-                    }
-                    else if (testScoreAvg >= 5 && testScoreAvg < 6.5) {
-                        var finalScore = 4;
-                    }
-                    else {
-                        var finalScore = 5;//;Math.round(testScoreAvg-2);
-                    }
 
-                    console.log("%s.%s:%s -", __file, __ext, __line, "test avg conversion to 1-5 ", finalScore);
+                    const finalScore =
+                        (testScoreAvg <= 2.3)?1:
+                            ((testScoreAvg <= 2.5)?2:
+                                    ((testScoreAvg <= 2.7)?3:4)
+                            );
                     callback(factors, finalScore);
                 })
                 .on('error', (err) => {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err)
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err);
                     callback(null);
                 })
         })
@@ -221,7 +281,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "factorVerbal: ", factorVerbal);
                     factorsData.forEach(function (factor) {
                         //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
-                        if (factor.subDimention == /*factorVerbal['SHORT NAME']*/factorVerbal['SUB_DIMENSION']) {
+                        if (factor.subDimension == /*factorVerbal['SHORT NAME']*/factorVerbal['SUB_DIMENSION']) {
                             factor.name = factorVerbal['SHORT NAME'];
                             // if reverse relation exists (0) than put the factor in the opposite column.
                             const isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
@@ -232,7 +292,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                             const isWeakness = ((factor.avg < (includeAvg ? 4.5 : 3.5) && factorVerbal['isReverseRelation'] == '1') ||
                                 (factor.avg > (includeAvg ? 3.5 : 4.5) && factorVerbal['isReverseRelation'] == '0'));
                             const langPrefix = lang.toUpperCase();
-                            const genderSuffix = (textGenerator_Ctrl.isLangGenderless(lang))?'':((isMale)?' MALE':' FEMALE');
+                            const genderSuffix = (textGenerator_Ctrl.isLangGenderless(lang)) ? '' : ((isMale) ? ' MALE' : ' FEMALE');
                             const verbalKey = (factor.avg >= 4.5) ? (isMale) ? (langPrefix + ' HIGH' + genderSuffix) : (langPrefix + ' HIGH' + genderSuffix)
                                 : (factor.avg <= 3.5) ? (isMale) ? (langPrefix + ' LOW' + genderSuffix) : (langPrefix + ' LOW' + genderSuffix)
                                     : (isMale) ? (langPrefix + ' AVG' + genderSuffix) : (langPrefix + ' AVG' + genderSuffix);
@@ -248,7 +308,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                             let elementExists = false;
                             if (isStrength) {
                                 for (let strengthsIndex = 0; strengthsIndex < strengths.length; strengthsIndex++) {
-                                    // if factor existed add subDimention to text
+                                    // if factor existed add subDimension to text
                                     if (strengths[strengthsIndex].id === verbalData.id) {
                                         elementExists = true;
                                         console.log("%s.%s:%s -", __file, __ext, __line, "Prev text: ", strengths[strengthsIndex].text);
@@ -263,7 +323,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                             }
                             else if (isWeakness) {
                                 for (let WeaknessIndex = 0; WeaknessIndex < weaknesses.length; WeaknessIndex++) {
-                                    // if factor existed add subDimention to text
+                                    // if factor existed add subDimension to text
                                     if (weaknesses[WeaknessIndex].id === verbalData.id) {
                                         elementExists = true;
                                         weaknesses[WeaknessIndex].text = weaknesses[WeaknessIndex].text.concat(verbalData.text);
