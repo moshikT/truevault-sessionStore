@@ -10,10 +10,14 @@ router.use('/:sid/:field', function (req, res, next) {
     console.log("%s.%s:%s -", __file, __ext, __line, "Middleware. sid: ", req.params.sid);
     Candidate.findOne({'session.id': req.params.sid}, function (err, candidate) {
         console.log("%s.%s:%s -", __file, __ext, __line, "err: ", err, '; candidate: ', candidate.fullName);
-        if ((err) || // There was an error or
-            (!candidate)) { // No candidate was found
+        if (err)  { // Error
             // Return an error to the API caller
-            res.status(500).send(err);
+            res.status(500).send("Error (" + __file + ":" + __line + ") - ", err);
+            return;
+        }
+        if (!candidate) { // No candidate was found
+            // Return an error to the API caller
+            res.status(500).send("Candidate not found (" + __file + ":" + __line + ")");
             return;
         }
         // Pass the candidate to the request
@@ -33,8 +37,11 @@ router.route('/:sid/:field')
         const field = req.params.field;
         console.log("%s.%s:%s -", __file, __ext, __line, "Patch: sid - ", req.params.sid, '; field - ', field, '; data - ', req.body);
         // Verify that the field is one of the supported fields
-        if (['phoneInterviewDate', 'phoneInterviewResult', 'interviewDate', 'interviewResult', 'reportRating',
-                'hired', 'hireDate', 'startedWork', 'workDate'].indexOf(field) >= 0) { // Valid field - update the record
+        /*if (['phoneNumber', 'department', 'team', 'cvScreenDate', 'cvScreenResult', 'phoneInterviewDate', 'phoneInterviewResult',
+                'interviewDate', 'interviewResult', 'auditDate', 'auditResult', 'hrResult', 'refCallDate', 'refCallResult',
+                'contractDate', 'reportRating', 'hired', 'workDate', 'processUpdate', 'startedWork', 'recruiterNotes', 'ehNotes'
+            ].indexOf(field) >= 0) { // Valid field - update the record*/
+        if ((typeof Candidate.schema.paths[field]) != 'undefined') { // Valid field - update the record
             // Mark the field as modified
             req.candidate.markModified(field);
             // Save the value in the field
@@ -43,7 +50,7 @@ router.route('/:sid/:field')
             // Save the modified candidate in the db
             req.candidate.save(function(err, entry){
                 if(err) { // There was an error saving
-                    res.status(500).send(err);
+                    res.status(500).send("Error while saving candidate (" + __file + ":" + __line + ") - ", err);
                 }
                 else { // Successfully saved
                     console.log("%s.%s:%s -", __file, __ext, __line, "Entry saved!");
@@ -52,7 +59,7 @@ router.route('/:sid/:field')
             });
         }
         else { // Invalid field
-            res.status(500).send("Invalid field");
+            res.status(500).send("Field not in allowed list (" + __file + ":" + __line + ")");
             return;
         }
     });

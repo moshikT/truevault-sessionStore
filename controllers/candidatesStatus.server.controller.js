@@ -12,7 +12,8 @@ exports.candidatesStatus = function (req, res) {
     // Retrieve all candidates
     // batchSize = 1000000 - allows up to 1000000 documents in each batch in order to make the response much faster
     // exahust = true - doesn't wait for the client to process the results before proceeding to next batch
-    Candidate.find({ 'cid': req.customer._id }, '', {exhaust: true, batchSize: 1000000}, function(err, candidateItems) {
+    const fields = (req.includeAnswers) ? '' : '-form'; // If not necessary don't include form to minimize transfer
+    Candidate.find({ 'cid': req.customer._id }, fields, {exhaust: true, batchSize: 1000000}, function(err, candidateItems) {
         if (err) {
             return;
         }

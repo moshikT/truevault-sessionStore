@@ -50,8 +50,7 @@
     <% }
     else { %>
         background-color: cornflowerblue;
-    <% } %>
-        color: white;
+    <% } %> color: white;
     }
 
 </style>
@@ -105,32 +104,35 @@ if (answers) {
     <thead>
     <tr>
         <% if (answers) { %>
-            <% console.log("108: Answers mode"); %>
-            <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
-            <%
+        <% console.log("108: Answers mode"); %>
+        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
+        <%
             // Add all the columns for <qid>
-            for (let j = 0;j < maxAnswer; j++) { %>
-                <th data-field="<%= orderedAnswers[j] %>" data-sortable="true"
-                    data-sorter="textSorter"><%= orderedAnswers[j] %></th>
-            <% }
+        for (let j = 0;j < maxAnswer; j++) { %>
+        <th data-field="<%= orderedAnswers[j] %>" data-sortable="true"
+            data-sorter="textSorter"><%= orderedAnswers[j] %></th>
+        <% }
             // Add all the columns for <qid>_time
-            for (let j = 0;j < maxAnswer; j++) { %>
-                <th data-field="<%= orderedAnswers[j] %>_time" data-sortable="true"
-                    data-sorter="textSorter"><%= orderedAnswers[j] %>_time
-            </th>
+        for (let j = 0;j < maxAnswer; j++) { %>
+        <th data-field="<%= orderedAnswers[j] %>_time" data-sortable="true"
+            data-sorter="textSorter"><%= orderedAnswers[j] %>_time
+        </th>
         <% } %>
-            <% console.log("117: Answers mode"); %>
+        <% console.log("117: Answers mode"); %>
         <% }
         else { %>
-            <th data-field="date" data-sortable="true" data-sorter="textSorter" style="text-align: right">
+            <th data-field="date" data-sortable="true" data-sorter="dateSorter" style="text-align: right">
                 <!--FIXME: Date Added-->תאריך <br>קבלת קוח
             </th>
+            <th data-field="recSource" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->מקור גיוס</th>
             <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
             <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+            <th data-field="department"><!--FIXME: Phone-->מחלקה</th>
+            <th data-field="team"><!--FIXME: Phone-->צוות</th>
+            <th data-field="cvScreenDate"><!--FIXME: Phone-->תאריך<br>סינון קו"ח</th>
+            <th data-field="cvScreenResult"><!--FIXME: Phone-->סינון<br>עפ"י קו"ח</th>
             <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
-            <th data-field="dateCompleted" data-sortable="true" data-sorter="textSorter"><!--FIXME: Date Completed-->תאריך
-                מילוי
-            </th>
+            <th data-field="dateCompleted" data-sortable="true" data-sorter="dateSorter"><!--FIXME: Date Completed-->תאריך מילוי</th>
             <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
             <th data-field="report"><!--FIXME: Report-->דוח</th>
             <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
@@ -145,115 +147,133 @@ if (answers) {
             <th data-field="phoneInterviewResult">ראיון טלפוני</th>
             <th data-field="interviewDate">תאריך <br>ראיון פרונטלי</th>
             <th data-field="interviewResult">ראיון פרונטלי</th>
+            <th data-field="auditDate">תאריך מבדק + ראיון</th>
+            <th data-field="auditResult">מבדק אמינות</th>
+            <th data-field="hrResult">ראיון מש"א</th>
+            <th data-field="refCallDate">תאריך<br>שיחת ממליצים</th>
+            <th data-field="refCallResult">שיחת ממליצים</th>
+            <th data-field="contractDate">תאריך<br>חתימת חוזה</th>
             <th data-field="reportRating">השוואה לדוח</th>
             <th data-field="hired">התקבל</th>
             <th data-field="workDate">תאריך <br>תחילת עבודה</th>
+            <th data-field="processUpdate">עדכון תהליך<br>מועמד באיילון</th>
             <th data-field="startedWork">התחיל לעבוד</th>
+            <th data-field="recruiterNotes">הערות</th>
+            <% if (advanced) { %>
+                <th data-field="ehNotes">הערות<br>EH</th>
+            <% } %>
         <% } %>
     </tr>
     </thead>
     <tbody>
-    <% for (let i = 0;i < candidates.length;i++) {
+    <% for (let i = 0; i < candidates.length; i++) {
         const candidate = candidates[i];
         formjson = candidate.form; // Get the answers
         let appExp = ''; // For holding the app experience response
-        for (let j = 0; j < formjson.length; j++) {
-            if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
-                if (formjson[j].type === 'A') { //is this an app exp type question?
-                    if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
-                        appExp = formjson[j].finalAnswer; //save the final answer
+        if (advanced) {
+            for (let j = 0; j < formjson.length; j++) {
+                if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
+                    if (formjson[j].type === 'A') { //is this an app exp type question?
+                        if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                            appExp = formjson[j].finalAnswer; //save the final answer
+                        }
+                        break;
                     }
-                    break;
                 }
             }
         }
     } %>
     <%
-        for (let i = 0; i < candidates.length; i++) { // Loop through candidates
-            const candidate = candidates[i];
-            formjson = candidate.form; // Get the answers
-            let appExp = ''; // For holding the app experience response
-            if (advanced) {
-                // Run through all the answers and find the answer for the app experience
-                for (let j = 0; j < formjson.length; j++) {
-                    if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
-                        if (formjson[j].type === 'A') { //is this an app exp type question?
-                            if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
-                                appExp = formjson[j].finalAnswer; //save the final answer
-                            }
-                            break;
-                        }
-                    }
-                }
-            }
-            if ((answers) && (candidate.formCompleted)) {
-                // If we're in answers mode we only include in the table candidates who have completed the form
-                console.log("185: Answers mode");
-                // Clear the orderedAnswers so we don't mix them up with previous answers
-                orderedAnswers = [];
-                // Run through all the answers and sort them into the correct order
-                for (let j = 0; j < formjson.length; j++) {
-                    if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
-                        const id = formjson[j].id;
-                        const index = answersOrder[id];
-                        let answer = '', timeToAnswer = '';
+    for (let i = 0; i < candidates.length; i++) { // Loop through candidates
+        const candidate = candidates[i];
+        formjson = candidate.form; // Get the answers
+        let appExp = ''; // For holding the app experience response
+        if (advanced) {
+            // Run through all the answers and find the answer for the app experience
+            for (let j = 0; j < formjson.length; j++) {
+                if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
+                    if (formjson[j].type === 'A') { //is this an app exp type question?
                         if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
-                            answer = formjson[j].finalAnswer;
+                            appExp = formjson[j].finalAnswer; //save the final answer
                         }
-                        if (formjson[j].hasOwnProperty('timeAnsweredInSeconds')) { // safety
-                            timeToAnswer = formjson[j].timeAnsweredInSeconds;
-                        }
-
-                        console.log("201: ", id, "; ", answer, "; ", timeToAnswer);
-                        orderedAnswers[index] = {
-                            answer: answer,
-                            timeToAnswer: timeToAnswer
-                        };
+                        break;
                     }
                 }
             }
-    %>
-        <% if ((answers) && (candidate.formCompleted)) { %>
-    <tr>
-            <% console.log("212: Answers mode"); %>
-            <td><%- candidate.fullName %></td>
-            <%
-            // Run through all the columns and add the answers first
-            for (let j = 0;j < maxAnswer; j++) {
-                if (!orderedAnswers[j]) {
-                    orderedAnswers[j] = {
-                        answer: '',
-                        timeToAnswer: ''
+        }
+        if ((answers) && (candidate.formCompleted)) {
+            // If we're in answers mode we only include in the table candidates who have completed the form
+            console.log("185: Answers mode");
+            // Clear the orderedAnswers so we don't mix them up with previous answers
+            orderedAnswers = [];
+            // Run through all the answers and sort them into the correct order
+            for (let j = 0; j < formjson.length; j++) {
+                if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
+                    const id = formjson[j].id;
+                    const index = answersOrder[id];
+                    let answer = '', timeToAnswer = '';
+                    if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                        answer = formjson[j].finalAnswer;
+                    }
+                    if (formjson[j].hasOwnProperty('timeAnsweredInSeconds')) { // safety
+                        timeToAnswer = formjson[j].timeAnsweredInSeconds;
+                    }
+
+                    console.log("201: ", id, "; ", answer, "; ", timeToAnswer);
+                    orderedAnswers[index] = {
+                        answer: answer,
+                        timeToAnswer: timeToAnswer
                     };
-                }%>
-                <td><%= orderedAnswers[j].answer %></td>
-            <% } %>
-            <%
-            // Run through all the columns and add the times
-            for (let j = 0;j < maxAnswer; j++) { %>
-                <td><%= orderedAnswers[j].timeToAnswer %></td>
-            <% } %>
-    </tr>
-        <% }
-        if (!answers) { %>
+                }
+            }
+        }
+    %>
+    <% if ((answers) && (candidate.formCompleted)) { %>
     <tr>
+        <% console.log("212: Answers mode"); %>
+        <td><%- candidate.fullName %></td>
+        <%
+            // Run through all the columns and add the answers first
+        for (let j = 0;j < maxAnswer; j++) {
+            if (!orderedAnswers[j]) {
+                orderedAnswers[j] = {
+                    answer: '',
+                    timeToAnswer: ''
+                };
+            } %>
+        <td><%= orderedAnswers[j].answer %></td>
+        <% } %>
+        <%
+            // Run through all the columns and add the times
+        for (let j = 0;j < maxAnswer; j++) { %>
+        <td><%= orderedAnswers[j].timeToAnswer %></td>
+        <% } %>
+    </tr>
+    <% }
+    if (!answers) { %>
+        <tr>
             <% const dateTimeCreated = candidate.dateTimeCreated; %>
             <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
             <% report = candidate.report; %>
-            <td><%- (dateTimeCreated != undefined) ? dateTimeCreated.toLocaleString() : '' %></td>
+            <td class="<%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>"><%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %></td>
+            <td><%- candidate.recruitmentSource %></td>
             <td><%- candidate.fullName %></td>
-            <td><%= candidate.phoneNumber %></td>
+            <td id="phoneNumber_<%= candidate.session.id %>"><%= candidate.phoneNumber %></td>
+            <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
+            <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
+            <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
+            <td id="cvScreenResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.cvScreenResult %></td>
             <td><%= candidate.id %></td>
-            <td><%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toLocaleString() : '' %></td>
+            <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>"><%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %></td>
             <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
             <td>
                 <% if ((report) && (candidate.formCompleted)) { %>
-                    <% if (candidate.linkToReport !== undefined) { %>
-                        <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
-                    <% }
-                    else { %>
-                        <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
-                    <% } %>
+                <% if (candidate.linkToReport !== undefined) { %>
+                <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                <% }
+                else { %>
+                <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                <% } %>
                 <% } %>
             </td>
             <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
@@ -265,15 +285,26 @@ if (answers) {
             <% } %>
             <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
             <td id="phoneInterviewResult_<%= candidate.session.id %>"
-                data-editor="2"><%= candidate.phoneInterviewResult %></td>
+                data-editor="3"><%= candidate.phoneInterviewResult %></td>
             <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
-            <td id="interviewResult_<%= candidate.session.id %>" data-editor="3"><%= candidate.interviewResult %></td>
+            <td id="interviewResult_<%= candidate.session.id %>" data-editor="4"><%= candidate.interviewResult %></td>
+            <td id="auditDate_<%= candidate.session.id %>"><%= candidate.auditDate %></td>
+            <td id="auditResult_<%= candidate.session.id %>" data-editor="7"><%= candidate.auditResult %></td>
+            <td id="hrResult_<%= candidate.session.id %>" data-editor="9"><%= candidate.hrResult %></td>
+            <td id="refCallDate_<%= candidate.session.id %>"><%= candidate.refCallDate %></td>
+            <td id="refCallResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.refCallResult %></td>
+            <td id="contractDate_<%= candidate.session.id %>"><%= candidate.contractDate %></td>
             <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
-            <td id="hired_<%= candidate.session.id %>" data-editor="1"><%= candidate.hired %></td>
+            <td id="hired_<%= candidate.session.id %>" data-editor="2"><%= candidate.hired %></td>
             <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
-            <td id="startedWork_<%= candidate.session.id %>" data-editor="1"><%= candidate.startedWork %></td>
-    </tr>
-        <% } %>
+            <td id="processUpdate_<%= candidate.session.id %>" data-editor="10"><%= candidate.processUpdate %></td>
+            <td id="startedWork_<%= candidate.session.id %>" data-editor="2"><%= candidate.startedWork %></td>
+            <td id="recruiterNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.recruiterNotes %></td>
+            <% if (advanced) { %>
+                <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
+            <% } %>
+        </tr>
+    <% } %>
     <% } %>
     </tbody>
 </table>
@@ -294,6 +325,17 @@ if (answers) {
         return 0;
     }
 
+    // Sorting function for dates
+    function dateSorter(a, b) {
+        if (b === '') return 1;
+        if (a === '') return -1;
+        const da = Date.parse(a);
+        const db = Date.parse(b);
+        if (da < db) return -1;
+        if (da > db) return 1;
+        return 0;
+    }
+
     // Sorting function for numbers
     function numSorter(a, b) {
         a = parseFloat(a);
@@ -301,6 +343,17 @@ if (answers) {
         if (a < b) return -1;
         if (a > b) return 1;
         return 0;
+    }
+
+    // Parse all elements of class "dateValue" and format them to correct date format
+    let dateCells = document.getElementsByClassName("dateValue");
+    for (let i = 0; i < dateCells.length; i++) {
+        const dateStr = dateCells[i].innerText; // Date is expected to be parse-able (ISO format)
+        const dateObj = new Date(dateStr);      // Create a date obj for convenience
+        // Only way to format as we wish - all the toLocaleString etc. functions don't do the job well
+        dateCells[i].innerText = dateObj.getFullYear() + '-' + ('0' + (1 + dateObj.getMonth())).slice(-2) +
+            '-' + ('0' + dateObj.getDate()).slice(-2) + ' ' +
+            ('0' + dateObj.getHours()).slice(-2) + ':' + ('0' + dateObj.getMinutes()).slice(-2);
     }
 
     // Add 'export to xlsx' button to table
@@ -323,13 +376,14 @@ if (answers) {
             $('#candidates').editableTableWidget({ // Initialize the table as an editableTable
                 editor:
                     [
-                        $('<textarea>'),  // The default editor will be a textarea
+                        $('<input>'), // The default editor will be an input
+                        $('<textarea>'),  // 1 - text area
                         $('<select>' +
                             '<option></option>' +
                             '<option value="כן">כן</option>' +
                             '<option value="לא">לא</option>' +
-                            '</select>'),  // 1 - select yes/no
-                        $('<select>' +   // 2 - select phone interview
+                            '</select>'),  // 2 - select yes/no
+                        $('<select>' +   // 3 - select phone interview
                             '<option></option>' +
                             '<option value="עבר">עבר</option>' +
                             '<option value="לא עבר">לא עבר</option>' +
@@ -337,20 +391,68 @@ if (answers) {
                             '<option value="צריך לחשוב על זה">צריך לחשוב על זה</option>' +
                             '<option value="לא ענה">לא ענה</option>' +
                             '</select>'),
-                        $('<select>' +   // 3 - select face-to-face interview
+                        $('<select>' +   // 4 - select face-to-face interview
                             '<option></option>' +
                             '<option value="עבר">עבר</option>' +
                             '<option value="לא עבר">לא עבר</option>' +
                             '<option value="לא הגיע">לא הגיע</option>' +
                             '<option value="מעוניין לחשוב">מעוניין לחשוב</option>' +
                             '<option value="הסיר מועמדות">הסיר מועמדות</option>' +
-                            '</select>')
+                            '</select>'),
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="מועדונים">מועדונים</option>' +
+                            '<option value="חיים ומשכנתאות מועדונים">חיים ומשכנתאות מועדונים</option>' +
+                            '<option value="משכנתאות בנקים ותאונות אישיות">משכנתאות בנקים ותאונות אישיות</option>' +
+                            '</select>'),  // 5 - dept
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="שרות לקוחות">שרות לקוחות</option>' +
+                            '<option value="מכירות">מכירות</option>' +
+                            '<option value="מכירות בריאות">מכירות בריאות</option>' +
+                            '<option value="מכירות ריסק">מכירות ריסק</option>' +
+                            '<option value="מכירות בנקים למשכנתאות">מכירות בנקים למשכנתאות</option>' +
+                            '<option value="מכירות בנקים למשכנתאות">מכירות בנקים למשכנתאות</option>' +
+                            '<option value="שרות בנקים למשכנתאות">שרות בנקים למשכנתאות</option>' +
+                            '<option value="מכירות תאונות אישיות ואלה">מכירות תאונות אישיות ואלה</option>' +
+                            '<option value="מכירות תאונות אישיות">מכירות תאונות אישיות</option>' +
+                            '</select>'),  // 6 - team
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="עבר">עבר</option>' +
+                            '<option value="לא עבר">לא עבר</option>' +
+                            '<option value="שיחת קבט עבר">שיחת קבט עבר</option>' +
+                            '<option value="שיחת קבט לא עבר">שיחת קבט לא עבר</option>' +
+                            '<option value="לא הגיע">לא הגיע</option>' +
+                            '<option value="הסיר מועמדות">הסיר מועמדות</option>' +
+                            '</select>'),  // 7 - Honesty audit
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="עבר">עבר</option>' +
+                            '<option value="לא עבר">לא עבר</option>' +
+                            '</select>'),  // 8 - CV Screening + references call
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="עבר">עבר</option>' +
+                            '<option value="לא עבר">לא עבר</option>' +
+                            '<option value="לא הגיע">לא הגיע</option>' +
+                            '<option value="הסיר מועמדות">הסיר מועמדות</option>' +
+                            '</select>'),  // 9 - HR Interview
+                        $('<select>' +
+                            '<option></option>' +
+                            '<option value="נשלח מייל למועמד">נשלח מייל למועמד</option>' +
+                            '</select>'),  // 10 - process status
                     ],
                 //FIXME: editableTableWidget supports only one type of editor for the entire table.
                 //       We would like to have different editors for different cells (e.g. calendar, dropdown)
                 //       To support this we either need to modify the implementation of editableTableWidget or
                 //       find another widget to replace it.
-                preventColumns: [1, 2, 3, 4, 5, 6, 7, 8<% if (advanced) { %>, 9, 10, 11, 12<% } %> ] // Columns which aren't editable
+                // Set columns which aren't editable
+                <% if (advanced) { %>
+                    preventColumns: [1, 2, 3, 9, 10, 11, 12, 13], //[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+                <% } else { %>
+                    preventColumns: [1, 2, 3, 9, 10, 11, 12, 13]
+                <% } %>
             });
         }
     });

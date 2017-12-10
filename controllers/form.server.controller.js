@@ -207,7 +207,7 @@ exports.getForm = function (req, res) {
                 }
             }
             else {
-                res.status(500).send("No User found");
+                res.status(500).send("User not found (" + __file + ":" + __line + ")");
             }
         });
     }
