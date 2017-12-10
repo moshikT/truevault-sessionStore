@@ -156,7 +156,7 @@ router.get('/clients/:cid/candidates', function (req, res) {
 // Candidates status - advanced
 router.get('/clients/:cid/candidatesAdv', function (req, res) {
     req.tableMode = 'advanced';
-    req.includeAnswers = true;
+    //req.includeAnswers = true;
     return candidatesStatus_Ctrl.candidatesStatus(req, res);
 });
 
@@ -165,6 +165,12 @@ router.get('/clients/:cid/answers', function (req, res) {
     req.tableMode = 'answers';
     req.includeAnswers = true;
     return candidatesStatus_Ctrl.candidatesStatus(req, res);
+});
+
+// Util - Update old candidates to store appExp separately
+router.get('/clients/:cid/candidatesSaveExp', function (req, res) {
+    candidatesStatus_Ctrl.candidatesSaveExp(req, res);
+    return 0;
 });
 
 // Clients management

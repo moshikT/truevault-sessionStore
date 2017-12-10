@@ -11,6 +11,7 @@ var candidateSchema = new Schema({
     formDurationInMinutes : Number,
     //formData: JSON,
     form : JSON,
+    appExp: Number,
     formCompleted: Boolean,
     session: JSON,
     linkToForm: String,

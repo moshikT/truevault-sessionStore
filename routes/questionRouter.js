@@ -151,6 +151,10 @@ router.route('/:sid/:qid')
         console.log("%s.%s:%s -", __file, __ext, __line, "patch question: ", req.params.qid);
         for (var index = 0; index < req.candidate.form.length; index++) {
             if(req.candidate.form[index].id == req.params.qid) {
+                if (req.candidate.form[index].type === 'A') {
+                    req.candidate.markModified('appExp');
+                    req.candidate.appExp = req.candidate.form[index].finalAnswer;
+                }
                 if(req.body._id) {
                     delete req.body._id;
                 }
