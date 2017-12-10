@@ -10,6 +10,7 @@ const rp = require('request-promise-native');
 const API_KEY = "MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVm"; // base64 encoded
 const vaultId = '987b3d71-6e6a-4fef-88af-1a1df582dc08'; // db id - EmpiricalHire
 const dbUrl = 'https://api.truevault.com/v1/vaults/' + vaultId;
+const basicUrl = 'https://api.truevault.com/v1/';
 const candidateSchemaId = "714f661e-bb1b-4d4f-bda7-5e67272ec807";//'714f661e-bb1b-4d4f-bda7-5e67272ec807';// candidateTestSchemaId = "405fac9b-37f6-4090-93cf-6d6b2c4a541b";
 
 // Return one document that equal to the documentId. If not exist, returns an error.
@@ -124,6 +125,35 @@ exports.saveCandidate = function (candidateData, documentId) {
         }
     })
 
+};
+
+// get user data from trueVault
+exports.getUser = function (accessToken) {
+    return new Promise(function (resolve, reject) {
+        let options = {
+            url: basicUrl + 'auth/me',
+            headers: {
+                'Authorization':accessToken
+            }
+        };
+
+        rp(options)
+            .then( body => {
+                let responseData = JSON.parse(body);
+                if(responseData.result === 'success') {
+                    let user = responseData.user;
+                    resolve(user);
+                }
+                else {
+                    resolve(responseData.result);
+                }
+
+                //console.log("user returned: ", body);
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
 };
 
 function setRequestOptions(url) {

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--<title>Empirical Hire</title>-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/main.css">
+    <style>
+        #auth-form {
+            width: 400px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .form-group{
+            margin-bottom: 20px;
+        }
+
+        .form-horizontal .control-label {
+            padding-top: 0px;
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            width: 200px;
+            border-radius: 100px;
+            background-color: #4ba8ff;
+            box-shadow: 0 2px 7px 0 rgba(0,0,0,.2);
+            color: #fff;
+            border: none;
+            display: block;
+            margin-top: 10px;
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 40px;
+            padding: 10px;
+            padding-left: 16px;
+            padding-right: 16px;
+            font-size: 16px;
+        }
+
+        .btn:hover {
+            background-color: #7ec1ff;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body class="content" dir=<%= textDirection %>>
+<header>
+    <% include partials/logo %>
+    <!--
+    <div class="container col-md-12">
+        <h1> <%=  title %> </h1>
+    </div>
+    -->
+</header>
+<div class="container">
+    <form id="auth-form" class="form-horizontal" method="POST" action="/login">
+        <div class="form-group">
+            <label for="username" class="control-label"><%= uNameText %></label>
+            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+        </div>
+        <div class="form-group">
+            <label for="password" class="control-label"><%= uPasswordText %></label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-default" id="auth-submit">Login</button>
+        </div>
+    </form>
+</div>
+<% include partials/footer %>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="/javascripts/messages_he.js"></script>
+<script src="https://unpkg.com/truevault@0.9.0/build/index.js"></script>
+<script>
+    const authFormEl = document.getElementById("auth-form");
+
+    authFormEl.addEventListener("submit", async e => {
+        e.preventDefault();
+
+        //const tvClient = await TrueVaultClient.login("60e812e5-e2ee-4a02-a8be-0f1a4ac0f27c", this.username.value, this.password.value);
+        TrueVaultClient.login("60e812e5-e2ee-4a02-a8be-0f1a4ac0f27c", this.username.value, this.password.value).then(tvClient => {
+            console.log('Auth header:', tvClient.authHeader);
+            console.log('tvClient:', tvClient);
+            // TODO: post user credentials and redirect back to requested page
+            let url = window.location.href;
+            let currUrl = url.substring(0, url.lastIndexOf('/'));
+            console.log("url ", currUrl);
+
+            $.ajax({
+                type: 'post',
+                url: currUrl + '/login',
+                /*data: {
+                  "ticket": {
+                    "subject": "new contact from " + this.username.value,
+                    "comment": {
+                      "body": this.password.value
+                    }
+                  }
+                },*/
+                //data: $('#auth-form').serialize(),
+                data: {
+                    username: this.username.value,
+                    authHeader: tvClient.authHeader
+                },
+                // ==========================================================
+                // This is where I'm confused....
+                // How do I authorize the API via the token? It's here right?
+                // I'm trying it via standard setRequestHeader Authorization
+                // For learning purposes in my local copy I'm pasting the key
+                // straight in, just to get it working.
+                // I know this is bad practice.
+                // ==========================================================
+                //beforeSend : function( xhr ) {
+                //    xhr.setRequestHeader( 'Authorization', 'BEARER my_api_token' );
+                //},
+                success: function( response ) {
+                    console.log("res ", response);
+                    if(response === 'success') {
+                        let pageTo = getParameterByName('p');
+                        let sid = getParameterByName('sid');
+                        var urlTo = currUrl + '/' + pageTo;
+
+                        if(sid) {
+                            urlTo += '?sid=' + sid;
+                        }
+                        window.location.href = urlTo;
+                    }
+                    // TODO: display an error
+                    //e.submit();
+                },
+                error : function(error) {
+                    console.log("err ", error);
+                }
+              });
+
+        })
+        .catch(err => {
+            console.log(err);
+            // TODO: display error to user
+        })
+
+
+
+
+
+    });
+
+    function getParameterByName(name) {
+        var url = window.location.href;
+        name = name.replace(/[\[\]]/g, "\\$&");
+        var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+            results = regex.exec(url);
+        if (!results) return null;
+        if (!results[2]) return '';
+        return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+</script>
+</body>
+</html>

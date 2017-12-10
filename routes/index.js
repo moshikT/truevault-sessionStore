@@ -12,6 +12,8 @@ var multer = require('multer');
 var upload = multer({dest: '/tmp/uploads/'});
 var fs = require('fs');
 var Client = require('../models/addClient.server.model.js');
+const trueVault_Ctrl = require('../controllers/truevault.server.controller');
+
 
 //router.use('/api', questionRouter);
 //mailParser_Ctrl.onMailArrived();
@@ -35,6 +37,34 @@ router.use(function (req, res, next) {
                 return;
             }
             cid = parts[2];
+            if(parts[3]) {
+                // Middleware to verify user credentials in the required pages
+                let requestedPage = parts[3];
+                if (requestedPage === 'candidates' || requestedPage.indexOf('recruiterReport') !== -1) {
+                    // test if user logged in - if not redirect to login
+                    let session = req.session;
+                    console.log("%s.%s:%s -", __file, __ext, __line, "session value", session);
+                    //Session set when user Request our app via URL
+                    if(session.userData) {
+                        if(session.userData.status === 'ACTIVATED') {
+                            console.log("%s.%s:%s -", __file, __ext, __line, "User is activate! Proceed to page");
+                        }
+                        else {
+                            // TODO: handle unauthorized user - error message of contact us?
+                            console.log("%s.%s:%s -", __file, __ext, __line, "User is NOT activate!");
+                        }
+                        // TODO: can add additional test here; that user has the right click - cid equal to user permissions, else rdirect to url with diff cid
+                    }
+                    else {
+                        let urlTo = 'login?p=' + parts[3];
+                        if(req.query.sid) {
+                            urlTo += '&sid=' + req.query.sid;
+                        }
+                        return res.redirect(urlTo);
+                    }
+                }
+            }
+
             console.log("%s.%s:%s -", __file, __ext, __line, "cid: ", cid);
             Client.findById(cid, function (err, client) { // Search for this cid in the clients collection
                 if (err) { // There was an error - doesn't mean the item wasn't found
@@ -178,6 +208,10 @@ router.get('/clients', function (req, res) {
     return mngClients_Ctrl.mngClients(req, res);
 });
 
+router.get('/clients/:cid/login', function (req, res) {
+    return form_Ctrl.login(req, res);
+});
+
 router.get('/clients/:cid/recruiterReport', function (req, res) {
     return recruiterReport_Ctrl.generateRecruiterReport(req, res);
 });
@@ -201,6 +235,22 @@ router.get('/privacy', function (req, res) {
 router.get('/html/:textfile', function (req, res) {
     console.log("%s.%s:%s -", __file, __ext, __line, textfile);
     res.render(textfile);
+});
+
+router.post('/clients/:cid/login',function(req,res){
+    let session = req.session;
+    session.accessToken = req.body.authHeader;
+    // TODO: test if cid for current user credentials is ok
+    // Use trueVault api to get the user data and store it in his session
+    trueVault_Ctrl.getUser(session.accessToken).then(user => {
+            console.log(user);
+            session.userData = user;
+            res.end('success');
+        })
+        .catch(err => {
+            console.log(err);
+            res.end('error');
+        });
 });
 
 module.exports = router;

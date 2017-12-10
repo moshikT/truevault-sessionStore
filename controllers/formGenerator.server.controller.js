@@ -217,10 +217,10 @@ function reOrderFormJSON(pType, fType, cType, bType, aType, sType, lType) {
                         //var fElement = fType.pop();
                         //console.log("inserted F question!!!!!!    ", fType[fIndex]);
                         items.push(fType[fIndex].item);
-                        console.log("%s.%s:%s -", __file, __ext, __line, "F item pushed to set: ", fType[fIndex].item);
+                        //console.log("%s.%s:%s -", __file, __ext, __line, "F item pushed to set: ", fType[fIndex].item);
                         let itemValue = Math.abs(set.itemsID.length - itemsIDIndex);
                         itemsValues.push(itemValue);
-                        console.log("%s.%s:%s -", __file, __ext, __line, "F item value pushed to set: ", itemValue);
+                        //console.log("%s.%s:%s -", __file, __ext, __line, "F item value pushed to set: ", itemValue);
                         pushQuestion(fType[fIndex], orderedForm);
                         break;
                     }

@@ -198,7 +198,7 @@ exports.addCandidate = function (req, res) {
                             personalDataId: documentId
                         });
 
-                        console.log("newCandidateEntry: ", newCandidateEntry);
+                        //console.log("newCandidateEntry: ", newCandidateEntry);
 
                         // Check if we need to send an SMS to candidate and prepare it if necessary
                         let smsText;

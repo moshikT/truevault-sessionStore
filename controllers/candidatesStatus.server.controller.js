@@ -31,20 +31,15 @@ exports.candidatesStatus = function (req, res) {
             }
         }
 
-        console.log("candidatesPersonalDataIds", candidatesPersonalDataIds);
         // find all candidates personal data by their personal data ids
         let candidatesWithPersonalData = [];
         trueVault_Ctrl.findAll(candidatesPersonalDataIds) // return an array of json obj with id & data
             .then(candidatesPersonalData => {
-                console.log("candidatesPersonalData", candidatesPersonalData);
-                // bind candidates to their personal data
+                // bind candidates to their personal data retrieved from vault
                 for(let pdIndex = 0; pdIndex < candidatesPersonalData.length; pdIndex++) {
                     for (let cIndex = 0; cIndex < candidateItems.length; cIndex++) {
-                        //console.log("candidatesPersonalData[pdIndex]['id'] ", candidatesPersonalData[pdIndex].id);
-                        //console.log("candidateItems[cIndex]['id'] ", candidateItems[cIndex]);
                         if(candidatesPersonalData[pdIndex]['id'] == candidateItems[cIndex]['personalDataId']) {
                             candidateItems[cIndex].personalData = candidatesPersonalData[pdIndex]['data'];
-                            console.log("candidate with personalData ", candidateItems[cIndex]);
                             break;
                         }
                     }

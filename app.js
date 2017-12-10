@@ -10,6 +10,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var fs = require('fs');
+const session = require('express-session');
 
 var dbName = process.env.DB_URL;
     //'mongodb://127.0.0.1/candidateLocal'; //local
@@ -39,6 +40,14 @@ db.once('open', function() {
 
 var app = express();
 app.disable('x-powered-by')
+
+// set a session
+app.use(session({
+    secret: 'some secret',
+    resave: false,
+    saveUninitialized: true
+}));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

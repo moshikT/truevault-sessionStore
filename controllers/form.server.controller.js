@@ -60,7 +60,7 @@ exports.getInfo = function (req, res) {
 
 // This is where we go to after the user submits the questionnaire form
 exports.saveFormResults = function (req, res) {
-    console.log("%s.%s:%s -", __file, __ext, __line, "form details", req.body);
+    //console.log("%s.%s:%s -", __file, __ext, __line, "form details", req.body);
     var formData = req.body;
     delete formData['agree'];
     delete formData['submit_btn'];
@@ -239,6 +239,18 @@ exports.getThankYouPage = function (req, res) {
             textAlign: pageText.textAlign,
             customer: req.customer
         });
+    });
+};
+
+exports.login = function (req, res) {
+    let uNameText = (req.customer.language == 'en') ? 'Username' : 'שם משתמש';
+    let uPasswordText = (req.customer.language == 'en') ? 'Password' : 'סיסמה';
+    res.render('login', { title: '',
+        isInEnglish: (req.customer.language == 'en'),
+        textDirection: (req.customer.language == 'en') ? 'ltr' : 'rtl',
+        client: req.client,
+        uNameText: uNameText,
+        uPasswordText: uPasswordText
     });
 };
 
