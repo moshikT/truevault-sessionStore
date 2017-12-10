@@ -152,16 +152,20 @@ router.route('/:sid/:qid')
         for (var index = 0; index < req.candidate.form.length; index++) {
             if(req.candidate.form[index].id == req.params.qid) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "qid: ", req.params.qid);
+                let appExpId = false;
                 if (req.candidate.form[index].type === 'A') {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "App experience");
-                    req.candidate.markModified('appExp');
-                    req.candidate.appExp = req.candidate.form[index].finalAnswer;
+                    appExpId = true;
                 }
                 if(req.body._id) {
                     delete req.body._id;
                 }
+                // Loop through the fields in the request body (finalAnswer, AnswerSwitched etc.) and copy them to the relevant qid in the form
                 for (var p in req.body) {
                     req.candidate.form[index][p] = req.body[p];
+                }
+                if (appExpId) { // This is an appExp question so need to store the appExp separately
+                    console.log("%s.%s:%s -", __file, __ext, __line, "App experience - ", req.candidate.form[index].finalAnswer);
+                    req.candidate.appExp = req.candidate.form[index].finalAnswer;
                 }
                 console.log("%s.%s:%s -", __file, __ext, __line, "formDurationInMinutes: ", req.candidate.formDurationInMinutes, "; timeAnsweredInSeconds", req.candidate.form[index].timeAnsweredInSeconds);
                 req.candidate.formDurationInMinutes = (req.candidate.formDurationInMinutes + req.candidate.form[index].timeLastAnswered / 60).toFixed(2);
