@@ -12,7 +12,7 @@ router.use('/:sid/:field', function (req, res, next) {
         console.log("%s.%s:%s -", __file, __ext, __line, "err: ", err, '; candidate: ', candidate.fullName);
         if (err)  { // Error
             // Return an error to the API caller
-            res.status(500).send("Error (" + __file + ":" + __line + ") - ", err);
+            res.status(500).send("Error (" + __file + ":" + __line + ") - " + err);
             return;
         }
         if (!candidate) { // No candidate was found
@@ -50,7 +50,7 @@ router.route('/:sid/:field')
             // Save the modified candidate in the db
             req.candidate.save(function(err, entry){
                 if(err) { // There was an error saving
-                    res.status(500).send("Error while saving candidate (" + __file + ":" + __line + ") - ", err);
+                    res.status(500).send("Error while saving candidate (" + __file + ":" + __line + ") - " + err);
                 }
                 else { // Successfully saved
                     console.log("%s.%s:%s -", __file, __ext, __line, "Entry saved!");

@@ -25,7 +25,7 @@ router.use('/:sid', function (req, res, next) {
     console.log("send patch request to sid: ", req.params.sid);
     Candidate.findOne({'session.id': req.params.sid}, function (err, candidate) {
         if (err) {
-            res.status(500).send("Error while searching for sid (" + __file + ":" + __line + ") - ", err);
+            res.status(500).send("Error while searching for sid (" + __file + ":" + __line + ") - " + err);
             return;
         };
         /* Add the question found to the request and pass it to the next action - get or patch */
@@ -108,7 +108,7 @@ router.route('/:sid')
         req.candidate.save(function(err, entry){
             if(err) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "error saving question data! ", err);
-                res.status(500).send("Error saving question data (" + __file + ":" + __line + ") - ", err);
+                res.status(500).send("Error saving question data (" + __file + ":" + __line + ") - " + err);
             }
             else {
                 res.json(entry);
@@ -123,7 +123,7 @@ router.use('/:sid/:qid', function (req, res, next) {
     Candidate.findOne({'session.id': req.params.sid}, function (err, candidate) {
         if (err) {
             console.log("%s.%s:%s -", __file, __ext, __line, "Error retrieving session: ", err);
-            res.status(500).send("Error retrieving session (" + __file + ":" + __line + ") - ", err);
+            res.status(500).send("Error retrieving session (" + __file + ":" + __line + ") - " + err);
             return;
         };
         /* Add the question found to the request and pass it to the next action - get or patch */
@@ -151,7 +151,9 @@ router.route('/:sid/:qid')
         console.log("%s.%s:%s -", __file, __ext, __line, "patch question: ", req.params.qid);
         for (var index = 0; index < req.candidate.form.length; index++) {
             if(req.candidate.form[index].id == req.params.qid) {
+                console.log("%s.%s:%s -", __file, __ext, __line, "qid: ", req.params.qid);
                 if (req.candidate.form[index].type === 'A') {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "App experience");
                     req.candidate.markModified('appExp');
                     req.candidate.appExp = req.candidate.form[index].finalAnswer;
                 }
@@ -179,7 +181,7 @@ router.route('/:sid/:qid')
                             time_to_answer: timeToAnswer,
                             error: err
                         });
-                        res.status(500).send("Error while saving answer (" + __file + ":" + __line + ") - ", err);
+                        res.status(500).send("Error while saving answer (" + __file + ":" + __line + ") - " + err);
                     }
                     else {
                         mixpanel.track('Question Answered', {

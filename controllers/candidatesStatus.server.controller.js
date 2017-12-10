@@ -67,7 +67,7 @@ exports.candidatesSaveExp = function (req, res) {
                                 candidate.save(function (err, entry) {
                                     if (err) {
                                         console.log("%s.%s:%s -", __file, __ext, __line, "error saving appExp! ", err);
-                                        res.status(500).send("Error saving appExp (" + __file + ":" + __line + ") - ", err);
+                                        res.status(500).send("Error saving appExp (" + __file + ":" + __line + ") - " + err);
                                     }
                                     else {
                                         console.log("%s.%s:%s -", __file, __ext, __line, "Updated candidate: ", candidate.session.id);
