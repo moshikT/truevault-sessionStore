@@ -123,12 +123,13 @@ if (answers) {
         </th>
         <th data-field="recSource" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->מקור גיוס</th>
         <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
+        <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
         <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+        <th data-field="email"><!--FIXME: Phone-->דוא"ל</th>
         <th data-field="department"><!--FIXME: Phone-->מחלקה</th>
         <th data-field="team"><!--FIXME: Phone-->צוות</th>
         <th data-field="cvScreenDate"><!--FIXME: Phone-->תאריך<br>סינון קו"ח</th>
         <th data-field="cvScreenResult"><!--FIXME: Phone-->סינון<br>עפ"י קו"ח</th>
-        <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
         <th data-field="dateCompleted" data-sortable="true" data-sorter="dateSorter"><!--FIXME: Date Completed-->תאריך
             מילוי
         </th>
@@ -259,12 +260,13 @@ if (answers) {
         <td class="<%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>"><%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %></td>
         <td><%- candidate.recruitmentSource %></td>
         <td><%- candidate.fullName %></td>
+        <td><%= candidate.id %></td>
         <td id="phoneNumber_<%= candidate.session.id %>"><%= candidate.phoneNumber %></td>
+        <td id="email"><a href='mailto:<%= candidate.email %>' target='_blank'><!--FIXME: send email -->שלח/י דוא"ל</a></td>
         <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
         <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
         <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
         <td id="cvScreenResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.cvScreenResult %></td>
-        <td><%= candidate.id %></td>
         <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>"><%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %></td>
         <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
         <td>
@@ -447,9 +449,9 @@ if (answers) {
                     ],
                 // Set columns which aren't editable
                 <% if (advanced) { %>
-                preventColumns: [1, 2, 3, 10, 11, 12, 13, 14, 15, 16, 17],
+                preventColumns: [1, 2, 3, 6, 11, 12, 13, 14, 15, 16, 17, 18],
                 <% } else { %>
-                preventColumns: [1, 2, 3, 4, 9, 10, 11, 12, 13]
+                preventColumns: [1, 2, 3, 4, 5, 6, 10, 11, 12, 13]
                 <% } %>
             });
         }
