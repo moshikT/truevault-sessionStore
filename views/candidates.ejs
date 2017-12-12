@@ -110,7 +110,7 @@ if (answers) {
     }
 }
 %>
-<div class="table-responsive" style="overflow-x: visible;"> <!-- Makes our table into a bootstrap responsive table which behaves nicely on mobiles -->
+<div id="tableDiv" class="table-responsive" style="overflow-x: visible; display:none;"> <!-- Makes our table into a bootstrap responsive table which behaves nicely on mobiles -->
 <table id="candidates"
        data-sort-name="date"
        data-sort-order="desc"
@@ -398,8 +398,9 @@ if (answers) {
     // Parse all elements of class "dateValue" and format them to correct date format
     let dateCells = document.getElementsByClassName("dateValue");
     for (let i = 0; i < dateCells.length; i++) {
-        const dateStr = dateCells[i].innerText; // Date is expected to be parse-able (ISO format)
-        const dateObj = new Date(dateStr);      // Create a date obj for convenience
+        //const dateStr = dateCells[i].innerText; // Date is expected to be parse-able (ISO format)
+        //const dateObj = new Date(dateStr);      // Create a date obj for convenience
+        const dateObj = new Date(parseInt(dateCells[i].attributes['data-num'].value, 10));      // Create a date obj for convenience
         // Only way to format as we wish - all the toLocaleString etc. functions don't do the job well
         dateCells[i].innerText = formatDate(dateObj, "<%= customer.dateFormat?customer.dateFormat:'YYYY-MM-DD HH:mm' %>");
     }
@@ -503,6 +504,10 @@ if (answers) {
         }
         <% } %>
     });
+
+    // Now we can un-hide the div
+    $('#tableDiv').css('display','block');
+
 
 
     // Method called when a cell value is changed
