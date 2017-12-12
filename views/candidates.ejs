@@ -281,7 +281,15 @@ if (answers) {
         <td><%- candidate.fullName %></td>
         <td><%= candidate.id %></td>
         <td id="phoneNumber_<%= candidate.session.id %>"><%= candidate.phoneNumber %></td>
-        <td id="email"><a href='mailto:<%= candidate.email %>' target='_blank'><!--FIXME: send email -->שלח/י דוא"ל</a></td>
+        <%
+            var mailSubject = encodeURIComponent('מועמדות לחברת ' + customer.name);
+            var mailContent = customer.SMSTextA?customer.SMSTextA:customer.SMSTextB;
+            if (mailContent) {
+                mailContent = mailContent.replace('$candidateName', candidate.fullName).replace('$formLink', candidate.linkToForm);
+                mailContent = encodeURIComponent(mailContent);
+            }
+        %>
+        <td id="email"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י דוא"ל</a></td>
         <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
         <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
         <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
@@ -393,7 +401,7 @@ if (answers) {
         const dateStr = dateCells[i].innerText; // Date is expected to be parse-able (ISO format)
         const dateObj = new Date(dateStr);      // Create a date obj for convenience
         // Only way to format as we wish - all the toLocaleString etc. functions don't do the job well
-        dateCells[i].innerText = formatDate(dateObj, "<%= dateFormat?dateFormat:'YYYY-MM-DD HH:mm' %>");
+        dateCells[i].innerText = formatDate(dateObj, "<%= customer.dateFormat?customer.dateFormat:'YYYY-MM-DD HH:mm' %>");
     }
 
     // Add 'export to xlsx' button to table

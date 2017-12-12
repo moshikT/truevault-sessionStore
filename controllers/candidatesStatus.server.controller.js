@@ -26,7 +26,7 @@ exports.candidatesStatus = function (req, res) {
             title: 'Manage Candidates',
             advanced: (req.tableMode === 'advanced'),
             answers: (req.tableMode === 'answers'),
-            dateFormat: req.customer.dateFormat,
+            customer: req.customer,
             candidates: candidateItems
         };
         const lintErr = ejsLint('candidates', options); // Lint check the template
