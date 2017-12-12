@@ -51,6 +51,10 @@
     <% } %> color: white;
     }
 
+    .wideCol {
+        min-width: 300px;
+    }
+
 </style>
 <header>
     <div class="container col-md-12" style="text-align: center;">
@@ -95,7 +99,7 @@ if (answers) {
 }
 %>
 <table id="candidates"
-       data-sort-name="dateCompleted"
+       data-sort-name="date"
        data-sort-order="desc"
        style="width:100%">
     <thead>
@@ -158,9 +162,9 @@ if (answers) {
         <th data-field="workDate">תאריך <br>תחילת עבודה</th>
         <th data-field="processUpdate">עדכון תהליך<br>מועמד באיילון</th>
         <th data-field="startedWork">התחיל לעבוד</th>
-        <th data-field="recruiterNotes">הערות</th>
+        <th data-field="recruiterNotes" class="wideCol">הערות</th>
         <% if (advanced) { %>
-        <th data-field="ehNotes">הערות EH</th>
+        <th data-field="ehNotes" class="wideCol">הערות EH</th>
         <% } %>
         <% } %>
     </tr>
