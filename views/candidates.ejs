@@ -118,7 +118,7 @@ if (answers) {
         <% console.log("117: Answers mode"); %>
         <% }
         else { %>
-        <th data-field="date" data-sortable="true" data-sorter="dateSorter" style="text-align: right">
+        <th data-field="date" data-sortable="true" data-sort-name="_date_data" data-sorter="dateNumSorter" style="text-align: right">
             <!--FIXME: Date Added-->תאריך <br>קבלת קוח
         </th>
         <th data-field="recSource" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->מקור גיוס</th>
@@ -130,7 +130,7 @@ if (answers) {
         <th data-field="team"><!--FIXME: Phone-->צוות</th>
         <th data-field="cvScreenDate"><!--FIXME: Phone-->תאריך<br>סינון קו"ח</th>
         <th data-field="cvScreenResult"><!--FIXME: Phone-->סינון<br>עפ"י קו"ח</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sorter="dateSorter"><!--FIXME: Date Completed-->תאריך
+        <th data-field="dateCompleted" data-sortable="true" data-sort-name="_dateCompleted_data" data-sorter="dateNumSorter"><!--FIXME: Date Completed-->תאריך
             מילוי
         </th>
         <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
@@ -160,7 +160,7 @@ if (answers) {
         <th data-field="startedWork">התחיל לעבוד</th>
         <th data-field="recruiterNotes">הערות</th>
         <% if (advanced) { %>
-        <th data-field="ehNotes">הערות<br>EH</th>
+        <th data-field="ehNotes">הערות EH</th>
         <% } %>
         <% } %>
     </tr>
@@ -257,7 +257,9 @@ if (answers) {
         <% const dateTimeCreated = candidate.dateTimeCreated; %>
         <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
         <% report = candidate.report; %>
-        <td class="<%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>"><%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %></td>
+        <td class="<%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCreated != undefined) ? dateTimeCreated.valueOf() : '' %>">
+            <%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %>
+        </td>
         <td><%- candidate.recruitmentSource %></td>
         <td><%- candidate.fullName %></td>
         <td><%= candidate.id %></td>
@@ -267,7 +269,9 @@ if (answers) {
         <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
         <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
         <td id="cvScreenResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.cvScreenResult %></td>
-        <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>"><%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %></td>
+        <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCompleted != undefined) ? dateTimeCompleted.valueOf() : '' %>">
+            <%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %>
+        </td>
         <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
         <td>
             <% if ((report) && (candidate.formCompleted)) { %>
@@ -348,15 +352,30 @@ if (answers) {
         return 0;
     }
 
+    // Sorting function for dates stored as number
+    function dateNumSorter(a, b) {
+        if (a.num < b.num) return -1;
+        if (a.num > b.num) return 1;
+        return 0;
+    }
+
+    function formatDate(dateObj, dateFormat) {
+        let dateStr = dateFormat.replace('YYYY', dateObj.getFullYear());      // First look for full-year (4-digit)
+        dateStr = dateStr.replace('YY', dateObj.getFullYear().toString().slice(-2));   // Now look for 2-digit year (if 4-digit wasn't found...)
+        dateStr = dateStr.replace('MM', ('0' + (1 + dateObj.getMonth())).slice(-2)); // Now replace 2-digit month
+        dateStr = dateStr.replace('DD', ('0' + dateObj.getDate()).slice(-2));        // 2-digit day-of-month
+        dateStr = dateStr.replace('HH', ('0' + dateObj.getHours()).slice(-2));       // 2-digit hour
+        dateStr = dateStr.replace('mm', ('0' + dateObj.getMinutes()).slice(-2));        // 2-digit minute
+        return dateStr;
+    }
+
     // Parse all elements of class "dateValue" and format them to correct date format
     let dateCells = document.getElementsByClassName("dateValue");
     for (let i = 0; i < dateCells.length; i++) {
         const dateStr = dateCells[i].innerText; // Date is expected to be parse-able (ISO format)
         const dateObj = new Date(dateStr);      // Create a date obj for convenience
         // Only way to format as we wish - all the toLocaleString etc. functions don't do the job well
-        dateCells[i].innerText = dateObj.getFullYear() + '-' + ('0' + (1 + dateObj.getMonth())).slice(-2) +
-            '-' + ('0' + dateObj.getDate()).slice(-2) + ' ' +
-            ('0' + dateObj.getHours()).slice(-2) + ':' + ('0' + dateObj.getMinutes()).slice(-2);
+        dateCells[i].innerText = formatDate(dateObj, "<%= dateFormat?dateFormat:'YYYY-MM-DD HH:mm' %>");
     }
 
     // Add 'export to xlsx' button to table
@@ -420,6 +439,7 @@ if (answers) {
                             '<option value="שרות בנקים למשכנתאות">שרות בנקים למשכנתאות</option>' +
                             '<option value="מכירות תאונות אישיות ואלה">מכירות תאונות אישיות ואלה</option>' +
                             '<option value="מכירות תאונות אישיות">מכירות תאונות אישיות</option>' +
+                            '<option value="מכירות תאונות אישיות">אחריות מקצועית זמני</option>' +
                             '</select>'),  // 6 - team
                         $('<select>' +
                             '<option></option>' +
@@ -449,7 +469,7 @@ if (answers) {
                     ],
                 // Set columns which aren't editable
                 <% if (advanced) { %>
-                preventColumns: [1, 2, 3, 6, 11, 12, 13, 14, 15, 16, 17, 18],
+                preventColumns: [1, 6, 11, 12, 13, 14, 15, 16, 17, 18],
                 <% } else { %>
                 preventColumns: [1, 2, 3, 4, 5, 6, 11, 12, 13, 14]
                 <% } %>

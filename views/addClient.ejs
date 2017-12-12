@@ -78,6 +78,14 @@
                                   name="thankYouText" placeholder='Thank You Text' cols="40" rows="2"
                                   style="opacity: 0.7;"><%= (customer.thankYouText) ? customer.thankYouText : '' %></textarea>
                     </div>
+                    <div id="clientDateFormat" style="padding: 20px;">
+                        <input onclick="scrollToNextElement('clientDateFormat')" id="clientDateFormat" class="inputs"
+                               name="dateFormat" type="text"
+                               value='<%= (customer.dateFormat) ? customer.dateFormat : '' %>'
+                               placeholder='Date Format'
+                               style="border-style: none none solid none;text-align: center;opacity: 0.7">
+                        </input>
+                    </div>
                     <div id="clientSMSOrigNum" style="padding: 20px;">
                         <input onclick="scrollToNextElement('clientSMSOrigNum')" id="clientSMSOrigNum" class="inputs"
                                name="smsOrigNum" type="text"
