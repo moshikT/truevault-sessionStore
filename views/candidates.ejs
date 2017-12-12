@@ -55,13 +55,25 @@
         min-width: 300px;
     }
 
+    /* Use to body ID bootstrap-overrides to give this a huge weight so it overrides bootstrap */
+    #bootstrap-overrides .xlsx {
+        display: block;
+        float: right;
+        margin-right: 13px;
+    }
+
+    /* Select any table that's inside the table-responsive div */
+    .table-responsive .table {
+        max-width: none; /* This helps Safari on iOS to understand that it has to allow horizontal scrolling of the table */
+    }
+
 </style>
 <header>
     <div class="container col-md-12" style="text-align: center;">
         <img class="logo" style="height: 100px;padding-top:20px;" src="/images/EH_logo.png"/>
     </div>
 </header>
-<body dir="rtl"><!-- FIXME: ltr -->
+<body id="bootstrap-overrides" dir="rtl"><!-- FIXME: ltr -->
 <ul>
 </ul>
 <%
@@ -98,6 +110,7 @@ if (answers) {
     }
 }
 %>
+<div class="table-responsive" style="overflow-x: visible;"> <!-- Makes our table into a bootstrap responsive table which behaves nicely on mobiles -->
 <table id="candidates"
        data-sort-name="date"
        data-sort-order="desc"
@@ -319,6 +332,7 @@ if (answers) {
     <% } %>
     </tbody>
 </table>
+</div>
 </body>
 
 <% include partials/footer %>
