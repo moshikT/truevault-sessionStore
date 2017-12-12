@@ -143,6 +143,9 @@ if (answers) {
         <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
         <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
         <th data-field="email"><!--FIXME: Phone-->דוא"ל</th>
+        <% if (advanced) { %>
+            <th data-field="ehNotes" class="wideCol">הערות EH</th>
+        <% } %>
         <th data-field="department"><!--FIXME: Phone-->מחלקה</th>
         <th data-field="team"><!--FIXME: Phone-->צוות</th>
         <th data-field="cvScreenDate"><!--FIXME: Phone-->תאריך<br>סינון קו"ח</th>
@@ -176,9 +179,6 @@ if (answers) {
         <th data-field="processUpdate">עדכון תהליך<br>מועמד באיילון</th>
         <th data-field="startedWork">התחיל לעבוד</th>
         <th data-field="recruiterNotes" class="wideCol">הערות</th>
-        <% if (advanced) { %>
-        <th data-field="ehNotes" class="wideCol">הערות EH</th>
-        <% } %>
         <% } %>
     </tr>
     </thead>
@@ -290,6 +290,9 @@ if (answers) {
             }
         %>
         <td id="email"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י דוא"ל</a></td>
+        <% if (advanced) { %>
+        <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
+        <% } %>
         <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
         <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
         <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
@@ -332,9 +335,6 @@ if (answers) {
         <td id="processUpdate_<%= candidate.session.id %>" data-editor="10"><%= candidate.processUpdate %></td>
         <td id="startedWork_<%= candidate.session.id %>" data-editor="2"><%= candidate.startedWork %></td>
         <td id="recruiterNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.recruiterNotes %></td>
-        <% if (advanced) { %>
-        <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
-        <% } %>
     </tr>
     <% } %>
     <% } %>
@@ -496,7 +496,7 @@ if (answers) {
                     ],
                 // Set columns which aren't editable
                 <% if (advanced) { %>
-                preventColumns: [1, 6, 11, 12, 13, 14, 15, 16, 17, 18],
+                preventColumns: [1, 6, 12, 13, 14, 15, 16, 17, 18, 19],
                 <% } else { %>
                 preventColumns: [1, 2, 3, 4, 5, 6, 11, 12, 13, 14]
                 <% } %>
