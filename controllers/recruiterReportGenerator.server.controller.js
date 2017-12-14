@@ -243,7 +243,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                             verbalData.id = factorVerbal['SHORT NAME'];
                             verbalData.title = factorVerbal[langPrefix + ' FACTOR'];
                             console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; factorVerbal[verbalKey] - ", factorVerbal[verbalKey]);
-                            verbalData.text = factorVerbal[verbalKey].split('\n');
+                            verbalData.text = factorVerbal[verbalKey]?factorVerbal[verbalKey].split('\n'):'';
 
                             let elementExists = false;
                             if (isStrength) {
