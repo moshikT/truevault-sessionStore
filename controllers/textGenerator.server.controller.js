@@ -2,11 +2,11 @@
 exports.initCandidateFieldNames = function (lang, callback) {
 
     let addCandidateText = {lang: lang};
+    addCandidateText.textDir = exports.getLangDir(lang);
+    addCandidateText.textAlign = exports.getLangAlign(lang);
     switch (lang) {
         case 'he':
             addCandidateText = {
-                textAlign: 'right',
-                textDir: 'rtl',
                 title: 'הוסף מועמד',
                 subTitle: 'הוסף מועמד עבור ',
                 nameField: "שם מלא",
@@ -26,8 +26,6 @@ exports.initCandidateFieldNames = function (lang, callback) {
         case 'en':
         default:
             addCandidateText = {
-                textAlign: 'left',
-                textDir: 'ltr',
                 title: 'Add Candidate',
                 subTitle: 'Add candidate for',
                 nameField: "Full Name",
@@ -51,17 +49,15 @@ exports.initCandidateFieldNames = function (lang, callback) {
 
 exports.initIndexPageText = function (lang, callback) {
     var pageText = {lang: lang};
+    pageText.textDir = exports.getLangDir(lang);
+    pageText.textAlign = exports.getLangAlign(lang);
     switch (lang) {
         case 'he':
-            pageText.textAlign = 'right';
-            pageText.textDir = 'rtl';
             pageText.next = 'הבא';
             pageText.back = 'חזור';
             break;
         case 'en':
         default:
-            pageText.textAlign = 'left';
-            pageText.textDir = 'ltr';
             pageText.next = 'Next';
             pageText.back = 'Back';
             break;
@@ -71,17 +67,15 @@ exports.initIndexPageText = function (lang, callback) {
 
 exports.initFormPageText = function (lang, callback) {
     var pageText = {lang: lang};
+    pageText.textDir = exports.getLangDir(lang);
+    pageText.textAlign = exports.getLangAlign(lang);
     switch (lang) {
         case 'he':
             pageText.submitText = "להגשת המבחן לחץ כאן";
-            pageText.textAlign = 'right';
-            pageText.textDir = 'rtl';
             break;
         case 'en':
         default:
             pageText.submitText = "Submit";
-            pageText.textAlign = 'left';
-            pageText.textDir = 'ltr';
             break;
     }
     callback(pageText);
@@ -89,28 +83,19 @@ exports.initFormPageText = function (lang, callback) {
 
 exports.initThankYouText = function (lang, callback) {
     var pageText = {lang: lang};
-    switch (lang) {
-        case 'he':
-            pageText.textAlign = 'right';
-            pageText.textDir = 'rtl';
-            break;
-        case 'en':
-        default:
-            pageText.textAlign = 'left';
-            pageText.textDir = 'ltr';
-            break;
-    }
+    pageText.textDir = exports.getLangDir(lang);
+    pageText.textAlign = exports.getLangAlign(lang);
     callback(pageText);
 };
 
 exports.initRecruiterReportText = function (lang, callback) {
     let pageText = {lang: lang};
+    pageText.textDir = exports.getLangDir(lang);
+    pageText.textAlign = exports.getLangAlign(lang);
     switch (lang) {
         case 'he':
             pageText = {
                 title: 'דוח מועמד - ',
-                textAlign: 'right',
-                textDir: 'rtl',
                 idField: "ת.ז: ",
                 dateFormCompletedField: "מילוי השאלון: ",
                 beforeXdaysField: "  (לפני X ימים)",
@@ -135,8 +120,6 @@ exports.initRecruiterReportText = function (lang, callback) {
         default:
             pageText = {
                 title: 'Candidate Report - ',
-                textAlign: 'left',
-                textDir: 'ltr',
                 idField: "ID: ",
                 dateFormCompletedField: "Test Date: ",
                 beforeXdaysField: "(X days ago)",
@@ -170,5 +153,29 @@ exports.isLangGenderless = function (lang) {
         // List of genderless languages
         default:
             return true;
+    }
+}
+
+exports.getLangDir = function(lang) {
+    switch (lang) {
+        // List of RTL languages
+        case 'he':
+            return 'rtl';
+        // List of LTR languages
+        case 'en':
+        default:
+            return 'ltr';
+    }
+}
+
+exports.getLangAlign = function(lang) {
+    switch (lang) {
+        // List of RTL languages
+        case 'he':
+            return 'right';
+        // List of LTR languages
+        case 'en':
+        default:
+            return 'left';
     }
 }

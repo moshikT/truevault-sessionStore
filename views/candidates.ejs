@@ -22,6 +22,18 @@
 </head>
 <!-- Define styles for a nice candidates table -->
 <style>
+    /* On wide screen allow bootstrap container to scale to maximum available width */
+    @media (min-width: 1200px) {
+        .container {
+            width: auto;
+        }
+    }
+
+    html {
+        max-width: 100%;
+        /*overflow-x: hidden;*/
+    }
+
     #candidates {
         font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
         border-collapse: collapse;
@@ -45,10 +57,13 @@
         padding-top: 12px;
         padding-bottom: 12px;
         text-align: right /*FIXME:left*/;
-    <% if (advanced) { %> background-color: palevioletred;
-    <% }
-    else { %> background-color: cornflowerblue;
-    <% } %> color: white;
+        <% if (advanced) { %>
+            background-color: palevioletred;
+        <% }
+        else { %>
+            background-color: cornflowerblue;
+        <% } %>
+        color: white;
     }
 
     .wideCol {
@@ -66,6 +81,77 @@
     .table-responsive .table {
         max-width: none; /* This helps Safari on iOS to understand that it has to allow horizontal scrolling of the table */
     }
+
+    .zui-wrapper {
+        position: relative;
+    }
+    .zui-scroller {
+        margin-<%= textAlign %>: 261px;
+        overflow-x: scroll;
+        overflow-y: visible;
+        padding-bottom: 5px;
+        width: 100%;
+    }
+    .zui-table .zui-sticky-col {
+        /*border-left: solid 1px #DDEFEF;*/
+        /*border-right: solid 1px #DDEFEF;*/
+        <%= textAlign %>: -0px;
+        position: absolute;
+        top: auto;
+        width: 120px;
+        border: 1px solid #ddd;
+        padding: 8px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }
+
+    .zui-table .zui-sticky-col2 {
+        /*border-left: solid 1px #DDEFEF;*/
+        /*border-right: solid 1px #DDEFEF;*/
+        <%= textAlign %>: 120px;
+        position: absolute;
+        top: auto;
+        width: 120px;
+        border: 1px solid #ddd;
+        padding: 8px;
+    }
+
+    .zui-table .zui-sticky-col th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: right /*FIXME:left*/;
+        color: white;
+        <% if (advanced) { %>
+            background-color: palevioletred;
+        <% }
+        else { %>
+            background-color: cornflowerblue;
+        <% } %>
+    }
+
+    .zui-table .zui-sticky-col2 th {
+        padding-top: 12px;
+        padding-bottom: 12px;
+        text-align: right /*FIXME:left*/;
+        color: white;
+        <% if (advanced) { %>
+            background-color: palevioletred;
+        <% }
+        else { %>
+            background-color: cornflowerblue;
+        <% } %>
+    }
+
+    .zui-table .th-inner {
+        color: white;
+        <% if (advanced) { %>
+            background-color: palevioletred;
+        <% }
+        else { %>
+            background-color: cornflowerblue;
+        <% } %>
+    }
+
 
 </style>
 <header>
@@ -110,236 +196,241 @@ if (answers) {
     }
 }
 %>
-<div id="tableDiv" class="table-responsive" style="overflow-x: visible; display:none;"> <!-- Makes our table into a bootstrap responsive table which behaves nicely on mobiles -->
-<table id="candidates"
-       data-sort-name="date"
-       data-sort-order="desc"
-       style="width:100%">
-    <thead>
-    <tr>
-        <% if (answers) { %>
-        <% console.log("108: Answers mode"); %>
-        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
-        <%
-            // Add all the columns for <qid>
-        for (let j = 0;j < maxAnswer; j++) { %>
-        <th data-field="<%= orderedAnswers[j] %>" data-sortable="true"
-            data-sorter="textSorter"><%= orderedAnswers[j] %></th>
-        <% }
-            // Add all the columns for <qid>_time
-        for (let j = 0;j < maxAnswer; j++) { %>
-        <th data-field="<%= orderedAnswers[j] %>_time" data-sortable="true"
-            data-sorter="textSorter"><%= orderedAnswers[j] %>_time
-        </th>
-        <% } %>
-        <% console.log("117: Answers mode"); %>
-        <% }
-        else { %>
-        <th data-field="date" data-sortable="true" data-sort-name="_date_data" data-sorter="dateNumSorter" style="text-align: right">
-            <!--FIXME: Date Added-->תאריך <br>קבלת קוח
-        </th>
-        <th data-field="recSource" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->מקור גיוס</th>
-        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
-        <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
-        <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
-        <th data-field="email"><!--FIXME: Phone-->דוא"ל</th>
-        <% if (advanced) { %>
-            <th data-field="ehNotes" class="wideCol">הערות EH</th>
-        <% } %>
-        <th data-field="department"><!--FIXME: Phone-->מחלקה</th>
-        <th data-field="team"><!--FIXME: Phone-->צוות</th>
-        <th data-field="cvScreenDate"><!--FIXME: Phone-->תאריך<br>סינון קו"ח</th>
-        <th data-field="cvScreenResult"><!--FIXME: Phone-->סינון<br>עפ"י קו"ח</th>
-        <th data-field="dateCompleted" data-sortable="true" data-sort-name="_dateCompleted_data" data-sorter="dateNumSorter"><!--FIXME: Date Completed-->תאריך
-            מילוי
-        </th>
-        <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
-        <th data-field="report"><!--FIXME: Report-->דוח</th>
-        <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
-        </th>
-        <% if (advanced) { %>
-        <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש
-        <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
-        <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
-        <th data-field="gooLink" data-sortable="false"><!--FIXME: goo.gl -->goo.gl</th>
-        <% } %>
-        <th data-field="phoneInterviewDate">תאריך <br>ראיון טלפוני</th>
-        <th data-field="phoneInterviewResult">ראיון טלפוני</th>
-        <th data-field="interviewDate">תאריך <br>ראיון פרונטלי</th>
-        <th data-field="interviewResult">ראיון פרונטלי</th>
-        <th data-field="auditDate">תאריך מבדק + ראיון</th>
-        <th data-field="auditResult">מבדק אמינות</th>
-        <th data-field="hrResult">ראיון מש"א</th>
-        <th data-field="refCallDate">תאריך<br>שיחת ממליצים</th>
-        <th data-field="refCallResult">שיחת ממליצים</th>
-        <th data-field="contractDate">תאריך<br>חתימת חוזה</th>
-        <th data-field="reportRating">השוואה לדוח</th>
-        <th data-field="hired">התקבל</th>
-        <th data-field="workDate">תאריך <br>תחילת עבודה</th>
-        <th data-field="processUpdate">עדכון תהליך<br>מועמד באיילון</th>
-        <th data-field="startedWork">התחיל לעבוד</th>
-        <th data-field="recruiterNotes" class="wideCol">הערות</th>
-        <% } %>
-    </tr>
-    </thead>
-    <tbody>
-    <% for (let i = 0; i < candidates.length; i++) {
-        const candidate = candidates[i];
-        formjson = candidate.form; // Get the answers
-        /*let appExp = ''; // For holding the app experience response
-        if (advanced) {
-            for (let j = 0; j < formjson.length; j++) {
-                if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
-                    if (formjson[j].type === 'A') { //is this an app exp type question?
-                        if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
-                            appExp = formjson[j].finalAnswer; //save the final answer
+<div class="wrapper container">
+    <div id="tableDiv" class="table-responsive" style="overflow-x: visible; display:none;"> <!-- Makes our table into a bootstrap responsive table which behaves nicely on mobiles -->
+        <div>
+            <table id="candidates" class="zui-table"
+                   data-sort-name="date"
+                   data-sort-order="desc"
+                   style="width:100%">
+                <thead>
+                <tr>
+                    <% if (answers) { %>
+                        <% console.log("108: Answers mode"); %>
+                        <th data-field="name" data-sortable="true" data-sorter="textSorter"><!--FIXME: Name-->שם מועמד</th>
+                        <%
+                            // Add all the columns for <qid>
+                            for (let j = 0;j < maxAnswer; j++) { %>
+                                <th data-field="<%= orderedAnswers[j] %>" data-sortable="true"
+                                    data-sorter="textSorter"><%= orderedAnswers[j] %></th>
+                        <% }
+                            // Add all the columns for <qid>_time
+                            for (let j = 0;j < maxAnswer; j++) { %>
+                                <th data-field="<%= orderedAnswers[j] %>_time" data-sortable="true"
+                                    data-sorter="textSorter"><%= orderedAnswers[j] %>_time
+                                </th>
+                            <% } %>
+                           <% console.log("117: Answers mode"); %>
+                    <% }
+                    else { %>
+                    <th data-field="date" data-sortable="true" data-sort-name="_date_data" data-sorter="dateNumSorter"
+                        class = "zui-sticky-col zui-sticky-th" style="text-align: right">
+                        <!--FIXME: Date Added-->תאריך <br>קבלת קוח
+                    </th>
+                    <th data-field="name" data-sortable="true" data-sorter="textSorter" class = "zui-sticky-col2 zui-sticky-th"><!--FIXME: Name-->שם מועמד</th>
+                    <th data-field="recSource" data-sortable="true" data-sorter="textSorter" class = "zui-nonsticky-th"><!--FIXME: Name-->מקור גיוס</th>
+                    <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
+                    <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+                    <th data-field="email"><!--FIXME: Phone-->דוא"ל</th>
+                    <% if (advanced) { %>
+                        <th data-field="ehNotes" class="wideCol">הערות EH</th>
+                    <% } %>
+                    <th data-field="department"><!--FIXME: Phone-->מחלקה</th>
+                    <th data-field="team"><!--FIXME: Phone-->צוות</th>
+                    <th data-field="cvScreenDate"><!--FIXME: Phone-->תאריך<br>סינון קו"ח</th>
+                    <th data-field="cvScreenResult"><!--FIXME: Phone-->סינון<br>עפ"י קו"ח</th>
+                    <th data-field="dateCompleted" data-sortable="true" data-sort-name="_dateCompleted_data" data-sorter="dateNumSorter"><!--FIXME: Date Completed-->תאריך
+                        מילוי
+                    </th>
+                    <th data-field="cv"><!--FIXME: CV-->קו"ח</th>
+                    <th data-field="report"><!--FIXME: Report-->דוח</th>
+                    <th data-field="score" data-sortable="true" data-sorter="textSorter"><!--FIXME: Score-->ציון</th>
+                    </th>
+                    <% if (advanced) { %>
+                    <th data-field="experience" data-sortable="true" data-sorter="textSorter"><!--FIXME: Experience-->חווית משתמש
+                    <th data-field="duration" data-sortable="true" data-sorter="numSorter"><!--FIXME: Duration-->זמן מילוי</th>
+                    <th data-field="formLink" data-sortable="false"><!--FIXME: Form -->שאלון</th>
+                    <th data-field="gooLink" data-sortable="false"><!--FIXME: goo.gl -->goo.gl</th>
+                    <% } %>
+                    <th data-field="phoneInterviewDate">תאריך <br>ראיון טלפוני</th>
+                    <th data-field="phoneInterviewResult">ראיון טלפוני</th>
+                    <th data-field="interviewDate">תאריך <br>ראיון פרונטלי</th>
+                    <th data-field="interviewResult">ראיון פרונטלי</th>
+                    <th data-field="auditDate">תאריך מבדק + ראיון</th>
+                    <th data-field="auditResult">מבדק אמינות</th>
+                    <th data-field="hrResult">ראיון מש"א</th>
+                    <th data-field="refCallDate">תאריך<br>שיחת ממליצים</th>
+                    <th data-field="refCallResult">שיחת ממליצים</th>
+                    <th data-field="contractDate">תאריך<br>חתימת חוזה</th>
+                    <th data-field="reportRating">השוואה לדוח</th>
+                    <th data-field="hired">התקבל</th>
+                    <th data-field="workDate">תאריך <br>תחילת עבודה</th>
+                    <th data-field="processUpdate">עדכון תהליך<br>מועמד באיילון</th>
+                    <th data-field="startedWork">התחיל לעבוד</th>
+                    <th data-field="recruiterNotes" class="wideCol">הערות</th>
+                    <% } %>
+                </tr>
+                </thead>
+                <tbody>
+                <% for (let i = 0; i < candidates.length; i++) {
+                    const candidate = candidates[i];
+                    formjson = candidate.form; // Get the answers
+                    /*let appExp = ''; // For holding the app experience response
+                    if (advanced) {
+                        for (let j = 0; j < formjson.length; j++) {
+                            if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
+                                if (formjson[j].type === 'A') { //is this an app exp type question?
+                                    if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                                        appExp = formjson[j].finalAnswer; //save the final answer
+                                    }
+                                    break;
+                                }
+                            }
                         }
-                        break;
-                    }
-                }
-            }
-        }*/
-        let appExp = candidate.appExp;
-    } %>
-    <%
-    for (let i = 0; i < candidates.length; i++) { // Loop through candidates
-        const candidate = candidates[i];
-        formjson = candidate.form; // Get the answers
-        /*let appExp = ''; // For holding the app experience response
-        if (advanced) {
-            // Run through all the answers and find the answer for the app experience
-            for (let j = 0; j < formjson.length; j++) {
-                if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
-                    if (formjson[j].type === 'A') { //is this an app exp type question?
-                        if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
-                            appExp = formjson[j].finalAnswer; //save the final answer
+                    }*/
+                    let appExp = candidate.appExp;
+                } %>
+                <%
+                for (let i = 0; i < candidates.length; i++) { // Loop through candidates
+                    const candidate = candidates[i];
+                    formjson = candidate.form; // Get the answers
+                    /*let appExp = ''; // For holding the app experience response
+                    if (advanced) {
+                        // Run through all the answers and find the answer for the app experience
+                        for (let j = 0; j < formjson.length; j++) {
+                            if (formjson[j] && formjson[j].hasOwnProperty('type')) { // safety
+                                if (formjson[j].type === 'A') { //is this an app exp type question?
+                                    if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                                        appExp = formjson[j].finalAnswer; //save the final answer
+                                    }
+                                    break;
+                                }
+                            }
                         }
-                        break;
-                    }
-                }
-            }
-        }*/
-        let appExp = candidate.appExp;
-        if ((answers) && (candidate.formCompleted)) {
-            // If we're in answers mode we only include in the table candidates who have completed the form
-            console.log("185: Answers mode");
-            // Clear the orderedAnswers so we don't mix them up with previous answers
-            orderedAnswers = [];
-            // Run through all the answers and sort them into the correct order
-            for (let j = 0; j < formjson.length; j++) {
-                if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
-                    const id = formjson[j].id;
-                    const index = answersOrder[id];
-                    let answer = '', timeToAnswer = '';
-                    if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
-                        answer = formjson[j].finalAnswer;
-                    }
-                    if (formjson[j].hasOwnProperty('timeAnsweredInSeconds')) { // safety
-                        timeToAnswer = formjson[j].timeAnsweredInSeconds;
-                    }
+                    }*/
+                    let appExp = candidate.appExp;
+                    if ((answers) && (candidate.formCompleted)) {
+                        // If we're in answers mode we only include in the table candidates who have completed the form
+                        console.log("185: Answers mode");
+                        // Clear the orderedAnswers so we don't mix them up with previous answers
+                        orderedAnswers = [];
+                        // Run through all the answers and sort them into the correct order
+                        for (let j = 0; j < formjson.length; j++) {
+                            if (formjson[j] && formjson[j].hasOwnProperty('id')) { // safety
+                                const id = formjson[j].id;
+                                const index = answersOrder[id];
+                                let answer = '', timeToAnswer = '';
+                                if (formjson[j].hasOwnProperty('finalAnswer')) { // safety
+                                    answer = formjson[j].finalAnswer;
+                                }
+                                if (formjson[j].hasOwnProperty('timeAnsweredInSeconds')) { // safety
+                                    timeToAnswer = formjson[j].timeAnsweredInSeconds;
+                                }
 
-                    console.log("201: ", id, "; ", answer, "; ", timeToAnswer);
-                    orderedAnswers[index] = {
-                        answer: answer,
-                        timeToAnswer: timeToAnswer
-                    };
-                }
-            }
-        }
-    %>
-    <% if ((answers) && (candidate.formCompleted)) { %>
-    <tr>
-        <% console.log("212: Answers mode"); %>
-        <td><%- candidate.fullName %></td>
-        <%
-            // Run through all the columns and add the answers first
-        for (let j = 0;j < maxAnswer; j++) {
-            if (!orderedAnswers[j]) {
-                orderedAnswers[j] = {
-                    answer: '',
-                    timeToAnswer: ''
-                };
-            } %>
-        <td><%= orderedAnswers[j].answer %></td>
-        <% } %>
-        <%
-            // Run through all the columns and add the times
-        for (let j = 0;j < maxAnswer; j++) { %>
-        <td><%= orderedAnswers[j].timeToAnswer %></td>
-        <% } %>
-    </tr>
-    <% }
-    if (!answers) { %>
-    <tr>
-        <% const dateTimeCreated = candidate.dateTimeCreated; %>
-        <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
-        <% report = candidate.report; %>
-        <td class="<%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCreated != undefined) ? dateTimeCreated.valueOf() : '' %>">
-            <%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %>
-        </td>
-        <td><%- candidate.recruitmentSource %></td>
-        <td><%- candidate.fullName %></td>
-        <td><%= candidate.id %></td>
-        <td id="phoneNumber_<%= candidate.session.id %>"><%= candidate.phoneNumber %></td>
-        <%
-            var mailSubject = encodeURIComponent('מועמדות לחברת ' + customer.name);
-            var mailContent = customer.SMSTextA?customer.SMSTextA:customer.SMSTextB;
-            if (mailContent) {
-                mailContent = mailContent.replace('$candidateName', candidate.fullName).replace('$formLink', candidate.linkToForm);
-                mailContent = encodeURIComponent(mailContent);
-            }
-        %>
-        <td id="email"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י דוא"ל</a></td>
-        <% if (advanced) { %>
-        <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
-        <% } %>
-        <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
-        <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
-        <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
-        <td id="cvScreenResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.cvScreenResult %></td>
-        <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCompleted != undefined) ? dateTimeCompleted.valueOf() : '' %>">
-            <%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %>
-        </td>
-        <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
-        <td>
-            <% if ((report) && (candidate.formCompleted)) { %>
-            <% if (candidate.linkToReport !== undefined) { %>
-            <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
-            <% }
-            else { %>
-            <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
-            <% } %>
-            <% } %>
-        </td>
-        <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
-        <% if (advanced) { %>
-            <td><%- appExp %></td>
-            <td><%= candidate.formDurationInMinutes %></td>
-            <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
-            <td><a href='<%= candidate.linkToForm + ".info" %>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
-        <% } %>
-        <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
-        <td id="phoneInterviewResult_<%= candidate.session.id %>"
-            data-editor="3"><%= candidate.phoneInterviewResult %></td>
-        <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
-        <td id="interviewResult_<%= candidate.session.id %>" data-editor="4"><%= candidate.interviewResult %></td>
-        <td id="auditDate_<%= candidate.session.id %>"><%= candidate.auditDate %></td>
-        <td id="auditResult_<%= candidate.session.id %>" data-editor="7"><%= candidate.auditResult %></td>
-        <td id="hrResult_<%= candidate.session.id %>" data-editor="9"><%= candidate.hrResult %></td>
-        <td id="refCallDate_<%= candidate.session.id %>"><%= candidate.refCallDate %></td>
-        <td id="refCallResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.refCallResult %></td>
-        <td id="contractDate_<%= candidate.session.id %>"><%= candidate.contractDate %></td>
-        <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
-        <td id="hired_<%= candidate.session.id %>" data-editor="2"><%= candidate.hired %></td>
-        <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
-        <td id="processUpdate_<%= candidate.session.id %>" data-editor="10"><%= candidate.processUpdate %></td>
-        <td id="startedWork_<%= candidate.session.id %>" data-editor="2"><%= candidate.startedWork %></td>
-        <td id="recruiterNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.recruiterNotes %></td>
-    </tr>
-    <% } %>
-    <% } %>
-    </tbody>
-</table>
+                                console.log("201: ", id, "; ", answer, "; ", timeToAnswer);
+                                orderedAnswers[index] = {
+                                    answer: answer,
+                                    timeToAnswer: timeToAnswer
+                                };
+                            }
+                        }
+                    }
+                %>
+                <% if ((answers) && (candidate.formCompleted)) { %>
+                <tr>
+                    <% console.log("212: Answers mode"); %>
+                    <td><%- candidate.fullName %></td>
+                    <%
+                        // Run through all the columns and add the answers first
+                    for (let j = 0;j < maxAnswer; j++) {
+                        if (!orderedAnswers[j]) {
+                            orderedAnswers[j] = {
+                                answer: '',
+                                timeToAnswer: ''
+                            };
+                        } %>
+                    <td><%= orderedAnswers[j].answer %></td>
+                    <% } %>
+                    <%
+                        // Run through all the columns and add the times
+                    for (let j = 0;j < maxAnswer; j++) { %>
+                    <td><%= orderedAnswers[j].timeToAnswer %></td>
+                    <% } %>
+                </tr>
+                <% }
+                if (!answers) { %>
+                <tr>
+                    <% const dateTimeCreated = candidate.dateTimeCreated; %>
+                    <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
+                    <% report = candidate.report; %>
+                    <td class="zui-sticky-col zui-sticky-td <%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCreated != undefined) ? dateTimeCreated.valueOf() : '' %>">
+                        <%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %>
+                    </td>
+                    <td id="fullName_<%= candidate.session.id %>" class = "zui-sticky-col2 zui-sticky-td"><%- candidate.fullName %></td>
+                    <td id="recruitmentSource_<%= candidate.session.id %>" class = "zui-nonsticky-td"><%- candidate.recruitmentSource %></td>
+                    <td><%= candidate.id %></td>
+                    <td id="phoneNumber_<%= candidate.session.id %>"><%= candidate.phoneNumber.replace(/\-/g, '') %></td>
+                    <%
+                        var mailSubject = encodeURIComponent('מועמדות לחברת ' + customer.name);
+                        var mailContent = customer.SMSTextA?customer.SMSTextA:customer.SMSTextB;
+                        if (mailContent) {
+                            mailContent = mailContent.replace('$candidateName', candidate.fullName).replace('$formLink', candidate.linkToForm);
+                            mailContent = encodeURIComponent(mailContent);
+                        }
+                    %>
+                    <td id="email"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י&nbspדוא"ל</a></td>
+                    <% if (advanced) { %>
+                    <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
+                    <% } %>
+                    <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
+                    <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
+                    <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
+                    <td id="cvScreenResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.cvScreenResult %></td>
+                    <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCompleted != undefined) ? dateTimeCompleted.valueOf() : '' %>">
+                        <%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %>
+                    </td>
+                    <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
+                    <td>
+                        <% if ((report) && (candidate.formCompleted)) { %>
+                        <% if (candidate.linkToReport !== undefined) { %>
+                        <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                        <% }
+                        else { %>
+                        <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                        <% } %>
+                        <% } %>
+                    </td>
+                    <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
+                    <% if (advanced) { %>
+                        <td><%- appExp %></td>
+                        <td><%= candidate.formDurationInMinutes %></td>
+                        <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
+                        <td><a href='<%= candidate.linkToForm + ".info" %>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
+                    <% } %>
+                    <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
+                    <td id="phoneInterviewResult_<%= candidate.session.id %>"
+                        data-editor="3"><%= candidate.phoneInterviewResult %></td>
+                    <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
+                    <td id="interviewResult_<%= candidate.session.id %>" data-editor="4"><%= candidate.interviewResult %></td>
+                    <td id="auditDate_<%= candidate.session.id %>"><%= candidate.auditDate %></td>
+                    <td id="auditResult_<%= candidate.session.id %>" data-editor="7"><%= candidate.auditResult %></td>
+                    <td id="hrResult_<%= candidate.session.id %>" data-editor="9"><%= candidate.hrResult %></td>
+                    <td id="refCallDate_<%= candidate.session.id %>"><%= candidate.refCallDate %></td>
+                    <td id="refCallResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.refCallResult %></td>
+                    <td id="contractDate_<%= candidate.session.id %>"><%= candidate.contractDate %></td>
+                    <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
+                    <td id="hired_<%= candidate.session.id %>" data-editor="2"><%= candidate.hired %></td>
+                    <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
+                    <td id="processUpdate_<%= candidate.session.id %>" data-editor="10"><%= candidate.processUpdate %></td>
+                    <td id="startedWork_<%= candidate.session.id %>" data-editor="2"><%= candidate.startedWork %></td>
+                    <td id="recruiterNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.recruiterNotes %></td>
+                </tr>
+                <% } %>
+                <% } %>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
 </body>
 
@@ -422,6 +513,25 @@ if (answers) {
         paginationNextText: '<', //FIXME: Strangely enough this is for Hebrew (it's reversed)... for English I'm not sure
         paginationPreText: '>' //FIXME: Strangely enough this is for Hebrew (it's reversed)... for English I'm not sure
         <% if (!answers) { %>
+        , onPageChange: function() { // Event triggers when the current page is change (by the user)
+            // Every time the page is changed, need to re-format the frozen columns
+            const table = $('#candidates');
+            // Now we need to do the same for the td in every row separately (because the rows may have different heights)
+            const rowCount = table.find('tr').length;
+            for (let i=0;i<rowCount;i++) {
+                // Get the formatting of the <td> in the 3rd column (not frozen) from the ith row
+                const temp1 = table.find('tr:eq(' + i + ')');
+                const temp2 = temp1.find('td:eq(2)');
+                const tdAttribs = temp2.css(["height", "color", "background-color"]);
+                if (tdAttribs !== undefined) { // There are attributes - for the column headings row this will be undefined
+                    const tdTarget1 = table.find('tr:eq(' + i + ') td:eq(0)'); // Get the 1st column in the ith row
+                    const tdTarget2 = table.find('tr:eq(' + i + ') td:eq(1)'); // Get the 2nd column in the ith row
+                    // Now copy the attribs to the td of the frozen columns
+                    tdTarget1.css("height", tdAttribs.height).css("color", tdAttribs.color).css("background-color", tdAttribs['background-color']);
+                    tdTarget2.css("height", tdAttribs.height).css("color", tdAttribs.color).css("background-color", tdAttribs['background-color']);
+                }
+            }
+        }
         , onPostBody: function () {  // Event triggere after table is added to the DOM
             $('#candidates').editableTableWidget({ // Initialize the table as an editableTable
                 editor:
@@ -505,9 +615,42 @@ if (answers) {
         <% } %>
     });
 
+    // Find the table-containing div generated by bootstrap-table and add the zui-wrapper class
+    $('.fixed-table-container').addClass('zui-wrapper');
+    // Find the table-body-containing div generated by bootstrap-table and add the zui-scroller class
+    $('.fixed-table-body').addClass('zui-scroller');
+
     // Now we can un-hide the div
     $('#tableDiv').css('display','block');
 
+    // The sticky columns feature corrupts the formatting of the frozen columns, so we need to copy it from another column
+    // Unfortunately this has to happen after the div is displayed
+
+    // Get the formatting of the <th> in the other column
+    const thAttribs = $('.zui-nonsticky-th').css(["height", "color", "background-color"]);
+    // ...and copy it to the th of the frozen columns
+    $('.zui-sticky-th').css("height", thAttribs.height).css("color", thAttribs.color).css("background-color", thAttribs['background-color']);
+
+    const table = $('#candidates');
+    // Now we need to do the same for the td in every row separately (because the rows may have different heights)
+    const rowCount = table.find('tr').length;
+    for (let i=0;i<rowCount;i++) {
+        // Get the formatting of the <td> in the 3rd column (not frozen) from the ith row
+        const temp1 = table.find('tr:eq(' + i + ')');
+        const temp2 = temp1.find('td:eq(2)');
+        const tdAttribs = temp2.css(["height", "color", "background-color"]);
+        if (tdAttribs !== undefined) { // There are attributes - for the column headings row this will be undefined
+            const tdTarget1 = table.find('tr:eq(' + i + ') td:eq(0)'); // Get the 1st column in the ith row
+            const tdTarget2 = table.find('tr:eq(' + i + ') td:eq(1)'); // Get the 2nd column in the ith row
+            // Now copy the attribs to the td of the frozen columns
+            tdTarget1.css("height", tdAttribs.height).css("color", tdAttribs.color).css("background-color", tdAttribs['background-color']);
+            tdTarget2.css("height", tdAttribs.height).css("color", tdAttribs.color).css("background-color", tdAttribs['background-color']);
+        }
+    }
+
+    // Following all the changes we also need to resize the zui-scroller to fit into the zui-wrapper
+    const zuiScrollerWidth = '' + (parseInt($('.zui-wrapper').css(['width']).width) - 290) + 'px';
+    $('.zui-scroller').css('width', zuiScrollerWidth);
 
 
     // Method called when a cell value is changed

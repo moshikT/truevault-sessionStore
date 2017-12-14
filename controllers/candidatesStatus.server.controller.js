@@ -3,6 +3,7 @@
 // let express = require('express');   //Express
 // let fs = require('fs');             //Node.js file I/O
 // let path = require('path');          //Node.js file & directory
+const textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
 
 const ejsLint = require('ejs-lint');
 
@@ -27,6 +28,8 @@ exports.candidatesStatus = function (req, res) {
             advanced: (req.tableMode === 'advanced'),
             answers: (req.tableMode === 'answers'),
             customer: req.customer,
+            textDirection: textGenerator_Ctrl.getLangDir(req.customer.language),
+            textAlign: textGenerator_Ctrl.getLangAlign(req.customer.language),
             candidates: candidateItems
         };
         const lintErr = ejsLint('candidates', options); // Lint check the template
