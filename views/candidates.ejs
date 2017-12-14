@@ -652,6 +652,11 @@ if (answers) {
     const zuiScrollerWidth = '' + (parseInt($('.zui-wrapper').css(['width']).width) - 290) + 'px';
     $('.zui-scroller').css('width', zuiScrollerWidth);
 
+    $( window ).resize(function() {
+        // Resize the zui-scroller to fit into the zui-wrapper whenever the window size change
+        const zuiScrollerWidth = '' + (parseInt($('.zui-wrapper').css(['width']).width) - 290) + 'px';
+        $('.zui-scroller').css('width', zuiScrollerWidth);
+    });
 
     // Method called when a cell value is changed
     candidatesTable.on('change', function (evt, newValue) {
