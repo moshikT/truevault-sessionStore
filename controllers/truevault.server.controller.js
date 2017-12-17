@@ -315,18 +315,83 @@ exports.getSessionById = function (sessionId) {
             .then(body => {
                 console.log("value return from session search: ", body);
                 var itemArray = JSON.parse(body);
-                console.log(itemArray); // for object return type
-                if (itemArray && itemArray.data && itemArray.data.info && (itemArray.data.info.total_result_count > 0)) {
-
-                    let utf8encodedDocument = (new Buffer(itemArray['data']['documents'][0], 'base64')).toString('utf8'); // for object return type
+                //console.log(itemArray); // for object return type
+                if (itemArray && itemArray['data'] && itemArray['data']['documents'][0]) {
+                    console.log(itemArray['data']['documents'][0]['document']);
+                    let utf8encodedDocument = (new Buffer(itemArray['data']['documents'][0]['document'], 'base64')).toString('utf8'); // for object return type
                     console.log(utf8encodedDocument); // for object return type
-                    let documentData = JSON.parse(utf8encodedDocument);
+                    let document = {};
+                    document.data = JSON.parse(utf8encodedDocument);
+                    document.id = itemArray['data']['documents'][0]['document_id'];
 
-
-                    console.log(documentData); // for object return type
+                    console.log(document); // for object return type
 
                     if (itemArray['result'] === 'success') {
-                        resolve(documentData);
+                        resolve(document);
+                    }
+                }
+                else {
+                    console.log("session not found: return null");
+                    resolve(null);
+                }
+                //resolve(documentData);
+            })
+            .catch(function (err) {
+                console.log("error return from session search: ", err);
+                reject(err);
+            })
+    });
+};
+
+
+function privateGetSessionById (sessionId) {
+    return new Promise(function (resolve, reject) {
+        //let options = setRequestOptions('/documents/' + documentId);
+        let searchTemplate = {
+            "filter":{
+                "sid":{
+                    //"sessionID":{
+                    "type":"eq",
+                    "value": sessionId//"test"
+                }
+            },
+            "full_document": true,
+            "schema_id": sessionSchemaId//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
+        };
+
+        let searchTemplateString = JSON.stringify(searchTemplate);
+        let searchTemplateB64 = new Buffer(searchTemplateString).toString("base64");
+        //console.log(searchTemplate.toString('base-64'));
+        var options = {
+            url: dbUrl + '/search',
+            headers: {
+                'Authorization':'Basic MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVmOg==',
+                'Content-Type':'application/x-www-form-urlencoded'
+            },
+            form: {
+                'search_option':searchTemplateB64
+            },
+            method: 'POST'
+        };
+
+        //console.log("options: ", options);
+        rp(options)
+            .then(body => {
+                console.log("value return from session search: ", body);
+                var itemArray = JSON.parse(body);
+                //console.log(itemArray); // for object return type
+                if (itemArray && itemArray['data'] && itemArray['data']['documents'][0]) {
+                    console.log(itemArray['data']['documents'][0]['document']);
+                    let utf8encodedDocument = (new Buffer(itemArray['data']['documents'][0]['document'], 'base64')).toString('utf8'); // for object return type
+                    console.log(utf8encodedDocument); // for object return type
+                    let document = {};
+                    document.data = JSON.parse(utf8encodedDocument);
+                    document.id = itemArray['data']['documents'][0]['document_id'];
+
+                    console.log(document); // for object return type
+
+                    if (itemArray['result'] === 'success') {
+                        resolve(document);
                     }
                 }
                 else {
@@ -346,10 +411,10 @@ exports.getSessionById = function (sessionId) {
 exports.saveSession = function (sessionData, sessionId) {
     return new Promise(function (resolve, reject) {
         if(sessionId) {
-            getSessionById(sessionId)
-                .then(sessionDocumentData => {
+            privateGetSessionById(sessionId)
+                .then(sessionDocument => {
                     // session found update new data with PUT request
-                    insertSession(sessionData, sessionDocumentData.document_id, 'PUT')
+                    insertSession(sessionData, sessionDocument.id, 'PUT')
                         .then(sessionDocumentId => {
                             console.log("success insert existing session");
                             resolve(sessionDocumentId);
@@ -413,7 +478,7 @@ function insertSession (sessionData, sessionDocumentId, method) {
 
 exports.removeSessionById = function (sessionId) {
     return new Promise(function (resolve, reject) {
-        getSessionById(sessionId)
+        privateGetSessionById(sessionId)
             .then(sessionDocumentData => {
                 let optionsUrl = '/documents/' + sessionDocumentData.document_id;
 

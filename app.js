@@ -42,7 +42,8 @@ db.once('open', function() {
 });
 
 var app = express();
-app.disable('x-powered-by')
+app.set('trust proxy', 1);  // TODO: Why?
+app.disable('x-powered-by'); // Security measure to prevent identifying server type
 
 // set a session
 /*app.use(session({

@@ -80,7 +80,7 @@ module.exports = function (session) {
 
         // Set TrueVaultStore object (this) params
         // =============REPLACE================
-        this.autosave = options.autosave !== false;
+        this.autosave = true;//options.autosave !== false;
         this.authHeader = options.authHeader || ''; // set here access token
         this.storePath = dbUrl;//options.path || './session-store.db'
         this.ttl = options.ttl || 1209600;
@@ -114,7 +114,7 @@ module.exports = function (session) {
         // =============REPLACE================
 
         // Get / Create collection
-        self.emit('connect');
+        //self.emit('connect');
         // if collection is not exist create new one, if exists connect
         // TODO: create a request to vault and check if schema exist if success emit connect event else return error.
         // =============REPLACE================ IMPORTANT
@@ -167,15 +167,19 @@ module.exports = function (session) {
         console.log("%s.%s:%s -", __file, __ext, __line, "get sid: ", sid);
         // get session document by session id
         // =============REPLACE================
-        this.client.getSessionById(sid)
-            .then(sessionData => {
-                if(sessionData && sessionData.content) {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "get, sid content: ", sessionData.content);
-                    fn(null, sessionData.content);
+        //var s =
+            this.client.getSessionById(sid)
+            .then(sessionDocument => {
+
+                //return sessionData;
+                if(sessionDocument && sessionDocument.data && sessionDocument.data.content) {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "get, sid content: ", sessionDocument.data.content);
+                    fn(null, sessionDocument.data.content);
                 }
                 else {
                     console.log("%s.%s:%s -", __file, __ext, __line, "get, sid not exists: ", sid);
                     fn(null);
+                    //this.destroy(sid, fn);
                 }
                  // might return sessionData.content and not all document
             })
@@ -184,6 +188,35 @@ module.exports = function (session) {
                 console.log("%s.%s:%s -", __file, __ext, __line, err);
                 fn(null);
             })
+        //console.log("%s.%s:%s -", __file, __ext, __line, "get: s returned value: ", s);
+        /*if(s && s.content) {
+            fn(null, s.content);
+        }
+        else {
+            fn(null);
+        }*/
+/*
+MongoDBStore.prototype.get = function(id, callback) {
+
+
+    this.db.collection(this.options.collection).
+      findOne(this._generateQuery(id), function(error, session) {
+        if (error) {
+          var e = new Error('Error finding ' + id + ': ' + error.message);
+          return _this._errorHandler(e, callback);
+        } else if (session) {
+          if (!session.expires || new Date < session.expires) {
+            return callback(null, session.session);
+          } else {
+            return _this.destroy(id, callback);
+          }
+        } else {
+          return callback();
+        }
+      });
+  };
+ */
+
         /*let s = this.collection.find({ sid })
         if (s[0] && s[0].content) {
             fn(null, s[0].content)
@@ -214,20 +247,44 @@ module.exports = function (session) {
         // =============REPLACE================
         console.log("%s.%s:%s -", __file, __ext, __line, "set sid: ", sid);
         this.client.getSessionById(sid)
-            .then(sessionData => {
+            .then(sessionDocument => {
                 // Session found - update session with sess and with current date.
-                console.log("%s.%s:%s -", __file, __ext, __line, "set session data  found: ", sessionData);
-                sessionData.content = sess;
-                sessionData.updatedAt = new Date();
-                this.client.saveSession(sessionData, sid)
-                    .then(sessionDocumentId => {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "Updated session ", sessionDocumentId);
-                        fn(null);
-                    })
-                    .catch(err => {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "Unable updating session %s err: %s", sid, err);
-                        fn(null);
-                    });
+                console.log("%s.%s:%s -", __file, __ext, __line, "set session data  found: ", sessionDocument);
+                if(sessionDocument != null) {
+                    sessionDocument.data.content = sess;
+                    sessionDocument.data.updatedAt = new Date();
+                    this.client.saveSession(sessionDocument.data, sid)
+                        .then(sessionDocumentId => {
+                            console.log("%s.%s:%s -", __file, __ext, __line, "Updated session ", sessionDocumentId);
+                            fn(null);
+                            //fn()
+                        })
+                        .catch(err => {
+                            console.log("%s.%s:%s -", __file, __ext, __line, "Unable updating session %s err: %s", sid, err);
+                            fn(null);
+                            //fn()
+                        });
+                }
+                else {
+                    var newSession = {
+                        sid: sid,
+                        content: sess,
+                        updatedAt: new Date()
+                    };
+                    this.client.saveSession(newSession)
+                        .then(sessionDocumentId => {
+                            this.client.sessionDocumentId = sessionDocumentId;
+                            console.log("%s.%s:%s -", __file, __ext, __line, "Saved session: ", sid);
+                            fn(null);
+                            //fn()
+                        })
+                        .catch(err => {
+                            console.log("%s.%s:%s -", __file, __ext, __line, "error while saving new session to database; err: ", err);
+                            fn(null);
+                            //fn()
+                        })
+                }
+
             })
             .catch(err => {
                 // Session doesnt exists save new session with sid - for search use
@@ -242,10 +299,12 @@ module.exports = function (session) {
                         this.client.sessionDocumentId = sessionDocumentId;
                         console.log("%s.%s:%s -", __file, __ext, __line, "Saved session: ", sid);
                         fn(null);
+                        //fn()
                     })
                     .catch(err => {
                         console.log("%s.%s:%s -", __file, __ext, __line, "error while saving new session to database; err: ", err);
                         fn(null);
+                        //fn()
                     })
             });
         /*let s = this.collection.find({ sid })
@@ -305,9 +364,9 @@ module.exports = function (session) {
         // find session document and update the time.
         // =============REPLACE================
         this.client.getSessionById(sid)
-            .then(sessionData => {
-               sessionData.updatedAt = new Date();
-               this.client.saveSession(sessionData, sid)
+            .then(sessionDocument => {
+                sessionDocument.data.updatedAt = new Date();
+               this.client.saveSession(sessionDocument.data, sid)
                    .then(sessionDocumentId => {
                        console.log("%s.%s:%s -", __file, __ext, __line, "Updated session %s date: ", sessionDocumentId);
                    })

@@ -66,13 +66,13 @@ router.use(function (req, res, next) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "session value", req.sessionID);
                     //Session set when user Request our app via URL
                     if(session && session.content) {
-                        if(session.content.status === 'ACTIVATED') {
+                        /*if(session.content.status === 'ACTIVATED') {
                             console.log("%s.%s:%s -", __file, __ext, __line, "User is activate! Proceed to page");
                         }
                         else {
                             // TODO: handle unauthorized user - error message of contact us?
                             console.log("%s.%s:%s -", __file, __ext, __line, "User is NOT activate!");
-                        }
+                        }*/
                         // TODO: can add additional test here; that user has the right click - cid equal to user permissions, else rdirect to url with diff cid
                     }
                     else {
