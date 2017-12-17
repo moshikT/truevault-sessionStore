@@ -26,13 +26,14 @@ exports.candidatesStatus = function (req, res) {
         // extract all candidates personal data ids.
         let candidatesPersonalDataIds = [];
         for (let candidatesIndex = 0; candidatesIndex < candidateItems.length; candidatesIndex++) {
-            if(candidateItems[candidatesIndex].personalDataId) {
+            if(candidateItems[candidatesIndex].personalDataId) { // safety
                 candidatesPersonalDataIds.push(candidateItems[candidatesIndex].personalDataId);
             }
         }
 
         // find all candidates personal data by their personal data ids
         let candidatesWithPersonalData = [];
+        // TODO: replace to lookup instead of two for loops
         trueVault_Ctrl.findAll(candidatesPersonalDataIds) // return an array of json obj with id & data
             .then(candidatesPersonalData => {
                 // bind candidates to their personal data retrieved from vault

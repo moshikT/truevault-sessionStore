@@ -12,8 +12,10 @@ const vaultId = '987b3d71-6e6a-4fef-88af-1a1df582dc08'; // db id - EmpiricalHire
 const dbUrl = 'https://api.truevault.com/v1/vaults/' + vaultId;
 const basicUrl = 'https://api.truevault.com/v1/';
 const candidateSchemaId = "714f661e-bb1b-4d4f-bda7-5e67272ec807";//'714f661e-bb1b-4d4f-bda7-5e67272ec807';// candidateTestSchemaId = "405fac9b-37f6-4090-93cf-6d6b2c4a541b";
+const sessionSchemaId = "bed02977-02c1-4831-a543-1b7e00d55909";
 
 // Return one document that equal to the documentId. If not exist, returns an error.
+// TODO: change named to get documentById and get documentsById's
 exports.findOne = function (documentId) {
     return new Promise(function (resolve, reject) {
         let options = setRequestOptions('/documents/' + documentId);
@@ -37,6 +39,7 @@ exports.findAll = function (documentIdsArray) {
 
         // initiate url with a list of document id's
         let optionsUrls = '/documents/';
+        // TODO: split the request to max available number
         for (let documentsIndex = 0; documentsIndex < documentIdsArray.length; documentsIndex++) {
             optionsUrls += documentIdsArray[documentsIndex];
             if(documentsIndex !== documentIdsArray.length - 1) {
@@ -58,6 +61,7 @@ exports.findAll = function (documentIdsArray) {
                     let utf8encoded = (new Buffer(documents[[index]].document, 'base64')).toString('utf8');
                     docObject.data = JSON.parse(utf8encoded);
                     documentsArray.push(docObject);
+                    // TODO: replace array to object of doc_id:doc_data instead
                 }
                 resolve(documentsArray);
             })
@@ -235,20 +239,213 @@ function getSchemaIdByName(name, callback) {
         //    errorText: "Failed to generate short URLs for: '" + newUser.fullName + "'"
         // });
     });*/
+/*
+var Session = {
+    cookie: {
+        path: '/',
+        _expires: null,
+        originalMaxAge: null,
+        httpOnly: true
+    },
+    sid: 'T_PhGL0Jn9bz_E459I4ZTSLdcVQU8aal',
+    content: 'changed content',
+    updatedAt: new Date()
+};
+console.log("sessId: ", Session['sid']);
+*/
+/*
+getSessionById(Session['sid'])
+    .then(res => {
+        console.log("result from getting session: ", res);
+    })
+    .catch(err => {
+        console.log("err while getting session: " /*, err);
+    });
+*/
+/*
+saveSession(Session, Session['sid'])
+    .then(res => {
+        console.log("result from saving session: ", res);
+    })
+    .catch(err => {
+        console.log("err while saveing session: ", err);
+    });*/
+
+/*removeSessionById(Session.sid)
+    .then(res => {
+        console.log("session removed succesfully : ", res);
+    })
+    .catch(err => {
+        console.log("unable to remve session: ", err);
+    });
+*/
+// get session by id (use search filter) - currently not in use, might be useful in the future
+exports.getSessionById = function (sessionId) {
+    return new Promise(function (resolve, reject) {
+        //let options = setRequestOptions('/documents/' + documentId);
+        let searchTemplate = {
+            "filter":{
+                "sid":{
+                    //"sessionID":{
+                    "type":"eq",
+                    "value": sessionId//"test"
+                }
+            },
+            "full_document": true,
+            "schema_id": sessionSchemaId//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
+        };
+
+        let searchTemplateString = JSON.stringify(searchTemplate);
+        let searchTemplateB64 = new Buffer(searchTemplateString).toString("base64");
+        //console.log(searchTemplate.toString('base-64'));
+        var options = {
+            url: dbUrl + '/search',
+            headers: {
+                'Authorization':'Basic MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVmOg==',
+                'Content-Type':'application/x-www-form-urlencoded'
+            },
+            form: {
+                'search_option':searchTemplateB64
+            },
+            method: 'POST'
+        };
+
+        //console.log("options: ", options);
+        rp(options)
+            .then(body => {
+                console.log("value return from session search: ", body);
+                var itemArray = JSON.parse(body);
+                console.log(itemArray); // for object return type
+                if (itemArray && itemArray.data && itemArray.data.info && (itemArray.data.info.total_result_count > 0)) {
+
+                    let utf8encodedDocument = (new Buffer(itemArray['data']['documents'][0], 'base64')).toString('utf8'); // for object return type
+                    console.log(utf8encodedDocument); // for object return type
+                    let documentData = JSON.parse(utf8encodedDocument);
 
 
-// get document id (use search filter) - currently not in use, might be useful in the future
-/*function getDocumentIdBySessionId(sessionID, schemaID, callback) {
+                    console.log(documentData); // for object return type
+
+                    if (itemArray['result'] === 'success') {
+                        resolve(documentData);
+                    }
+                }
+                else {
+                    console.log("session not found: return null");
+                    resolve(null);
+                }
+                //resolve(documentData);
+            })
+            .catch(function (err) {
+                console.log("error return from session search: ", err);
+                reject(err);
+            })
+    });
+};
+
+// upsert session - if session exists update with 'PUT' request else create new session with sessionData
+exports.saveSession = function (sessionData, sessionId) {
+    return new Promise(function (resolve, reject) {
+        if(sessionId) {
+            getSessionById(sessionId)
+                .then(sessionDocumentData => {
+                    // session found update new data with PUT request
+                    insertSession(sessionData, sessionDocumentData.document_id, 'PUT')
+                        .then(sessionDocumentId => {
+                            console.log("success insert existing session");
+                            resolve(sessionDocumentId);
+                        })
+                        .catch(err => {
+                            console.log("err insert existing session");
+                            reject(err);
+                        })
+                })
+                .catch(err => {
+                    reject("error while update session to database; err: ", err);
+                })
+        }
+        else {
+            // create new session
+            insertSession(sessionData, undefined, 'POST')
+                .then(sessionDocumentId => {
+                    resolve(sessionDocumentId);
+                })
+                .catch(err => {
+                    reject(err);
+                })
+        }
+    })
+
+};
+// if sessionDocumentId exists update session else create new session
+function insertSession (sessionData, sessionDocumentId, method) {
+    return new Promise(function (resolve, reject) {
+        let docTemplateString = JSON.stringify(sessionData);
+        let docTemplateB64 = new Buffer(docTemplateString).toString("base64");
+
+        let optionsUrl = '/documents';
+        if(method === 'PUT') {
+            optionsUrl += '/' + sessionDocumentId;
+        }
+
+        let options = setRequestOptions(optionsUrl);
+        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
+        options.form = {
+            'document' : docTemplateB64,
+            'schema_id': sessionSchemaId
+        };
+        options.method = method;
+
+        rp(options)
+            .then( body => {
+                let sessionDocumentData = JSON.parse(body);
+                if(sessionDocumentData.result === 'success') {
+                    resolve(sessionDocumentData.document_id);
+                }
+                else {
+                    reject("Couldn't save session data: " + sessionDocumentData.result);
+                }
+            })
+            .catch(function (err) {
+                reject(err);
+            })
+    });
+}
+
+exports.removeSessionById = function (sessionId) {
+    return new Promise(function (resolve, reject) {
+        getSessionById(sessionId)
+            .then(sessionDocumentData => {
+                let optionsUrl = '/documents/' + sessionDocumentData.document_id;
+
+                let options = setRequestOptions(optionsUrl);
+                options.method = 'DELETE';
+
+                rp(options)
+                    .then(response => {
+                        resolve("Session %s deleted successfully", sessionId);
+                    })
+                    .catch(function (err) {
+                        reject(err);
+                    })
+            })
+            .catch(err => {
+                reject(err);
+            })
+    });
+}
+
+/*
+function getDocumentIdBySessionId(sessionID, callback) {
     let searchTemplate = {
         "filter":{
-            "name":{
-            //"sessionID":{
+            //"name":{
+            "sid":{
                 "type":"eq",
                 "value": sessionID//"test"
             }
         },
         "full_document": true,
-        "schema_id": schemaID//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
+        "schema_id": sessionSchemaId//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
     };
 
     let searchTemplateString = JSON.stringify(searchTemplate);
@@ -285,7 +482,13 @@ function getSchemaIdByName(name, callback) {
     });
 }
 */
-
+/*
+getDocumentIdBySessionId(Session['sid'], function (doc) {
+   //console.log("cb body: ", body);
+   // console.log("cb res: ", res);
+    console.log("cb doc: ", doc);
+});
+*/
 // for testing only
 /*let documentIds = ['310559c4-65af-48bf-a82d-89d649c57266', 'cc465b3b-4d70-4e41-b59a-43ebddbde8bc', '8bf3aa01-11c3-4e23-a684-6a15a194957e'];
 

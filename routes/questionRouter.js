@@ -156,6 +156,7 @@ router.route('/:sid/:qid')
                 if (req.candidate.form[index].type === 'A') {
                     appExpId = true;
                 }
+                // Remove _id
                 if(req.body._id) {
                     delete req.body._id;
                 }

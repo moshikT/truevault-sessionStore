@@ -12,6 +12,9 @@ var mongoose = require('mongoose');
 var fs = require('fs');
 const session = require('express-session');
 
+var TrueVaultStore = require('./controllers/sessionStore.server.controller')(session);
+
+
 var dbName = process.env.DB_URL;
     //'mongodb://127.0.0.1/candidateLocal'; //local
     //'mongodb://moshik.tsadok:chiko301@ds163494.mlab.com:63494/empiricalhire'; //old mLab
@@ -42,12 +45,13 @@ var app = express();
 app.disable('x-powered-by')
 
 // set a session
-app.use(session({
+/*app.use(session({
     secret: 'some secret',
+    store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
     resave: false,
     saveUninitialized: true
 }));
-
+*/
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

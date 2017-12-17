@@ -53,4 +53,6 @@ var candidateSchema = new Schema({
     called: Boolean
 });
 
+// TODO: add middlware to check that personal data isnt save in db - if personal data exists abort and return an error.
+
 module.exports = mongoose.model('Candidate', candidateSchema);
