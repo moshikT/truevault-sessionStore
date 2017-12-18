@@ -132,11 +132,15 @@ function getFactorsScaleConversion(companyKeyword, callback) {
                 .fromFile(filePath)
                 .on('csv', (csvRow) => {
                     // factor id, weight, range 1-3
-                    if (csvRow[2] != '') {
-                        scaleConversion[csvRow[0]] = {weight: csvRow[1], ranges: [csvRow[2], csvRow[3], csvRow[4]]};
+                    if (csvRow[3] != '') {
+                        scaleConversion[csvRow[0]] = {
+                            weight: csvRow[2],
+                            factor: csvRow[1],
+                            ranges: [csvRow[3], csvRow[4], csvRow[5]]
+                        };
                     }
                     else {
-                        scaleConversion[csvRow[0]] = {weight: csvRow[1], ranges: [2.5, 4, 5.5]};
+                        scaleConversion[csvRow[0]] = {weight: csvRow[2], factor: csvRow[1], ranges: [2.5, 4, 5.5]};
                     }
                     console.log("%s.%s:%s -", __file, __ext, __line, "scaleConversion[", csvRow[0], "] = ", scaleConversion[csvRow[0]]);
                 })
@@ -161,10 +165,32 @@ function getFactorsScaleConversion(companyKeyword, callback) {
 }
 
 function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
-    var factors = [];
-    var testScore = 0;
-    var testWeight = 0;
+    let factors = {};
+    let subDims = [];
+    let testScore = 0;
+    let testWeight = 0;
     const baseFileName = 'report.items';
+    let answers = {}
+
+    // First create an object indexed by qids for all the answer data
+    for (let qIndex = 0; qIndex < candidate.form.length; qIndex++) {
+        let score;
+        if (candidate.form[qIndex].type == 'C') {
+            score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
+            //console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", candidate.form[qIndex].id, "; score: ", score);
+        }
+        else if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {
+            score = 8 - Number(candidate.form[qIndex].finalAnswer);
+            //console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", candidate.form[qIndex].id, "; score: ", score);
+        }
+        else {
+            score = Number(candidate.form[qIndex].finalAnswer);
+            //console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", candidate.form[qIndex].id, "; score: ", score);
+        }
+        answers[candidate.form[qIndex].id] = score;
+    }
+    console.log("%s.%s:%s -", __file, __ext, __line, "Answers: ", answers);
+
 
     addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
         .then(filePath => {
@@ -173,88 +199,103 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                 .fromFile(filePath)
                 .on('csv', (csvRow) => {
                     // csvRow is an array
-                    var factorAvg = 0;
-                    var numOfElementsInFactor = 0;
-                    var factor = csvRow[0];
+                    var subDimAvg = 0;
+                    var numOfElementsInSubDim = 0;
+                    var subDim = csvRow[0];
                     //var isRevereRelation = csvRow[1];
                     console.log("%s.%s:%s -", __file, __ext, __line, "csvRow : ", csvRow);
-                    console.log("%s.%s:%s -", __file, __ext, __line, "factor : ", factor);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "subDim : ", subDim);
 
-                    for (var factorElementIndex = 1; factorElementIndex < csvRow.length; factorElementIndex++) {
-                        if (csvRow[factorElementIndex] == '') {
+                    for (var subDimElementIndex = 1; subDimElementIndex < csvRow.length; subDimElementIndex++) {
+                        if (csvRow[subDimElementIndex] == '') {
                         }
                         else {
-                            let found = false;
-                            for (var qIndex = 0; qIndex < candidate.form.length; qIndex++) {
-                                if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {
-                                    found = true;
-                                    numOfElementsInFactor++;
-
-                                    let score;
-                                    if (candidate.form[qIndex].type == 'C') {
-                                        score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
-                                        console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", csvRow[factorElementIndex], "; score: ", score);
-                                    }
-                                    else if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {
-                                        score = 8 - Number(candidate.form[qIndex].finalAnswer);
-                                        console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", csvRow[factorElementIndex], "; score: ", score);
-                                    }
-                                    else {
-                                        score = Number(candidate.form[qIndex].finalAnswer);
-                                        console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", csvRow[factorElementIndex], "; score: ", score);
-                                    }
-                                    factorAvg += score;
-                                    //console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);
-                                }
+                            const score = answers[csvRow[subDimElementIndex]];
+                            if (!score) {
+                                console.log("%s.%s:%s -", __file, __ext, __line, "Question id not found: ", csvRow[subDimElementIndex]);
                             }
-                            if (!found) {
-                                console.log("%s.%s:%s -", __file, __ext, __line, "Question id not found: ", csvRow[factorElementIndex]);
+                            else {
+                                subDimAvg += answers[csvRow[subDimElementIndex]];
+                                numOfElementsInSubDim++;
                             }
                         }
                     }
-                    var factorData = {};
-                    factorData.subDimension = factor;
-                    let factorScaleConversion = scaleConversion[factor];
-                    if (!factorScaleConversion) {
-                        factorScaleConversion = {weight: 0, ranges: [2.5, 4, 5.5]};
+                    let subDimData = {};
+                    let subDimScale = 7;
+                    // Calculate the subDim average on a scale of 1-7
+                    subDimAvg = subDimAvg / numOfElementsInSubDim;
+                    subDimData.subDimension = subDim;
+                    if (subDimScale == 4) { // Convert sub-dimension from 1-7 to 1-4 scale based on distribution
+                        let subDimScaleConversion = scaleConversion[subDim];
+                        if (!subDimScaleConversion) {
+                            subDimScaleConversion = {weight: 0, ranges: [2.5, 4, 5.5]};
+                        }
+                        // Convert to a scale of 1-4
+                        subDimData.avg =
+                            (subDimAvg <= subDimScaleConversion.ranges[0]) ? 1 :
+                                ((subDimAvg <= subDimScaleConversion.ranges[1]) ? 2 :
+                                        ((subDimAvg <= subDimScaleConversion.ranges[2]) ? 3 :
+                                                4
+                                        )
+                                );
                     }
-                    // Calculate the factor average on a scale of 1-7
-                    factorAvg = factorAvg / numOfElementsInFactor;
-                    // Convert to a scale of 1-4
-                    factorData.avg =
-                        (factorAvg <= factorScaleConversion.ranges[0])?1:
-                            ((factorAvg <= factorScaleConversion.ranges[1])?2:
-                                ((factorAvg <= factorScaleConversion.ranges[2])?3:
-                                    4
-                                )
-                            );
-                    let factorAvgAfterDirection = factorData.avg; // At this point the average isn't reversed
-                    if (factorScaleConversion.weight < 0)
-                    { // If it's a negative weight, we need to include the factor average reversed (1-4 --> 4-1)
-                        factorAvgAfterDirection = 5 - factorAvgAfterDirection;
+                    else { // Keep the sub-dimension on a scale of 1-7
+                        subDimData.avg = subDimAvg;
                     }
-                    testScore += (factorData.avg * Math.abs(factorScaleConversion.weight));
-                    testWeight += Math.abs(factorScaleConversion.weight);
-                    // Note that we keep the factor average not reversed for the verbal
-                    factors.push(factorData);
+                    let subDimAvgAfterDirection = subDimData.avg; // At this point the average isn't reversed
+                    if (scaleConversion[subDim].weight < 0) { // If it's a negative weight, we need to include the subDim average reversed (1-4 --> 4-1) (1-7 --> 7-1)
+                        subDimAvgAfterDirection = subDimScale + 1 - subDimAvgAfterDirection;
+                    }
+                    let factorData = factors[scaleConversion[subDim].factor];
+                    if (!factorData) {
+                        factorData = {count: 1, total: subDimAvgAfterDirection};
+                    }
+                    else {
+                        factorData.count++;
+                        factorData.total += subDimAvgAfterDirection;
+                    }
+                    factors[scaleConversion[subDim].factor] = factorData;
+                    /*
+                    testScore += (subDimData.avg * Math.abs(subDimScaleConversion.weight));
+                    testWeight += Math.abs(subDimScaleConversion.weight);
+                    */
+                    // Note that we keep the subDim average not reversed for the verbal
+                    subDims.push(subDimData);
                 })
                 .on('data', (data) => {
                     //data is a buffer object
                     //const jsonStr= data.toString('utf8');
-                    //var factor = JSON.parse(jsonStr);
+                    //var subDim = JSON.parse(jsonStr);
                 })
                 .on('done', (error) => {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Subdims: ", subDims);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Factors: ", factors);
+                    let testScoreAvg = 0;
+                    let count = 0;
+                    // Loop through all the factors and add them to the total
+                    for (var property in factors) {
+                        if (factors.hasOwnProperty(property)) {
+                            factors[property] = factors[property].total / factors[property].count;
+                            testScoreAvg += factors[property];
+                            count++;
+                        }
+                    }
+                    // Now divide the total by the number of factors to get the average
+                    testScoreAvg /= count;
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Test average: ", testScoreAvg);
+                    /*
                     var testScoreAvg = testScore / testWeight;
                     console.log("%s.%s:%s -", __file, __ext, __line, "test score ", testScore);
                     console.log("%s.%s:%s -", __file, __ext, __line, "total weight ", testWeight);
                     console.log("%s.%s:%s -", __file, __ext, __line, "test avg ", testScoreAvg);
-
+                    */
                     const finalScore =
-                        (testScoreAvg <= 2.3)?1:
-                            ((testScoreAvg <= 2.5)?2:
-                                    ((testScoreAvg <= 2.7)?3:4)
+                        (testScoreAvg <= scaleConversion.total.ranges[0]) ? 1 :
+                            ((testScoreAvg <= scaleConversion.total.ranges[1]) ? 2 :
+                                    ((testScoreAvg <= scaleConversion.total.ranges[2]) ? 3 : 4)
                             );
-                    callback(factors, finalScore);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Final score (1-4): ", finalScore);
+                    callback(subDims, finalScore);
                 })
                 .on('error', (err) => {
                     console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err);
