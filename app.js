@@ -10,9 +10,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var fs = require('fs');
-const session = require('express-session');
+//const session = require('express-session');
 
-var TrueVaultStore = require('./controllers/sessionStore.server.controller')(session);
+//var TrueVaultStore = require('./controllers/sessionStore.server.controller')(session);
 
 
 var dbName = process.env.DB_URL;
@@ -42,7 +42,7 @@ db.once('open', function() {
 });
 
 var app = express();
-app.set('trust proxy', 1);  // TODO: Why?
+//app.set('trust proxy', 1);  // TODO: Why?
 app.disable('x-powered-by'); // Security measure to prevent identifying server type
 
 // set a session

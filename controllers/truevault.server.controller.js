@@ -1,8 +1,9 @@
 'use strict';
-
-/*
- TrueVault controller for handling request to trueVault api
- moshik user API_KEY = 207da439-301c-48bb-91bf-2a72d498dfef
+/**
+ * TrueVault controller/adapter for handling request to trueVault api.
+ * Moshik_TrueVault_User; API_KEY = 207da439-301c-48bb-91bf-2a72d498dfef
+ *
+ * @author Moshik
  */
 
 const request = require('request');
@@ -11,18 +12,27 @@ const API_KEY = "MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVm"; // base64 en
 const vaultId = '987b3d71-6e6a-4fef-88af-1a1df582dc08'; // db id - EmpiricalHire
 const dbUrl = 'https://api.truevault.com/v1/vaults/' + vaultId;
 const basicUrl = 'https://api.truevault.com/v1/';
-const candidateSchemaId = "714f661e-bb1b-4d4f-bda7-5e67272ec807";//'714f661e-bb1b-4d4f-bda7-5e67272ec807';// candidateTestSchemaId = "405fac9b-37f6-4090-93cf-6d6b2c4a541b";
+const candidateSchemaId = "714f661e-bb1b-4d4f-bda7-5e67272ec807";// candidateTestSchemaId = "405fac9b-37f6-4090-93cf-6d6b2c4a541b";
 const sessionSchemaId = "bed02977-02c1-4831-a543-1b7e00d55909";
+const self = this;
 
-// Return one document that equal to the documentId. If not exist, returns an error.
-// TODO: change named to get documentById and get documentsById's
+/**
+ * Return single document corresponding to documentId.
+ * If not exist, returns an error.
+ *
+ * TODO: chane function name to getDocumentById
+ *
+ * @param documentId
+ * @returns {Promise}
+ */
 exports.findOne = function (documentId) {
     return new Promise(function (resolve, reject) {
         let options = setRequestOptions('/documents/' + documentId);
 
         rp(options)
             .then( body => {
-                let utf8encodedDocument = (new Buffer(body, 'base64')).toString('utf8'); // for object return type
+                // Decode response base64 document's data to utf8
+                let utf8encodedDocument = (new Buffer(body, 'base64')).toString('utf8');
                 let documentData = JSON.parse(utf8encodedDocument);
                 resolve(documentData);
             })
@@ -32,14 +42,17 @@ exports.findOne = function (documentId) {
     });
 };
 
-// Return an array of documents that correspond to the documentIdsArray
+/**
+ * Return an array of documents corresponding to documentIdsArray
+ *
+ * @param documentIdsArray
+ * @returns {Promise}
+ */
 exports.findAll = function (documentIdsArray) {
     return new Promise(function (resolve, reject) {
-        //if (documentIdsArray.length <= 1) reject("To receive one document use trueVault.findOne method!");
-
         // initiate url with a list of document id's
         let optionsUrls = '/documents/';
-        // TODO: split the request to max available number
+        // TODO: split the request to max available number according to TrueVault documentation
         for (let documentsIndex = 0; documentsIndex < documentIdsArray.length; documentsIndex++) {
             optionsUrls += documentIdsArray[documentsIndex];
             if(documentsIndex !== documentIdsArray.length - 1) {
@@ -50,10 +63,12 @@ exports.findAll = function (documentIdsArray) {
         let options = setRequestOptions(optionsUrls);
 
         rp(options)
-            .then( body => {
-                let encodedBody = (new Buffer(body, 'utf8'));//.toString('utf8') // for object return type
+            .then(body => {
+                // parse body
+                let encodedBody = (new Buffer(body, 'utf8'));
                 let responseBody = JSON.parse(encodedBody);
                 let documents = responseBody.documents;
+                // Built array of json object received from query
                 let documentsArray = [];
                 for (let index = 0; index < documents.length; index++) {
                     let docObject = {};
@@ -71,46 +86,18 @@ exports.findAll = function (documentIdsArray) {
     });
 };
 
-// Insert (post)/update (put), new candidate personal details - return candidate's document id.
-function insertCandidate(candidateData, documentId, method) {
-    return new Promise(function (resolve, reject) {
-        let docTemplateString = JSON.stringify(candidateData);
-        let docTemplateB64 = new Buffer(docTemplateString).toString("base64");
-
-        let optionsUrl = '/documents';
-        if(method === 'PUT') {
-            optionsUrl += '/' + documentId;
-        }
-
-        let options = setRequestOptions(optionsUrl);
-        options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
-        options.form = {
-            'document' : docTemplateB64,
-            'schema_id': candidateSchemaId
-        };
-        options.method = method;
-
-        rp(options)
-            .then( body => {
-                let documentData = JSON.parse(body);
-                if(documentData.result === 'success') {
-                    resolve(documentData.document_id);
-                }
-                else {
-                    reject("Couldn't save candidate's personal data: " + documentData.result);
-                }
-            })
-            .catch(function (err) {
-                reject(err);
-            })
-    });
-}
-
-// if candidate is new post a new candidate else update candidate data with PUT method and candidate's documentId
+/**
+ * Middleware for deciding if insert new candidate or update existing one according to input params
+ *
+ * @param candidateData
+ * @param documentId -> OPTIONAL: defaults behavior - insert new candidate.
+ * If @documentId specified updated corresponding document with input @candidateData
+ * @returns {Promise} - updated/inserted document's Id
+ */
 exports.saveCandidate = function (candidateData, documentId) {
     return new Promise(function (resolve, reject) {
         if(!documentId) {
-            insertCandidate(candidateData, undefined, 'POST')
+            insertDocument(candidateData, undefined, 'POST', candidateSchemaId)
                 .then(documentId => {
                     resolve(documentId);
                 })
@@ -119,7 +106,7 @@ exports.saveCandidate = function (candidateData, documentId) {
                 });
         }
         else {
-            insertCandidate(candidateData, documentId, 'PUT')
+            insertDocument(candidateData, documentId, 'PUT', candidateSchemaId)
                 .then(documentId => {
                     resolve(documentId);
                 })
@@ -127,11 +114,15 @@ exports.saveCandidate = function (candidateData, documentId) {
                     reject(err);
                 });
         }
-    })
-
+    });
 };
 
-// get user data from trueVault
+/**
+ * Get user data from trueVault by @accessToken
+ *
+ * @param accessToken
+ * @returns {Promise} - user data or server response if not succeeded
+ */
 exports.getUser = function (accessToken) {
     return new Promise(function (resolve, reject) {
         let options = {
@@ -151,8 +142,6 @@ exports.getUser = function (accessToken) {
                 else {
                     resolve(responseData.result);
                 }
-
-                //console.log("user returned: ", body);
             })
             .catch(function (err) {
                 reject(err);
@@ -160,6 +149,12 @@ exports.getUser = function (accessToken) {
     });
 };
 
+/**
+ * Private method for setting request options
+ *
+ * @param url
+ * @returns {{url: string, headers: {Authorization: string}}}
+ */
 function setRequestOptions(url) {
     let options = {
         url: dbUrl + url,
@@ -170,134 +165,29 @@ function setRequestOptions(url) {
     return options;
 }
 
-// TODO: create new schema - currently not important enough to implement - can be done at trueVault console
-// POST /v1/vaults/(string: vault_id)/schemas - creates new schema in the specified vault.
-// urlEndoced (base64 encoding of the schema): "schema=eyJuYW1lIjoidGVzdF9zY2hlbWEiLCJmaWVsZHMiOltdfQ=="
-//var queryUrl = 'https://api.truevault.com/v1/vaults/987b3d71-6e6a-4fef-88af-1a1df582dc08/documents/64f34785-d1d1-4cd5-a1a2-527d8106e687'
-// differentiate between two types of data recevied - all documents request
-// return json object while specific document response is base64 json object encoded
-// type: can be schema/vault/document
-
-// Return a schemaId (collectionId) by name
-function getSchemaIdByName(name, callback) {
-    let options = {
-        url: 'https://api.truevault.com/v1/vaults/' + vaultId + '/schemas',
-        headers: {
-            'Authorization':'Basic MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVmOg=='
-        }
-    };
-
-    request(options, function (error, response, body) {
-        if (!error && response.statusCode === 200) {
-            //let utf8encoded = (new Buffer(body, 'base64')).toString('utf8') // for object return type
-            //var jsonRes = JSON.parse(utf8encoded);
-            let itemArray = JSON.parse(body);
-            //console.log(jsonRes); // for object return type
-
-            if(itemArray['result'] === 'success') {
-                for (let itemIndex = 0; itemIndex < itemArray['schemas'].length; itemIndex++) {
-                    if(itemArray['schemas'][itemIndex]['name'] === name) {
-                        //console.log("item id ", itemArray[grouptype][itemIndex]['id']);
-                        callback(itemArray['schemas'][itemIndex]['id']);
-                    }
-                }
-            }
-            // TODO: iterate all until name === schemaName and return schema id
-
-        }
-        else {
-            // TODO: handle error
-        }
-    });
-}
-
-// get candidate document by id - non-Promise version, currently not in used
-/*exports.getDocumentById(documentID)
-    .then(documentID => {
-        var options = {
-            url: 'https://api.truevault.com/v1/vaults/' + vaultId + '/documents/' + documentID,
-            headers: {
-                'Authorization':'Basic MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVmOg=='
-            }
-        };
-
-        request(options, function (error, response, body) {
-            if (!error && response.statusCode == 200) {
-                let utf8encoded = (new Buffer(body, 'base64')).toString('utf8') // for object return type
-                var jsonRes = JSON.parse(utf8encoded);
-                return getDocumentById(jsonRes);
-            }
-            else {
-                // TODO: handle error
-            }
-        });
-    })
-    .catch(error => {
-        console.log("%s.%s:%s -", __file, __ext, __line, error)
-        //res.render('niceError', {
-        //    title: 'Add Candidate' + newUser.fullName,
-        //    errorText: "Failed to generate short URLs for: '" + newUser.fullName + "'"
-        // });
-    });*/
-/*
-var Session = {
-    cookie: {
-        path: '/',
-        _expires: null,
-        originalMaxAge: null,
-        httpOnly: true
-    },
-    sid: 'T_PhGL0Jn9bz_E459I4ZTSLdcVQU8aal',
-    content: 'changed content',
-    updatedAt: new Date()
-};
-console.log("sessId: ", Session['sid']);
-*/
-/*
-getSessionById(Session['sid'])
-    .then(res => {
-        console.log("result from getting session: ", res);
-    })
-    .catch(err => {
-        console.log("err while getting session: " /*, err);
-    });
-*/
-/*
-saveSession(Session, Session['sid'])
-    .then(res => {
-        console.log("result from saving session: ", res);
-    })
-    .catch(err => {
-        console.log("err while saveing session: ", err);
-    });*/
-
-/*removeSessionById(Session.sid)
-    .then(res => {
-        console.log("session removed succesfully : ", res);
-    })
-    .catch(err => {
-        console.log("unable to remve session: ", err);
-    });
-*/
-// get session by id (use search filter) - currently not in use, might be useful in the future
+/**
+ * Get session document data corresponding to @sessionId
+ *
+ * @param sessionId
+ * @returns {Promise} - session document data or null if not found
+ */
 exports.getSessionById = function (sessionId) {
     return new Promise(function (resolve, reject) {
         //let options = setRequestOptions('/documents/' + documentId);
         let searchTemplate = {
             "filter":{
                 "sid":{
-                    //"sessionID":{
                     "type":"eq",
-                    "value": sessionId//"test"
+                    "value": sessionId
                 }
             },
             "full_document": true,
-            "schema_id": sessionSchemaId//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
+            "schema_id": sessionSchemaId
         };
 
+        // Encode @searchTemplate filter to base64
         let searchTemplateString = JSON.stringify(searchTemplate);
         let searchTemplateB64 = new Buffer(searchTemplateString).toString("base64");
-        //console.log(searchTemplate.toString('base-64'));
         var options = {
             url: dbUrl + '/search',
             headers: {
@@ -310,119 +200,58 @@ exports.getSessionById = function (sessionId) {
             method: 'POST'
         };
 
-        //console.log("options: ", options);
         rp(options)
             .then(body => {
-                console.log("value return from session search: ", body);
-                var itemArray = JSON.parse(body);
-                //console.log(itemArray); // for object return type
-                if (itemArray && itemArray['data'] && itemArray['data']['documents'][0]) {
-                    console.log(itemArray['data']['documents'][0]['document']);
-                    let utf8encodedDocument = (new Buffer(itemArray['data']['documents'][0]['document'], 'base64')).toString('utf8'); // for object return type
-                    console.log(utf8encodedDocument); // for object return type
-                    let document = {};
-                    document.data = JSON.parse(utf8encodedDocument);
-                    document.id = itemArray['data']['documents'][0]['document_id'];
-
-                    console.log(document); // for object return type
+                let itemArray = JSON.parse(body);
+                let responseDocumentData = itemArray['data']['documents'][0];
+                if (itemArray && itemArray['data'] && responseDocumentData) {
+                    // Document exists, encode and parse document data to JSON object
+                    let utf8encodedDocument = (new Buffer(responseDocumentData['document'], 'base64')).toString('utf8');
+                    let sessionDocument = {};
+                    sessionDocument.data = JSON.parse(utf8encodedDocument);
+                    sessionDocument.id = responseDocumentData['document_id'];
 
                     if (itemArray['result'] === 'success') {
-                        resolve(document);
+                        resolve(sessionDocument);
                     }
                 }
                 else {
-                    console.log("session not found: return null");
+                    // Session not found: return null
                     resolve(null);
                 }
-                //resolve(documentData);
             })
             .catch(function (err) {
-                console.log("error return from session search: ", err);
                 reject(err);
             })
     });
 };
 
-
-function privateGetSessionById (sessionId) {
-    return new Promise(function (resolve, reject) {
-        //let options = setRequestOptions('/documents/' + documentId);
-        let searchTemplate = {
-            "filter":{
-                "sid":{
-                    //"sessionID":{
-                    "type":"eq",
-                    "value": sessionId//"test"
-                }
-            },
-            "full_document": true,
-            "schema_id": sessionSchemaId//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
-        };
-
-        let searchTemplateString = JSON.stringify(searchTemplate);
-        let searchTemplateB64 = new Buffer(searchTemplateString).toString("base64");
-        //console.log(searchTemplate.toString('base-64'));
-        var options = {
-            url: dbUrl + '/search',
-            headers: {
-                'Authorization':'Basic MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVmOg==',
-                'Content-Type':'application/x-www-form-urlencoded'
-            },
-            form: {
-                'search_option':searchTemplateB64
-            },
-            method: 'POST'
-        };
-
-        //console.log("options: ", options);
-        rp(options)
-            .then(body => {
-                console.log("value return from session search: ", body);
-                var itemArray = JSON.parse(body);
-                //console.log(itemArray); // for object return type
-                if (itemArray && itemArray['data'] && itemArray['data']['documents'][0]) {
-                    console.log(itemArray['data']['documents'][0]['document']);
-                    let utf8encodedDocument = (new Buffer(itemArray['data']['documents'][0]['document'], 'base64')).toString('utf8'); // for object return type
-                    console.log(utf8encodedDocument); // for object return type
-                    let document = {};
-                    document.data = JSON.parse(utf8encodedDocument);
-                    document.id = itemArray['data']['documents'][0]['document_id'];
-
-                    console.log(document); // for object return type
-
-                    if (itemArray['result'] === 'success') {
-                        resolve(document);
-                    }
-                }
-                else {
-                    console.log("session not found: return null");
-                    resolve(null);
-                }
-                //resolve(documentData);
-            })
-            .catch(function (err) {
-                console.log("error return from session search: ", err);
-                reject(err);
-            })
-    });
-};
-
-// upsert session - if session exists update with 'PUT' request else create new session with sessionData
+/**
+ * Middleware for deciding if insert new session or update existing one according to input params
+ *
+ * @param sessionData
+ * @param sessionId -> OPTIONAL: defaults behavior - insert new session.
+ * If @sessionId specified updated corresponding session document with input @sessionData
+ * @returns {Promise} - updated/inserted session document's Id
+ */
 exports.saveSession = function (sessionData, sessionId) {
     return new Promise(function (resolve, reject) {
         if(sessionId) {
-            privateGetSessionById(sessionId)
+            self.getSessionById(sessionId)
                 .then(sessionDocument => {
-                    // session found update new data with PUT request
-                    insertSession(sessionData, sessionDocument.id, 'PUT')
-                        .then(sessionDocumentId => {
-                            console.log("success insert existing session");
-                            resolve(sessionDocumentId);
-                        })
-                        .catch(err => {
-                            console.log("err insert existing session");
-                            reject(err);
-                        })
+                    // session found update new session data with session documentId
+                    if(sessionDocument) {
+                        insertDocument(sessionData, sessionDocument.id, 'PUT', sessionSchemaId)
+                            .then(sessionDocumentId => {
+                                resolve(sessionDocumentId);
+                            })
+                            .catch(err => {
+                                reject(err);
+                            })
+                    }
+                    else {
+                        reject("error: Couldn't get document data");
+                    }
                 })
                 .catch(err => {
                     reject("error while update session to database; err: ", err);
@@ -430,7 +259,7 @@ exports.saveSession = function (sessionData, sessionId) {
         }
         else {
             // create new session
-            insertSession(sessionData, undefined, 'POST')
+            insertDocument(sessionData, undefined, 'POST', sessionSchemaId)
                 .then(sessionDocumentId => {
                     resolve(sessionDocumentId);
                 })
@@ -439,35 +268,43 @@ exports.saveSession = function (sessionData, sessionId) {
                 })
         }
     })
-
 };
-// if sessionDocumentId exists update session else create new session
-function insertSession (sessionData, sessionDocumentId, method) {
+
+/**
+ * Private method: Insert/update document data according to http @method
+ *
+ * @param sessionData - JSON object of document data
+ * @param sessionDocumentId
+ * @param method - HTTP; POST for insert, PUT for update
+ * @returns {Promise} - document id.
+ */
+function insertDocument (documentData, documentId, method, schemaId) {
     return new Promise(function (resolve, reject) {
-        let docTemplateString = JSON.stringify(sessionData);
+        // Encode @documentData to base64
+        let docTemplateString = JSON.stringify(documentData);
         let docTemplateB64 = new Buffer(docTemplateString).toString("base64");
 
         let optionsUrl = '/documents';
-        if(method === 'PUT') {
-            optionsUrl += '/' + sessionDocumentId;
+        if(method === 'PUT' && documentId) {
+            optionsUrl += '/' + documentId;
         }
 
         let options = setRequestOptions(optionsUrl);
         options.headers['Content-Type'] = 'application/x-www-form-urlencoded';
         options.form = {
             'document' : docTemplateB64,
-            'schema_id': sessionSchemaId
+            'schema_id': schemaId //
         };
         options.method = method;
 
         rp(options)
             .then( body => {
-                let sessionDocumentData = JSON.parse(body);
-                if(sessionDocumentData.result === 'success') {
-                    resolve(sessionDocumentData.document_id);
+                let documentData = JSON.parse(body);
+                if(documentData.result === 'success') {
+                    resolve(documentData.document_id);
                 }
                 else {
-                    reject("Couldn't save session data: " + sessionDocumentData.result);
+                    reject("Couldn't save document data: " + documentData.result);
                 }
             })
             .catch(function (err) {
@@ -476,41 +313,56 @@ function insertSession (sessionData, sessionDocumentId, method) {
     });
 }
 
+/**
+ * Remove session by id
+ *
+ * @param sessionId
+ * @returns {Promise} - success msg or null if session not found
+ */
 exports.removeSessionById = function (sessionId) {
     return new Promise(function (resolve, reject) {
-        privateGetSessionById(sessionId)
+        self.getSessionById(sessionId)
             .then(sessionDocumentData => {
-                let optionsUrl = '/documents/' + sessionDocumentData.document_id;
+                if(sessionDocumentData) {
+                    let optionsUrl = '/documents/' + sessionDocumentData.document_id;
 
-                let options = setRequestOptions(optionsUrl);
-                options.method = 'DELETE';
+                    let options = setRequestOptions(optionsUrl);
+                    options.method = 'DELETE';
 
-                rp(options)
-                    .then(response => {
-                        resolve("Session %s deleted successfully", sessionId);
-                    })
-                    .catch(function (err) {
-                        reject(err);
-                    })
+                    rp(options)
+                        .then(response => {
+                            resolve("Session %s deleted successfully", sessionId);
+                        })
+                        .catch(function (err) {
+                            reject(err);
+                        })
+                }
+                else {
+                    resolve(null);
+                }
             })
             .catch(err => {
                 reject(err);
             })
     });
-}
+};
 
-/*
+/**
+ * Not in use: getSessionById callback implementation
+ *
+ * @param sessionID
+ * @param callback
+ */
 function getDocumentIdBySessionId(sessionID, callback) {
     let searchTemplate = {
         "filter":{
-            //"name":{
             "sid":{
                 "type":"eq",
-                "value": sessionID//"test"
+                "value": sessionID
             }
         },
         "full_document": true,
-        "schema_id": sessionSchemaId//"405fac9b-37f6-4090-93cf-6d6b2c4a541b"
+        "schema_id": sessionSchemaId
     };
 
     let searchTemplateString = JSON.stringify(searchTemplate);
@@ -529,11 +381,7 @@ function getDocumentIdBySessionId(sessionID, callback) {
 
     request.post(options, function optionalCallback(error, response, body) {
         if (!error && response.statusCode == 200) {
-            //let utf8encoded = (new Buffer(body, 'base64')).toString('utf8') // for object return type
-            //var jsonRes = JSON.parse(utf8encoded);
             var itemArray = JSON.parse(body);
-            //console.log(jsonRes); // for object return type
-
             if(itemArray['result'] === 'success') {
                 callback(itemArray['data']['documents'][0]);
             }
@@ -546,49 +394,184 @@ function getDocumentIdBySessionId(sessionID, callback) {
         }
     });
 }
-*/
-/*
-getDocumentIdBySessionId(Session['sid'], function (doc) {
-   //console.log("cb body: ", body);
-   // console.log("cb res: ", res);
-    console.log("cb doc: ", doc);
-});
-*/
-// for testing only
-/*let documentIds = ['310559c4-65af-48bf-a82d-89d649c57266', 'cc465b3b-4d70-4e41-b59a-43ebddbde8bc', '8bf3aa01-11c3-4e23-a684-6a15a194957e'];
 
-findAll(/*'310559c4-65af-48bf-a82d-89d649c57266'*//*documentIds)
-    .then(document => {
-        //console.log("result: ", document);
-        //return getDocumentById(result);
-    })
-    .catch(err => {
-        console.log("catch ", err);
-    });
-//console.log(res);
+/**
+ * TODO: set @asset to test expected output in all functions
+ */
+class TrueVaultAdapterSessionTests {
+    constructor() {
+        this.session = {
+            cookie: {
+                path: '/',
+                _expires: null,
+                originalMaxAge: null,
+                httpOnly: true
+            },
+            sid: 'T_PhGL0Jn9bz_E459I4ZTSLdcVQU8aal',
+            content: 'changed content',
+            updatedAt: new Date()
+        };
+        this.trueVault = require('/controllers/truevault.server.controller');
+    }
+
+    getSessionById() {
+        this.trueVault.getSessionById(this.session.sid)
+            .then(res => {
+                console.log("result from getting session: ", res);
+            })
+            .catch(err => {
+                console.log("err while getting session: " , err);
+            });
+    }
+
+    saveSessionUpdate() {
+        this.trueVault.saveSession(this.session, this.session.sid)
+            .then(res => {
+                console.log("result from saving session: ", res);
+            })
+            .catch(err => {
+                console.log("err while saveing session: ", err);
+            });
+    }
+
+    saveSessionInsert() {
+        this.trueVault.saveSession(this.session)
+            .then(res => {
+                console.log("result from saving session: ", res);
+            })
+            .catch(err => {
+                console.log("err while saveing session: ", err);
+            });
+    }
+
+    removeSessionById() {
+        this.trueVault.removeSessionById(this.session.sid)
+            .then(res => {
+                console.log("session removed successfully : ", res);
+            })
+            .catch(err => {
+                console.log("unable to remve session: ", err);
+            });
+    }
+
+    /**
+     * Currently not in use - function is private
+     */
+    /*
+    getSessionByIdCallBack() {
+        this.trueVault.getDocumentIdBySessionId(this.session.sid, function (sessionDocument) {
+            console.log("cb doc: ", sessionDocument);
+        });
+    }*/
 
 
-        let docTemplate = {
+}
+
+/**
+ * TODO: set @asset to test expected output in all functions
+ */
+class TrueVaultAdapterDocumentTests {
+    constructor() {
+        this.docTemplate = {
             'name': "updated candidate new 5 again"
         };
+        this.trueVault = require('/controllers/truevault.server.controller');
+        this.documentIdsArray = [
+            '310559c4-65af-48bf-a82d-89d649c57266',
+            'cc465b3b-4d70-4e41-b59a-43ebddbde8bc',
+            '8bf3aa01-11c3-4e23-a684-6a15a194957e'
+        ];
+    }
 
-/*
-saveCandidate(docTemplate,'9702a198-948c-4b07-abe6-da39ee6f9b2d')
-    .then(document => {
-        console.log("result: ", document);
-        //return getDocumentById(result);
-    })
-    .catch(err => {
-        console.log("catch ", err);
+    findAllCaseWithOneDocId() {
+        this.trueVault.findAll('310559c4-65af-48bf-a82d-89d649c57266')
+            .then(document => {
+                console.log("result: ", document);
+            })
+            .catch(err => {
+                console.log("catch ", err);
+            });
+    }
+
+    findAll() {
+        this.trueVault.findAll(this.documentIdsArray)
+            .then(document => {
+                console.log("result: ", document);
+            })
+            .catch(err => {
+                console.log("catch ", err);
+            });
+    }
+
+    findOne() {
+        this.trueVault.findOne('9702a198-948c-4b07-abe6-da39ee6f9b2d')
+            .then(document => {
+                console.log("result: ", document);
+            })
+            .catch(err => {
+                console.log("catch ", err);
+            });
+    }
+
+    saveCandidateUpdate() {
+        this.trueVault.saveCandidate(this.docTemplate,'9702a198-948c-4b07-abe6-da39ee6f9b2d')
+            .then(document => {
+                console.log("result: ", document);
+            })
+            .catch(err => {
+                console.log("catch ", err);
+            });
+    }
+
+    saveCandidateInsert() {
+        this.trueVault.saveCandidate(this.docTemplate)
+            .then(document => {
+                console.log("result: ", document);
+            })
+            .catch(err => {
+                console.log("catch ", err);
+            });
+    }
+}
+
+/**
+ * Empty function currently
+ * TODO: decide if need to implement
+ *
+ * Request details: POST /v1/vaults/(string: vault_id)/schemas - creates new schema in the specified vault.
+ * @param vaultId
+ */
+function insertSchema(vaultId) {
+
+}
+
+/**
+ * Not in use: Return a schemaId (collectionId) by name
+ *
+ * @param name
+ * @param callback
+ */
+function getSchemaIdByName(name, callback) {
+    let options = {
+        url: 'https://api.truevault.com/v1/vaults/' + vaultId + '/schemas',
+        headers: {
+            'Authorization':'Basic MjA3ZGE0MzktMzAxYy00OGJiLTkxYmYtMmE3MmQ0OThkZmVmOg=='
+        }
+    };
+
+    request(options, function (error, response, body) {
+        if (!error && response.statusCode === 200) {
+            let itemArray = JSON.parse(body);
+            if(itemArray['result'] === 'success') {
+                for (let itemIndex = 0; itemIndex < itemArray['schemas'].length; itemIndex++) {
+                    if(itemArray['schemas'][itemIndex]['name'] === name) {
+                        callback(itemArray['schemas'][itemIndex]['id']);
+                    }
+                }
+            }
+        }
+        else {
+            // TODO: handle error
+        }
     });
-//insertNewCandidate('');
-
-
-findOne('9702a198-948c-4b07-abe6-da39ee6f9b2d')
-    .then(document => {
-        console.log("result: ", document);
-        //return getDocumentById(result);
-    })
-    .catch(err => {
-        console.log("catch ", err);
-    });*/
+}

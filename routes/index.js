@@ -17,12 +17,12 @@ const sessionStore_Ctrl = require('../controllers/sessionStore.server.controller
 const session = require('express-session');
 var TrueVaultStore = require('../controllers/sessionStore.server.controller')(session);
 
-const sessionHandler = session({
+/*const sessionHandler = session({
     secret: 'some secret',
     store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
     resave: false,
     saveUninitialized: true
-});
+});*/
 //router.use('/api', questionRouter);
 //mailParser_Ctrl.onMailArrived();
 
