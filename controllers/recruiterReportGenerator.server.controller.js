@@ -51,15 +51,15 @@ exports.calcRecruiterReport = function (req, res, callback) {
                 }
 
                 // Calculate factor averages
-                getFactorsAvg(candidate, req.customer.keyword, scaleConversion, function (factorsData, finalScore) {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);
-                    if (!factorsData) { // Couldn't read factors data file
+                getFactorsAvg(candidate, req.customer.keyword, scaleConversion, function (subDims, finalScore) {
+                    console.log("%s.%s:%s -", __file, __ext, __line, "subDims: ", subDims);
+                    if (!subDims) { // Couldn't read factors data file
                         callback(candidate, false);
                         return;
                     }
                     var isMale = (candidate.gender == 'male'); // Gender adjustment
                     // Get text based on factor averages
-                    getVerbalText(req.lang, factorsData, isMale, req.customer.keyword, function (strengths, weaknesses) {
+                    getVerbalText(req.lang, subDims, isMale, req.customer.keyword, function (strengths, weaknesses) {
                         if (!strengths) { // verbal text wasn't retrieved
                             callback(candidate, false);
                             return;
@@ -69,7 +69,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
                         report.strengths = strengths;
                         report.weaknesses = weaknesses;
                         report.finalScore = finalScore;
-                        report.factorsData = factorsData;
+                        report.subDims = subDims;
                         report.completed = true;
 
                         candidate.report = report;
@@ -140,7 +140,7 @@ function getFactorsScaleConversion(companyKeyword, callback) {
                         };
                     }
                     else {
-                        scaleConversion[csvRow[0]] = {weight: csvRow[2], factor: csvRow[1], ranges: [2.5, 4, 5.5]};
+                        scaleConversion[csvRow[0]] = {weight: csvRow[2], factor: csvRow[1], ranges: [4.08, 4.98, 6.1]};
                     }
                     console.log("%s.%s:%s -", __file, __ext, __line, "scaleConversion[", csvRow[0], "] = ", scaleConversion[csvRow[0]]);
                 })
@@ -225,11 +225,12 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     // Calculate the subDim average on a scale of 1-7
                     subDimAvg = subDimAvg / numOfElementsInSubDim;
                     subDimData.subDimension = subDim;
+                    let subDimScaleConversion = scaleConversion[subDim];
+                    if (!subDimScaleConversion) {
+                        subDimScaleConversion = {weight: 0, ranges: [4.08, 4.98, 6.1]};
+                    }
+                    subDimData.scaleConversion = subDimScaleConversion;
                     if (subDimScale == 4) { // Convert sub-dimension from 1-7 to 1-4 scale based on distribution
-                        let subDimScaleConversion = scaleConversion[subDim];
-                        if (!subDimScaleConversion) {
-                            subDimScaleConversion = {weight: 0, ranges: [2.5, 4, 5.5]};
-                        }
                         // Convert to a scale of 1-4
                         subDimData.avg =
                             (subDimAvg <= subDimScaleConversion.ranges[0]) ? 1 :
@@ -246,15 +247,20 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     if (scaleConversion[subDim].weight < 0) { // If it's a negative weight, we need to include the subDim average reversed (1-4 --> 4-1) (1-7 --> 7-1)
                         subDimAvgAfterDirection = subDimScale + 1 - subDimAvgAfterDirection;
                     }
-                    let factorData = factors[scaleConversion[subDim].factor];
-                    if (!factorData) {
-                        factorData = {count: 1, total: subDimAvgAfterDirection};
+                    // Should we include this sub dimension in the factor average?
+                    if (scaleConversion[subDim].weight !== 0) { // Yes
+                        // Get the current accumulated data for this factor
+                        let factorData = factors[scaleConversion[subDim].factor];
+                        if (!factorData) { // No data has been accumulated yet - so start from zero
+                            factorData = {count: 1, total: subDimAvgAfterDirection};
+                        }
+                        else { // There's data already - so just add to it
+                            factorData.count++;
+                            factorData.total += subDimAvgAfterDirection;
+                        }
+                        // Save/update the data for this factor
+                        factors[scaleConversion[subDim].factor] = factorData;
                     }
-                    else {
-                        factorData.count++;
-                        factorData.total += subDimAvgAfterDirection;
-                    }
-                    factors[scaleConversion[subDim].factor] = factorData;
                     /*
                     testScore += (subDimData.avg * Math.abs(subDimScaleConversion.weight));
                     testWeight += Math.abs(subDimScaleConversion.weight);
@@ -308,7 +314,7 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
         });
 }
 
-function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
+function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
     var strengths = [];
     var weaknesses = [];
     const baseFileName = 'report.verbal';
@@ -320,36 +326,38 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                 .fromFile(filePath)
                 .on('data', (data) => {
                     //data is a buffer object
-                    //parseVerbalData(factorsData, isMale, data);
+                    //parseVerbalData(subDimsData, isMale, data);
                     const jsonStr = data.toString('utf8');
-                    var factorVerbal = JSON.parse(jsonStr);
+                    var subDimVerbal = JSON.parse(jsonStr);
 
-                    console.log("%s.%s:%s -", __file, __ext, __line, "factorVerbal: ", factorVerbal);
-                    factorsData.forEach(function (factor) {
-                        //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
-                        if (factor.subDimension == /*factorVerbal['SHORT NAME']*/factorVerbal['SUB_DIMENSION']) {
-                            factor.name = factorVerbal['SHORT NAME'];
-                            // if reverse relation exists (0) than put the factor in the opposite column.
-                            const isStrength = ((factor.avg >= 4.5 && factorVerbal['isReverseRelation'] == '1') ||
-                                (factor.avg <= 3.5 && factorVerbal['isReverseRelation'] == '0'));
+                    console.log("%s.%s:%s -", __file, __ext, __line, "subDimVerbal: ", subDimVerbal);
+                    subDimsData.forEach(function (subDim) {
+                        //console.log("%s.%s:%s -", __file, __ext, __line, subDim.factorName);
+                        if (subDim.subDimension == subDimVerbal['SUB_DIMENSION']) {
+                            subDim.factorName = subDimVerbal['SHORT NAME'];
+                            const loRange = subDim.scaleConversion.ranges[0];
+                            const hiRange = subDim.scaleConversion.ranges[2];
+                            // if reverse relation exists (0) than put the subDim in the opposite column.
+                            const isStrength = ((subDim.avg >= hiRange && subDimVerbal['isReverseRelation'] == '1') ||
+                                (subDim.avg <= loRange && subDimVerbal['isReverseRelation'] == '0'));
                             // Use env variable for setting whether to include average scores in the verbal report or not
                             const includeAvg = (process.env.INCLUDE_AVG === 'yes') ? true : false; // Default is don't include
                             // If included, treat average scores as weaknesses in the report
-                            const isWeakness = ((factor.avg < (includeAvg ? 4.5 : 3.5) && factorVerbal['isReverseRelation'] == '1') ||
-                                (factor.avg > (includeAvg ? 3.5 : 4.5) && factorVerbal['isReverseRelation'] == '0'));
+                            const isWeakness = ((subDim.avg < (includeAvg ? hiRange : loRange) && subDimVerbal['isReverseRelation'] == '1') ||
+                                (subDim.avg > (includeAvg ? loRange : hiRange) && subDimVerbal['isReverseRelation'] == '0'));
                             const langPrefix = lang.toUpperCase();
                             const genderSuffix = (textGenerator_Ctrl.isLangGenderless(lang)) ? '' : ((isMale) ? ' MALE' : ' FEMALE');
-                            const verbalKey = (factor.avg >= 4.5) ? (isMale) ? (langPrefix + ' HIGH' + genderSuffix) : (langPrefix + ' HIGH' + genderSuffix)
-                                : (factor.avg <= 3.5) ? (isMale) ? (langPrefix + ' LOW' + genderSuffix) : (langPrefix + ' LOW' + genderSuffix)
+                            const verbalKey = (subDim.avg >= hiRange) ? (isMale) ? (langPrefix + ' HIGH' + genderSuffix) : (langPrefix + ' HIGH' + genderSuffix)
+                                : (subDim.avg <= loRange) ? (isMale) ? (langPrefix + ' LOW' + genderSuffix) : (langPrefix + ' LOW' + genderSuffix)
                                     : (isMale) ? (langPrefix + ' AVG' + genderSuffix) : (langPrefix + ' AVG' + genderSuffix);
 
                             /** Go through the weaknesses and strengths array and if id already exists
                              *  concat text else create new verbalData object */
                             let verbalData = {};
-                            verbalData.id = factorVerbal['SHORT NAME'];
-                            verbalData.title = factorVerbal[langPrefix + ' FACTOR'];
-                            console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; factorVerbal[verbalKey] - ", factorVerbal[verbalKey]);
-                            verbalData.text = factorVerbal[verbalKey]?factorVerbal[verbalKey].split('\n'):'';
+                            verbalData.id = subDimVerbal['SHORT NAME'];
+                            verbalData.title = subDimVerbal[langPrefix + ' FACTOR'];
+                            console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; subDimVerbal[verbalKey] - ", subDimVerbal[verbalKey]);
+                            verbalData.text = subDimVerbal[verbalKey]?subDimVerbal[verbalKey].split('\n'):'';
 
                             let elementExists = false;
                             if (isStrength) {
@@ -365,7 +373,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                                 (!elementExists) ? strengths.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
                                     'Factor exists in strengths - text was added to ' + verbalData.id
                                     + ' text: ', verbalData.text);
-                                console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);
+                                console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", subDim);
                             }
                             else if (isWeakness) {
                                 for (let WeaknessIndex = 0; WeaknessIndex < weaknesses.length; WeaknessIndex++) {
@@ -379,7 +387,7 @@ function getVerbalText(lang, factorsData, isMale, companyKeyword, callback) {
                                     'Factor exists in weaknesses - text was added to ' + verbalData.id
                                     + ' text: ', verbalData.text);
 
-                                console.log("%s.%s:%s -", __file, __ext, __line, "weakness added ", factor);
+                                console.log("%s.%s:%s -", __file, __ext, __line, "weakness added ", subDim);
                             }
                         }
                     })
