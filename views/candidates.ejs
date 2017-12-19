@@ -395,11 +395,11 @@ if (answers) {
                     <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
                     <td>
                         <% if ((report) && (candidate.formCompleted)) { %>
-                        <% if (0) {//candidate.linkToReport !== undefined) { %>
+                        <% if (candidate.linkToReport !== undefined) { %>
                         <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
                         <% }
                         else { %>
-                        <a href='./recruiterReport?force=1&sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                        <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
                         <% } %>
                         <% } %>
                     </td>
