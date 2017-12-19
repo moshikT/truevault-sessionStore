@@ -30,7 +30,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
             if ((candidate.report) && (candidate.report.completed)) {
                 // Report was already calculated before
                 console.log("%s.%s:%s -", __file, __ext, __line, req.query);
-                if (req.query.force !== '1') { // Not instructed to force recalc of report
+                if ((req.query.force !== '1') && (req.query.test !== '1')) { // Not instructed to force recalc of report
                     console.log("%s.%s:%s -", __file, __ext, __line, req.query.force);
                     if (callback) {
                         callback(candidate);
@@ -74,15 +74,17 @@ exports.calcRecruiterReport = function (req, res, callback) {
 
                         candidate.report = report;
 
-                        // Store report data in DB
-                        candidate.save(function (err, entry) {
-                            if (err) {
-                                console.log("%s.%s:%s -", __file, __ext, __line, "unable To save report data", err);
-                            }
-                            else {
-                                console.log("%s.%s:%s -", __file, __ext, __line, "Stored report data");
-                            }
-                        });
+                        if (req.query.test !== '1') { // This is not a test report
+                            // Store report data in DB
+                            candidate.save(function (err, entry) {
+                                if (err) {
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "unable To save report data", err);
+                                }
+                                else {
+                                    console.log("%s.%s:%s -", __file, __ext, __line, "Stored report data");
+                                }
+                            });
+                        }
                         if (callback) {
                             callback(candidate);
                         }
@@ -357,7 +359,7 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
                             verbalData.id = subDimVerbal['SHORT NAME'];
                             verbalData.title = subDimVerbal[langPrefix + ' FACTOR'];
                             console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; subDimVerbal[verbalKey] - ", subDimVerbal[verbalKey]);
-                            verbalData.text = subDimVerbal[verbalKey]?subDimVerbal[verbalKey].split('\n'):'';
+                            verbalData.text = subDimVerbal[verbalKey] ? subDimVerbal[verbalKey].split('\n') : '';
 
                             let elementExists = false;
                             if (isStrength) {
