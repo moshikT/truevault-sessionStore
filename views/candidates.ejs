@@ -152,6 +152,9 @@
         <% } %>
     }
 
+    .cell-nowrap {
+        white-space: nowrap;
+    }
 
 </style>
 <header>
@@ -363,13 +366,13 @@ if (answers) {
                     <% const dateTimeCreated = candidate.dateTimeCreated; %>
                     <% let dateTimeCompleted = candidate.dateTimeCompleted; if ((dateTimeCompleted === undefined) && (candidate.formCompleted)) dateTimeCompleted = new Date('11/14/17'); %>
                     <% report = candidate.report; %>
-                    <td class="zui-sticky-col zui-sticky-td <%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCreated != undefined) ? dateTimeCreated.valueOf() : '' %>">
+                    <td class="cell-nowrap zui-sticky-col zui-sticky-td <%- (dateTimeCreated != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCreated != undefined) ? dateTimeCreated.valueOf() : '' %>">
                         <%- (dateTimeCreated != undefined) ? dateTimeCreated.toISOString() : '' %>
                     </td>
-                    <td id="fullName_<%= candidate.session.id %>" class = "zui-sticky-col2 zui-sticky-td"><%- candidate.fullName %></td>
-                    <td id="recruitmentSource_<%= candidate.session.id %>" class = "zui-nonsticky-td"><%- candidate.recruitmentSource %></td>
+                    <td id="fullName_<%= candidate.session.id %>" class = "cell-nowrap zui-sticky-col2 zui-sticky-td"><%- candidate.fullName %></td>
+                    <td id="recruitmentSource_<%= candidate.session.id %>" class = "cell-nowrap zui-nonsticky-td"><%- candidate.recruitmentSource %></td>
                     <td><%= candidate.id %></td>
-                    <td id="phoneNumber_<%= candidate.session.id %>"><%= candidate.phoneNumber.replace(/\-/g, '') %></td>
+                    <td id="phoneNumber_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.phoneNumber.replace(/\-/g, '') %></td>
                     <%
                         var mailSubject = encodeURIComponent('מועמדות לחברת ' + customer.name);
                         var mailContent = customer.SMSTextA?customer.SMSTextA:customer.SMSTextB;
@@ -378,25 +381,25 @@ if (answers) {
                             mailContent = encodeURIComponent(mailContent);
                         }
                     %>
-                    <td id="email"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י&nbspדוא"ל</a></td>
+                    <td id="email" class="cell-nowrap"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י&nbspדוא"ל</a></td>
                     <% if (advanced) { %>
                     <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
                     <% } %>
-                    <td id="department_<%= candidate.session.id %>" data-editor="5"><%= candidate.department %></td>
-                    <td id="team_<%= candidate.session.id %>" data-editor="6"><%= candidate.team %></td>
-                    <td id="cvScreenDate_<%= candidate.session.id %>"><%= candidate.cvScreenDate %></td>
-                    <td id="cvScreenResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.cvScreenResult %></td>
-                    <td class="<%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCompleted != undefined) ? dateTimeCompleted.valueOf() : '' %>">
+                    <td id="department_<%= candidate.session.id %>" data-editor="5" class="cell-nowrap"><%= candidate.department %></td>
+                    <td id="team_<%= candidate.session.id %>" data-editor="6" class="cell-nowrap"><%= candidate.team %></td>
+                    <td id="cvScreenDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.cvScreenDate %></td>
+                    <td id="cvScreenResult_<%= candidate.session.id %> class="cell-nowrap"" data-editor="8"><%= candidate.cvScreenResult %></td>
+                    <td class="cell-nowrap <%- (dateTimeCompleted != undefined) ? 'dateValue' : '' %>" data-num="<%- (dateTimeCompleted != undefined) ? dateTimeCompleted.valueOf() : '' %>">
                         <%- (dateTimeCompleted != undefined) ? dateTimeCompleted.toISOString() : '' %>
                     </td>
                     <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
                     <td>
                         <% if ((report) && (candidate.formCompleted)) { %>
-                        <% if (candidate.linkToReport !== undefined) { %>
+                        <% if (0) {//candidate.linkToReport !== undefined) { %>
                         <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
                         <% }
                         else { %>
-                        <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
+                        <a href='./recruiterReport?force=1&sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
                         <% } %>
                         <% } %>
                     </td>
@@ -407,22 +410,22 @@ if (answers) {
                         <td><a href='<%= candidate.linkToForm %>' target='_blank'><!--FIXME: Form-->שאלון</a></td>
                         <td><a href='<%= candidate.linkToForm + ".info" %>' target='_blank'><!--FIXME: goo.gl-->goo.gl</a></td>
                     <% } %>
-                    <td id="phoneInterviewDate_<%= candidate.session.id %>"><%= candidate.phoneInterviewDate %></td>
+                    <td id="phoneInterviewDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.phoneInterviewDate %></td>
                     <td id="phoneInterviewResult_<%= candidate.session.id %>"
-                        data-editor="3"><%= candidate.phoneInterviewResult %></td>
-                    <td id="interviewDate_<%= candidate.session.id %>"><%= candidate.interviewDate %></td>
-                    <td id="interviewResult_<%= candidate.session.id %>" data-editor="4"><%= candidate.interviewResult %></td>
-                    <td id="auditDate_<%= candidate.session.id %>"><%= candidate.auditDate %></td>
-                    <td id="auditResult_<%= candidate.session.id %>" data-editor="7"><%= candidate.auditResult %></td>
-                    <td id="hrResult_<%= candidate.session.id %>" data-editor="9"><%= candidate.hrResult %></td>
-                    <td id="refCallDate_<%= candidate.session.id %>"><%= candidate.refCallDate %></td>
-                    <td id="refCallResult_<%= candidate.session.id %>" data-editor="8"><%= candidate.refCallResult %></td>
-                    <td id="contractDate_<%= candidate.session.id %>"><%= candidate.contractDate %></td>
-                    <td id="reportRating_<%= candidate.session.id %>"><%= candidate.reportRating %></td>
-                    <td id="hired_<%= candidate.session.id %>" data-editor="2"><%= candidate.hired %></td>
-                    <td id="workDate_<%= candidate.session.id %>"><%= candidate.workDate %></td>
-                    <td id="processUpdate_<%= candidate.session.id %>" data-editor="10"><%= candidate.processUpdate %></td>
-                    <td id="startedWork_<%= candidate.session.id %>" data-editor="2"><%= candidate.startedWork %></td>
+                        data-editor="3" class="cell-nowrap"><%= candidate.phoneInterviewResult %></td>
+                    <td id="interviewDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.interviewDate %></td>
+                    <td id="interviewResult_<%= candidate.session.id %>" data-editor="4" class="cell-nowrap"><%= candidate.interviewResult %></td>
+                    <td id="auditDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.auditDate %></td>
+                    <td id="auditResult_<%= candidate.session.id %>" data-editor="7" class="cell-nowrap"><%= candidate.auditResult %></td>
+                    <td id="hrResult_<%= candidate.session.id %>" data-editor="9" class="cell-nowrap"><%= candidate.hrResult %></td>
+                    <td id="refCallDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.refCallDate %></td>
+                    <td id="refCallResult_<%= candidate.session.id %>" data-editor="8" class="cell-nowrap"><%= candidate.refCallResult %></td>
+                    <td id="contractDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.contractDate %></td>
+                    <td id="reportRating_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.reportRating %></td>
+                    <td id="hired_<%= candidate.session.id %>" data-editor="2" class="cell-nowrap"><%= candidate.hired %></td>
+                    <td id="workDate_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.workDate %></td>
+                    <td id="processUpdate_<%= candidate.session.id %>" data-editor="10" class="cell-nowrap"><%= candidate.processUpdate %></td>
+                    <td id="startedWork_<%= candidate.session.id %>" data-editor="2" class="cell-nowrap"><%= candidate.startedWork %></td>
                     <td id="recruiterNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.recruiterNotes %></td>
                 </tr>
                 <% } %>
