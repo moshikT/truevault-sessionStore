@@ -14,6 +14,7 @@ exports.addClient = function (req, res) {
     let companyName = req.body.name;
 
     // Search for this client in the db
+    console.log(`${__file}.${__ext}:${__line} -`, `Searching for customer '${companyName}'; trimmed '${companyName.trim()}'`);
     Client.findOne({name: companyName.trim()}, function (err, client) { // callback
         if (err) { // Error checking the db - abort
             res.render('niceError', {
@@ -23,12 +24,14 @@ exports.addClient = function (req, res) {
             return;
         }
 
-        let newClientEntry; // place to hold found client or new client entry (if not found)
+        let newClientEntry; // place to hold found client or new client  entry (if not found)
         if (client) { // found this client in db
+            console.log(`${__file}.${__ext}:${__line} -`, `Found: ${client}`);
             newClientEntry = client;
         }
         else { // didn't find
             // prepare a new entry
+            console.log(`${__file}.${__ext}:${__line} -`, `Not found`);
             newClientEntry = new Client({
                 name: companyName.trim()
             });
@@ -40,53 +43,11 @@ exports.addClient = function (req, res) {
 
         // Go through all the elements in the request and set client's entry
         for (let element in req.body) {
-            console.log("%s.%s:%s -", __file, __ext, __line, "Saving property: ", element, " = ", req.body[element]);
-                newClientEntry[element] = req.body[element];
+            //console.log("%s.%s:%s -", __file, __ext, __line, "Saving property: ", element, " = ", req.body[element]);
+            newClientEntry[element] = req.body[element];
         }
 
-        // Save all the fields that were entered in the form
-        /*if (req.body.logoStyle) {
-            newClientEntry.logoStyle = req.body.logoStyle;
-        }
-        if (req.body.title) {
-            newClientEntry.title = req.body.title;
-        }
-        if (req.body.headlineText) {
-            newClientEntry.headlineText = req.body.headlineText;
-        }
-        if (req.body.companyDescription) {
-            newClientEntry.companyDescription = req.body.companyDescription;
-        }
-        if (req.body.instructionText) {
-            newClientEntry.instructionText = req.body.instructionText;
-        }
-        if (req.body.language) {
-            newClientEntry.language = req.body.language;
-        }
-                if (req.body.isDemo) {
-                    newClientEntry.isDemo = (req.body.isDemo == 'on');
-                }
-        if (req.body.keyword) {
-            newClientEntry.keyword = req.body.keyword;
-        }
-        if (req.body.SMSText) {
-            newClientEntry.SMSText = req.body.SMSText;
-        }
-        if (req.body.emailTo) {
-            newClientEntry.emailTo = req.body.emailTo;
-        }
-        if (req.body.emailFrom) {
-            newClientEntry.emailFrom = req.body.emailFrom;
-        }
-        if (req.body.newCandidateEmailText) {
-            newClientEntry.newCandidateEmailText = req.body.newCandidateEmailText;
-        }
-        if (req.body.candidateReportEmailText) {
-            newClientEntry.candidateReportEmailText = req.body.candidateReportEmailText;
-        }
-        if (req.body.emailFromPswd) {
-            newClientEntry.emailFromPswd = req.body.emailFromPswd;
-        }*/
+
         if (req.file) {
             var logoImg = {};
             logoImg.fileName = req.file.originalname;
@@ -97,6 +58,9 @@ exports.addClient = function (req, res) {
             newClientEntry.logoImg = logoImg;
             console.log("%s.%s:%s -", __file, __ext, __line, "file exists!!", client.logoImg);
         }
+        // Make sure the company name is trimmed - otherwise the search is different than the way we store data and the entries would be duplicated for each update
+        newClientEntry.name = companyName.trim();
+        // Save the entry
         newClientEntry.save(function (err) {
             if (err) {
                 console.log("%s.%s:%s -", __file, __ext, __line, err);
