@@ -381,7 +381,7 @@ if (answers) {
                             mailContent = encodeURIComponent(mailContent);
                         }
                     %>
-                    <td id="email" class="cell-nowrap"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י&nbspדוא"ל</a></td>
+                    <td id="email" class="cell-nowrap"><a href='mailto:<%= candidate.email %>?subject=<%= mailSubject %>&body=<%= mailContent %>' target='_blank'><!--FIXME: send email -->שלח/י דוא"ל</a></td>
                     <% if (advanced) { %>
                     <td id="ehNotes_<%= candidate.session.id %>" data-editor="1"><%= candidate.ehNotes %></td>
                     <% } %>
