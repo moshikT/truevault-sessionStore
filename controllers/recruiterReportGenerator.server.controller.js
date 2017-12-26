@@ -52,7 +52,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
 
                 // Calculate factor averages
                 getFactorsAvg(candidate, req.customer.keyword, scaleConversion, function (subDims, finalScore) {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "subDims: ", subDims);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "subDims: ", subDims);
                     if (!subDims) { // Couldn't read factors data file
                         callback(candidate, false);
                         return;
@@ -205,8 +205,8 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     var numOfElementsInSubDim = 0;
                     var subDim = csvRow[0];
                     //var isRevereRelation = csvRow[1];
-                    console.log("%s.%s:%s -", __file, __ext, __line, "csvRow : ", csvRow);
-                    console.log("%s.%s:%s -", __file, __ext, __line, "subDim : ", subDim);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "csvRow : ", csvRow);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "subDim : ", subDim);
 
                     for (var subDimElementIndex = 1; subDimElementIndex < csvRow.length; subDimElementIndex++) {
                         if (csvRow[subDimElementIndex] == '') {
@@ -252,7 +252,8 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     // Should we include this sub dimension in the factor average?
                     if (scaleConversion[subDim].weight !== 0) { // Yes
                         // Get the current accumulated data for this factor
-                        let factorData = factors[scaleConversion[subDim].factor];
+                        subDimData.factorName = scaleConversion[subDim].factor;
+                        let factorData = factors[subDim.factorName];
                         if (!factorData) { // No data has been accumulated yet - so start from zero
                             factorData = {count: 1, total: subDimAvgAfterDirection};
                         }
@@ -279,7 +280,15 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     //var subDim = JSON.parse(jsonStr);
                 })
                 .on('done', (error) => {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "Subdims: ", subDims);
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "Subdims: ", subDims);
+                    for (let i=0;i<subDims.length;i++) {
+                        const subDim = subDims[i];
+                        console.log(`${__file}.${__ext}:${__line} -`,
+                            `subDim ${subDim.subDimension} - factor: ${subDim.factorName}; weight: ${subDim.scaleConversion.weight}; `,
+                            `ranges: ${subDim.scaleConversion.ranges}; avg: ${subDim.avg}; `/*,
+                            `${(isWeakness) ? 'is weakness' : (isStrength ? 'is strength' : '')}`*/);
+                    }
+
                     console.log("%s.%s:%s -", __file, __ext, __line, "Factors: ", factors);
                     let testScoreAvg = 0;
                     let count = 0;
@@ -356,10 +365,6 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
                             const verbalKey = (subDim.avg >= hiRange) ? (isMale) ? (langPrefix + ' HIGH' + genderSuffix) : (langPrefix + ' HIGH' + genderSuffix)
                                 : (subDim.avg <= loRange) ? (isMale) ? (langPrefix + ' LOW' + genderSuffix) : (langPrefix + ' LOW' + genderSuffix)
                                     : (isMale) ? (langPrefix + ' AVG' + genderSuffix) : (langPrefix + ' AVG' + genderSuffix);
-
-                            console.log(`${__file}.${__ext}:${__line} -`,
-                                `subDim ${subDim.subDimension} - weight: ${subDim.scaleConversion.weight}; ranges: ${subDim.scaleConversion.ranges}; avg: ${subDim.avg}; `,
-                                `${(isWeakness)?'is weakness':(isStrength?'is strength':'')}`);
 
                             /** Go through the weaknesses and strengths array and if id already exists
                              *  concat text else create new verbalData object */

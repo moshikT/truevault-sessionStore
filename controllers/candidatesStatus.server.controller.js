@@ -32,11 +32,11 @@ exports.candidatesStatus = function (req, res) {
             textAlign: textGenerator_Ctrl.getLangAlign(req.customer.language),
             candidates: candidateItems
         };
-        const lintErr = ejsLint('candidates', options); // Lint check the template
+/*        const lintErr = ejsLint('candidates', options); // Lint check the template
         if (lintErr) {
             console.log("%s.%s:%s -", __file, __ext, __line, "candidates.ejs error: ", lintErr);
             return;
-        }
+        }*/
         res.render('candidates', options); // Clients management page
     });
 };

@@ -395,12 +395,14 @@ if (answers) {
                     <td><a href='<%- candidate.linkToCV %>' target='_blank'><!--FIXME: CV-->קו"ח</a></td>
                     <td>
                         <% if ((report) && (candidate.formCompleted)) { %>
-                        <% if (candidate.linkToReport !== undefined) { %>
-                        <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a>
-                        <% }
-                        else { %>
-                        <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a>
-                        <% } %>
+                            <% if ((advanced) || // This is advanced mode?
+                                    (candidate.linkToReport === undefined)) { // or there's no short link?
+                            %>
+                                <a href='./recruiterReport?sid=<%- candidate.session.id %>' target='_blank'><!--FIXME: Report-->דוח</a> <!-- Use the full link -->
+                            <% }
+                            else { %>
+                                <a href='<%= candidate.linkToReport %>' target='_blank'><!--FIXME: Report-->דוח</a> <!-- Use the short link -->
+                            <% } %>
                         <% } %>
                     </td>
                     <td><%- (report != undefined) ? report.finalScore : 'Not Done' %></td>
