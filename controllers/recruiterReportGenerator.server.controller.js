@@ -263,6 +263,9 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                         // Save/update the data for this factor
                         factors[scaleConversion[subDim].factor] = factorData;
                     }
+                    else {
+                        console.log("%s.%s:%s -", __file, __ext, __line, "Not including subDim in average - ", subDim);
+                    }
                     /*
                     testScore += (subDimData.avg * Math.abs(subDimScaleConversion.weight));
                     testWeight += Math.abs(subDimScaleConversion.weight);
