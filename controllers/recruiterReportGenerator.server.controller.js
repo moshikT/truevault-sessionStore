@@ -335,8 +335,9 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
                     const jsonStr = data.toString('utf8');
                     var subDimVerbal = JSON.parse(jsonStr);
 
-                    console.log("%s.%s:%s -", __file, __ext, __line, "subDimVerbal: ", subDimVerbal);
-                    subDimsData.forEach(function (subDim) {
+                    //console.log("%s.%s:%s -", __file, __ext, __line, "subDimVerbal: ", subDimVerbal);
+                    for (let i=0;i<subDimsData.length;i++) {
+                        const subDim = subDimsData[i];
                         //console.log("%s.%s:%s -", __file, __ext, __line, subDim.factorName);
                         if (subDim.subDimension == subDimVerbal['SUB_DIMENSION']) {
                             subDim.factorName = subDimVerbal['SHORT NAME'];
@@ -356,12 +357,16 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
                                 : (subDim.avg <= loRange) ? (isMale) ? (langPrefix + ' LOW' + genderSuffix) : (langPrefix + ' LOW' + genderSuffix)
                                     : (isMale) ? (langPrefix + ' AVG' + genderSuffix) : (langPrefix + ' AVG' + genderSuffix);
 
+                            console.log(`${__file}.${__ext}:${__line} -`,
+                                `subDim ${subDim.subDimension} - weight: ${subDim.scaleConversion.weight}; ranges: ${subDim.scaleConversion.ranges}; avg: ${subDim.avg}; `,
+                                `${(isWeakness)?'is weakness':(isStrength?'is strength':'')}`);
+
                             /** Go through the weaknesses and strengths array and if id already exists
                              *  concat text else create new verbalData object */
                             let verbalData = {};
                             verbalData.id = subDimVerbal['SHORT NAME'];
                             verbalData.title = subDimVerbal[langPrefix + ' FACTOR'];
-                            console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; subDimVerbal[verbalKey] - ", subDimVerbal[verbalKey]);
+                            //console.log("%s.%s:%s -", __file, __ext, __line, "verbalKey: ", verbalKey, "; subDimVerbal[verbalKey] - ", subDimVerbal[verbalKey]);
                             verbalData.text = subDimVerbal[verbalKey] ? subDimVerbal[verbalKey].split('\n') : '';
 
                             let elementExists = false;
@@ -370,15 +375,18 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
                                     // if factor existed add subDimension to text
                                     if (strengths[strengthsIndex].id === verbalData.id) {
                                         elementExists = true;
-                                        console.log("%s.%s:%s -", __file, __ext, __line, "Prev text: ", strengths[strengthsIndex].text);
+                                        //console.log("%s.%s:%s -", __file, __ext, __line, "Prev text: ", strengths[strengthsIndex].text);
                                         strengths[strengthsIndex].text = strengths[strengthsIndex].text.concat(verbalData.text);
-                                        console.log("%s.%s:%s -", __file, __ext, __line, "New text: ", strengths[strengthsIndex].text);
+                                        //console.log("%s.%s:%s -", __file, __ext, __line, "New text: ", strengths[strengthsIndex].text);
                                     }
                                 }
-                                (!elementExists) ? strengths.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
-                                    'Factor exists in strengths - text was added to ' + verbalData.id
-                                    + ' text: ', verbalData.text);
-                                console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", subDim);
+                                if (!elementExists) { // This is a subDim for a new factor
+                                    strengths.push(verbalData);
+                                }
+                                else { // This subDim was added to an existing factor
+                                    // console.log(`${__file}.${__ext}:${__line} -`, `Factor exists in strengths - text was added to ${verbalData.id} text: ${verbalData.text});
+                                }
+                                //console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", subDim);
                             }
                             else if (isWeakness) {
                                 for (let WeaknessIndex = 0; WeaknessIndex < weaknesses.length; WeaknessIndex++) {
@@ -388,19 +396,22 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
                                         weaknesses[WeaknessIndex].text = weaknesses[WeaknessIndex].text.concat(verbalData.text);
                                     }
                                 }
-                                (!elementExists) ? weaknesses.push(verbalData) : console.log("%s.%s:%s -", __file, __ext, __line,
-                                    'Factor exists in weaknesses - text was added to ' + verbalData.id
-                                    + ' text: ', verbalData.text);
+                                if (!elementExists) { // This is a subDim for a new factor
+                                    weaknesses.push(verbalData);
+                                }
+                                else {
+                                    // console.log(`${__file}.${__ext}:${__line} -`, `Factor exists in weaknesses - text was added to ${verbalData.id} text: ${verbalData.text});
+                                }
 
-                                console.log("%s.%s:%s -", __file, __ext, __line, "weakness added ", subDim);
+                                //console.log("%s.%s:%s -", __file, __ext, __line, "weakness added ", subDim);
                             }
                         }
-                    })
+                    }
                 })
                 .on('done', (error) => {
                     if (!error) {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "weaknesses: " + weaknesses);
-                        console.log("%s.%s:%s -", __file, __ext, __line, "strengths: " + strengths);
+                        //console.log("%s.%s:%s -", __file, __ext, __line, "weaknesses: " + weaknesses);
+                        //console.log("%s.%s:%s -", __file, __ext, __line, "strengths: " + strengths);
                         callback(strengths, weaknesses);
                     }
                     else {
