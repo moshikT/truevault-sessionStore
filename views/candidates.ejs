@@ -239,6 +239,9 @@ if (answers) {
                     <th data-field="recSource" data-sortable="true" data-sorter="textSorter" class = "zui-nonsticky-th"><!--FIXME: Name-->מקור גיוס</th>
                     <th data-field="id"><!--FIXME: Phone-->ת.ז.</th>
                     <th data-field="phone"><!--FIXME: Phone-->טלפון</th>
+                    <% if (advanced) { %>
+                        <th data-field="called">שיחה</th>
+                    <% } %>
                     <th data-field="email"><!--FIXME: Phone-->דוא"ל</th>
                     <% if (advanced) { %>
                         <th data-field="ehNotes" class="wideCol">הערות EH</th>
@@ -378,6 +381,9 @@ if (answers) {
                     <td id="recruitmentSource_<%= candidate.session.id %>" class = "cell-nowrap zui-nonsticky-td"><%- candidate.recruitmentSource %></td>
                     <td><%= candidate.id %></td>
                     <td id="phoneNumber_<%= candidate.session.id %>" class="cell-nowrap"><%= candidate.phoneNumber.replace(/\-/g, '') %></td>
+                    <% if (advanced) { %>
+                        <td id="called_<%= candidate.session.id %>" class="cell-nowrap"><input type="checkbox" <%= candidate.called?'checked':'' %>/></td>
+                    <% } %>
                     <%
                         var mailSubject = encodeURIComponent('מועמדות לחברת ' + customer.name);
                         var mailContent = customer.SMSTextA?customer.SMSTextA:customer.SMSTextB;
@@ -620,7 +626,7 @@ if (answers) {
                     ],
                 // Set columns which aren't editable
                 <% if (advanced) { %>
-                preventColumns: [1, 6, 12, 13, 14, 15, 16, 17, 18, 19],
+                preventColumns: [1, 6, 7, 13, 14, 15, 16, 17, 18, 19, 20],
                 <% } else { %>
                 preventColumns: [1, 2, 3, 4, 5, 6, 11, 12, 13, 14]
                 <% } %>
@@ -678,7 +684,9 @@ if (answers) {
 
     // Method called when a cell value is changed
     candidatesTable.on('change', function (evt, newValue) {
-        const cellId = evt.target.id;
+        const cellId = evt.target.id?
+            evt.target.id: // This is what we get for editable table fields after they're edited
+            evt.target.parentElement.id; // This is what we get for checkbox fields when they're changed
         const cellIdParts = cellId.split('_');
         if (!cellIdParts[1]) {
             //something went wrong as the ID doesn't seem to have the right structure
@@ -688,7 +696,10 @@ if (answers) {
         // Create a PATCH request to update the db
         const sid = cellIdParts[1];
         const property = cellIdParts[0];
-        let patchUrl = '/api/candidates/' + sid + '/' + property;
+        const patchUrl = '/api/candidates/' + sid + '/' + property;
+        if ((!newValue) && (evt.target.parentElement) && (evt.target.parentElement.childNodes)) { // If no newValue this is probably a checkbox
+            newValue = evt.target.parentElement.childNodes[0].checked;
+        }
         let patchData = {value: newValue};
         // Send the result to the db
         sendUpdate(patchUrl, patchData);

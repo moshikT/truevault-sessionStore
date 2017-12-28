@@ -48,7 +48,8 @@ var candidateSchema = new Schema({
     contractDate: String,
     processUpdate: String,
     recruiterNotes: String,
-    ehNotes: String
+    ehNotes: String,
+    called: Boolean
 });
 
 module.exports = mongoose.model('Candidate', candidateSchema);
