@@ -22,12 +22,12 @@ mixpanel.track('Event Name', {
 
 /* get form by user */
 router.use('/:sid', function (req, res, next) {
-    console.log("send patch request to sid: ", req.params.sid);
+    console.log("%s.%s:%s -", __file, __ext, __line, "send patch request to sid: ", req.params.sid);
     Candidate.findOne({'session.id': req.params.sid}, function (err, candidate) {
         if (err) {
             res.status(500).send("Error while searching for sid (" + __file + ":" + __line + ") - " + err);
             return;
-        };
+        }
         /* Add the question found to the request and pass it to the next action - get or patch */
         req.candidate = candidate;
         next();
@@ -149,8 +149,8 @@ router.route('/:sid/:qid')
     .patch(function (req, res, next) {
         req.candidate.markModified('form');
         console.log("%s.%s:%s -", __file, __ext, __line, "patch question: ", req.params.qid);
-        for (var index = 0; index < req.candidate.form.length; index++) {
-            if(req.candidate.form[index].id == req.params.qid) {
+        for (let index = 0; index < req.candidate.form.length; index++) {
+            if (req.candidate.form[index].id === req.params.qid) {
                 console.log("%s.%s:%s -", __file, __ext, __line, "qid: ", req.params.qid);
                 let appExpId = false;
                 if (req.candidate.form[index].type === 'A') {
@@ -160,7 +160,7 @@ router.route('/:sid/:qid')
                     delete req.body._id;
                 }
                 // Loop through the fields in the request body (finalAnswer, AnswerSwitched etc.) and copy them to the relevant qid in the form
-                for (var p in req.body) {
+                for (let p in req.body) {
                     req.candidate.form[index][p] = req.body[p];
                 }
                 if (appExpId) { // This is an appExp question so need to store the appExp separately
@@ -202,6 +202,7 @@ router.route('/:sid/:qid')
                         res.json(entry);
                     }
                 });
+                break; // after qid found - stop searching for it...
             }
         }
     });

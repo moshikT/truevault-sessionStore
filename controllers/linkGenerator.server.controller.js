@@ -16,7 +16,10 @@ generateLink = function (link, callback) {
         // We get here after the URL is generated or if there's an error
         console.log("%s.%s:%s -", __file, __ext, __line, "Short URL: ", shortUrl);
         // @@@ For now throw an exception but need to handle this better
-        if(err) throw err;
+        if(err) {
+            callback(null);
+            return;
+        }
         // Notify the caller that the URL is ready
         callback(shortUrl);
     } );

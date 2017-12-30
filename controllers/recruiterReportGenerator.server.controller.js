@@ -310,10 +310,12 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     console.log("%s.%s:%s -", __file, __ext, __line, "test avg ", testScoreAvg);
                     */
                     const finalScore =
-                        (testScoreAvg <= scaleConversion.total.ranges[0]) ? 1 :
+                        scaleConversion.total ?
+                            ((testScoreAvg <= scaleConversion.total.ranges[0]) ? 1 :
                             ((testScoreAvg <= scaleConversion.total.ranges[1]) ? 2 :
                                     ((testScoreAvg <= scaleConversion.total.ranges[2]) ? 3 : 4)
-                            );
+                            )) :
+                            (testScoreAvg - 1) * 4 / 6 + 1;
                     console.log("%s.%s:%s -", __file, __ext, __line, "Final score (1-4): ", finalScore);
                     callback(subDims, finalScore);
                 })

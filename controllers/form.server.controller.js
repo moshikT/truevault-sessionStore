@@ -66,7 +66,12 @@ exports.saveFormResults = function (req, res) {
     delete formData['submit_btn'];
     delete  formData['isCompleted'];
     Candidate.findOne({'session.id': req.query.sid}, function (err, candidate) {
-        if (err) throw err;
+        if (err) {
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error finding candidate on form submission: ", err);
+
+            res.redirect('/clients/' + req.customer._id + '/thankYou');
+            return;
+        }
         /* load default params */
         if (candidate) {
             candidate.markModified('form');
@@ -116,6 +121,7 @@ exports.saveFormResults = function (req, res) {
                         user_agent: req.headers['user-agent'],
                         from: req.headers['from'],
                         cid: req.params ? req.params.cid : 0,
+                        called: entry.called,
                     });
                     console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");
                     console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");
@@ -145,12 +151,22 @@ exports.saveFormResults = function (req, res) {
 exports.getIndex = function (req, res) {
     //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.customer.name, req.customer.isDemo, (req.customer.language === 'en'));
     console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.customer.name);
-    mixpanel.track('Index Entered', {
-        distinct_id: req ? req.sid : 0,
-        server_name: process.env.SERVER_NAME,
-        user_agent: req.headers['user-agent'],
-        from: req.headers['from'],
-        cid: req.params ? req.params.cid : 0
+    Candidate.findOne({'session.id': req.query.sid}, 'called', function (err, candidate) { // Retrieve the 'called' field to use in tracking
+        if (err) {
+            console.log("%s.%s:%s -", __file, __ext, __line, "Error finding candidate on form submission: ", err);
+
+            res.redirect('/clients/' + req.customer._id + '/thankYou');
+            return;
+        }
+
+        mixpanel.track('Index Entered', {
+            distinct_id: req ? req.sid : 0,
+            server_name: process.env.SERVER_NAME,
+            user_agent: req.headers['user-agent'],
+            from: req.headers['from'],
+            cid: req.params ? req.params.cid : 0,
+            called: candidate?candidate.called:'unknown',
+        });
     });
     textGenerator_Ctrl.initIndexPageText(req.lang, function (pageText) {
         res.render('index', {
@@ -188,7 +204,8 @@ exports.getForm = function (req, res) {
                         server_name: process.env.SERVER_NAME,
                         user_agent: req.headers['user-agent'],
                         from: req.headers['from'],
-                        cid: req.params ? req.params.cid : 0
+                        cid: req.params ? req.params.cid : 0,
+                        called: candidate?candidate.called:'unknown',
                     });
                     textGenerator_Ctrl.initFormPageText(req.lang, function (pageText) {
                         res.render('form', {

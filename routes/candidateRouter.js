@@ -3,11 +3,6 @@
 let express = require('express');
 let router = express.Router();
 let Candidate = require('../models/candidate.server.model.js');
-const Mixpanel = require('mixpanel');
-// initialize mixpanel client configured to communicate over https
-const mixpanel = Mixpanel.init('c7c569d0adcc1f4cc5a52fbc9002a43e', {
-    protocol: 'https'
-});
 
 // Use a middleware to retrieve the sid
 router.use('/:sid/:field', function (req, res, next) {
@@ -51,20 +46,6 @@ router.route('/:sid/:field')
             req.candidate.markModified(field);
             // Save the value in the field
             req.candidate[field] = req.body.value;
-
-            // If this is the 'called' field - might need to send an event to mixPanel
-            if (field == 'called') {
-                if (req.body.value) {
-                    mixpanel.track('Create Candidate', { // We reuse this event because MixPanel doesn't allow optional events
-                        distinct_id: req.params.sid,
-                        server_name: process.env.SERVER_NAME,
-                        user_agent: req.headers['user-agent'],
-                        from: req.headers['from'],
-                        cid: req.params ? req.params.cid : 0,
-                        called: true,
-                    });
-                }
-            }
 
             // Save the modified candidate in the db
             req.candidate.save(function(err, entry){
