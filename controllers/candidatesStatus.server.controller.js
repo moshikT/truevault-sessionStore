@@ -70,7 +70,7 @@ exports.candidatesStatus = function (req, res) {
                     textAlign: textGenerator_Ctrl.getLangAlign(req.customer.language),
                     candidates: candidateItems
                 };
-                res.render('candidates', { title: 'Manage Candidates', advanced: req.advanced, candidates: candidateItems}); // Clients management page
+                res.render('candidates', options); // Clients management page
             })
     });
 };
