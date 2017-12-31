@@ -120,7 +120,7 @@ exports.generateRecruiterReport = function (req, res) {
                     title: pageText.title + candidate.fullName,
                     textDirection: pageText.textDir,
                     textAlign: pageText.textAlign,
-                    client: req.customer,
+                    customer: req.customer,
                     sid: req.sid,
                     candidate: candidate,
                     text: pageText

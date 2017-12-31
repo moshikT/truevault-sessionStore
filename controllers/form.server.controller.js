@@ -248,7 +248,7 @@ exports.login = function (req, res) {
     res.render('login', { title: '',
         isInEnglish: (req.customer.language == 'en'),
         textDirection: (req.customer.language == 'en') ? 'ltr' : 'rtl',
-        client: req.client,
+        customer: req.customer,
         uNameText: uNameText,
         uPasswordText: uPasswordText
     });

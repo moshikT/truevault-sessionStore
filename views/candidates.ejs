@@ -303,6 +303,9 @@ if (answers) {
                         if (candidate.personalData.id) {
                             candidate.id = candidate.personalData.id;
                         }
+                        if (candidate.personalData.email) {
+                            candidate.email = candidate.personalData.email;
+                        }
                     }
                     formjson = candidate.form; // Get the answers
                     const appExp = candidate.appExp;
