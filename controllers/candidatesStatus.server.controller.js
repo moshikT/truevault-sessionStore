@@ -32,17 +32,12 @@ exports.candidatesStatus = function (req, res) {
         }
 
         // find all candidates personal data by their personal data ids
-        let candidatesWithPersonalData = [];
-        // TODO: replace to lookup instead of two for loops
-        trueVault_Ctrl.findAll(candidatesPersonalDataIds) // return an array of json obj with id & data
-            .then(candidatesPersonalData => {
+        trueVault_Ctrl.getDocumentsByIds(candidatesPersonalDataIds) // return an array of json obj with id & data
+            .then(candidatesPersonalDataHM => {
                 // bind candidates to their personal data retrieved from vault
-                for(let pdIndex = 0; pdIndex < candidatesPersonalData.length; pdIndex++) {
-                    for (let cIndex = 0; cIndex < candidateItems.length; cIndex++) {
-                        if(candidatesPersonalData[pdIndex]['id'] == candidateItems[cIndex]['personalDataId']) {
-                            candidateItems[cIndex].personalData = candidatesPersonalData[pdIndex]['data'];
-                            break;
-                        }
+                for(let item in candidateItems) {
+                    if(candidatesPersonalDataHM.hasOwnProperty(candidateItems[item].personalDataId)) {
+                        candidateItems[item]['personalData'] = candidatesPersonalDataHM[candidateItems[item].personalDataId];
                     }
                 }
 
