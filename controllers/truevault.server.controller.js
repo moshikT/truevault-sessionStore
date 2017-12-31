@@ -14,18 +14,17 @@ const dbUrl = 'https://api.truevault.com/v1/vaults/' + vaultId;
 const basicUrl = 'https://api.truevault.com/v1/';
 const candidateSchemaId = "714f661e-bb1b-4d4f-bda7-5e67272ec807";// candidateTestSchemaId = "405fac9b-37f6-4090-93cf-6d6b2c4a541b";
 const sessionSchemaId = "bed02977-02c1-4831-a543-1b7e00d55909";
+const MaxRequestOperation = 100;
 const self = this;
 
 /**
  * Return single document corresponding to documentId.
  * If not exist, returns an error.
- *
- * TODO: chane function name to getDocumentById
- *
+ **
  * @param documentId
  * @returns {Promise}
  */
-exports.findOne = function (documentId) {
+exports.getDocumentById = function (documentId) {
     return new Promise(function (resolve, reject) {
         let options = setRequestOptions('/documents/' + documentId);
 
@@ -43,46 +42,95 @@ exports.findOne = function (documentId) {
 };
 
 /**
- * Return an array of documents corresponding to documentIdsArray
+ * Return an object of documents corresponding to documentIdsArray
  *
- * @param documentIdsArray
+ * @param documentIdsArray (aka @personalDataId field in candidate document)
  * @returns {Promise}
  */
-exports.findAll = function (documentIdsArray) {
+exports.getDocumentsByIds = function (documentIdsArray) {
     return new Promise(function (resolve, reject) {
-        // initiate url with a list of document id's
-        let optionsUrls = '/documents/';
-        // TODO: split the request to max available number according to TrueVault documentation
-        for (let documentsIndex = 0; documentsIndex < documentIdsArray.length; documentsIndex++) {
-            optionsUrls += documentIdsArray[documentsIndex];
-            if(documentsIndex !== documentIdsArray.length - 1) {
-                optionsUrls += ',';
+        let requestPromisesArray = [];
+
+        // Split the request to max available number according to TrueVault documentation = 100 documents
+        let operationIndex = 0;
+        let slicedDocIdsArray = [];
+        if(documentIdsArray.length < MaxRequestOperation) {
+            slicedDocIdsArray.push(documentIdsArray);
+        }
+        else {
+            while(operationIndex < documentIdsArray.length) {
+                slicedDocIdsArray.push(documentIdsArray.slice(operationIndex, operationIndex + MaxRequestOperation));
+                operationIndex += MaxRequestOperation;
             }
         }
 
-        let options = setRequestOptions(optionsUrls);
-
-        rp(options)
-            .then(body => {
-                // parse body
-                let encodedBody = (new Buffer(body, 'utf8'));
-                let responseBody = JSON.parse(encodedBody);
-                let documents = responseBody.documents;
-                // Built array of json object received from query
-                let documentsArray = [];
-                for (let index = 0; index < documents.length; index++) {
-                    let docObject = {};
-                    docObject.id = documents[index].id;
-                    let utf8encoded = (new Buffer(documents[[index]].document, 'base64')).toString('utf8');
-                    docObject.data = JSON.parse(utf8encoded);
-                    documentsArray.push(docObject);
-                    // TODO: replace array to object of doc_id:doc_data instead
+        let singleDocId = undefined;
+        for(let subArrayIndex = 0; subArrayIndex < slicedDocIdsArray.length; subArrayIndex++) {
+            let optionsUrls = '/documents/';
+            for (let documentsIndex = 0; documentsIndex < slicedDocIdsArray[subArrayIndex].length; documentsIndex++) {
+                // in case of single doc request - initialize @singleDocId
+                if(slicedDocIdsArray[subArrayIndex].length === 1) {
+                    singleDocId = slicedDocIdsArray[subArrayIndex][documentsIndex];
                 }
-                resolve(documentsArray);
+                // initiate url with a list of document id's
+                optionsUrls += slicedDocIdsArray[subArrayIndex][documentsIndex];
+                if(documentsIndex !== slicedDocIdsArray[subArrayIndex].length - 1) {
+                    optionsUrls += ',';
+                }
+            }
+            let options = setRequestOptions(optionsUrls);
+
+            let requestPromise = rp(options)
+                .then(body => {
+                    // parse body
+                    let documentsArray = [];
+                    let documentHashMap = {}; // creating a hashMap object of key=>value pairs: 'docId':'docData'
+                    // if request contains several docs id's, parse body
+                    if (body.toString().indexOf('documents') !== -1) {
+                        let encodedBody = (new Buffer(body, 'utf8'));
+                        let responseBody = JSON.parse(encodedBody);
+
+                        let documents = responseBody.documents;
+                        // Built array of json object received from query
+                        for (let index = 0; index < documents.length; index++) {
+                            let utf8encoded = (new Buffer(documents[[index]].document, 'base64')).toString('utf8');
+                            documentHashMap[documents[index].id] = JSON.parse(utf8encoded);
+                        }
+
+                        return documentHashMap;
+                    }
+                    else {
+                        // case of single doc request, receives only the doc data
+                        if(singleDocId) {
+                            let utf8encoded = (new Buffer(body, 'base64')).toString('utf8');
+                            documentHashMap[singleDocId] = JSON.parse(utf8encoded);
+                            return documentHashMap;
+                        }
+                    }
+                })
+                .catch(function (err) {
+                    reject(err);
+                });
+
+            requestPromisesArray.push(requestPromise);
+        }
+
+        Promise.all(requestPromisesArray)
+            .then(arrayOfDocumentsArray => {
+                let singleDocObj = {};
+
+                while(arrayOfDocumentsArray.length > 0) {
+                    let element = arrayOfDocumentsArray.shift();
+                    for(var property in element) {
+                        singleDocObj[property] = element[property];
+                    }
+                }
+                resolve(singleDocObj);
             })
-            .catch(function (err) {
+            .catch(err => {
                 reject(err);
             })
+
     });
 };
 
@@ -168,6 +216,8 @@ function setRequestOptions(url) {
 /**
  * Get session document data corresponding to @sessionId
  *
+ * Helper method for Session Store Implementation
+ *
  * @param sessionId
  * @returns {Promise} - session document data or null if not found
  */
@@ -228,6 +278,8 @@ exports.getSessionById = function (sessionId) {
 
 /**
  * Middleware for deciding if insert new session or update existing one according to input params
+ *
+ * Helper method for Session Store Implementation
  *
  * @param sessionData
  * @param sessionId -> OPTIONAL: defaults behavior - insert new session.
@@ -315,6 +367,8 @@ function insertDocument (documentData, documentId, method, schemaId) {
 
 /**
  * Remove session by id
+ *
+ * Helper method for Session Store Implementation
  *
  * @param sessionId
  * @returns {Promise} - success msg or null if session not found

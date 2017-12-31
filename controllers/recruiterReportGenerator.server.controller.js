@@ -85,7 +85,7 @@ exports.calcRecruiterReport = function (req, res, callback) {
                                 }
                             });
                         }
-                        trueVault_Ctrl.findOne(candidate.personalDataId) // Return one document that equal to the documentId.
+                        trueVault_Ctrl.getDocumentById(candidate.personalDataId) // Return one document that equal to the documentId.
                             .then(candidatePersonalData => {
                                 console.log("candidatesPersonalData", candidatePersonalData);
                                 candidate.personalData = candidatePersonalData;

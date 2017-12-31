@@ -17,20 +17,11 @@ const sessionStore_Ctrl = require('../controllers/sessionStore.server.controller
 const session = require('express-session');
 var TrueVaultStore = require('../controllers/sessionStore.server.controller')(session);
 
-/*const sessionHandler = session({
-    secret: 'some secret',
-    store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
-    resave: false,
-    saveUninitialized: true
-});*/
-//router.use('/api', questionRouter);
-//mailParser_Ctrl.onMailArrived();
-
-router.use(/*'/clients/:cid/candidates',*/ session({
+router.use(session({
         secret: 'some secret',
         store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
         resave: false,
-        saveUninitialized: true
+        saveUninitialized: false
     })
 );
 
@@ -65,29 +56,22 @@ router.use(function (req, res, next) {
                     //TrueVaultStore.prototype.get(req.session);
                     console.log("%s.%s:%s -", __file, __ext, __line, "session value", req.sessionID);
                     //Session set when user Request our app via URL
-                    if(session && session.content) {
-                        /*if(session.content.status === 'ACTIVATED') {
+                    if(session && session.userData) {
+                        if(session.userData.status === 'ACTIVATED') {
                             console.log("%s.%s:%s -", __file, __ext, __line, "User is activate! Proceed to page");
                         }
                         else {
                             // TODO: handle unauthorized user - error message of contact us?
                             console.log("%s.%s:%s -", __file, __ext, __line, "User is NOT activate!");
-                        }*/
+                        }
                         // TODO: can add additional test here; that user has the right click - cid equal to user permissions, else rdirect to url with diff cid
                     }
                     else {
-                        /*session({
-                            secret: 'some secret',
-                            store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
-                            resave: false,
-                            saveUninitialized: true
-                        });*/
                         let urlTo = 'login?p=' + parts[3];
                         if(req.query.sid) {
                             urlTo += '&sid=' + req.query.sid;
                         }
                         return res.redirect(urlTo);
-                        //return form_Ctrl.login(req, res);
                     }
                 }
             }
@@ -266,58 +250,24 @@ router.get('/html/:textfile', function (req, res) {
 });
 
 router.post('/clients/:cid/login',function(req,res, next){
-    //req.session.reload(function(err) {
-        // session updated
-    /*function createSession(cb) {
-        cb(sessionHandler(req, res, next));
-    }*/
-    /*console.log("before init session ");
-    var next = function init() {
-        return sessionHandler(req, res, next);
-    }
-    next();
-    console.log("after init session ");*/
-    //createSession(res => {
-        let session = req.session;
-        session.accessToken = req.body.authHeader;
+    // TODO: dont save session if user data does not exists??
+    let session = req.session;
+    session.accessToken = req.body.authHeader;
 
-        console.log("login session: ", req.session);
-        trueVault_Ctrl.getUser(session.accessToken)
-            .then(user => {
-                console.log("user details: ", user);
-                session.content = user;
-                console.log("session: ", session);
-                // TODO: update user data in session
-                res.end('success');
-            })
-            .catch(err => {
-                console.log(err);
-                res.end('error');
-            });
-    //});
-    //if (req.url.indexOf("/error/") !== 0) {
-    //    var rep =  sessionHandler(req, res, next)();
-    //    console.log(rep);
-    //}
-    //else {
-
-    //}
-    //})
-    //let session = req.session;
-
-    //session.accessToken = req.body.authHeader;
-    /*session({
-        secret: 'some secret',
-        store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
-        resave: false,
-        saveUninitialized: true
-    });*/
-    //let session = req.session;
-    //session.accessToken = req.body.authHeader;
+    console.log("login session: ", req.session);
+    trueVault_Ctrl.getUser(session.accessToken)
+        .then(user => {
+            console.log("user details: ", user);
+            session.userData = user;
+            console.log("session: ", session);
+            // TODO: update user data in session
+            res.end('success');
+        })
+        .catch(err => {
+            console.log(err);
+            res.end('error');
+        });
     // TODO: test if cid for current user credentials is ok
-
-    // Use trueVault api to get the user data and store it in his session
-
 });
 
 module.exports = router;
