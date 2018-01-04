@@ -17,6 +17,9 @@ const sessionStore_Ctrl = require('../controllers/sessionStore.server.controller
 const session = require('express-session');
 var TrueVaultStore = require('../controllers/sessionStore.server.controller')(session);
 
+const mailBox_Ctrl = require('../controllers/mailStatus.server.controller');
+
+
 router.use(session({
         secret: 'some secret',
         store: new TrueVaultStore({}), // TODO: receives an access token to connect to trueVault
@@ -268,6 +271,14 @@ router.post('/clients/:cid/login',function(req,res, next){
             res.end('error');
         });
     // TODO: test if cid for current user credentials is ok
+});
+
+router.get('/mailBoxes', function (req, res) {
+    return mailBox_Ctrl.getMailBoxesPage(req, res);
+});
+
+router.post('/mailBoxes', function (req, res) {
+    return mailBox_Ctrl.fetchMail(req, res);
 });
 
 module.exports = router;

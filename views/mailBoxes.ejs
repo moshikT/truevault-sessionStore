@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title><%= title %></title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel='stylesheet' href='/stylesheets/style.css'/>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/header.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <style>
+        table {
+            width: 100%;
+            padding-top: 40px;
+            border: 1px solid #023b7a;
+        }
+        th {
+            background-color: #023b7a;
+            color: white;
+            font-weight: 100;
+            padding: 5px;
+        }
+        tbody, td {
+            padding: 5px;
+        }
+        td {
+            border: 1px solid #023b7a;
+        }
+    </style>
+</head>
+<header>
+    <div class="container col-md-12" style="text-align: center;">
+        <img class="logo" style="height: 100px;padding-top:20px;padding-bottom: 20px;" src="../images/EH_logo.png"/>
+    </div>
+</header>
+<body>
+<div class="container col-md-16">
+    <table>
+        <thead>
+        <tr>
+            <th>Mail Box userName</th>
+            <th>Client</th>
+            <th>fetch</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if(mailBoxes) {
+            for(var mailBoxIndex = 0; mailBoxIndex < mailBoxes.length; mailBoxIndex++) {
+        %>
+        <tr>
+            <td>
+                <%= mailBoxes[mailBoxIndex].userName %>
+            </td>
+            <td>
+                <%= mailBoxes[mailBoxIndex].cid %>
+            </td>
+            <td>
+                <% if (mailBoxes[mailBoxIndex].uidnext.length > 0) { %>
+                <button name='<%= mailBoxes[mailBoxIndex].userName %>' onclick="fetchMail(this)">fetch</button>
+                <%} else { %>
+                <button name='<%= mailBoxes[mailBoxIndex].userName %>' onclick="fetchMail(this)">init</button>
+                <% } %>
+            </td>
+        </tr>
+            <% } %>
+        <% } %>
+        </tbody>
+    </table>
+</div>
+
+        <% include partials/footer %>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.17.0/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com_ajax_libs_jquery-scrollTo_2.1.2_jquery.scrollTo.js"></script>
+<script>
+function fetchMail(el) {
+    console.log(el.name);
+    $.ajax({
+        method: "POST",
+        url: "/mailBoxes",
+        data: { userName: el.name }
+    })
+        .done(function( msg ) {
+            console.log( "Data Saved: " + msg );
+        });
+
+}
+</script>
+
+</body>
+</html>

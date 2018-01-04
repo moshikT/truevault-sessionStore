@@ -29,6 +29,10 @@ var index = require('./routes/index');
 var questionRouter = require('./routes/questionRouter');
 let candidateRouter = require('./routes/candidateRouter');
 
+const mailBox_Ctrl = require('./controllers/mailStatus.server.controller');
+
+
+
 /*LOCAL*/
 mongoose.Promise = global.Promise;
 mongoose.connect(dbName, {
@@ -39,7 +43,14 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
     console.log("%s.%s:%s -", __file, __ext, __line, "Connected to mongodb!");
+/*
+    mailBox_Ctrl.fetchMail(function (msg) {
+        console.log(msg);
+    });*/
 });
+
+
+
 
 var app = express();
 //app.set('trust proxy', 1);  // TODO: Why?
