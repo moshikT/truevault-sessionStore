@@ -1,6 +1,6 @@
 'use strict';
 /**
- * trueVaultSessionStore implements a basic session store with trueVault service which will replace
+ * trueVaultSessionStore implements a basic session store for Connect/Express with trueVault service which will replace
  * the default express-session MemoryStore that is not compatible with production environment.
  */
 
