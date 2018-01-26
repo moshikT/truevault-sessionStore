@@ -4,7 +4,7 @@ TrueVault SessionStore controller implements a basic session store for Connect/E
 the default express-session MemoryStore that is not compatible with production environment.
 
 ### Dependencies
-Requires the truevault-adapter module
+Requires the truevault-adapter(https://github.com/moshikT/truevault-adapter) module
 
 ## Example:
 
