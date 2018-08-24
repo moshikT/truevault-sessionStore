@@ -37,7 +37,6 @@ module.exports = function (session) {
         }
 
         console.log("%s.%s:%s -", __file, __ext, __line, "TrueVaultStore constructor: input options; ", options);
-        var self = this;
 
         options = options || {};
         Store.call(this, options);
