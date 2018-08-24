@@ -1,0 +1,764 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for controllers/recruiterReportGenerator.server.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">controllers/</a> recruiterReportGenerator.server.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>9/116</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/83</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/11</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">7.76% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>9/116</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+var csv = require("csvtojson");
+var fs = require('fs');
+var Candidate = require('../models/candidate.server.model.js');
+var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+&nbsp;
+&nbsp;
+//['EQ', 'LEARNING', 'OUTCOME DRIVEN', 'EMOTIONAL STABILITY', 'ASSERTIVENESS',
+//'MOTIVATION TO MAKE MONEY', 'SOCIAL DESIRABILITY', 'ATTENTIVENESS TO DETAILS', 'WORK TENDENCY'];
+&nbsp;
+// calcRecruiterReport
+exports.calcRecruiterReport = <span class="fstat-no" title="function not covered" >function (req, res, callback) {</span>
+    // Lookup the candidate
+<span class="cstat-no" title="statement not covered" >    Candidate.findOne({'session.id': req.sid}, <span class="fstat-no" title="function not covered" >function (err, candidate) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (err) {</span>
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "couldn't load candidate", err);</span>
+        }
+<span class="cstat-no" title="statement not covered" >        if (candidate) { // Safety</span>
+<span class="cstat-no" title="statement not covered" >            if (!candidate.formCompleted) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("%s.%s:%s -", __file, __ext, __line, "Can't calculate for an incomplete form", err);</span>
+                // If form wasn't completed don't try to calculate the report
+<span class="cstat-no" title="statement not covered" >                if (callback) {</span>
+<span class="cstat-no" title="statement not covered" >                    callback(candidate);</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return;</span>
+            }
+<span class="cstat-no" title="statement not covered" >            if ((candidate.report) &amp;&amp; (candidate.report.completed)) {</span>
+                // Report was already calculated before
+<span class="cstat-no" title="statement not covered" >                if (callback) {</span>
+<span class="cstat-no" title="statement not covered" >                    callback(candidate);</span>
+                }
+<span class="cstat-no" title="statement not covered" >                return;</span>
+            }
+&nbsp;
+            // Calculate factor averages
+<span class="cstat-no" title="statement not covered" >            getFactorsAvg(candidate, <span class="fstat-no" title="function not covered" >function (factorsData, finalScore) {</span></span>
+<span class="cstat-no" title="statement not covered" >                console.log("%s.%s:%s -", __file, __ext, __line, "factorsData: ", factorsData);</span>
+<span class="cstat-no" title="statement not covered" >                var isMale = (candidate.gender == 'male'); </span>// Gender adjustment
+                // Get text based on factor averages
+<span class="cstat-no" title="statement not covered" >                getVerbalText(factorsData, isMale, req.client.keyword, <span class="fstat-no" title="function not covered" >function (strengths, weaknesses) {</span></span>
+                    // Prepare report object for storage
+<span class="cstat-no" title="statement not covered" >                    var report = {}</span>
+<span class="cstat-no" title="statement not covered" >                    report.strengths = strengths;</span>
+<span class="cstat-no" title="statement not covered" >                    report.weaknesses = weaknesses;</span>
+<span class="cstat-no" title="statement not covered" >                    report.finalScore = finalScore;</span>
+<span class="cstat-no" title="statement not covered" >                    report.factorsData = factorsData;</span>
+<span class="cstat-no" title="statement not covered" >                    report.completed = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    candidate.report = report;</span>
+&nbsp;
+                    // Store report data in DB
+<span class="cstat-no" title="statement not covered" >                    candidate.save(<span class="fstat-no" title="function not covered" >function (err, entry) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        if (err) {</span>
+<span class="cstat-no" title="statement not covered" >                            console.log("%s.%s:%s -", __file, __ext, __line, "unable To save report data", err);</span>
+                        }
+                        else {
+<span class="cstat-no" title="statement not covered" >                            console.log("%s.%s:%s -", __file, __ext, __line, "Stored report data");</span>
+                        }
+                    });
+<span class="cstat-no" title="statement not covered" >                    if (callback) {</span>
+<span class="cstat-no" title="statement not covered" >                        callback(candidate);</span>
+                    }
+                });
+            });
+        }
+    });
+}
+&nbsp;
+exports.generateRecruiterReport = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+<span class="cstat-no" title="statement not covered" >    exports.calcRecruiterReport(req, res, <span class="fstat-no" title="function not covered" >function(candidate) {</span></span>
+<span class="cstat-no" title="statement not covered" >        const langHeb = (req.client.language !== 'en');</span>
+<span class="cstat-no" title="statement not covered" >        if ((candidate) &amp;&amp; (candidate.report) &amp;&amp; (candidate.report.completed)) { // Safety</span>
+<span class="cstat-no" title="statement not covered" >            textGenerator_Ctrl.initRecruiterReportText(!langHeb, <span class="fstat-no" title="function not covered" >function (recruiterReportText) {</span></span>
+<span class="cstat-no" title="statement not covered" >                res.render('recruiterReport', {</span>
+                    title: (langHeb?'דוח מועמד - ':'Candidate Report - ') + candidate.fullName,
+                    client: req.client,
+                    sid: req.sid,
+                    candidate: candidate,
+                    text: recruiterReportText
+                });
+            });
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            res.render('niceError', {</span>
+                title: (langHeb?'דוח מועמד - ':'Candidate Report - ') + candidate.fullName,
+                errorText: langHeb?'המועמד טרם השלים את מילוי השאלון':'The candidate has not completed the questionnaire yet'
+            });
+        }
+    });
+};
+&nbsp;
+<span class="fstat-no" title="function not covered" >function getFactorsAvg(candidate, callback) {</span>
+<span class="cstat-no" title="statement not covered" >    var factors = [];</span>
+<span class="cstat-no" title="statement not covered" >    var testScore = 0;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    csv({noheader: true})</span>
+        .fromFile('report factors - factorsTranspose.csv')
+        .on('csv', (csvRow) =&gt; {
+            // csvRow is an array
+<span class="cstat-no" title="statement not covered" >            var factorAvg = 0;</span>
+<span class="cstat-no" title="statement not covered" >            var numOfElementsInFactor = 0;</span>
+<span class="cstat-no" title="statement not covered" >            var factor = csvRow[0];</span>
+            //var isRevereRelation = csvRow[1];
+            //console.log("%s.%s:%s -", __file, __ext, __line, "reverse realtion: ", isRevereRelation);
+<span class="cstat-no" title="statement not covered" >            for (var factorElementIndex = 1; factorElementIndex &lt; csvRow.length; factorElementIndex++) {</span>
+<span class="cstat-no" title="statement not covered" >                if (csvRow[factorElementIndex] == '') {</span>
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    numOfElementsInFactor++;</span>
+<span class="cstat-no" title="statement not covered" >                    for (var qIndex = 0; qIndex &lt; candidate.form.length; qIndex++) {</span>
+<span class="cstat-no" title="statement not covered" >                        if (candidate.form[qIndex].id == csvRow[factorElementIndex]) {</span>
+<span class="cstat-no" title="statement not covered" >                            if (candidate.form[qIndex].type == 'C') {</span>
+<span class="cstat-no" title="statement not covered" >                                var score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;</span>
+                            }
+                            else <span class="cstat-no" title="statement not covered" >if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {</span>
+<span class="cstat-no" title="statement not covered" >                                var score = Math.abs(Number(candidate.form[qIndex].finalAnswer) - 8);</span>
+                            }
+                            else {
+<span class="cstat-no" title="statement not covered" >                                var score = Number(candidate.form[qIndex].finalAnswer);</span>
+                            }
+<span class="cstat-no" title="statement not covered" >                            factorAvg += score;</span>
+<span class="cstat-no" title="statement not covered" >                            console.log("%s.%s:%s -", __file, __ext, __line, "question id: " + candidate.form[qIndex].id + " score: " + score);</span>
+                        }
+                    }
+                }
+            }
+<span class="cstat-no" title="statement not covered" >            var factorData = {};</span>
+<span class="cstat-no" title="statement not covered" >            factorData.name = factor;</span>
+<span class="cstat-no" title="statement not covered" >            factorData.avg = factorAvg / numOfElementsInFactor;</span>
+            //factorData.isRevereRelation = isRevereRelation;
+<span class="cstat-no" title="statement not covered" >            testScore += factorData.avg;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "factor: " + factor + " avg: " + factorData.avg);</span>
+<span class="cstat-no" title="statement not covered" >            factors.push(factorData);</span>
+        })
+        .on('data', (data) =&gt; {
+            //data is a buffer object
+            //const jsonStr= data.toString('utf8');
+            //var factor = JSON.parse(jsonStr);
+        })
+        .on('done', (error) =&gt; {
+<span class="cstat-no" title="statement not covered" >            var testScoreAvg = testScore / factors.length;</span>
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "test score ", testScore);</span>
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "num of factors ", factors.length);</span>
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "test avg ", testScoreAvg);</span>
+<span class="cstat-no" title="statement not covered" >            if (testScoreAvg &lt; 1.5) {</span>
+<span class="cstat-no" title="statement not covered" >                var finalScore = Math.round(testScoreAvg);</span>
+            }
+            else <span class="cstat-no" title="statement not covered" >if (testScoreAvg &gt;= 1.5 &amp;&amp; testScoreAvg &lt; 3) {</span>
+<span class="cstat-no" title="statement not covered" >                var finalScore = 2;</span>
+            }
+            else <span class="cstat-no" title="statement not covered" >if (testScoreAvg &gt;= 3 &amp;&amp; testScoreAvg &lt; 5) {</span>
+<span class="cstat-no" title="statement not covered" >                var finalScore = 3;</span>
+            }
+            else <span class="cstat-no" title="statement not covered" >if (testScoreAvg &gt;= 5 &amp;&amp; testScoreAvg &lt; 6.5) {</span>
+<span class="cstat-no" title="statement not covered" >                var finalScore = 4;</span>
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                var finalScore = 5;/</span>/;Math.round(testScoreAvg-2);
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "test avg conversion to 1-5 ", finalScore);</span>
+<span class="cstat-no" title="statement not covered" >            callback(factors, finalScore);</span>
+        })
+        .on('error', (err) =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'factorsTranspose.csv ", err)</span>
+        })
+}
+&nbsp;
+<span class="fstat-no" title="function not covered" >function getVerbalText(factorsData, isMale, companyKeyword, callback) {</span>
+<span class="cstat-no" title="statement not covered" >    var strengths = [];</span>
+<span class="cstat-no" title="statement not covered" >    var weaknesses = [];</span>
+<span class="cstat-no" title="statement not covered" >    var fileName = 'report factors - verbal.csv';</span>
+&nbsp;
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    if (companyKeyword != 'default' &amp;&amp; companyKeyword != '') {</span>
+<span class="cstat-no" title="statement not covered" >        fileName = 'report factors - verbal' + '.' + companyKeyword + '.csv'</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    console.log("%s.%s:%s -", __file, __ext, __line, "file name: ", fileName);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    csv()</span>
+        .fromFile(fileName)
+        .on('data', (data) =&gt; {
+            //data is a buffer object
+            //parseVerbalData(factorsData, isMale, data);
+<span class="cstat-no" title="statement not covered" >            const jsonStr = data.toString('utf8');</span>
+<span class="cstat-no" title="statement not covered" >            var factorVerbal = JSON.parse(jsonStr);</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            factorsData.forEach(<span class="fstat-no" title="function not covered" >function (factor) {</span></span>
+                //console.log("%s.%s:%s -", __file, __ext, __line, factor.name);
+<span class="cstat-no" title="statement not covered" >                if (factor.name == factorVerbal['SHORT NAME']) {</span>
+                    /* if reverse relation exists (0) thank put the factor in the opposite column. */
+<span class="cstat-no" title="statement not covered" >                    var isStrength = ((factor.avg &gt;= 4.5 &amp;&amp; factorVerbal['isReverseRelation'] == '1') ||</span>
+                        (factor.avg &lt;= 3.5 &amp;&amp; factorVerbal['isReverseRelation'] == '0'));
+<span class="cstat-no" title="statement not covered" >                    var isWeakness = ((factor.avg &lt;= 3.5 &amp;&amp; factorVerbal['isReverseRelation'] == '1') ||</span>
+                        (factor.avg &gt;= 4.5 &amp;&amp; factorVerbal['isReverseRelation'] == '0'));
+<span class="cstat-no" title="statement not covered" >                    var verbalKey = (factor.avg &gt;= 4.5) ? (isMale) ? 'HE HIGH MALE' : 'HE HIGH FEMALE'</span>
+                        : (factor.avg &lt;= 3.5) ? (isMale) ? 'HE LOW MALE' : 'HE LOW FEMALE'
+                            : (isMale) ? 'HE AVG MALE' : 'HE AVG FEMALE';
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    var verbalData = {};</span>
+<span class="cstat-no" title="statement not covered" >                    verbalData.id = factorVerbal['SHORT NAME'];</span>
+<span class="cstat-no" title="statement not covered" >                    verbalData.title = factorVerbal['HE FACTOR'];</span>
+<span class="cstat-no" title="statement not covered" >                    verbalData.text = factorVerbal[verbalKey].split('\n');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                    if (isStrength) {</span>
+<span class="cstat-no" title="statement not covered" >                        console.log("%s.%s:%s -", __file, __ext, __line, "strength added ", factor);</span>
+<span class="cstat-no" title="statement not covered" >                        strengths.push(verbalData);</span>
+                    }
+                    else <span class="cstat-no" title="statement not covered" >if (isWeakness) {</span>
+<span class="cstat-no" title="statement not covered" >                        console.log("%s.%s:%s -", __file, __ext, __line, "weaknes added ", factor);</span>
+<span class="cstat-no" title="statement not covered" >                        weaknesses.push(verbalData);</span>
+                    }
+                }
+            })
+        })
+        .on('done', (error) =&gt; {
+<span class="cstat-no" title="statement not covered" >            if (!error) {</span>
+<span class="cstat-no" title="statement not covered" >                console.log("%s.%s:%s -", __file, __ext, __line, "weaknesses: " + weaknesses);</span>
+<span class="cstat-no" title="statement not covered" >                console.log("%s.%s:%s -", __file, __ext, __line, "strengths: " + strengths);</span>
+<span class="cstat-no" title="statement not covered" >                callback(strengths, weaknesses);</span>
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                console.log("%s.%s:%s -", __file, __ext, __line, "error occur at done ", error);</span>
+<span class="cstat-no" title="statement not covered" >                getVerbalText(factorsData, isMale, 'default', callback);</span>
+            }
+&nbsp;
+        })
+        .on('error', (err) =&gt; {
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file " + fileName + ", err: " + err + "! reading default instead");</span>
+        })
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 16 2017 15:17:00 GMT+0200 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for controllers/formGenerator.server.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">controllers/</a> formGenerator.server.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.87% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>104/124</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.64% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>39/56</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>6/6</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.87% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>104/124</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">481×</span>
+<span class="cline-any cline-yes">481×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">481×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">103×</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">22×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">15×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">481×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-yes">3×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">122×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">728×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">18×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">17×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-yes">4×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">125×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2×</span>
+<span class="cline-any cline-yes">106×</span>
+<span class="cline-any cline-yes">106×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">106×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">106×</span>
+<span class="cline-any cline-yes">106×</span>
+<span class="cline-any cline-yes">106×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-yes">20×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+var csv = require("csvtojson");
+var fs = require('fs');
+var Candidate = require('../models/candidate.server.model.js');
+&nbsp;
+var question = {
+    type : null,
+    item : null,
+    answer : null,
+    dataTitle : null,
+    answerOptions : null,
+    scalaEdges : null,
+    next : null
+}
+&nbsp;
+exports.generateForm = function (isInEnglish, questionsKeyWord, callback) {
+    var lines = 0;
+    var companyForm = questionsKeyWord;//company.isDemo ? 'DEMO' : 'AYALON';
+&nbsp;
+    var questionsArraysByType = {
+        p_typeJSON : [],
+        f_typeJSON : [],
+        c_typeJSON : [],
+        b_typeJSON : [],
+        a_typeJSON : [],
+        s_typeJSON : []
+    }
+&nbsp;
+    csv()
+        .fromFile('items key.csv')
+        .on('json',(jsonObj)=&gt;{
+            // combine csv header row and csv line to a json object
+            // jsonObj.a ==&gt; 1 or 4
+            // formJSON = jsonObj
+            //console.log("%s.%s:%s -", __file, __ext, __line, jsonObj);
+        })
+        .on('data',(data)=&gt;{
+            //data is a buffer object
+            const jsonStr= data.toString('utf8');
+            var questionsJSON = JSON.parse(jsonStr);
+&nbsp;
+            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON);
+            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED']);
+            //console.log("%s.%s:%s -", __file, __ext, __line, questionsJSON['INCLUDED'].indexOf(companyForm));
+&nbsp;
+            if (questionsJSON['INCLUDED'].indexOf(companyForm) !== -1) {
+                question = parseQuestions(questionsJSON, isInEnglish);
+                if (question.type == 'P') {
+                    questionsArraysByType.p_typeJSON.push(question);
+                } else <span class="missing-if-branch" title="if path not taken" >I</span>if (question.type == 'F' /*&amp;&amp; question.answerOptions.length &gt; 2*/) {
+<span class="cstat-no" title="statement not covered" >                    console.log("%s.%s:%s -", __file, __ext, __line, "pushed f type: ", question.id);</span>
+<span class="cstat-no" title="statement not covered" >                    questionsArraysByType.f_typeJSON.push(question);</span>
+                } else if (question.type == 'C') {
+                    questionsArraysByType.c_typeJSON.push(question);
+                } else if (question.type == 'B') {
+                    questionsArraysByType.b_typeJSON.push(question);
+                } else if (question.type == 'A') {
+                    questionsArraysByType.a_typeJSON.push(question);
+                }
+                else if (question.type == 'S') {
+                    questionsArraysByType.s_typeJSON.push(question);
+                }
+            }
+&nbsp;
+            lines++;
+        })
+        .on('done',(error)=&gt;{
+&nbsp;
+            shuffle(questionsArraysByType.p_typeJSON);
+            //shuffle(questionsArraysByType.f_typeJSON);
+            shuffle(questionsArraysByType.b_typeJSON);
+&nbsp;
+            var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
+                questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON,
+                    questionsArraysByType.s_typeJSON);
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            callback(form);</span>
+    })
+}
+&nbsp;
+function parseQuestions(qJSON, isInEnglish) {
+    var parsedQuestion = {};
+    parsedQuestion.id = qJSON['Q_ID'];
+    parsedQuestion.type = qJSON['TYPE'];
+    parsedQuestion.item = isInEnglish ? <span class="branch-0 cbranch-no" title="branch not covered" >qJSON['ITEM ENGLISH'] </span>: qJSON['ITEM HEBREW'];
+    var answerOptions = isInEnglish ? <span class="branch-0 cbranch-no" title="branch not covered" >qJSON['ANS_OPT_ENGLISH'].split(",") </span>: qJSON['ANS_OPT_HEBREW'].split(",");
+&nbsp;
+    if (parsedQuestion.type == 'B') {
+        var parsedAnswers = [];
+        var parsedAnswersWeight = [];
+        var answersOptionsArray = isInEnglish ? <span class="branch-0 cbranch-no" title="branch not covered" >qJSON['ANSWER ENGLISH'].split(";") </span>: qJSON['ANSWER HEBREW'].split(";");
+        for (var answerIndex = 0; answerIndex &lt; answersOptionsArray.length; answerIndex++) {
+            var answer = answersOptionsArray[answerIndex].split(":");
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (answer.length == 2) {
+                parsedAnswers.push(answer[0]);
+                parsedAnswersWeight.push(answer[1]);
+                //console.log("%s.%s:%s -", __file, __ext, __line, answer);
+            }
+            else {
+                //console.log("%s.%s:%s -", __file, __ext, __line, "Wrong structure for question type B: " + qJSON);
+            }
+        }
+        parsedQuestion.answer = parsedAnswers; /* TODO: check if possible to change to answer options for uniformity between questions types */
+        parsedQuestion.dataTitle = parsedAnswersWeight;
+    }
+    else if(parsedQuestion.type == 'P' || parsedQuestion.type == 'A') {
+        var scalaOptionsNumber = 7;
+        var scalaArray = [];
+        for (var index = 1; index &lt;= scalaOptionsNumber; index++) {
+            scalaArray.push(index);
+        }
+&nbsp;
+        parsedQuestion.answerOptions = scalaArray;
+        parsedQuestion.dataTitle = scalaArray;
+        var scalaEdges = answerOptions.toString().split("-");//.reverse().join("");
+&nbsp;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (scalaEdges.length == 2) {
+            scalaEdges[0] = scalaEdges[0].replace(/\s+/g, '&lt;br&gt;');
+            scalaEdges[1] = scalaEdges[1].replace(/\s+/g, '&lt;br&gt;');
+        }
+&nbsp;
+        /*$$$ Old code - hardcoded text for answer scale
+        parsedQuestion.scalaEdges = isInEnglish ?
+            ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? ["Disagree","Agree"] : ["Not &lt;br&gt;important &lt;br&gt;at all","Very &lt;br&gt; important"]) :
+            ((qJSON['TYPE'] == 'P' || qJSON['TYPE'] == 'A') ? scalaEdges : ['הכי חשוב &lt;br&gt; לי', 'הכי פחות &lt;br&gt; חשוב לי']); */
+&nbsp;
+        // Use text for answer scale as provided in the CSV
+        parsedQuestion.scalaEdges = scalaEdges;
+&nbsp;
+&nbsp;
+    }
+    else <span class="missing-if-branch" title="if path not taken" >I</span>if (parsedQuestion.type == 'F') {
+        /**
+        var fitItemString = qJSON['FIT HEBREW'].toString();
+        //if()
+        var itemsCollection = fitItemString.split(/\,\s?(?![^\(]*\))/);
+        //console.log("%s.%s:%s -", __file, __ext, __line, "coltural fit qid: ", parsedQuestion.id);
+        //console.log("%s.%s:%s -", __file, __ext, __line, "coltural fit asnwers: ", itemsCollection);
+        parsedQuestion.answerOptions = itemsCollection;
+        parsedQuestion.dataTitle = itemsCollection;
+         */
+    }
+    else if (parsedQuestion.type == 'S') {
+        var itemsID = qJSON['GROUP IDS'].split(";");
+        parsedQuestion.itemsID = itemsID; // [id_1,id_2,...,id_5]
+    }
+    else if (parsedQuestion.type == 'C') {
+        parsedQuestion.dataTitle = (answerOptions.length == 2) ? <span class="branch-0 cbranch-no" title="branch not covered" >[7, 1] </span>: answerOptions;
+        parsedQuestion.answerOptions = answerOptions;
+        parsedQuestion.optAnswer = isInEnglish ? <span class="branch-0 cbranch-no" title="branch not covered" >qJSON['ANSWER ENGLISH'] </span>: qJSON['ANSWER HEBREW'];
+    }
+    return parsedQuestion;
+}
+&nbsp;
+function shuffle(typeArray) {
+    var numOfElements = typeArray.length;
+    var index, temp;
+&nbsp;
+    while (numOfElements &gt; 0) {
+        index = Math.floor(Math.random() * numOfElements);
+        numOfElements--;
+        // And swap the last element with element at index
+        swap(typeArray, numOfElements, index);
+    }
+}
+&nbsp;
+function swap(array, element1Index, element2Index) {
+    var temp = array[element1Index];
+    array[element1Index] = array[element2Index];
+    array[element2Index] = temp;
+}
+&nbsp;
+function reOrderFormJSON(pType, fType, cType, bType, aType, sType) {
+    var orderedForm = [];
+    var numOfPTypeQuestion = 20;
+    var numOfFTypeQuestion = 0;//5;
+&nbsp;
+    while(pType.length &gt; 0 ||/* fType.length &gt; 0 || */<span class="branch-1 cbranch-no" title="branch not covered" >cType.length &gt; 0)</span> {
+        var elementsToPush = numOfPTypeQuestion;
+        while (elementsToPush &gt; 0 &amp;&amp; pType.length &gt; 0){
+            var elementToPush = pType.pop();
+            pushQuestion(elementToPush, orderedForm);
+            elementsToPush--;
+        }
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(cType.length &gt; 0) {
+            var elementToPush = cType.pop()
+            pushQuestion(elementToPush, orderedForm);
+        }
+        //var elementsToPush = 1;//numOfFTypeQuestion;
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (sType.length &gt; 0) {
+            var set = sType.pop();
+            var items = [];
+            var itemsValues = [];
+            for(var itemsIDIndex = 0; itemsIDIndex &lt; set.itemsID.length; itemsIDIndex++) {
+                for(var fIndex = 0; fIndex &lt; fType.length; fIndex++) {
+                    //console.log("fArray id ", fType[fIndex].id);
+                    //console.log("set.items id ", set.itemsID[itemsIDIndex]);
+<span class="cstat-no" title="statement not covered" >                    if(set.itemsID[itemsIDIndex].trim() == fType[fIndex].id.trim()) {</span>
+                        //var fElement = fType.pop();
+<span class="cstat-no" title="statement not covered" >                        console.log("inserted F question!!!!!!    ", fType[fIndex]);</span>
+<span class="cstat-no" title="statement not covered" >                        items.push(fType[fIndex].item);</span>
+<span class="cstat-no" title="statement not covered" >                        itemsValues.push(Math.abs(set.itemsID.length - itemsIDIndex));</span>
+<span class="cstat-no" title="statement not covered" >                        pushQuestion(fType[fIndex], orderedForm);</span>
+<span class="cstat-no" title="statement not covered" >                        break;</span>
+                    }
+                }
+                console.log("%s.%s:%s -", __file, __ext, __line, "missing item in set: " + set.id + " id: ", set.itemsID[itemsIDIndex]);
+            }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            set.items = items;</span>
+<span class="cstat-no" title="statement not covered" >            set.itemsValues = itemsValues;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            if(items.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >                pushQuestion(set, orderedForm);</span>
+            }
+        }
+    }
+<span class="cstat-no" title="statement not covered" >    while(bType.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        var elementToPush = bType.pop();</span>
+<span class="cstat-no" title="statement not covered" >        pushQuestion(elementToPush, orderedForm);</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    while(aType.length &gt; 0) {</span>
+<span class="cstat-no" title="statement not covered" >        var elementToPush = aType.pop();</span>
+<span class="cstat-no" title="statement not covered" >        pushQuestion(elementToPush, orderedForm);</span>
+    }
+<span class="cstat-no" title="statement not covered" >    return orderedForm;</span>
+}
+&nbsp;
+function pushQuestion(nextQuestion, arrayTo) {
+    /** Skip updating F type question next because its not appear at form UI */
+   if (arrayTo.length &gt; 0) {
+        var currentQuestion = arrayTo[arrayTo.length - 1];
+        <span class="missing-if-branch" title="else path not taken" >E</span>if(nextQuestion.id.indexOf('cultural') == '-1'){
+            currentQuestion.next = nextQuestion.id;
+        }
+    }
+    arrayTo.push(nextQuestion);
+}
+&nbsp;
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 16 2017 15:17:00 GMT+0200 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

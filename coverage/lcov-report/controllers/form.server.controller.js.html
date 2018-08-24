@@ -1,0 +1,635 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for controllers/form.server.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">controllers/</a> form.server.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">19.79% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>19/96</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/14</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">20.43% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>19/93</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var express = require('express');
+var dateTime = require('node-datetime');
+var json2csv = require('json2csv');
+var fs = require('fs');
+var csv = require("csvtojson");
+var formGenerator_Ctrl = require('../controllers/formGenerator.server.controller');
+var textGenerator_Ctrl = require('../controllers/textGenerator.server.controller');
+var Candidate = require('../models/candidate.server.model.js');
+var Client = require('../models/addClient.server.model.js');
+var uuidv1 = require('uuid/v1');
+var recruiterReport_Ctrl = require('../controllers/recruiterReportGenerator.server.controller');
+&nbsp;
+var isCandidate = true;
+&nbsp;
+var newLine= "\r\n";
+class userData {
+    constructor<span class="fstat-no" title="function not covered" >(fullName, id, email, phoneNumber, company) {</span>
+<span class="cstat-no" title="statement not covered" >        this.fullName = fullName;</span>
+<span class="cstat-no" title="statement not covered" >        this.id = id;</span>
+<span class="cstat-no" title="statement not covered" >        this.email = email;</span>
+<span class="cstat-no" title="statement not covered" >        this.phoneNumber = phoneNumber;</span>
+<span class="cstat-no" title="statement not covered" >        this.company = company;</span>
+    }
+}
+&nbsp;
+// get users data (currently setted via addCandidate) and generate form f user is new
+exports.getInfo = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+<span class="cstat-no" title="statement not covered" >    var newUser = new userData(req.body['user_fullName'], req.body['user_id'],</span>
+        req.body['user_email'], req.body['user_tel'], req.client.name);
+&nbsp;
+    /* If user exists and session not expired load form - else generate new form */
+<span class="cstat-no" title="statement not covered" >    Candidate.findOne({'session.id' : req.sid}, <span class="fstat-no" title="function not covered" >function(err, candidate) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >throw err; </span></span>/* load default params */
+<span class="cstat-no" title="statement not covered" >        if(candidate) {</span>
+<span class="cstat-no" title="statement not covered" >            res.redirect('/clients/' + req.client._id + '/form/?sid=' + candidate.session.id);</span>
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            var isInEnglish = (req.client.language == 'en');</span>
+<span class="cstat-no" title="statement not covered" >            formGenerator_Ctrl.generateForm(isInEnglish, req.client.keyword , <span class="fstat-no" title="function not covered" >function (form) {</span></span>
+<span class="cstat-no" title="statement not covered" >                var sid = uuidv1();</span>
+<span class="cstat-no" title="statement not covered" >                var session = {};</span>
+<span class="cstat-no" title="statement not covered" >                session.id = sid;</span>
+<span class="cstat-no" title="statement not covered" >                session.expired = false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >                var entry = new Candidate({</span>
+                    fullName: newUser.fullName,
+                    id: newUser.id,
+                    email: newUser.email,
+                    phoneNumber: newUser.phoneNumber,
+                    company : newUser.company,
+                    formDurationInMinutes: 0,
+                    form : form,
+                    formCompleted: false,
+                    session: session
+                });
+<span class="cstat-no" title="statement not covered" >                entry.save(<span class="fstat-no" title="function not covered" >function (err) {</span></span>
+<span class="cstat-no" title="statement not covered" >                    if(err) {</span>
+<span class="cstat-no" title="statement not covered" >                        console.log("%s.%s:%s -", __file, __ext, __line, err);</span>
+                    }
+                    // TODO: send SMS with varification code
+<span class="cstat-no" title="statement not covered" >                    res.redirect('/clients/' + req.client._id + '/form/?sid=' + sid);</span>
+                });
+            });
+        }
+    });
+}
+&nbsp;
+exports.saveFormResults = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+<span class="cstat-no" title="statement not covered" >    console.log("%s.%s:%s -", __file, __ext, __line, "form details", req.body);</span>
+<span class="cstat-no" title="statement not covered" >    var formData = req.body;</span>
+<span class="cstat-no" title="statement not covered" >    delete formData['agree'];</span>
+<span class="cstat-no" title="statement not covered" >    delete formData['submit_btn'];</span>
+<span class="cstat-no" title="statement not covered" >    delete  formData['isCompleted'];</span>
+<span class="cstat-no" title="statement not covered" >    Candidate.findOne({'session.id' : req.query.sid}, <span class="fstat-no" title="function not covered" >function(err, candidate) {</span></span>
+<span class="cstat-no" title="statement not covered" >        if (err) <span class="cstat-no" title="statement not covered" >throw err; </span></span>/* load default params */
+<span class="cstat-no" title="statement not covered" >        if(candidate) {</span>
+<span class="cstat-no" title="statement not covered" >            candidate.markModified('form');</span>
+<span class="cstat-no" title="statement not covered" >            candidate.markModified('formCompleted');</span>
+<span class="cstat-no" title="statement not covered" >            candidate.markModified('session');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var recruiterReportUrl = req.protocol + '://' + req.get('host') +</span>
+                '/clients/' + req.client._id + '/recruiterReport?sid=' + req.query.sid;//+ req.originalUrl;
+<span class="cstat-no" title="statement not covered" >            var report = {};</span>
+<span class="cstat-no" title="statement not covered" >            report.link = recruiterReportUrl;</span>
+<span class="cstat-no" title="statement not covered" >            report.completed = true;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            var dateCompleted = new Date();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >            candidate.formCompleted = true;</span>
+<span class="cstat-no" title="statement not covered" >            candidate.session.expired = true;</span>
+<span class="cstat-no" title="statement not covered" >            candidate.dateCompleted = convertDate(dateCompleted);</span>
+<span class="cstat-no" title="statement not covered" >            candidate.dateTimeCompleted = dateCompleted;</span>
+            //candidate.report.completed = true;
+<span class="cstat-no" title="statement not covered" >            candidate.report = report;</span>
+&nbsp;
+            // Iterate through the candidates form and update all failed patch request -
+            // unAnswered question with the users' final answer.
+<span class="cstat-no" title="statement not covered" >            for(var qIndex = 0; qIndex &lt; candidate.form.length; qIndex++) {</span>
+                /* If final answer does not exist update from form */
+<span class="cstat-no" title="statement not covered" >                if(!candidate.form[qIndex].finalAnswer) {</span>
+<span class="cstat-no" title="statement not covered" >                    candidate.form[qIndex].finalAnswer = formData[candidate.form[qIndex].id];</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("%s.%s:%s -", __file, __ext, __line, "updated final answer for " + candidate.form[qIndex].id + " to be ", formData[candidate.form[qIndex].id]);</span>
+                }
+            }
+<span class="cstat-no" title="statement not covered" >            candidate.save(<span class="fstat-no" title="function not covered" >function(err, entry){</span></span>
+<span class="cstat-no" title="statement not covered" >                if(err) {</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("%s.%s:%s -", __file, __ext, __line, "unable To save", err);</span>
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    console.log("%s.%s:%s -", __file, __ext, __line, "Finished storing form submission");</span>
+<span class="cstat-no" title="statement not covered" >                    console.log("%s.%s:%s -", __file, __ext, __line, "Calculating report data");</span>
+<span class="cstat-no" title="statement not covered" >                    recruiterReport_Ctrl.calcRecruiterReport(req, res); </span>// Calculate the report data
+                }
+            });
+&nbsp;
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            console.log("%s.%s:%s -", __file, __ext, __line, "Unable to save all form data");</span>
+        }
+<span class="cstat-no" title="statement not covered" >        res.redirect('/clients/' + req.client._id + '/thankYou');</span>
+    });
+}
+&nbsp;
+exports.getIndex = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+    //indexText = textGenerator_Ctrl.initCandidateFieldNames(req.client.name, req.client.isDemo, (req.client.language === 'en'));
+<span class="cstat-no" title="statement not covered" >    console.log("%s.%s:%s -", __file, __ext, __line, "Rendering client: ", req.client.name);</span>
+<span class="cstat-no" title="statement not covered" >    res.render('index', {</span>
+        title: '',
+        indexPageText : (req.client.language == 'en') ? 'ltr' : 'rtl',
+        client: req.client,
+        sid: req.sid
+    });
+}
+&nbsp;
+exports.getForm = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+<span class="cstat-no" title="statement not covered" >    if(!req.query.sid) {</span>
+        /* no session id; redirect to home page in order to get user data */
+<span class="cstat-no" title="statement not covered" >        res.redirect('/clients/' + req.client._id + '/');</span>
+    }
+    else {
+<span class="cstat-no" title="statement not covered" >        Candidate.findOne({'session.id': req.query.sid}, <span class="fstat-no" title="function not covered" >function (err, candidate) {</span></span>
+<span class="cstat-no" title="statement not covered" >            if (err) <span class="cstat-no" title="statement not covered" >throw err;</span></span>
+<span class="cstat-no" title="statement not covered" >            if (candidate) {</span>
+<span class="cstat-no" title="statement not covered" >                if(candidate.session.expired) {</span>
+<span class="cstat-no" title="statement not covered" >                    res.redirect('/clients/' + req.client._id + '/thankYou');</span>
+                }
+                else {
+<span class="cstat-no" title="statement not covered" >                    var isInEnglish = (req.client.language == 'en');</span>
+<span class="cstat-no" title="statement not covered" >                    textGenerator_Ctrl.initFormPageText(isInEnglish, <span class="fstat-no" title="function not covered" >function (formText) {</span></span>
+<span class="cstat-no" title="statement not covered" >                        res.render('form', {</span>
+                            title: '' ,
+                            formjson: candidate.form,
+                            isInEnglish: isInEnglish,
+                            textDirection: isInEnglish ? 'ltr' : 'rtl',
+                            //terms : formText.terms,
+                            submitText : formText.submitText,
+                            sid: candidate.session.id,
+                            client: req.client,
+                            fullName: candidate.fullName
+                        });
+                    })
+                    // TODO: update and delete unnecessary fields render.
+                }
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                res.status(500).send("No User found");</span>
+            }
+        });
+    }
+}
+&nbsp;
+exports.getThankYouPage = <span class="fstat-no" title="function not covered" >function (req, res) {</span>
+<span class="cstat-no" title="statement not covered" >    res.render('thankYou', { title: 'Empiricalhire',</span>
+        isInEnglish: (req.client.language == 'en'),
+        textDirection: (req.client.language == 'en') ? 'ltr' : 'rtl',
+        client: req.client
+    });
+}
+&nbsp;
+// Set Date Time object to the format of dd/mm/yyyy
+<span class="fstat-no" title="function not covered" >function convertDate(date) {</span>
+<span class="cstat-no" title="statement not covered" >    var yyyy = date.getFullYear().toString();</span>
+<span class="cstat-no" title="statement not covered" >    var mm = (date.getMonth()+1).toString();</span>
+<span class="cstat-no" title="statement not covered" >    var dd  = date.getDate().toString();</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    var mmChars = mm.split('');</span>
+<span class="cstat-no" title="statement not covered" >    var ddChars = dd.split('');</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    return (ddChars[1]?dd:"0"+ddChars[0])  + '/' + (mmChars[1]?mm:"0"+mmChars[0]) + '/' + yyyy;</span>
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 16 2017 15:17:00 GMT+0200 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

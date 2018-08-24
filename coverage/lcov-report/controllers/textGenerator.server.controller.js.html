@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for controllers/textGenerator.server.controller.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">all files</a> / <a href="index.html">controllers/</a> textGenerator.server.controller.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>3/10</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/58</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>0/3</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">30% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>3/10</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// Init language-dependent field names for candidate entry
+exports.initCandidateFieldNames = <span class="fstat-no" title="function not covered" >function (companyName, isDemo, isInEnglish) {</span>
+<span class="cstat-no" title="statement not covered" >    var addCandidateText = {</span>
+        //company : '',
+        //personalInfoText = "Please fill your personal details";
+        nameField : isInEnglish ? "Full Name" : "שם מלא",
+        phoneField : isInEnglish ? "Phone Number" : "מספר טלפון",
+        idField : isInEnglish ? "ID" : "ת.ז.",
+        emailField : isInEnglish ? "Email" : "דואר אלקטרוני",
+        recruitmentSourcelField : isInEnglish ? "Recruitment Source" : "מקור גיוס",
+        linkToCVField : isInEnglish ? "Link to CV" : "קישור לקו״ח",
+        textDirection : isInEnglish ? "ltr" : "rtl",
+        maleText: isInEnglish ? "Male" : "זכר",
+        femaleText: isInEnglish ? "Female" : "נקבה"
+        //personalInfoText : isInEnglish ? "Please fill your personal details" : "להתחלת השאלון נא מלא/י את הפרטים הבאים:",
+        //submitBtn : isInEnglish ? "Start Questionnaire" : "להתחלת השאלון",
+        //next : isInEnglish ? "next" : "הבא",
+    }
+<span class="cstat-no" title="statement not covered" >    return addCandidateText;</span>
+};
+&nbsp;
+exports.initFormPageText = <span class="fstat-no" title="function not covered" >function(isInEnglish, callback) {</span>
+<span class="cstat-no" title="statement not covered" >    var pageText = {};</span>
+<span class="cstat-no" title="statement not covered" >    pageText.submitText = isInEnglish ? "Submit" : "להגשת המבחן לחץ כאן";</span>
+    /*pageText.terms = {
+        title : isInEnglish ? "Please confirm our Terms of service" : "* בבקשה אשר את תנאי השימוש",
+        prefix : isInEnglish ? "I confirm our" : "אני מאשר את",
+        postfix : isInEnglish ? " Terms of service" : " תנאי השימוש"
+    }*/
+<span class="cstat-no" title="statement not covered" >    callback(pageText);</span>
+}
+&nbsp;
+exports.initRecruiterReportText = <span class="fstat-no" title="function not covered" >function (isInEnglish, callback) {</span>
+<span class="cstat-no" title="statement not covered" >    var recruiterReportText = {</span>
+        idField : isInEnglish ? "ID: " : "ת.ז: ",
+        dateFormCompletedField : isInEnglish ? "Test Date: " : "מילוי השאלון: ",
+        beforeXdaysField : isInEnglish ? "(X days ago)" : "  (לפני X ימים)",
+        phoneField : isInEnglish ? "Phone: " : "טלפון: ",
+        positionDescriptionField : isInEnglish ? "Sales Representative" : "נציג/ת שירות ומכירות",
+        recruiterSourceField : isInEnglish ? "Recruiting Sources: " : "מקור גיוס: ",
+        CVField : isInEnglish ? "CV" : "קורות חיים",
+        formResultField : isInEnglish ? "Test results (before calibration):" : "ציון מבחן (לפני כיול):",
+        lowField : isInEnglish ? "Low" : "תחתונים",
+        avgField: isInEnglish ? "Average" : "מרכזיים",
+        highField : isInEnglish ? "Top" : "עליונים",
+        dontRecommendField : isInEnglish ? "Do not hire" : "מומלץ לא להעסיק",
+        furtherStepsField : isInEnglish ? "Requires further assessment" : "מומלץ להמשיך בתהליך המיון ולברר התאמה",
+        RecommendField : isInEnglish ? "Hire" : "מומלץ להעסיק",
+        issuesToTestField : isInEnglish ? "Points for Inquiry" : "נקודות לבירור",
+        expectedBehaviorField : isInEnglish ? 'The candidate is &lt;b&gt;likely&lt;/b&gt; to display the following&lt;br&gt; behaviors or tendencies: ' :
+            'המועמד\n' + '&lt;b&gt;סביר&lt;/b&gt; להציג את ההתנהגויות\n' + '&lt;br&gt;או הנטיות הבאות:',
+        inATeamField : isInEnglish ? "In a team-" : "בצוות ובארגון-\n",
+        strengthsField : isInEnglish ? "Main Strengths" : "נקודות עוצמה",
+        direction: isInEnglish ? "ltr" : "rtl"
+    };
+<span class="cstat-no" title="statement not covered" >    callback(recruiterReportText);</span>
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu Nov 16 2017 15:17:00 GMT+0200 (IST)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>
