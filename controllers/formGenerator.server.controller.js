@@ -86,6 +86,7 @@ exports.generateForm = function (isInEnglish, companyKeyword, callback) {
             var form = reOrderFormJSON(questionsArraysByType.p_typeJSON, questionsArraysByType.f_typeJSON,
                 questionsArraysByType.c_typeJSON, questionsArraysByType.b_typeJSON, questionsArraysByType.a_typeJSON,
                 questionsArraysByType.s_typeJSON, questionsArraysByType.l_typeJSON);
+                    questionsArraysByType.s_typeJSON, questionsArraysByType.l_typeJSON);
 
                     callback(form);
                 });
@@ -190,6 +191,7 @@ function swap(array, element1Index, element2Index) {
 
 function reOrderFormJSON(pType, fType, cType, bType, aType, sType, lType) {
     var orderedForm = [];
+    var numOfPTypeQuestion = pType.length/cType.length;//20; // Relatively show after equal number of p types questions - c type question
     var numOfPTypeQuestion = pType.length/cType.length; // Relatively show after equal number of p types questions - c type question
     var numOfFTypeQuestion = 0;//5;
 

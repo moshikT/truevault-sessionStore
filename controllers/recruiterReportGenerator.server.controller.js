@@ -140,74 +140,8 @@ function getFactorsScaleConversion(companyKeyword, callback) {
     let scaleConversion = {};
     const baseFileName = 'report.scale.conversion';
 
-    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
-        .then(filePath => {
-            console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
-            csv({noheader: true})
-                .fromFile(filePath)
-                .on('csv', (csvRow) => {
-                    // factor id, weight, range 1-3
-                    if (csvRow[3] != '') {
-                        scaleConversion[csvRow[0]] = {
-                            weight: parseFloat(csvRow[2]),
-                            factor: csvRow[1],
-                            ranges: [parseFloat(csvRow[3]), parseFloat(csvRow[4]), parseFloat(csvRow[5])]
-                        };
-                    }
-                    else {
-                        scaleConversion[csvRow[0]] = {weight:  parseFloat(csvRow[2]), factor: csvRow[1], ranges: [4.08, 4.98, 6.1]};
-                    }
-                    console.log("%s.%s:%s -", __file, __ext, __line, "scaleConversion[", csvRow[0], "] = ", scaleConversion[csvRow[0]]);
-                })
-                .on('done', (error) => {
-                    if (!error) {
-                        callback(scaleConversion);
-                    }
-                    else {
-                        console.log("%s.%s:%s -", __file, __ext, __line, "Error reading csv: ", error);
-                        callback(null);
-                    }
-                })
-                .on('error', (err) => {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file ", baseFileName, "; error: ", err);
-                    callback(null);
-                })
-        })
-        .catch(error => { // file not found
-            console.log("%s.%s:%s -", __file, __ext, __line, "Error: ", error);
-            callback(null);
-        });
-}
 
-function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
-    let factors = {};
-    let subDims = [];
-    let testScore = 0;
-    let testWeight = 0;
-    const baseFileName = 'report.items';
-    let answers = {}
-
-    // First create an object indexed by qids for all the answer data
-    for (let qIndex = 0; qIndex < candidate.form.length; qIndex++) {
-        let score;
-        if (candidate.form[qIndex].type == 'C') {
-            score = (candidate.form[qIndex].optAnswer == candidate.form[qIndex].finalAnswer) ? 7 : 1;
-            //console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", candidate.form[qIndex].id, "; score: ", score);
-        }
-        else if (candidate.form[qIndex].id.trim().charAt(candidate.form[qIndex].id.length - 1) == 'r') {
-            score = 8 - Number(candidate.form[qIndex].finalAnswer);
-            //console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", candidate.form[qIndex].id, "; score: ", score);
-        }
-        else {
-            score = Number(candidate.form[qIndex].finalAnswer);
-            //console.log("%s.%s:%s -", __file, __ext, __line, "Question ID: ", candidate.form[qIndex].id, "; score: ", score);
-        }
-        answers[candidate.form[qIndex].id] = score;
-    }
-    console.log("%s.%s:%s -", __file, __ext, __line, "Answers: ", answers);
-
-
-    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
+    addFile_Ctrl.getFile([/*'report factors - factorsTranspose.csv'*/'report.items.csv'])
         .then(filePath => {
             console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv({noheader: true})
@@ -333,7 +267,7 @@ function getFactorsAvg(candidate, companyKeyword, scaleConversion, callback) {
                     callback(subDims, finalScore);
                 })
                 .on('error', (err) => {
-                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err);
+                    console.log("%s.%s:%s -", __file, __ext, __line, "Unable to read csv file 'report.items ", err)
                     callback(null);
                 })
         })
@@ -348,7 +282,7 @@ function getVerbalText(lang, subDimsData, isMale, companyKeyword, callback) {
     var weaknesses = [];
     const baseFileName = 'report.verbal';
 
-    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'])
+    addFile_Ctrl.getFile([baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'/*baseFileName + '.' + companyKeyword + '.csv', baseFileName + '.csv'*/])
         .then(filePath => {
             console.log("%s.%s:%s -", __file, __ext, __line, "File found: ", filePath);
             csv()
